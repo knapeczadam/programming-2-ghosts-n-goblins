@@ -1,0 +1,6 @@
+256x224 8:7
+512x448 8:7
+
+https://andrew.hedges.name/experiments/aspect_ratio/
+
+https://www.reddit.com/r/snes/comments/871o2b/43_or_87_aspect_ratio/

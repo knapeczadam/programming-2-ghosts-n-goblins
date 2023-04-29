@@ -1,0 +1,324 @@
+{
+  "images": [
+    {
+      "label": "arthur",
+      "path": "characters/arthur.png"
+    },
+    {
+      "label": "big_man",
+      "path": "characters/big_man.png"
+    },
+    {
+      "label": "crow",
+      "path": "characters/crow.png"
+    },
+    {
+      "label": "flying_knight",
+      "path": "characters/flying_knight.png"
+    },
+    {
+      "label": "green_monster",
+      "path": "characters/green_monster.png"
+    },
+    {
+      "label": "magician",
+      "path": "characters/magician.png"
+    },
+    {
+      "label": "princess",
+      "path": "characters/princess.png"
+    },
+    {
+      "label": "red_arremer",
+      "path": "characters/red_arremer.png"
+    },
+    {
+      "label": "satan",
+      "path": "characters/satan.png"
+    },
+    {
+      "label": "woody_pig",
+      "path": "characters/woody_pig.png"
+    },
+    {
+      "label": "zombie",
+      "path": "characters/zombie.png"
+    },
+    {
+      "label": "basket",
+      "path": "collectibles/basket.png"
+    },
+    {
+      "label": "coins",
+      "path": "collectibles/coins.png"
+    },
+    {
+      "label": "money_bag",
+      "path": "collectibles/money_bag.png"
+    },
+    {
+      "label": "necklace",
+      "path": "collectibles/necklace.png"
+    },
+    {
+      "label": "shield",
+      "path": "collectibles/shield.png"
+    },
+    {
+      "label": "fire",
+      "path": "fx/fire.png"
+    },
+    {
+      "label": "fx",
+      "path": "fx/fx.bmp"
+    },
+    {
+      "label": "vanish",
+      "path": "fx/vanish.png"
+    },
+    {
+      "label": "door",
+      "path": "level/door.bmp"
+    },
+    {
+      "label": "level",
+      "path": "level/level.bmp"
+    },
+    {
+      "label": "level_debug",
+      "path": "level/level_debug.bmp"
+    },
+    {
+      "label": "platform",
+      "path": "level/platform.bmp"
+    },
+    {
+      "label": "water",
+        "path": "level/water.png"
+    },
+    {
+      "label": "map",
+      "path": "ui/map.png"
+    },
+    {
+      "label": "pin",
+      "path": "ui/pin.png"
+    },
+    {
+      "label": "dagger",
+      "path": "weapons/dagger.png"
+    },
+    {
+      "label": "lance",
+      "path": "weapons/lance.png"
+    },
+    {
+      "label": "spear",
+      "path": "weapons/spear.png"
+    },
+    {
+      "label": "torch",
+      "path": "weapons/torch.png"
+    },
+    {
+      "label": "fallback",
+      "path": "fallback.png"
+    },
+    {
+      "label": "avatar",
+      "path": "minigame/AvatarSheet.png"
+    }
+  ],
+  "sprites": [
+    {
+      "label": "arthur",
+      "rows": 14,
+      "columns": 16,
+      "frames_per_second": 16,
+      "scale": 2
+    },
+    {
+      "label": "big_man",
+      "rows": 5,
+      "columns": 3,
+      "sub_rows": 0,
+      "sub_columns": 0,
+      "frames_per_second": 5,
+      "scale": 2
+    },
+    {
+      "label": "crow",
+      "rows": 2,
+      "columns": 4,
+      "sub_rows": 1,
+      "sub_columns": 4,
+      "frames_per_second": 10,
+      "scale": 2
+    },
+    {
+      "label": "flying_knight",
+      "rows": 1,
+      "columns": 4,
+      "sub_rows": 1,
+      "sub_columns": 4,
+      "frames_per_second": 10,
+      "scale": 2
+    },
+    {
+      "label": "green_monster",
+      "rows": 1,
+      "columns": 5,
+      "sub_rows": 1,
+      "sub_columns": 5,
+      "frames_per_second": 10,
+      "scale": 2
+    },
+    {
+      "label": "magician",
+      "scale": 2
+    },
+    {
+      "label": "princess",
+      "rows": 1,
+      "columns": 3,
+      "sub_rows": 0,
+      "sub_columns": 0,
+      "frames_per_second": 10,
+      "scale": 2
+    },
+    {
+      "label": "red_arremer",
+      "rows": 3,
+      "columns": 5,
+      "sub_rows": 3,
+      "sub_columns": 5,
+      "frames_per_second": 10,
+      "scale": 2
+    },
+    {
+      "label": "satan",
+      "rows": 1,
+      "columns": 6,
+      "sub_rows": 3,
+      "sub_columns": 5,
+      "frames_per_second": 10,
+      "scale": 2
+    },
+    {
+      "label": "woody_pig",
+      "rows": 3,
+      "columns": 4,
+      "sub_rows": 3,
+      "sub_columns": 4,
+      "frames_per_second": 10,
+      "scale": 2
+    },
+    {
+      "label": "zombie",
+      "rows": 1,
+      "columns": 6,
+      "sub_rows": 1,
+      "sub_columns": 6,
+      "frames_per_second": 5,
+      "scale": 2
+    },
+    {
+      "label": "basket",
+      "scale": 2
+    },
+    {
+      "label": "coins",
+      "scale": 2
+    },
+    {
+      "label": "money_bag",
+      "scale": 2
+    },
+    {
+      "label": "necklace",
+      "rows": 1,
+      "columns": 25,
+      "sub_rows": 1,
+      "sub_columns": 25,
+      "frames_per_second": 10,
+      "scale": 2
+    },
+    {
+      "label": "shield",
+      "scale": 2
+    },
+    {
+      "label": "fire",
+      "rows": 1,
+      "columns": 4,
+      "sub_rows": 0,
+      "sub_columns": 0,
+      "frames_per_second": 10,
+      "scale": 2
+    },
+    {
+      "label": "fx",
+      "rows": 1,
+      "columns": 4,
+      "sub_rows": 0,
+      "sub_columns": 0,
+      "frames_per_second": 10,
+      "scale": 2
+    },
+    {
+      "label": "vanish",
+      "rows": 1,
+      "columns": 3,
+      "frames_per_second": 3,
+      "scale": 2
+    },
+    {
+      "label" : "level"
+    },
+    {
+      "label": "platform",
+        "scale": 2
+    },
+    {
+      "label": "water",
+      "rows": 3,
+      "columns": 1,
+      "frames_per_second": 3
+    },
+    {
+      "label": "dagger",
+      "scale": 2
+    },
+    {
+      "label": "lance",
+      "scale": 2
+    },
+    {
+      "label": "spear",
+      "scale": 2
+    },
+    {
+      "label": "torch",
+      "scale": 2
+    },
+    {
+      "label": "avatar",
+      "rows": 11,
+      "columns": 10,
+      "sub_rows": 1,
+      "sub_columns": 10,
+      "frames_per_second": 10,
+      "scale": 1,
+      "left_offset_pixel": 0,
+      "top_offset_pixel": 0,
+      "left_offset_columns": 0,
+      "top_offset_rows": 0
+    }
+  ],
+  "sounds": [
+    {
+      "label": "",
+      "path": ""
+    }
+  ]
+}
