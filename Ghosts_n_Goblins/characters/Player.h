@@ -55,8 +55,12 @@ private:
     void ApplyGravity(float elapsedSec);
     
     void CheckForBoundaries(const Rectf& boundaries);
-
+    
+public:
+    static Point2f GetSpawnPos();
 private:
+    static const Point2f m_SpawnPos;
+    
     float m_HorVelocity;
     float m_VerVelocity;
     Vector2f m_Velocity;

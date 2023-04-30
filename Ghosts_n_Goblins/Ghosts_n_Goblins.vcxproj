@@ -533,6 +533,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="engine\Timer.cpp" />
     <ClCompile Include="engine\main.cpp">
       <RuntimeLibrary>MultiThreadedDebugDll</RuntimeLibrary>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -1059,6 +1060,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="level\KillZone.cpp" />
     <ClCompile Include="level\Level.cpp">
       <RuntimeLibrary>MultiThreadedDebugDll</RuntimeLibrary>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -1452,6 +1454,7 @@
     <ClInclude Include="collectibles\PickUpManager.h" />
     <ClInclude Include="collectibles\PowerUp.h" />
     <ClInclude Include="collectibles\PowerUpManager.h" />
+    <ClInclude Include="engine\Timer.h" />
     <ClInclude Include="engine\json.hpp" />
     <ClInclude Include="engine\SoundManager.h" />
     <ClInclude Include="engine\Sprite.h" />
@@ -1461,6 +1464,7 @@
     <ClInclude Include="game\Game.h" />
     <ClInclude Include="game\GameObject.h" />
     <ClInclude Include="game\Macros.h" />
+    <ClInclude Include="level\KillZone.h" />
     <ClInclude Include="level\Level.h" />
     <ClInclude Include="level\Platform.h" />
     <ClInclude Include="level\Tombstone.h" />

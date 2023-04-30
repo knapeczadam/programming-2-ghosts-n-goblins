@@ -16,6 +16,8 @@
 #include "level/Platform.h"
 #include "weapons/Lance.h"
 
+const Point2f Player::m_SpawnPos{ 100.0f, 200.0f };
+
 Player::Player(Sprite* pSprite, const Point2f& pos, Level* pLevel)
     : GameObject{Game::Label::ARTHUR, pSprite, pos}
       , m_HorVelocity{150.0f}
@@ -95,14 +97,7 @@ void Player::valamiMegNemTom() const
 void Player::Draw() const
 {
     valamiMegNemTom();
-    if (m_IsFlipped)
-    {
-        m_pSprite->DrawFlipped();
-    }
-    else
-    {
-        m_pSprite->Draw();
-    }
+    GameObject::Draw();
 }
 
 void Player::UpdateCooldown(float elapsedSec)
@@ -384,4 +379,9 @@ void Player::CheckForBoundaries(const Rectf& boundaries)
     {
         m_Shape.left = boundaries.left + boundaries.width - m_Shape.width;
     }
+}
+
+Point2f Player::GetSpawnPos()
+{
+    return m_SpawnPos;
 }

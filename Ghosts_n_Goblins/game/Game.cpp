@@ -11,15 +11,18 @@
 #include "engine/SpriteFactory.h"
 #include "engine/TextureManager.h"
 #include "level/Level.h"
+#include "level/KillZone.h"
 #include "level/Platform.h"
 #include "level/Tombstone.h"
 #include "ui/HUD.h"
+#include "game/Macros.h"
 
 #include <fstream>
 #include <iostream>
 #include <ranges>
 
 #include "characters/IEnemy.h"
+#include "engine/Timer.h"
 #include "level/Water.h"
 #include "weapons/Dagger.h"
 
@@ -32,6 +35,7 @@ Game::Game(const Window& window)
       , m_pTextureManager{}
       , m_pPlayer{}
       , m_pLevel{}
+      , m_pKillZone{}
       , m_pPlatform{}
       , m_pCamera{}
       , m_pHUD{}
@@ -63,6 +67,7 @@ void Game::Initialize()
 
     // LEVEL
     m_pPlatform = new Platform{m_pSpriteFactory->CreateSprite(Label::PLATFORM), Point2f{3555.0f, 30.0f}};
+    m_pKillZone = new KillZone{m_pTextureManager->GetTexture(Label::LEVEL)->GetWidth(), 20.0f};
     m_pLevel = new Level{m_pSpriteFactory->CreateSprite(Label::LEVEL), m_pPlatform};
     InitWaters();
     InitTombstones();
@@ -73,7 +78,7 @@ void Game::Initialize()
 
     // PLAYER
     Sprite* pPlayerSprite{m_pSpriteFactory->CreateSprite(Label::ARTHUR)};
-    m_pPlayer = new Player{pPlayerSprite, Point2f{100, 200}, m_pLevel};
+    m_pPlayer = new Player{pPlayerSprite, Player::GetSpawnPos(), m_pLevel};
 
     // HUD
     m_pHUD = new HUD{Point2f{20.0f, 200.0f}, 3};
@@ -183,6 +188,7 @@ void Game::Cleanup()
     delete m_pCamera;
     delete m_pHUD;
     delete m_pLevel;
+    delete m_pKillZone;
     delete m_pPlatform;
     delete m_pSpriteFactory;
     delete m_pTextureManager;
@@ -196,22 +202,23 @@ void Game::Cleanup()
 
 void Game::Draw() const
 {
+    static auto draw{[](const GameObject* pGameObject) { pGameObject->Draw(); }};
+    static auto toGameObject{[](IThrowable* pThrowable) { return dynamic_cast<GameObject*>(pThrowable); }};
+    static auto isVisible{[](const GameObject* pGameObject) { return pGameObject->IsVisible(); }};
+    
     ClearBackground();
 
     glPushMatrix();
     m_pCamera->Transform(m_pPlayer->GetShape());
     m_pLevel->Draw();
     std::ranges::for_each(m_Waters, [](const Water* pWater) { pWater->Draw(); });
-    // C++20 ranges for loop with condition
-    static auto draw{[](const GameObject* pGameObject) { pGameObject->Draw(); }};
-    static auto toGameObject{[](IThrowable* pThrowable) { return dynamic_cast<GameObject*>(pThrowable); }};
-    static auto isActive{[](const GameObject* pGameObject) { return pGameObject->IsActive(); }};
-    std::ranges::for_each(m_GameObjects | std::views::filter(isActive), draw);
-    std::ranges::for_each(m_Throwables | std::views::transform(toGameObject) | std::views::filter(isActive), draw);
+    std::ranges::for_each(m_GameObjects | std::views::filter(isVisible), draw);
+    std::ranges::for_each(m_Throwables | std::views::transform(toGameObject) | std::views::filter(isVisible), draw);
     m_pPlayer->Draw();
+#if DEBUG_COLLISION
+    m_pKillZone->Draw();
+#endif
     glPopMatrix();
-
-    // m_pHUD->Draw();
 }
 
 void Game::ClearBackground() const
@@ -222,10 +229,12 @@ void Game::ClearBackground() const
 
 void Game::Update(float elapsedSec)
 {
+    Timer::Update(elapsedSec);
+    
     // Update game objects
     m_pLevel->Update(elapsedSec);
     std::ranges::for_each(m_Waters, [&](Water* pWater) { pWater->Update(elapsedSec); });
-    m_pPlayer->Update(elapsedSec);
+    if (m_pPlayer->IsActive()) m_pPlayer->Update(elapsedSec);
 
     static auto isActive{[](const GameObject* pGameObject) { return pGameObject->IsActive(); }};
     static auto toGameObject{[](IThrowable* pThrowable) { return dynamic_cast<GameObject*>(pThrowable); }};
@@ -297,7 +306,8 @@ void Game::PrintInfo() const
 
 void Game::DoCollisionTests()
 {
-    m_pLevel->HandleCollision(m_pPlayer);
+    m_pKillZone->HandleCollision(m_pPlayer);
+    if  (m_pPlayer->IsActive()) m_pLevel->HandleCollision(m_pPlayer);
     // ENEMIES, PICKUPS
     for (GameObject* pGameObject : m_GameObjects)
     {

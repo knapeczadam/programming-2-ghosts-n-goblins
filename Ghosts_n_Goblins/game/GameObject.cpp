@@ -1,16 +1,20 @@
 ﻿#include "pch.h"
 #include "GameObject.h"
 #include <cassert>
+#include "game/Macros.h"
 
 #include "utils.h"
 #include "engine/Sprite.h"
+#include "engine/Timer.h"
 
 GameObject::GameObject()
     : m_Label{Game::Label::DUMMY}
       , m_pSprite{}
       , m_Shape{}
       , m_IsActive{true}
+      , m_IsVisible{true}
       , m_IsFlipped{false}
+      , m_pTimer{}
 {
 }
 
@@ -19,7 +23,9 @@ GameObject::GameObject(Game::Label label)
       , m_pSprite{}
       , m_Shape{}
       , m_IsActive{true}
+      , m_IsVisible{true}
       , m_IsFlipped{false}
+      , m_pTimer{}
 {
 }
 
@@ -28,7 +34,9 @@ GameObject::GameObject(Game::Label label, Sprite* pSprite)
       , m_pSprite{pSprite}
       , m_Shape{}
       , m_IsActive{true}
+      , m_IsVisible{true}
       , m_IsFlipped{false}
+      , m_pTimer{}
 {
     InitShape();
 }
@@ -38,7 +46,9 @@ GameObject::GameObject(Game::Label label, const Rectf& shape)
       , m_pSprite{}
       , m_Shape{shape}
       , m_IsActive{true}
+      , m_IsVisible{true}
       , m_IsFlipped{false}
+      , m_pTimer{}
 {
 }
 
@@ -47,21 +57,30 @@ GameObject::GameObject(Game::Label label, Sprite* pSprite, const Point2f& pos)
       , m_pSprite{pSprite}
       , m_Shape{}
       , m_IsActive{true}
+      , m_IsVisible{true}
       , m_IsFlipped{false}
+      , m_pTimer{}
 {
     InitShape(pos);
 }
 
 void GameObject::Draw() const
 {
-    if (m_IsFlipped)
+    if (m_pSprite)
     {
-        m_pSprite->DrawFlipped();    
+        if (m_IsFlipped)
+        {
+            m_pSprite->DrawFlipped();
+        }
+        else
+        {
+            m_pSprite->Draw();
+        }
     }
-    else
-    {
-        m_pSprite->Draw();
-    }
+#if DEBUG_COLLISION
+    utils::SetColor(Color4f{0, 1, 1, 1});
+    utils::DrawRect(m_Shape);
+#endif
 }
 
 void GameObject::Update(float elapsedSec)
@@ -116,9 +135,37 @@ void GameObject::SetActive(bool isActive)
     m_IsActive = isActive;
 }
 
+bool GameObject::IsVisible() const
+{
+    return m_IsVisible;
+}
+
+void GameObject::SetVisible(bool isVisible)
+{
+    m_IsVisible = isVisible;
+}
+
 bool GameObject::IsOverlapping(GameObject* other) const
 {
     return utils::IsOverlapping(m_Shape, other->GetShape());
+}
+
+void GameObject::StartTimer(float seconds)
+{
+    if (m_pTimer) return;
+    m_pTimer = new Timer{seconds};
+}
+
+bool GameObject::IsTimerFinished()
+{
+    if (not m_pTimer) return true;
+    if (m_pTimer->IsFinished())
+    {
+        delete m_pTimer;
+        m_pTimer = nullptr;
+        return true;
+    }
+    return false;
 }
 
 Point2f GameObject::GetCenter() const

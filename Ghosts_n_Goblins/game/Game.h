@@ -9,6 +9,7 @@ using json = nlohmann::json;
 
 class HUD;
 class Level;
+class KillZone;
 class Platform;
 class Tombstone;
 class Water;
@@ -54,6 +55,7 @@ public:
 
         // LEVEL
         DOOR,
+        KILLZONE,
         LEVEL,
         PLATFORM,
         TOMBSTONE,
@@ -121,6 +123,7 @@ private:
     TextureManager* m_pTextureManager;
     Player* m_pPlayer;
     Level* m_pLevel;
+    KillZone* m_pKillZone;
     Platform* m_pPlatform;
     Camera* m_pCamera;
     HUD* m_pHUD;

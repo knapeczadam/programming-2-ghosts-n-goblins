@@ -3,6 +3,7 @@
 #include "utils.h"
 
 class Sprite;
+class Timer;
 
 class GameObject
 {
@@ -45,6 +46,8 @@ public:
 public:
     virtual bool IsActive() const final;
     virtual void SetActive(bool isActive) final;
+    virtual bool IsVisible() const final;
+    virtual void SetVisible(bool isVisible) final;
     virtual Rectf GetShape() const final;
     virtual Point2f GetCenter() const final;
     virtual void SetBottom(float bottom) final;
@@ -52,6 +55,8 @@ public:
 
 protected:
     virtual bool IsOverlapping(GameObject* other) const final;
+    virtual void StartTimer(float seconds) final;
+    virtual bool IsTimerFinished() final;
 
 private:
     void InitShape();
@@ -62,5 +67,8 @@ protected:
     Sprite* m_pSprite;
     Rectf m_Shape;
     bool m_IsActive;
+    bool m_IsVisible;
     bool m_IsFlipped;
+private:
+    Timer* m_pTimer;
 };

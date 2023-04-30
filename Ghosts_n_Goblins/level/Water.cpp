@@ -25,8 +25,3 @@ void Water::Update(float elapsedSec)
 {
     GameObject::Update(elapsedSec);
 }
-
-void Water::HandleCollision(GameObject* other)
-{
-    Player* pPlayer{ static_cast<Player*>(other) };
-}
