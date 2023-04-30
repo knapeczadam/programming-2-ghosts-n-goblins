@@ -6,13 +6,8 @@
 Lance::Lance(Sprite* pSprite, const Point2f& pos, bool isFlipped)
     : GameObject{Game::Label::LANCE, pSprite, pos}
         , m_Speed{300.0f}
-{
+{   
     m_IsFlipped = isFlipped;
-}
-
-void Lance::Draw() const
-{
-    GameObject::Draw();
 }
 
 void Lance::Update(float elapsedSec)
@@ -25,6 +20,4 @@ void Lance::Update(float elapsedSec)
     {
         m_Shape.left += m_Speed * elapsedSec;
     }
-    m_pSprite->SetPosition(GetPosition<Point2f>());
-    m_pSprite->Update(elapsedSec);
 }

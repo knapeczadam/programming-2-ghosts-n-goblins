@@ -191,6 +191,7 @@ void BaseGame::Run()
 
 			// Call the BaseGame object 's Update function, using time in seconds (!)
 			this->Update(elapsedSeconds);
+			this->LateUpdate(elapsedSeconds);
 
 			// Draw in the back buffer
 			this->Draw();

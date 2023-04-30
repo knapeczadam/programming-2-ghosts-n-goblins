@@ -70,9 +70,8 @@ void Platform::Update(float elapsedSec)
     m_AccuSec += elapsedSec;
     Move();
     UpdateVertices();
-    m_pSprite
-        ->
-        SetPosition(GetPosition<Point2f>());
+    m_pSprite->SetPosition(GetPosition<Point2f>());
+    UpdateCollisionBox();
 }
 
 /*
@@ -80,8 +79,8 @@ Handles collision with this platform only when the actor is moving downwards.
  */
 void Platform::HandleCollision(GameObject* other)
 {
-    const Point2f p1{other->GetCenter()};
-    const Point2f p2{p1.x, other->GetShape().bottom};
+    const Point2f p1{other->GetCollisionBoxCenter()};
+    const Point2f p2{p1.x, other->GetCollisionBox().bottom};
     utils::HitInfo hit;
     const bool isHit{utils::Raycast(m_Vertices, p1, p2, hit)};
     // Swamp effect
@@ -110,8 +109,8 @@ platform’s top.
 bool Platform::IsOnGround(GameObject* pGameObject) const
 {
     const float epsilon{1.0f};
-    const Point2f p1{pGameObject->GetCenter()};
-    const Point2f p2{p1.x, pGameObject->GetShape().bottom - epsilon};
+    const Point2f p1{pGameObject->GetCollisionBoxCenter()};
+    const Point2f p2{p1.x, pGameObject->GetCollisionBox().bottom - epsilon};
     Player* pPlayer{static_cast<Player*>(pGameObject)};
     if (pPlayer->GetVelocity().y <= 0.0f && utils::IsOverlapping(p1, p2, m_Shape))
     {

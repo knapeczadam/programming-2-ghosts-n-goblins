@@ -29,7 +29,6 @@ public:
     Player& operator=(const Player& other) = delete;
     Player& operator=(Player&& other) noexcept = delete;
 
-    virtual void Draw() const override;
     void UpdateCooldown(float elapsedSec);
     virtual void Update(float elapsedSec) override;
     void SyncWithPlatform(float elapsedSec);

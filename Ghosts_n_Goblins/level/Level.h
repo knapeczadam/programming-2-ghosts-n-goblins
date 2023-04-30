@@ -25,7 +25,7 @@ public:
     
     bool IsOnGround(GameObject* pGameObject) const;
     Rectf GetBoundaries() const;
-    bool HasReachedEnd(const Rectf& actorShape) const;
+    bool HasReachedEnd(const Rectf& collisionBox) const;
 
     Platform* GetPlatform() const;
 

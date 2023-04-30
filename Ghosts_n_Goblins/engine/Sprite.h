@@ -55,6 +55,11 @@ public:
     void SetClipWidth(float clipWidth);
     float GetClipHeight() const;
     void SetClipHeight(float clipHeight);
+    float GetCollisionWidth() const;
+    void SetCollisionWidth(float collisionWidth);
+    float GetCollisionHeight() const;
+    void SetCollisionHeight(float collisionHeight);
+    
 
 private:
     // SPRITE PROPERTIES
@@ -82,4 +87,6 @@ private:
     Rectf m_DstRect;
     float m_ClipWidth;
     float m_ClipHeight;
+    float m_CollisionWidth;
+    float m_CollisionHeight;
 };

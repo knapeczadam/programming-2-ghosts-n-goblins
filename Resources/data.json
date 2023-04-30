@@ -94,7 +94,7 @@
     },
     {
       "label": "water",
-        "path": "level/water.png"
+      "path": "level/water.png"
     },
     {
       "label": "map",
@@ -134,8 +134,9 @@
       "label": "arthur",
       "rows": 14,
       "columns": 16,
-      "frames_per_second": 16,
-      "scale": 2
+      "frames_per_second": 10,
+      "scale": 2,
+      "collision_width": 20
     },
     {
       "label": "big_man",
@@ -273,11 +274,11 @@
       "scale": 2
     },
     {
-      "label" : "level"
+      "label": "level"
     },
     {
       "label": "platform",
-        "scale": 2
+      "scale": 2
     },
     {
       "label": "water",

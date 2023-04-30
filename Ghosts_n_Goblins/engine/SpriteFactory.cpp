@@ -79,6 +79,10 @@ Sprite* SpriteFactory::CreateSprite(Game::Label label)
             pSprite->SetClipWidth(clipWidth);
             const float clipHeight{sprite.contains("clip_height") ? static_cast<float>(sprite["clip_height"]) : 0.0f};
             pSprite->SetClipHeight(clipHeight);
+            const float collisionWidth{sprite.contains("collision_width") ? static_cast<float>(sprite["collision_width"]) : 0.0f};
+            pSprite->SetCollisionWidth(collisionWidth);
+            const float collisionHeight{sprite.contains("collision_height") ? static_cast<float>(sprite["collision_height"]) : 0.0f};
+            pSprite->SetCollisionHeight(collisionHeight);
 
             pSprite->Init();
 

@@ -14,9 +14,11 @@
 
 #include "Matrix2x3.h"
 #include "level/Platform.h"
+#include "weapons/Dagger.h"
 #include "weapons/Lance.h"
+#include "weapons/Torch.h"
 
-const Point2f Player::m_SpawnPos{ 100.0f, 200.0f };
+const Point2f Player::m_SpawnPos{100.0f, 200.0f};
 
 Player::Player(Sprite* pSprite, const Point2f& pos, Level* pLevel)
     : GameObject{Game::Label::ARTHUR, pSprite, pos}
@@ -91,13 +93,6 @@ void Player::valamiMegNemTom() const
     }
     m_pSprite->SetCurrRowsCols();
     m_pSprite->UpdateSourceRect();
-    m_pSprite->SetPosition(Point2f{m_Shape.left, m_Shape.bottom});
-}
-
-void Player::Draw() const
-{
-    valamiMegNemTom();
-    GameObject::Draw();
 }
 
 void Player::UpdateCooldown(float elapsedSec)
@@ -145,16 +140,17 @@ void Player::Update(float elapsedSec)
         UpdatePosition(elapsedSec);
         break;
     }
-
-    //m_pLevel->HandleCollision(this);
+    valamiMegNemTom();
+    // late update
+    UpdateCollisionBox();
     m_pSprite->Update(elapsedSec);
 }
 
 void Player::SyncWithPlatform(float elapsedSec)
 {
-    if (m_OffsetSnapshot == Vector2f{0,0})
+    if (m_OffsetSnapshot == Vector2f{0, 0})
     {
-        m_OffsetSnapshot.x = GetPosition<Point2f>().x -  m_pLevel->GetPlatform()->GetPosition<Point2f>().x;
+        m_OffsetSnapshot.x = GetPosition<Point2f>().x - m_pLevel->GetPlatform()->GetPosition<Point2f>().x;
         m_OffsetSnapshot.y = m_Shape.bottom - m_pLevel->GetPlatform()->GetPosition<Point2f>().y;
     }
     m_OffsetSnapshot.x += m_Velocity.x * elapsedSec;
@@ -183,7 +179,7 @@ void Player::UpdatePosition(float elapsedSec)
     }
     else
     {
-        m_OffsetSnapshot = Vector2f{0,0};
+        m_OffsetSnapshot = Vector2f{0, 0};
         m_Shape.left += m_Velocity.x * elapsedSec;
         m_Shape.bottom += m_Velocity.y * elapsedSec;
     }
@@ -301,7 +297,18 @@ void Player::Attack(std::vector<IThrowable*>& throwables, SpriteFactory* spriteF
         m_LongAccuCooldown += m_LongCooldownTime;
         m_isAttacking = true;
 
-        throwables.push_back(new Lance{spriteFactory->CreateSprite(m_CurrWeapon), GetCenter(), m_IsFlipped});
+        switch (m_CurrWeapon)
+        {
+        case Game::Label::DAGGER:
+            throwables.push_back(new Dagger{spriteFactory->CreateSprite(m_CurrWeapon), GetShapeCenter(), m_IsFlipped});
+            break;
+        case Game::Label::LANCE:
+            throwables.push_back(new Lance{spriteFactory->CreateSprite(m_CurrWeapon), GetShapeCenter(), m_IsFlipped});
+            break;
+        case Game::Label::TORCH:
+            throwables.push_back(new Torch{spriteFactory->CreateSprite(m_CurrWeapon), GetShapeCenter(), m_IsFlipped});
+            break;
+        }
     }
 }
 
@@ -355,6 +362,7 @@ void Player::HandleCollision(GameObject* other)
         {
         case Game::Label::DAGGER:
             m_CurrWeapon = Game::Label::DAGGER;
+            other->SetVisible(false);
             other->SetActive(false);
             break;
         case Game::Label::LANCE:

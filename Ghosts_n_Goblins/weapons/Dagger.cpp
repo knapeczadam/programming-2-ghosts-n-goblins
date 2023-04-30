@@ -3,17 +3,22 @@
 
 #include "engine/Sprite.h"
 
-Dagger::Dagger(Sprite* pSprite, const Point2f& pos)
-    : GameObject{Game::Label::DAGGER, pSprite, pos}
-{
-}
 
-void Dagger::Draw() const
+Dagger::Dagger(Sprite* pSprite, const Point2f& pos, bool isFlipped)
+    : GameObject{Game::Label::DAGGER, pSprite, pos}
+    , m_Speed{300.0f}
 {
-    GameObject::Draw();
+    m_IsFlipped = isFlipped;
 }
 
 void Dagger::Update(float elapsedSec)
 {
-    GameObject::Update(elapsedSec);
+    if (m_IsFlipped)
+    {
+        m_Shape.left -= m_Speed * elapsedSec;
+    }
+    else
+    {
+        m_Shape.left += m_Speed * elapsedSec;
+    }
 }

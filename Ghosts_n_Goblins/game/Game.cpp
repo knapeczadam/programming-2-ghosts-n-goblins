@@ -84,7 +84,8 @@ void Game::Initialize()
     m_pHUD = new HUD{Point2f{20.0f, 200.0f}, 3};
 
     // TEST GAME OBJECT
-    m_pTestGameObject = new Dagger{m_pSpriteFactory->CreateSprite(Label::DAGGER), Point2f{218.f, 65.f}};
+    m_pTestGameObject = new Dagger{m_pSpriteFactory->CreateSprite(Label::DAGGER), Point2f{218.f, 65.f}, false};
+    m_pTestGameObject->SetActive(false);
 
     // GAME OBJECTS
     m_GameObjects.push_back(m_pTestGameObject);
@@ -106,7 +107,7 @@ void Game::InitWaters()
 
 void Game::InitTombstones()
 {
-    Tombstone* tombstone1 = new Tombstone{Rectf{86.0f, 66.0f, 30.0f, 40.0f}};
+    Tombstone* tombstone1 = new Tombstone{Rectf{86.0f, 66.0f, 30.0f, 30.0f}};
     m_Tombstones.push_back(tombstone1);
 }
 
@@ -205,7 +206,7 @@ void Game::Draw() const
     static auto draw{[](const GameObject* pGameObject) { pGameObject->Draw(); }};
     static auto toGameObject{[](IThrowable* pThrowable) { return dynamic_cast<GameObject*>(pThrowable); }};
     static auto isVisible{[](const GameObject* pGameObject) { return pGameObject->IsVisible(); }};
-    
+
     ClearBackground();
 
     glPushMatrix();
@@ -217,6 +218,7 @@ void Game::Draw() const
     m_pPlayer->Draw();
 #if DEBUG_COLLISION
     m_pKillZone->Draw();
+    std::ranges::for_each(m_Tombstones, [](const Tombstone* pTombstone) { pTombstone->Draw(); });
 #endif
     glPopMatrix();
 }
@@ -230,7 +232,7 @@ void Game::ClearBackground() const
 void Game::Update(float elapsedSec)
 {
     Timer::Update(elapsedSec);
-    
+
     // Update game objects
     m_pLevel->Update(elapsedSec);
     std::ranges::for_each(m_Waters, [&](Water* pWater) { pWater->Update(elapsedSec); });
@@ -257,6 +259,18 @@ void Game::Update(float elapsedSec)
 
     // Do collision
     DoCollisionTests();
+}
+
+void Game::LateUpdate(float elapsedSec)
+{
+    std::ranges::for_each(m_Waters, [&](Water* pWater) { pWater->LateUpdate(elapsedSec); });
+    m_pPlayer->LateUpdate(elapsedSec);
+    
+    static auto lateUpdate{[&](GameObject* pGameObject) { pGameObject->LateUpdate(elapsedSec); }};
+    static auto toGameObject{[](IThrowable* pThrowable) { return dynamic_cast<GameObject*>(pThrowable); }};
+
+    std::ranges::for_each(m_GameObjects, lateUpdate);
+    std::ranges::for_each(m_Throwables | std::views::transform(toGameObject),  lateUpdate);
 }
 
 
@@ -307,18 +321,27 @@ void Game::PrintInfo() const
 void Game::DoCollisionTests()
 {
     m_pKillZone->HandleCollision(m_pPlayer);
-    if  (m_pPlayer->IsActive()) m_pLevel->HandleCollision(m_pPlayer);
-    // ENEMIES, PICKUPS
+    if (m_pPlayer->IsActive()) m_pLevel->HandleCollision(m_pPlayer);
+
+    // Game objects on player
     for (GameObject* pGameObject : m_GameObjects)
     {
-        // ENEMY, PICKUP
-        for (IThrowable* pThrowable : m_Throwables)
+        if (pGameObject->IsActive())
         {
-            GameObject* weapon = dynamic_cast<GameObject*>(pThrowable);
-            if (pGameObject->IsActive())
+            m_pPlayer->HandleCollision(pGameObject);
+        }
+    }
+
+    // Weapons on game objects and tombstones
+    for (IThrowable* pThrowable : m_Throwables)
+    {
+        GameObject* weapon = dynamic_cast<GameObject*>(pThrowable);
+        if (weapon->IsActive())
+        {
+            // GAME OBJECTS
+            for (GameObject* pGameObject : m_GameObjects)
             {
-                m_pPlayer->HandleCollision(pGameObject);
-                if (weapon->IsActive()) pGameObject->HandleCollision(weapon);
+                if (pGameObject->IsActive()) weapon->HandleCollision(pGameObject);
             }
             // TOMBSTONE
             for (Tombstone* pTombstone : m_Tombstones)

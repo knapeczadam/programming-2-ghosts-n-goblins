@@ -1,17 +1,23 @@
 ﻿#include "pch.h"
 #include "Torch.h"
+#include "engine/Sprite.h"
 
-Torch::Torch(Sprite* pSprite, const Point2f& pos)
+
+Torch::Torch(Sprite* pSprite, const Point2f& pos, bool isFlipped)
     : GameObject{Game::Label::TORCH, pSprite, pos}
+    , m_Speed{300.0f}
 {
-}
-
-void Torch::Draw() const
-{
-    GameObject::Draw();
+    m_IsFlipped = isFlipped;
 }
 
 void Torch::Update(float elapsedSec)
 {
-    GameObject::Update(elapsedSec);
+    if (m_IsFlipped)
+    {
+        m_Shape.left -= m_Speed * elapsedSec;
+    }
+    else
+    {
+        m_Shape.left += m_Speed * elapsedSec;
+    }
 }

@@ -22,6 +22,7 @@ public:
 
     virtual void Draw() const;
     virtual void Update(float elapsedSec);
+    virtual void LateUpdate(float elapsedSec);
     virtual void HandleCollision(GameObject* other);
 
     // GETTERS & SETTERS
@@ -49,7 +50,9 @@ public:
     virtual bool IsVisible() const final;
     virtual void SetVisible(bool isVisible) final;
     virtual Rectf GetShape() const final;
-    virtual Point2f GetCenter() const final;
+    virtual Point2f GetShapeCenter() const final;
+    virtual Rectf GetCollisionBox() const final;
+    virtual Point2f GetCollisionBoxCenter() const final;
     virtual void SetBottom(float bottom) final;
     virtual void SetLeft(float left) final;
 
@@ -57,6 +60,8 @@ protected:
     virtual bool IsOverlapping(GameObject* other) const final;
     virtual void StartTimer(float seconds) final;
     virtual bool IsTimerFinished() final;
+    virtual void InitCollisionBox() final;
+    virtual void UpdateCollisionBox() final;
 
 private:
     void InitShape();
@@ -66,6 +71,7 @@ protected:
     Game::Label m_Label;
     Sprite* m_pSprite;
     Rectf m_Shape;
+    Rectf m_CollisionBox;
     bool m_IsActive;
     bool m_IsVisible;
     bool m_IsFlipped;

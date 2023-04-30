@@ -13,9 +13,8 @@ public:
 	Lance& operator=(const Lance& other) = delete;
 	Lance& operator=(Lance&& other) noexcept = delete;
 
-	virtual void Draw() const override;
 	virtual void Update(float elapsedSec) override;
-	
+
 private:
 	float m_Speed;
 };

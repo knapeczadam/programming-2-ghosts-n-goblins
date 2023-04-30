@@ -31,6 +31,8 @@ Sprite::Sprite(Texture* pTexture)
       , m_DstRect{0.0f, 0.0f, 0.0f, 0.0f}
       , m_ClipWidth{0.0f}
       , m_ClipHeight{0.0f}
+      , m_CollisionWidth{0.0f}
+      , m_CollisionHeight{0.0f}
 {
 }
 
@@ -305,4 +307,32 @@ float Sprite::GetClipHeight() const
 void Sprite::SetClipHeight(float clipHeight)
 {
     m_ClipHeight = clipHeight;
+}
+
+float Sprite::GetCollisionWidth() const
+{
+    if (m_CollisionWidth == 0.0f)
+    {
+        return m_ClipWidth * m_Scale;
+    }
+    return m_CollisionWidth * m_Scale;
+}
+
+void Sprite::SetCollisionWidth(float collisionWidth)
+{
+    m_CollisionWidth = collisionWidth;
+}
+
+float Sprite::GetCollisionHeight() const
+{
+    if (m_CollisionHeight == 0.0f)
+    {
+        return m_ClipHeight * m_Scale;
+    }
+    return m_CollisionHeight * m_Scale;
+}
+
+void Sprite::SetCollisionHeight(float collisionHeight)
+{
+    m_CollisionHeight = collisionHeight;
 }

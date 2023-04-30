@@ -90,6 +90,7 @@ public:
     virtual ~Game() override;
 
     virtual void Update(float elapsedSec) override;
+    virtual void LateUpdate(float elapsedSec) override;
     virtual void Draw() const override;
 
     // Event handling

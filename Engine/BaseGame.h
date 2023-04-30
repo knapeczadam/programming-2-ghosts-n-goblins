@@ -20,6 +20,12 @@ public:
 	{
 		
 	}
+	
+	virtual void LateUpdate(float elapsedSec)
+	{
+		
+	}
+	
 	virtual void Draw() const
 	{
 		
