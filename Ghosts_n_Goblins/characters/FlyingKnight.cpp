@@ -18,11 +18,11 @@ void FlyingKnight::Update(float elapsedSec)
     GameObject::Update(elapsedSec);
 }
 
-void FlyingKnight::HandleCollision(GameObject* player)
+void FlyingKnight::HandleCollision(GameObject* other)
 {
-    if (not IsOverlapping(player)) return;
+    if (not IsOverlapping(other)) return;
     
-    IThrowable* pThrowable{dynamic_cast<IThrowable*>(player)};
+    IThrowable* pThrowable{dynamic_cast<IThrowable*>(other)};
     if (pThrowable)
     {
     }

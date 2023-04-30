@@ -14,7 +14,7 @@ Platform::Platform(Sprite* pSprite, const Point2f& pos)
       , m_OriginalPos{pos}
       , m_Speed{2.0f}
       , m_MaxAmplitude{238.0f}
-      , m_ShortAmplitude{140.0f}
+      , m_ShortAmplitude{100.0f}
       , m_CurrAmplitude{m_MaxAmplitude}
       , m_IsShortened{false}
       , m_Flip{true}
@@ -78,10 +78,10 @@ void Platform::Update(float elapsedSec)
 /*
 Handles collision with this platform only when the actor is moving downwards.
  */
-void Platform::HandleCollision(GameObject* pGameObject)
+void Platform::HandleCollision(GameObject* other)
 {
-    const Point2f p1{pGameObject->GetCenter()};
-    const Point2f p2{p1.x, pGameObject->GetShape().bottom};
+    const Point2f p1{other->GetCenter()};
+    const Point2f p2{p1.x, other->GetShape().bottom};
     utils::HitInfo hit;
     const bool isHit{utils::Raycast(m_Vertices, p1, p2, hit)};
     // Swamp effect
@@ -93,10 +93,10 @@ void Platform::HandleCollision(GameObject* pGameObject)
     //        actorVelocity.y = 0.0f;
     //    } 
     // }
-    Player* pPlayer{static_cast<Player*>(pGameObject)};
+    Player* pPlayer{static_cast<Player*>(other)};
     if (isHit and pPlayer->GetVelocity().y < 0)
     {
-        pGameObject->SetBottom(hit.intersectPoint.y);
+        other->SetBottom(hit.intersectPoint.y);
         Vector2f playerVelocity{pPlayer->GetVelocity()};
         playerVelocity.y = 0.f;
         pPlayer->SetVelocity(playerVelocity);

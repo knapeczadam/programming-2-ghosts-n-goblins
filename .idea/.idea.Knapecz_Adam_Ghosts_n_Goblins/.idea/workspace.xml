@@ -7,11 +7,44 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0c813320-22e2-4144-ad4a-570649cc50d7" name="Changes" comment="" />
+    <list default="true" id="0c813320-22e2-4144-ad4a-570649cc50d7" name="Changes" comment="Engine and SDL2 libraries">
+      <change afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/level/Tombstone.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/level/Tombstone.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Knapecz_Adam_Ghosts_n_Goblins/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Knapecz_Adam_Ghosts_n_Goblins/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/Ghosts_n_Goblins.vcxproj" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/Ghosts_n_Goblins.vcxproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/characters/BigMan.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/characters/BigMan.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/characters/BigMan.h" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/characters/BigMan.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/characters/Crow.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/characters/Crow.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/characters/Crow.h" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/characters/Crow.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/characters/FlyingKnight.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/characters/FlyingKnight.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/characters/FlyingKnight.h" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/characters/FlyingKnight.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/characters/GreenMonster.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/characters/GreenMonster.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/characters/GreenMonster.h" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/characters/GreenMonster.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/characters/RedArremer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/characters/RedArremer.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/characters/RedArremer.h" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/characters/RedArremer.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/characters/WoodyPig.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/characters/WoodyPig.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/characters/WoodyPig.h" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/characters/WoodyPig.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/engine/Sprite.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/engine/Sprite.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/game/Game.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/game/Game.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/game/Game.h" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/game/Game.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/game/GameObject.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/game/GameObject.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/game/GameObject.h" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/game/GameObject.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/level/Level.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/level/Level.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/level/Level.h" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/level/Level.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/level/Platform.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/level/Platform.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/level/Platform.h" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/level/Platform.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/level/Water.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/level/Water.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/level/Water.h" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/level/Water.h" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ChangesViewManager">
+    <option name="groupingKeys">
+      <option value="directory" />
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -23,39 +56,50 @@
     <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../../../../../../../../Program Files (x86)/Windows Kits/10/Include/10.0.19041.0/ucrt/float.h" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../../../../../../../../Program Files/Microsoft Visual Studio/2022/Enterprise/VC/Tools/MSVC/14.35.32215/include/limits" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Ghosts_n_Goblins/engine/json.hpp" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Libraries/SDLMixer/SDL2_mixer-2.6.3/include/SDL_mixer.h" root0="SKIP_HIGHLIGHTING" />
   </component>
+  <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
   <component name="ProjectId" id="2Oy6MoEaUpT1s1HUQSypcIOrD3w" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;rider.external.source.directories&quot;: [
-      &quot;C:\\Users\\adam\\AppData\\Roaming\\JetBrains\\Rider2023.1\\resharper-host\\DecompilerCache&quot;,
-      &quot;C:\\Users\\adam\\AppData\\Roaming\\JetBrains\\Rider2023.1\\resharper-host\\SourcesCache&quot;,
-      &quot;C:\\Users\\adam\\AppData\\Local\\Symbols\\src&quot;
+  "keyToStringList": {
+    "rider.external.source.directories": [
+      "C:\\Users\\adam\\AppData\\Roaming\\JetBrains\\Rider2023.1\\resharper-host\\DecompilerCache",
+      "C:\\Users\\adam\\AppData\\Roaming\\JetBrains\\Rider2023.1\\resharper-host\\SourcesCache",
+      "C:\\Users\\adam\\AppData\\Local\\Symbols\\src"
     ]
   }
-}</component>
+}]]></component>
   <component name="RunManager">
     <configuration name="Ghosts_n_Goblins" type="CppProject" factoryName="C++ Project">
       <configuration_1>
@@ -127,18 +171,47 @@
       <workItem from="1682807429273" duration="23000" />
       <workItem from="1682807462658" duration="1259000" />
       <workItem from="1682808734171" duration="327000" />
+      <workItem from="1682809076422" duration="7388000" />
     </task>
+    <task id="LOCAL-00001" summary="#1">
+      <created>1682809240069</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1682809240069</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Engine and SDL2 libraries">
+      <created>1682809750815</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1682809750815</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="UnityCheckinConfiguration" checkUnsavedScenes="true" />
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="main" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
@@ -146,6 +219,20 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+    <MESSAGE value="#1" />
+    <MESSAGE value="Engine and SDL2 libraries" />
+    <option name="LAST_COMMIT_MESSAGE" value="Engine and SDL2 libraries" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/Ghosts_n_Goblins/level/Water.cpp</url>
+          <line>20</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

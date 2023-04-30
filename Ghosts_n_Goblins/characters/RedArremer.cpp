@@ -18,11 +18,11 @@ void RedArremer::Update(float elapsedSec)
     GameObject::Update(elapsedSec);
 }
 
-void RedArremer::HandleCollision(GameObject* player)
+void RedArremer::HandleCollision(GameObject* other)
 {
-    if (not IsOverlapping(player)) return;
+    if (not IsOverlapping(other)) return;
     
-    IThrowable* pThrowable{dynamic_cast<IThrowable*>(player)};
+    IThrowable* pThrowable{dynamic_cast<IThrowable*>(other)};
     if (pThrowable)
     {
     }

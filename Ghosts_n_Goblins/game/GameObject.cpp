@@ -33,6 +33,15 @@ GameObject::GameObject(Game::Label label, Sprite* pSprite)
     InitShape();
 }
 
+GameObject::GameObject(Game::Label label, const Rectf& shape)
+    : m_Label{label}
+      , m_pSprite{}
+      , m_Shape{shape}
+      , m_IsActive{true}
+      , m_IsFlipped{false}
+{
+}
+
 GameObject::GameObject(Game::Label label, Sprite* pSprite, const Point2f& pos)
     : m_Label{label}
       , m_pSprite{pSprite}
@@ -61,7 +70,7 @@ void GameObject::Update(float elapsedSec)
     m_pSprite->Update(elapsedSec);
 }
 
-void GameObject::HandleCollision(GameObject* player)
+void GameObject::HandleCollision(GameObject* other)
 {
 }
 
@@ -123,6 +132,11 @@ Point2f GameObject::GetCenter() const
 void GameObject::SetBottom(float bottom)
 {
     m_Shape.bottom = bottom;
+}
+
+void GameObject::SetLeft(float left)
+{
+    m_Shape.left = left;
 }
 
 void GameObject::InitShape()

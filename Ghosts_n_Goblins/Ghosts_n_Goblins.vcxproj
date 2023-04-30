@@ -1209,6 +1209,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="level\Tombstone.cpp" />
     <ClCompile Include="level\Water.cpp" />
     <ClCompile Include="pch.cpp">
       <RuntimeLibrary>MultiThreadedDebugDll</RuntimeLibrary>
@@ -1462,6 +1463,7 @@
     <ClInclude Include="game\Macros.h" />
     <ClInclude Include="level\Level.h" />
     <ClInclude Include="level\Platform.h" />
+    <ClInclude Include="level\Tombstone.h" />
     <ClInclude Include="level\Water.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="ui\HUD.h" />

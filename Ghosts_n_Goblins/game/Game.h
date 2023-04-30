@@ -10,6 +10,7 @@ using json = nlohmann::json;
 class HUD;
 class Level;
 class Platform;
+class Tombstone;
 class Water;
 class Player;
 class Camera;
@@ -55,6 +56,7 @@ public:
         DOOR,
         LEVEL,
         PLATFORM,
+        TOMBSTONE,
         WATER,
 
         // UI
@@ -96,6 +98,8 @@ public:
 private:
     // FUNCTIONS
     void Initialize();
+    void InitWaters();
+    void InitTombstones();
     void Cleanup();
     void ClearBackground() const;
     void PrintInfo() const;
@@ -111,6 +115,7 @@ private:
     std::vector<GameObject*> m_GameObjects;
     std::vector<IThrowable*> m_Throwables;
     std::vector<Water*> m_Waters;
+    std::vector<Tombstone*> m_Tombstones;
     
     SpriteFactory* m_pSpriteFactory;
     TextureManager* m_pTextureManager;

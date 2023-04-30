@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "Game.h"
+#include "utils.h"
 
 class Sprite;
 
@@ -10,6 +11,7 @@ public:
     explicit GameObject();
     explicit GameObject(Game::Label label);
     explicit GameObject(Game::Label label, Sprite* pSprite);
+    explicit GameObject(Game::Label label, const Rectf& shape);
     explicit GameObject(Game::Label label, Sprite* pSprite, const Point2f& pos);
     virtual ~GameObject() = default;
     GameObject(const GameObject& other) = delete;
@@ -19,7 +21,7 @@ public:
 
     virtual void Draw() const;
     virtual void Update(float elapsedSec);
-    virtual void HandleCollision(GameObject* player);
+    virtual void HandleCollision(GameObject* other);
 
     // GETTERS & SETTERS
     Game::Label GetLabel() const;
@@ -46,6 +48,7 @@ public:
     virtual Rectf GetShape() const final;
     virtual Point2f GetCenter() const final;
     virtual void SetBottom(float bottom) final;
+    virtual void SetLeft(float left) final;
 
 protected:
     virtual bool IsOverlapping(GameObject* other) const final;

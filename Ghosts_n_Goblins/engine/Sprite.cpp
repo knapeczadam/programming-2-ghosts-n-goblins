@@ -102,14 +102,24 @@ void Sprite::SetFrameTime()
 
 void Sprite::InitSourceRect()
 {
-    m_SrcRect.width = m_Width / m_Cols;
-    m_SrcRect.height = m_Height / m_Rows;
-    SetClipWidth(m_SrcRect.width);
-    SetClipHeight(m_SrcRect.height);
+    if (m_ClipWidth > 0.0f and m_ClipHeight > 0.0f)
+    {
+        m_SrcRect.width = m_ClipWidth;
+        m_SrcRect.height = m_ClipHeight;
+    }
+    else
+    {
+        m_SrcRect.width = m_Width / m_Cols;
+        m_SrcRect.height = m_Height / m_Rows;
+        SetClipWidth(m_SrcRect.width);
+        SetClipHeight(m_SrcRect.height);
+    }
 }
 
 void Sprite::UpdateSourceRect()
 {
+    m_SrcRect.width = m_ClipWidth;
+    m_SrcRect.height = m_ClipHeight;
     m_SrcRect.left = m_LeftOffsetPx + m_LeftOffsetCols * m_ClipWidth + m_CurrFrame % m_CurrCols * m_ClipWidth;
     m_SrcRect.bottom = m_TopOffsetPx + m_TopOffsetRows * m_ClipHeight + (m_CurrFrame / m_CurrCols + 1) * m_ClipHeight;
 }

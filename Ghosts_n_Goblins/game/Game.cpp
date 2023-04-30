@@ -12,6 +12,7 @@
 #include "engine/TextureManager.h"
 #include "level/Level.h"
 #include "level/Platform.h"
+#include "level/Tombstone.h"
 #include "ui/HUD.h"
 
 #include <fstream>
@@ -19,6 +20,7 @@
 #include <ranges>
 
 #include "characters/IEnemy.h"
+#include "level/Water.h"
 #include "weapons/Dagger.h"
 
 Game::Game(const Window& window)
@@ -62,13 +64,17 @@ void Game::Initialize()
     // LEVEL
     m_pPlatform = new Platform{m_pSpriteFactory->CreateSprite(Label::PLATFORM), Point2f{3555.0f, 30.0f}};
     m_pLevel = new Level{m_pSpriteFactory->CreateSprite(Label::LEVEL), m_pPlatform};
-    //m_pWater = new GameObject{Label::WATER, m_pSpriteFactory->CreateSprite(Label::WATER), Point2f{3550.0f, 0.0f}};
+    InitWaters();
+    InitTombstones();
+
     // CAMERA - has to be after level initialization
     m_pCamera = new Camera{};
     InitCamera();
+
     // PLAYER
     Sprite* pPlayerSprite{m_pSpriteFactory->CreateSprite(Label::ARTHUR)};
-    m_pPlayer = new Player{pPlayerSprite, Point2f{3520, 200}, m_pLevel};
+    m_pPlayer = new Player{pPlayerSprite, Point2f{100, 200}, m_pLevel};
+
     // HUD
     m_pHUD = new HUD{Point2f{20.0f, 200.0f}, 3};
 
@@ -77,6 +83,26 @@ void Game::Initialize()
 
     // GAME OBJECTS
     m_GameObjects.push_back(m_pTestGameObject);
+}
+
+void Game::InitWaters()
+{
+    Water* water1 = new Water{m_pSpriteFactory->CreateSprite(Label::WATER), Point2f{3550.0f, 0.0f}};
+    Water* water2 = new Water{m_pSpriteFactory->CreateSprite(Label::WATER), Point2f{4205.0f, 0.0f}, 64.0f};
+    Water* water3 = new Water{m_pSpriteFactory->CreateSprite(Label::WATER), Point2f{4343.0f, 0.0f}, 64.0f};
+    Water* water4 = new Water{m_pSpriteFactory->CreateSprite(Label::WATER), Point2f{5308.0f, 0.0f}, 64.0f};
+    Water* water5 = new Water{m_pSpriteFactory->CreateSprite(Label::WATER), Point2f{5997.0f, 0.0f}, 64.0f};
+    m_Waters.push_back(water1);
+    m_Waters.push_back(water2);
+    m_Waters.push_back(water3);
+    m_Waters.push_back(water4);
+    m_Waters.push_back(water5);
+}
+
+void Game::InitTombstones()
+{
+    Tombstone* tombstone1 = new Tombstone{Rectf{86.0f, 66.0f, 30.0f, 40.0f}};
+    m_Tombstones.push_back(tombstone1);
 }
 
 void Game::InitLabels()
@@ -162,15 +188,10 @@ void Game::Cleanup()
     delete m_pTextureManager;
     delete m_pPlayer;
 
-    for (const GameObject* pGameObject : m_GameObjects)
-    {
-        delete pGameObject;
-    }
-
-    for (const IThrowable* pThrowable : m_Throwables)
-    {
-        delete pThrowable;
-    }
+    std::ranges::for_each(m_Waters, [](const Water* pWater) { delete pWater; });
+    std::ranges::for_each(m_Throwables, [](const IThrowable* pThrowable) { delete pThrowable; });
+    std::ranges::for_each(m_GameObjects, [](const GameObject* pGameObject) { delete pGameObject; });
+    std::ranges::for_each(m_Tombstones, [](const Tombstone* pTombstone) { delete pTombstone; });
 }
 
 void Game::Draw() const
@@ -180,6 +201,7 @@ void Game::Draw() const
     glPushMatrix();
     m_pCamera->Transform(m_pPlayer->GetShape());
     m_pLevel->Draw();
+    std::ranges::for_each(m_Waters, [](const Water* pWater) { pWater->Draw(); });
     // C++20 ranges for loop with condition
     static auto draw{[](const GameObject* pGameObject) { pGameObject->Draw(); }};
     static auto toGameObject{[](IThrowable* pThrowable) { return dynamic_cast<GameObject*>(pThrowable); }};
@@ -202,24 +224,25 @@ void Game::Update(float elapsedSec)
 {
     // Update game objects
     m_pLevel->Update(elapsedSec);
+    std::ranges::for_each(m_Waters, [&](Water* pWater) { pWater->Update(elapsedSec); });
     m_pPlayer->Update(elapsedSec);
 
     static auto isActive{[](const GameObject* pGameObject) { return pGameObject->IsActive(); }};
     static auto toGameObject{[](IThrowable* pThrowable) { return dynamic_cast<GameObject*>(pThrowable); }};
-    static auto update {[&](GameObject* pGameObject) { pGameObject->Update(elapsedSec); }};
+    static auto update{[&](GameObject* pGameObject) { pGameObject->Update(elapsedSec); }};
     std::ranges::for_each(m_GameObjects | std::views::filter(isActive), update);
     std::ranges::for_each(m_Throwables | std::views::transform(toGameObject) | std::views::filter(isActive), update);
-    
+
     // for (GameObject* pGameObject : m_GameObjects)
     // {
     //     if (pGameObject->IsActive())
     //     {
     //         pGameObject->Update(elapsedSec);
-            // IEnemy* pEnemy{dynamic_cast<IEnemy*>(pGameObject)};
-            // if (pEnemy)
-            // {
-            //     pEnemy->SetTarget(m_pPlayer->GetPosition<Point2f>());
-            // }
+    // IEnemy* pEnemy{dynamic_cast<IEnemy*>(pGameObject)};
+    // if (pEnemy)
+    // {
+    //     pEnemy->SetTarget(m_pPlayer->GetPosition<Point2f>());
+    // }
     //     }
     // }
 
@@ -278,16 +301,19 @@ void Game::DoCollisionTests()
     // ENEMIES, PICKUPS
     for (GameObject* pGameObject : m_GameObjects)
     {
-        if (pGameObject->IsActive())
+        // ENEMY, PICKUP
+        for (IThrowable* pThrowable : m_Throwables)
         {
-            // PLAYER
-            m_pPlayer->HandleCollision(pGameObject);
-
-            // WEAPONS
-            for (IThrowable* pThrowable : m_Throwables)
+            GameObject* weapon = dynamic_cast<GameObject*>(pThrowable);
+            if (pGameObject->IsActive())
             {
-                GameObject* weapon = dynamic_cast<GameObject*>(pThrowable);
-                pGameObject->HandleCollision(weapon);
+                m_pPlayer->HandleCollision(pGameObject);
+                if (weapon->IsActive()) pGameObject->HandleCollision(weapon);
+            }
+            // TOMBSTONE
+            for (Tombstone* pTombstone : m_Tombstones)
+            {
+                if (weapon->IsActive()) pTombstone->HandleCollision(weapon);
             }
         }
     }

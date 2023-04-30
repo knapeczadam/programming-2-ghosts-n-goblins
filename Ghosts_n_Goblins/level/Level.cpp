@@ -39,12 +39,25 @@ void Level::Draw() const
     if (m_pPlayer)
     {
         const float epsilon{0.0f};
-        Point2f p1{m_pPlayer->GetCenter()};
-        Point2f p2;
-        p2.x = p1.x;
-        p2.y = m_pPlayer->GetShape().bottom - epsilon;
+        Point2f playerCenter{m_pPlayer->GetCenter()};
+        // LEFT
+        Point2f left;
+        left.x = m_pPlayer->GetShape().left - epsilon;
+        left.y = playerCenter.y;
+        // RIGHT
+        Point2f right;
+        right.x = m_pPlayer->GetShape().left + m_pPlayer->GetShape().width + epsilon;
+        right.y = playerCenter.y;
+        // DOWN
+        Point2f down;
+        down.x = playerCenter.x;
+        down.y = m_pPlayer->GetShape().bottom - epsilon;
+        utils::SetColor(Color4f{0, 1, 0, 1});
+        utils::DrawLine(playerCenter, left);
         utils::SetColor(Color4f{1, 0, 0, 1});
-        utils::DrawLine(p1, p2);
+        utils::DrawLine(playerCenter, right);
+        utils::SetColor(Color4f{1, 1, 0, 1});
+        utils::DrawLine(playerCenter, down);
     }
 #endif
 }
@@ -63,25 +76,53 @@ It stops the actor when it penetrates the level:
 - the vertical part of the actor's velocity becomes 0.
 Tip: use Raycast with a vertical ray (blue line) in the middle of the actor.
  */
-void Level::HandleCollision(GameObject* pGameObject)
+void Level::HandleCollision(GameObject* other)
 {
-    m_pPlatform->HandleCollision(pGameObject);
+    m_pPlatform->HandleCollision(other);
     
-    m_pPlayer = pGameObject;
+    m_pPlayer = other;
     const float epsilon{0.0f};
     utils::HitInfo hit;
-    Point2f p1{pGameObject->GetCenter()};
-    Point2f p2;
-    p2.x = p1.x;
-    p2.y = pGameObject->GetShape().bottom - epsilon;
+    
+    // DOWN
+    const Point2f playerCenter{other->GetCenter()};
+    Point2f down;
+    down.x = playerCenter.x;
+    down.y = other->GetShape().bottom - epsilon;
+
+    // RIGHT
+    Point2f right;
+    right.x = other->GetShape().left + other->GetShape().width + epsilon;
+    right.y = playerCenter.y;
+
+    // LEFT
+    Point2f left;
+    left.x = other->GetShape().left - epsilon;
+    left.y = playerCenter.y;
     std::ranges::for_each(m_Vertices, [&](const std::vector<Point2f>& vertices)
     {
-        if (utils::Raycast(vertices, p1, p2, hit))
+        if (utils::Raycast(vertices, playerCenter, down, hit))
         {
-            pGameObject->SetBottom(hit.intersectPoint.y);
-            Player* pPlayer{static_cast<Player*>(pGameObject)};
+            other->SetBottom(hit.intersectPoint.y);
+            Player* pPlayer{static_cast<Player*>(other)};
             Vector2f playerVelocity{pPlayer->GetVelocity()};
             playerVelocity.y = 0.f;
+            pPlayer->SetVelocity(playerVelocity);
+        }
+        if (utils::Raycast(vertices, playerCenter, right, hit))
+        {
+            other->SetLeft(hit.intersectPoint.x - other->GetShape().width);
+            Player* pPlayer{static_cast<Player*>(other)};
+            Vector2f playerVelocity{pPlayer->GetVelocity()};
+            playerVelocity.x = 0.f;
+            pPlayer->SetVelocity(playerVelocity);
+        }
+        if (utils::Raycast(vertices, playerCenter, left, hit))
+        {
+            other->SetLeft(hit.intersectPoint.x);
+            Player* pPlayer{static_cast<Player*>(other)};
+            Vector2f playerVelocity{pPlayer->GetVelocity()};
+            playerVelocity.x = 0.f;
             pPlayer->SetVelocity(playerVelocity);
         }
     });

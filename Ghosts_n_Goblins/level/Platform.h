@@ -20,7 +20,7 @@ public:
     virtual void Draw() const override;
     void Move();
     virtual void Update(float elapsedSec) override;
-    virtual void HandleCollision(GameObject* pGameObject) override;
+    virtual void HandleCollision(GameObject* other) override;
     bool IsOnGround(GameObject* pGameObject) const;
 
 private:
