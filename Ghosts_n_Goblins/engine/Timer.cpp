@@ -1,20 +1,26 @@
 ﻿#include "pch.h"
 #include "Timer.h"
+#include "Clock.h"
 
-float Timer::s_AccuTime{};
-
-Timer::Timer(float seconds)
-    : m_TotalTime{seconds}
-    , m_StartTime{s_AccuTime}
+Timer::Timer()
+    : m_pClock{}
 {
 }
 
-void Timer::Update(float elapsedSec)
+void Timer::StartTimer(float seconds)
 {
-    s_AccuTime += elapsedSec;
+    if (m_pClock) return;
+    m_pClock = new Clock{seconds};
 }
 
-bool Timer::IsFinished() const
+bool Timer::IsTimerFinished()
 {
-    return s_AccuTime - m_StartTime >= m_TotalTime;
+    if (not m_pClock) return true;
+    if (m_pClock->IsFinished())
+    {
+        delete m_pClock;
+        m_pClock = nullptr;
+        return true;
+    }
+    return false;
 }

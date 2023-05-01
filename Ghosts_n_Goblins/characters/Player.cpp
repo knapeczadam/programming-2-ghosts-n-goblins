@@ -38,6 +38,7 @@ Player::Player(Sprite* pSprite, const Point2f& pos, Level* pLevel)
       , m_Overheated{false}
       , m_IsOnPlatform{false}
       , m_OffsetSnapshot{}
+      , m_CanJump{true}
 {
 }
 
@@ -172,7 +173,6 @@ void Player::UpdatePosition(float elapsedSec)
 
     ApplyGravity(elapsedSec);
 
-
     if (m_IsOnPlatform)
     {
         SyncWithPlatform(elapsedSec);
@@ -267,13 +267,17 @@ void Player::MoveHorizontal(const Uint8* pState)
 
 void Player::Jump(const Uint8* pState)
 {
-    if (pState[SDL_SCANCODE_S])
+    if (m_CanJump)
     {
-        m_Velocity.y = m_VerVelocity;
-    }
-    else
-    {
-        m_Velocity.y = 0;
+        if (pState[SDL_SCANCODE_S])
+        {
+            m_Velocity.y = m_VerVelocity;
+            m_CanJump = false;
+        }
+        else
+        {
+            m_Velocity.y = 0;
+        }
     }
 }
 
@@ -325,6 +329,11 @@ void Player::Climb(const Uint8* pState)
 bool Player::IsAttacking() const
 {
     return m_isAttacking;
+}
+
+void Player::CanJump(bool canJump)
+{
+    m_CanJump = canJump;
 }
 
 Vector2f Player::GetVelocity() const

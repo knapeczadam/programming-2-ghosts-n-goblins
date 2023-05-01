@@ -533,7 +533,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="engine\Timer.cpp" />
+    <ClCompile Include="engine\Clock.cpp" />
     <ClCompile Include="engine\main.cpp">
       <RuntimeLibrary>MultiThreadedDebugDll</RuntimeLibrary>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -835,6 +835,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="engine\Timer.cpp" />
     <ClCompile Include="game\Camera.cpp">
       <RuntimeLibrary>MultiThreadedDebugDll</RuntimeLibrary>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -1454,12 +1455,13 @@
     <ClInclude Include="collectibles\PickUpManager.h" />
     <ClInclude Include="collectibles\PowerUp.h" />
     <ClInclude Include="collectibles\PowerUpManager.h" />
-    <ClInclude Include="engine\Timer.h" />
+    <ClInclude Include="engine\Clock.h" />
     <ClInclude Include="engine\json.hpp" />
     <ClInclude Include="engine\SoundManager.h" />
     <ClInclude Include="engine\Sprite.h" />
     <ClInclude Include="engine\SpriteFactory.h" />
     <ClInclude Include="engine\TextureManager.h" />
+    <ClInclude Include="engine\Timer.h" />
     <ClInclude Include="game\Camera.h" />
     <ClInclude Include="game\Game.h" />
     <ClInclude Include="game\GameObject.h" />

@@ -5,7 +5,7 @@
 
 #include "utils.h"
 #include "engine/Sprite.h"
-#include "engine/Timer.h"
+#include "engine/Clock.h"
 
 GameObject::GameObject()
     : m_Label{Game::Label::DUMMY}
@@ -16,7 +16,6 @@ GameObject::GameObject()
       , m_IsActive{true}
       , m_IsVisible{true}
       , m_IsFlipped{false}
-      , m_pTimer{}
 {
 }
 
@@ -29,7 +28,6 @@ GameObject::GameObject(Game::Label label, bool collisionEnabled)
       , m_IsActive{true}
       , m_IsVisible{true}
       , m_IsFlipped{false}
-      , m_pTimer{}
 {
 }
 
@@ -42,7 +40,6 @@ GameObject::GameObject(Game::Label label, Sprite* pSprite, bool collisionEnabled
       , m_IsActive{true}
       , m_IsVisible{true}
       , m_IsFlipped{false}
-      , m_pTimer{}
 {
     InitShape();
     if (m_CollisionEnabled)
@@ -60,7 +57,6 @@ GameObject::GameObject(Game::Label label, const Rectf& shape, bool collisionEnab
       , m_IsActive{true}
       , m_IsVisible{true}
       , m_IsFlipped{false}
-      , m_pTimer{}
 {
 }
 
@@ -73,7 +69,6 @@ GameObject::GameObject(Game::Label label, Sprite* pSprite, const Point2f& pos, b
       , m_IsActive{true}
       , m_IsVisible{true}
       , m_IsFlipped{false}
-      , m_pTimer{}
 {
     InitShape(pos);
     if (m_CollisionEnabled)
@@ -180,24 +175,6 @@ void GameObject::SetVisible(bool isVisible)
 bool GameObject::IsOverlapping(GameObject* other) const
 {
     return utils::IsOverlapping(m_CollisionBox, other->GetCollisionBox());
-}
-
-void GameObject::StartTimer(float seconds)
-{
-    if (m_pTimer) return;
-    m_pTimer = new Timer{seconds};
-}
-
-bool GameObject::IsTimerFinished()
-{
-    if (not m_pTimer) return true;
-    if (m_pTimer->IsFinished())
-    {
-        delete m_pTimer;
-        m_pTimer = nullptr;
-        return true;
-    }
-    return false;
 }
 
 Rectf GameObject::GetCollisionBox() const

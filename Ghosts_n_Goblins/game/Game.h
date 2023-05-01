@@ -5,6 +5,8 @@
 
 #include <string>
 
+#include "engine/Timer.h"
+
 using json = nlohmann::json;
 
 class HUD;
@@ -23,7 +25,7 @@ class PowerUpManager;
 class IThrowable;
 
 
-class Game : public BaseGame
+class Game : public BaseGame, public Timer
 {
 public:
     enum class Label
@@ -137,5 +139,6 @@ private:
     std::map<std::string, Label> m_Labels;
 
     bool m_AttackKeyReleased;
+    bool m_JumpKeyReleased;
 
 };

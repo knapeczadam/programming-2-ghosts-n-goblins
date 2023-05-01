@@ -37,6 +37,7 @@ public:
 
     void Attack(std::vector<IThrowable*>& throwables, SpriteFactory* spriteFactory);
     bool IsAttacking() const;
+    void CanJump(bool canJump);
 
     Vector2f GetVelocity() const;
     void SetVelocity(const Vector2f& velocity);
@@ -76,4 +77,5 @@ private:
     bool m_Overheated;
     bool m_IsOnPlatform;
     Vector2f m_OffsetSnapshot;
+    bool m_CanJump;
 };

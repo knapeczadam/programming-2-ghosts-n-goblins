@@ -22,7 +22,7 @@
 #include <ranges>
 
 #include "characters/IEnemy.h"
-#include "engine/Timer.h"
+#include "engine/Clock.h"
 #include "level/Water.h"
 #include "weapons/Dagger.h"
 
@@ -44,6 +44,7 @@ Game::Game(const Window& window)
       , m_DataPath{"../../Resources/data.json"}
       , m_Labels{}
       , m_AttackKeyReleased{true}
+      , m_JumpKeyReleased{true}
 {
     Initialize();
 }
@@ -124,7 +125,7 @@ void Game::InitTombstones()
     Tombstone* tombstone11 = new Tombstone{Rectf{1643.0f, 238.0f, 30.0f, 30.0f}};
     Tombstone* tombstone12 = new Tombstone{Rectf{1849.0f, 238.0f, 30.0f, 30.0f}};
     Tombstone* tombstone13 = new Tombstone{Rectf{2056.0f, 238.0f, 30.0f, 30.0f}};
-    
+
     // m_Tombstones.push_back(tombstone1);
     m_Tombstones.push_back(tombstone2);
     m_Tombstones.push_back(tombstone3);
@@ -138,7 +139,6 @@ void Game::InitTombstones()
     m_Tombstones.push_back(tombstone11);
     m_Tombstones.push_back(tombstone12);
     m_Tombstones.push_back(tombstone13);
-    
 }
 
 void Game::InitLabels()
@@ -244,10 +244,10 @@ void Game::Draw() const
     glPushMatrix();
     m_pCamera->Transform(m_pPlayer->GetShape());
     m_pLevel->Draw();
-    std::ranges::for_each(m_Waters, [](const Water* pWater) { pWater->Draw(); });
     std::ranges::for_each(m_GameObjects | std::views::filter(isVisible), draw);
     std::ranges::for_each(m_Throwables | std::views::transform(toGameObject) | std::views::filter(isVisible), draw);
     m_pPlayer->Draw();
+    std::ranges::for_each(m_Waters, [](const Water* pWater) { pWater->Draw(); });
     m_pForeground->Draw();
 #if DEBUG_COLLISION
     m_pKillZone->Draw();
@@ -264,7 +264,7 @@ void Game::ClearBackground() const
 
 void Game::Update(float elapsedSec)
 {
-    Timer::Update(elapsedSec);
+    Clock::Update(elapsedSec);
 
     // Update game objects
     m_pLevel->Update(elapsedSec);
@@ -298,12 +298,12 @@ void Game::LateUpdate(float elapsedSec)
 {
     std::ranges::for_each(m_Waters, [&](Water* pWater) { pWater->LateUpdate(elapsedSec); });
     m_pPlayer->LateUpdate(elapsedSec);
-    
+
     static auto lateUpdate{[&](GameObject* pGameObject) { pGameObject->LateUpdate(elapsedSec); }};
     static auto toGameObject{[](IThrowable* pThrowable) { return dynamic_cast<GameObject*>(pThrowable); }};
 
     std::ranges::for_each(m_GameObjects, lateUpdate);
-    std::ranges::for_each(m_Throwables | std::views::transform(toGameObject),  lateUpdate);
+    std::ranges::for_each(m_Throwables | std::views::transform(toGameObject), lateUpdate);
 }
 
 
@@ -316,6 +316,13 @@ void Game::ProcessKeyDownEvent(const SDL_KeyboardEvent& e)
         {
             m_pPlayer->Attack(m_Throwables, m_pSpriteFactory);
             m_AttackKeyReleased = false;
+        }
+        break;
+    case SDLK_s:
+        if (m_JumpKeyReleased)
+        {
+            m_pPlayer->CanJump(true);
+            m_JumpKeyReleased = false;
         }
         break;
     case SDLK_ESCAPE:
@@ -337,6 +344,9 @@ void Game::ProcessKeyUpEvent(const SDL_KeyboardEvent& e)
     {
     case SDLK_x:
         m_AttackKeyReleased = true;
+        break;
+    case SDLK_s:
+        m_JumpKeyReleased = true;
         break;
     }
 }

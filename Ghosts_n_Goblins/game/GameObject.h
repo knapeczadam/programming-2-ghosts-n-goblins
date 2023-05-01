@@ -1,11 +1,11 @@
 ﻿#pragma once
 #include "Game.h"
 #include "utils.h"
+#include "engine/Timer.h"
 
 class Sprite;
-class Timer;
 
-class GameObject
+class GameObject : public Timer
 {
 public:
     // CONSTRUCTORS & DESTRUCTOR
@@ -14,7 +14,7 @@ public:
     explicit GameObject(Game::Label label, Sprite* pSprite, bool collisionEnabled = true);
     explicit GameObject(Game::Label label, const Rectf& shape, bool collisionEnabled = true);
     explicit GameObject(Game::Label label, Sprite* pSprite, const Point2f& pos, bool collisionEnabled = true);
-    virtual ~GameObject() = default;
+    virtual ~GameObject() override = default;
     GameObject(const GameObject& other) = delete;
     GameObject(GameObject&& other) noexcept = delete;
     GameObject& operator=(const GameObject& other) = delete;
@@ -58,8 +58,6 @@ public:
 
 protected:
     virtual bool IsOverlapping(GameObject* other) const final;
-    virtual void StartTimer(float seconds) final;
-    virtual bool IsTimerFinished() final;
     virtual void InitCollisionBox() final;
     virtual void UpdateCollisionBox() final;
 
@@ -76,6 +74,4 @@ protected:
     bool m_IsActive;
     bool m_IsVisible;
     bool m_IsFlipped;
-private:
-    Timer* m_pTimer;
 };
