@@ -55,6 +55,7 @@ public:
 
         // LEVEL
         DOOR,
+        FOREGROUND,
         KILLZONE,
         LEVEL,
         PLATFORM,
@@ -123,6 +124,7 @@ private:
     SpriteFactory* m_pSpriteFactory;
     TextureManager* m_pTextureManager;
     Player* m_pPlayer;
+    GameObject* m_pForeground;
     Level* m_pLevel;
     KillZone* m_pKillZone;
     Platform* m_pPlatform;

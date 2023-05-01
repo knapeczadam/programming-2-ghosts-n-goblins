@@ -85,6 +85,10 @@
       "path": "level/level.bmp"
     },
     {
+      "label": "foreground",
+      "path": "level/foreground.png"
+    },
+    {
       "label": "level_debug",
       "path": "level/level_debug.bmp"
     },
@@ -275,6 +279,9 @@
     },
     {
       "label": "level"
+    },
+    {
+      "label": "foreground"
     },
     {
       "label": "platform",

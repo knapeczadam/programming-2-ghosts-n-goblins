@@ -9,11 +9,6 @@ KillZone::KillZone(float width, float height)
 {
 }
 
-void KillZone::Draw() const
-{
-    GameObject::Draw();
-}
-
 void KillZone::HandleCollision(GameObject* other)
 {
     if (not IsOverlapping(other)) return;

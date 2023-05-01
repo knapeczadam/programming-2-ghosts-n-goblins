@@ -379,13 +379,14 @@ void Player::HandleCollision(GameObject* other)
 
 void Player::CheckForBoundaries(const Rectf& boundaries)
 {
-    if (m_Shape.left < boundaries.left)
+    const float horizontalOffset{(m_Shape.width - m_pSprite->GetCollisionWidth()) / 2};
+    if (m_CollisionBox.left < boundaries.left)
     {
-        m_Shape.left = boundaries.left;
+        m_Shape.left = boundaries.left - horizontalOffset;
     }
-    else if (m_Shape.left + m_Shape.width > boundaries.left + boundaries.width)
+    else if (m_CollisionBox.left + m_CollisionBox.width > boundaries.left + boundaries.width)
     {
-        m_Shape.left = boundaries.left + boundaries.width - m_Shape.width;
+        m_Shape.left = boundaries.left + boundaries.width - m_CollisionBox.width - horizontalOffset;
     }
 }
 

@@ -12,6 +12,7 @@ GameObject::GameObject()
       , m_pSprite{}
       , m_Shape{}
       , m_CollisionBox{}
+      , m_CollisionEnabled{false}
       , m_IsActive{true}
       , m_IsVisible{true}
       , m_IsFlipped{false}
@@ -19,11 +20,12 @@ GameObject::GameObject()
 {
 }
 
-GameObject::GameObject(Game::Label label)
+GameObject::GameObject(Game::Label label, bool collisionEnabled)
     : m_Label{label}
       , m_pSprite{}
       , m_Shape{}
       , m_CollisionBox{}
+      , m_CollisionEnabled{collisionEnabled}
       , m_IsActive{true}
       , m_IsVisible{true}
       , m_IsFlipped{false}
@@ -31,25 +33,30 @@ GameObject::GameObject(Game::Label label)
 {
 }
 
-GameObject::GameObject(Game::Label label, Sprite* pSprite)
+GameObject::GameObject(Game::Label label, Sprite* pSprite, bool collisionEnabled)
     : m_Label{label}
       , m_pSprite{pSprite}
       , m_Shape{}
       , m_CollisionBox{}
+      , m_CollisionEnabled{collisionEnabled}
       , m_IsActive{true}
       , m_IsVisible{true}
       , m_IsFlipped{false}
       , m_pTimer{}
 {
     InitShape();
-    InitCollisionBox();
+    if (m_CollisionEnabled)
+    {
+        InitCollisionBox();
+    }
 }
 
-GameObject::GameObject(Game::Label label, const Rectf& shape)
+GameObject::GameObject(Game::Label label, const Rectf& shape, bool collisionEnabled)
     : m_Label{label}
       , m_pSprite{}
       , m_Shape{shape}
       , m_CollisionBox{shape}
+      , m_CollisionEnabled{collisionEnabled}
       , m_IsActive{true}
       , m_IsVisible{true}
       , m_IsFlipped{false}
@@ -57,18 +64,22 @@ GameObject::GameObject(Game::Label label, const Rectf& shape)
 {
 }
 
-GameObject::GameObject(Game::Label label, Sprite* pSprite, const Point2f& pos)
+GameObject::GameObject(Game::Label label, Sprite* pSprite, const Point2f& pos, bool collisionEnabled)
     : m_Label{label}
       , m_pSprite{pSprite}
       , m_Shape{}
       , m_CollisionBox{}
+      , m_CollisionEnabled{collisionEnabled}
       , m_IsActive{true}
       , m_IsVisible{true}
       , m_IsFlipped{false}
       , m_pTimer{}
 {
     InitShape(pos);
-    InitCollisionBox();
+    if (m_CollisionEnabled)
+    {
+        InitCollisionBox();
+    }
 }
 
 void GameObject::Draw() const
@@ -85,8 +96,11 @@ void GameObject::Draw() const
         }
     }
 #if DEBUG_COLLISION
-    utils::SetColor(Color4f{0, 1, 1, 1});
-    utils::DrawRect(m_CollisionBox);
+    if (m_CollisionEnabled)
+    {
+        utils::SetColor(Color4f{0, 1, 1, 1});
+        utils::DrawRect(m_CollisionBox);
+    }
 #endif
 }
 
@@ -101,7 +115,10 @@ void GameObject::LateUpdate(float elapsedSec)
         m_pSprite->SetPosition(GetPosition<Point2f>());
         m_pSprite->Update(elapsedSec);
     }
-    UpdateCollisionBox();
+    if (m_CollisionEnabled)
+    {
+        UpdateCollisionBox();
+    }
 }
 
 void GameObject::HandleCollision(GameObject* other)
@@ -200,8 +217,8 @@ void GameObject::InitCollisionBox()
 {
     m_CollisionBox.width = m_pSprite->GetCollisionWidth();
     m_CollisionBox.height = m_pSprite->GetCollisionHeight();
-    const float verticalOffset{(m_Shape.width - m_pSprite->GetCollisionWidth()) / 2};
-    const float horizontalOffset{(m_Shape.height - m_pSprite->GetCollisionHeight()) / 2};
+    const float horizontalOffset{(m_Shape.width - m_pSprite->GetCollisionWidth()) / 2};
+    const float verticalOffset{(m_Shape.height - m_pSprite->GetCollisionHeight()) / 2};
     m_CollisionBox.left = m_Shape.left + verticalOffset;
     m_CollisionBox.bottom = m_Shape.bottom + horizontalOffset;
 }

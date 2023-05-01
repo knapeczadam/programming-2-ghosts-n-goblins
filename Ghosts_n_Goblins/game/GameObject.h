@@ -10,10 +10,10 @@ class GameObject
 public:
     // CONSTRUCTORS & DESTRUCTOR
     explicit GameObject();
-    explicit GameObject(Game::Label label);
-    explicit GameObject(Game::Label label, Sprite* pSprite);
-    explicit GameObject(Game::Label label, const Rectf& shape);
-    explicit GameObject(Game::Label label, Sprite* pSprite, const Point2f& pos);
+    explicit GameObject(Game::Label label, bool collisionEnabled = true);
+    explicit GameObject(Game::Label label, Sprite* pSprite, bool collisionEnabled = true);
+    explicit GameObject(Game::Label label, const Rectf& shape, bool collisionEnabled = true);
+    explicit GameObject(Game::Label label, Sprite* pSprite, const Point2f& pos, bool collisionEnabled = true);
     virtual ~GameObject() = default;
     GameObject(const GameObject& other) = delete;
     GameObject(GameObject&& other) noexcept = delete;
@@ -72,6 +72,7 @@ protected:
     Sprite* m_pSprite;
     Rectf m_Shape;
     Rectf m_CollisionBox;
+    bool m_CollisionEnabled;
     bool m_IsActive;
     bool m_IsVisible;
     bool m_IsFlipped;

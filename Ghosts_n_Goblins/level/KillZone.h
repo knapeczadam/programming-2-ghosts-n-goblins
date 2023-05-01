@@ -11,6 +11,5 @@ public:
     KillZone& operator=(const KillZone& other) = delete;
     KillZone& operator=(KillZone&& other) noexcept = delete;
 
-    virtual void Draw() const override;
     virtual void HandleCollision(GameObject* other) override;
 };

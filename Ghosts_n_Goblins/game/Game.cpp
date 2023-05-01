@@ -67,6 +67,7 @@ void Game::Initialize()
 
     // LEVEL
     m_pPlatform = new Platform{m_pSpriteFactory->CreateSprite(Label::PLATFORM), Point2f{3555.0f, 30.0f}};
+    m_pForeground = new GameObject{Label::FOREGROUND, m_pSpriteFactory->CreateSprite(Label::FOREGROUND), false};
     m_pKillZone = new KillZone{m_pTextureManager->GetTexture(Label::LEVEL)->GetWidth(), 20.0f};
     m_pLevel = new Level{m_pSpriteFactory->CreateSprite(Label::LEVEL), m_pPlatform};
     InitWaters();
@@ -107,8 +108,37 @@ void Game::InitWaters()
 
 void Game::InitTombstones()
 {
-    Tombstone* tombstone1 = new Tombstone{Rectf{86.0f, 66.0f, 30.0f, 30.0f}};
-    m_Tombstones.push_back(tombstone1);
+    // BOTTOM
+    // Tombstone* tombstone1 = new Tombstone{Rectf{86.0f, 66.0f, 30.0f, 30.0f}};
+    Tombstone* tombstone2 = new Tombstone{Rectf{90.0f, 66.0f, 30.0f, 30.0f}};
+    Tombstone* tombstone3 = new Tombstone{Rectf{535.0f, 66.0f, 30.0f, 30.0f}};
+    Tombstone* tombstone4 = new Tombstone{Rectf{884.0f, 66.0f, 30.0f, 30.0f}};
+    Tombstone* tombstone5 = new Tombstone{Rectf{1124.0f, 66.0f, 30.0f, 30.0f}};
+    Tombstone* tombstone6 = new Tombstone{Rectf{1608.0f, 66.0f, 30.0f, 30.0f}};
+    Tombstone* tombstone7 = new Tombstone{Rectf{2056.0f, 66.0f, 30.0f, 30.0f}};
+    Tombstone* tombstone8 = new Tombstone{Rectf{2365.0f, 66.0f, 30.0f, 30.0f}};
+    Tombstone* tombstone9 = new Tombstone{Rectf{2707.0f, 66.0f, 30.0f, 30.0f}};
+    Tombstone* tombstone10 = new Tombstone{Rectf{3261.0f, 66.0f, 30.0f, 30.0f}};
+
+    // TOP
+    Tombstone* tombstone11 = new Tombstone{Rectf{1643.0f, 238.0f, 30.0f, 30.0f}};
+    Tombstone* tombstone12 = new Tombstone{Rectf{1849.0f, 238.0f, 30.0f, 30.0f}};
+    Tombstone* tombstone13 = new Tombstone{Rectf{2056.0f, 238.0f, 30.0f, 30.0f}};
+    
+    // m_Tombstones.push_back(tombstone1);
+    m_Tombstones.push_back(tombstone2);
+    m_Tombstones.push_back(tombstone3);
+    m_Tombstones.push_back(tombstone4);
+    m_Tombstones.push_back(tombstone5);
+    m_Tombstones.push_back(tombstone6);
+    m_Tombstones.push_back(tombstone7);
+    m_Tombstones.push_back(tombstone8);
+    m_Tombstones.push_back(tombstone9);
+    m_Tombstones.push_back(tombstone10);
+    m_Tombstones.push_back(tombstone11);
+    m_Tombstones.push_back(tombstone12);
+    m_Tombstones.push_back(tombstone13);
+    
 }
 
 void Game::InitLabels()
@@ -140,6 +170,7 @@ void Game::InitLabels()
 
     // LEVEL
     m_Labels["door"] = Label::DOOR;
+    m_Labels["foreground"] = Label::FOREGROUND;
     m_Labels["level"] = Label::LEVEL;
     m_Labels["platform"] = Label::PLATFORM;
     m_Labels["water"] = Label::WATER;
@@ -188,6 +219,7 @@ void Game::Cleanup()
 {
     delete m_pCamera;
     delete m_pHUD;
+    delete m_pForeground;
     delete m_pLevel;
     delete m_pKillZone;
     delete m_pPlatform;
@@ -216,6 +248,7 @@ void Game::Draw() const
     std::ranges::for_each(m_GameObjects | std::views::filter(isVisible), draw);
     std::ranges::for_each(m_Throwables | std::views::transform(toGameObject) | std::views::filter(isVisible), draw);
     m_pPlayer->Draw();
+    m_pForeground->Draw();
 #if DEBUG_COLLISION
     m_pKillZone->Draw();
     std::ranges::for_each(m_Tombstones, [](const Tombstone* pTombstone) { pTombstone->Draw(); });

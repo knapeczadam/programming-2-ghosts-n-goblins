@@ -7,35 +7,23 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0c813320-22e2-4144-ad4a-570649cc50d7" name="Changes" comment="Killzone">
+    <list default="true" id="0c813320-22e2-4144-ad4a-570649cc50d7" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Resources/images/level/foreground.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/images/level/foreground.psd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/images/level/level.psd" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/Resources/videos/death/03_losing_armor_from_the_right.mp4" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/Resources/videos/death/04_losing_armor_from_the_left.mp4" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/Resources/videos/level/platform.mp4" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Knapecz_Adam_Ghosts_n_Goblins/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Knapecz_Adam_Ghosts_n_Goblins/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Engine/BaseGame.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Engine/BaseGame.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Engine/BaseGame.h" beforeDir="false" afterPath="$PROJECT_DIR$/Engine/BaseGame.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/characters/Player.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/characters/Player.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/characters/Player.h" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/characters/Player.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/engine/Sprite.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/engine/Sprite.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/engine/Sprite.h" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/engine/Sprite.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/engine/SpriteFactory.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/engine/SpriteFactory.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/game/Game.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/game/Game.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/game/Game.h" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/game/Game.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/game/GameObject.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/game/GameObject.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/game/GameObject.h" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/game/GameObject.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/game/Macros.h" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/game/Macros.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/level/Level.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/level/Level.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/level/Level.h" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/level/Level.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/level/Platform.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/level/Platform.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/level/Water.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/level/Water.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/level/Water.h" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/level/Water.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/weapons/Dagger.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/weapons/Dagger.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/weapons/Dagger.h" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/weapons/Dagger.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/weapons/Lance.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/weapons/Lance.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/weapons/Lance.h" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/weapons/Lance.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/weapons/Torch.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/weapons/Torch.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/weapons/Torch.h" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/weapons/Torch.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/level/KillZone.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/level/KillZone.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/level/KillZone.h" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/level/KillZone.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Resources/data.json" beforeDir="false" afterPath="$PROJECT_DIR$/Resources/data.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Resources/images/level/level.svg" beforeDir="false" afterPath="$PROJECT_DIR$/Resources/images/level/level.svg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Resources/videos/03_losing_armor_from_the_right.mp4" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Resources/videos/04_losing_armor_from_the_left.mp4" beforeDir="false" />
     </list>
@@ -285,18 +273,53 @@
     <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../../../../../../../../Program Files (x86)/Windows Kits/10/Include/10.0.19041.0/ucrt/float.h" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../../../../../../../../Program Files/Microsoft Visual Studio/2022/Enterprise/VC/Tools/MSVC/14.35.32215/include/limits" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/adam/OneDrive - Hogeschool West-Vlaanderen/DAE/2022 - 2023/Semester 2/Programming 2/00 - Game Project/Knapecz_Adam_Ghosts_n_Goblins/Engine/BaseGame.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/adam/OneDrive - Hogeschool West-Vlaanderen/DAE/2022 - 2023/Semester 2/Programming 2/00 - Game Project/Knapecz_Adam_Ghosts_n_Goblins/Ghosts_n_Goblins/characters/Player.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/adam/OneDrive - Hogeschool West-Vlaanderen/DAE/2022 - 2023/Semester 2/Programming 2/00 - Game Project/Knapecz_Adam_Ghosts_n_Goblins/Ghosts_n_Goblins/characters/Player.cpp" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://C:/Users/adam/OneDrive - Hogeschool West-Vlaanderen/DAE/2022 - 2023/Semester 2/Programming 2/00 - Game Project/Knapecz_Adam_Ghosts_n_Goblins/Ghosts_n_Goblins/characters/Player.cpp" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://C:/Users/adam/OneDrive - Hogeschool West-Vlaanderen/DAE/2022 - 2023/Semester 2/Programming 2/00 - Game Project/Knapecz_Adam_Ghosts_n_Goblins/Ghosts_n_Goblins/characters/Player.h" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/adam/OneDrive - Hogeschool West-Vlaanderen/DAE/2022 - 2023/Semester 2/Programming 2/00 - Game Project/Knapecz_Adam_Ghosts_n_Goblins/Ghosts_n_Goblins/characters/Player.h" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/adam/OneDrive - Hogeschool West-Vlaanderen/DAE/2022 - 2023/Semester 2/Programming 2/00 - Game Project/Knapecz_Adam_Ghosts_n_Goblins/Ghosts_n_Goblins/engine/Sprite.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/adam/OneDrive - Hogeschool West-Vlaanderen/DAE/2022 - 2023/Semester 2/Programming 2/00 - Game Project/Knapecz_Adam_Ghosts_n_Goblins/Ghosts_n_Goblins/engine/Sprite.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/adam/OneDrive - Hogeschool West-Vlaanderen/DAE/2022 - 2023/Semester 2/Programming 2/00 - Game Project/Knapecz_Adam_Ghosts_n_Goblins/Ghosts_n_Goblins/engine/Sprite.h" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Ghosts_n_Goblins/engine/json.hpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/adam/OneDrive - Hogeschool West-Vlaanderen/DAE/2022 - 2023/Semester 2/Programming 2/00 - Game Project/Knapecz_Adam_Ghosts_n_Goblins/Ghosts_n_Goblins/game/Game.cpp" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://C:/Users/adam/OneDrive - Hogeschool West-Vlaanderen/DAE/2022 - 2023/Semester 2/Programming 2/00 - Game Project/Knapecz_Adam_Ghosts_n_Goblins/Ghosts_n_Goblins/game/Game.cpp" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://C:/Users/adam/OneDrive - Hogeschool West-Vlaanderen/DAE/2022 - 2023/Semester 2/Programming 2/00 - Game Project/Knapecz_Adam_Ghosts_n_Goblins/Ghosts_n_Goblins/game/Game.h" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://C:/Users/adam/OneDrive - Hogeschool West-Vlaanderen/DAE/2022 - 2023/Semester 2/Programming 2/00 - Game Project/Knapecz_Adam_Ghosts_n_Goblins/Ghosts_n_Goblins/game/GameObject.cpp" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://C:/Users/adam/OneDrive - Hogeschool West-Vlaanderen/DAE/2022 - 2023/Semester 2/Programming 2/00 - Game Project/Knapecz_Adam_Ghosts_n_Goblins/Ghosts_n_Goblins/game/GameObject.h" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://C:/Users/adam/OneDrive - Hogeschool West-Vlaanderen/DAE/2022 - 2023/Semester 2/Programming 2/00 - Game Project/Knapecz_Adam_Ghosts_n_Goblins/Ghosts_n_Goblins/game/Macros.h" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/adam/OneDrive - Hogeschool West-Vlaanderen/DAE/2022 - 2023/Semester 2/Programming 2/00 - Game Project/Knapecz_Adam_Ghosts_n_Goblins/Ghosts_n_Goblins/level/Level.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/adam/OneDrive - Hogeschool West-Vlaanderen/DAE/2022 - 2023/Semester 2/Programming 2/00 - Game Project/Knapecz_Adam_Ghosts_n_Goblins/Ghosts_n_Goblins/level/Platform.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/adam/OneDrive - Hogeschool West-Vlaanderen/DAE/2022 - 2023/Semester 2/Programming 2/00 - Game Project/Knapecz_Adam_Ghosts_n_Goblins/Ghosts_n_Goblins/level/Water.cpp" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://C:/Users/adam/OneDrive - Hogeschool West-Vlaanderen/DAE/2022 - 2023/Semester 2/Programming 2/00 - Game Project/Knapecz_Adam_Ghosts_n_Goblins/Ghosts_n_Goblins/level/Water.cpp" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://C:/Users/adam/OneDrive - Hogeschool West-Vlaanderen/DAE/2022 - 2023/Semester 2/Programming 2/00 - Game Project/Knapecz_Adam_Ghosts_n_Goblins/Ghosts_n_Goblins/level/Water.h" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/adam/OneDrive - Hogeschool West-Vlaanderen/DAE/2022 - 2023/Semester 2/Programming 2/00 - Game Project/Knapecz_Adam_Ghosts_n_Goblins/Ghosts_n_Goblins/level/Water.h" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/adam/OneDrive - Hogeschool West-Vlaanderen/DAE/2022 - 2023/Semester 2/Programming 2/00 - Game Project/Knapecz_Adam_Ghosts_n_Goblins/Ghosts_n_Goblins/weapons/Dagger.cpp" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Libraries/SDLMixer/SDL2_mixer-2.6.3/include/SDL_mixer.h" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
@@ -308,30 +331,30 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "main",
-    "ignore.virus.scanning.warn.message": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "rider.external.source.directories": [
-      "C:\\Users\\adam\\AppData\\Roaming\\JetBrains\\Rider2023.1\\resharper-host\\DecompilerCache",
-      "C:\\Users\\adam\\AppData\\Roaming\\JetBrains\\Rider2023.1\\resharper-host\\SourcesCache",
-      "C:\\Users\\adam\\AppData\\Local\\Symbols\\src"
+  &quot;keyToStringList&quot;: {
+    &quot;rider.external.source.directories&quot;: [
+      &quot;C:\\Users\\adam\\AppData\\Roaming\\JetBrains\\Rider2023.1\\resharper-host\\DecompilerCache&quot;,
+      &quot;C:\\Users\\adam\\AppData\\Roaming\\JetBrains\\Rider2023.1\\resharper-host\\SourcesCache&quot;,
+      &quot;C:\\Users\\adam\\AppData\\Local\\Symbols\\src&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="Ghosts_n_Goblins" type="CppProject" factoryName="C++ Project">
       <configuration_1>
@@ -404,7 +427,8 @@
       <workItem from="1682807462658" duration="1259000" />
       <workItem from="1682808734171" duration="327000" />
       <workItem from="1682809076422" duration="7774000" />
-      <workItem from="1682846137765" duration="18383000" />
+      <workItem from="1682846137765" duration="19286000" />
+      <workItem from="1682872980154" duration="5884000" />
     </task>
     <task id="LOCAL-00001" summary="#1">
       <created>1682809240069</created>
@@ -434,7 +458,14 @@
       <option name="project" value="LOCAL" />
       <updated>1682855037951</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Collision box, late update">
+      <created>1682867476845</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1682867476845</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -471,16 +502,12 @@
     <MESSAGE value="Engine and SDL2 libraries" />
     <MESSAGE value="Tombstone" />
     <MESSAGE value="Killzone" />
-    <option name="LAST_COMMIT_MESSAGE" value="Killzone" />
+    <MESSAGE value="Collision box, late update" />
+    <option name="LAST_COMMIT_MESSAGE" value="Collision box, late update" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/Ghosts_n_Goblins/game/Game.cpp</url>
-          <line>233</line>
-          <option name="timeStamp" value="20" />
-        </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/Ghosts_n_Goblins/weapons/Dagger.cpp</url>
           <line>10</line>
