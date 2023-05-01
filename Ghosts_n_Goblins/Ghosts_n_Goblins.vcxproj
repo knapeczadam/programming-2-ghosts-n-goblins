@@ -1437,6 +1437,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="ui\UI.cpp" />
     <ClCompile Include="weapons\Dagger.cpp" />
     <ClCompile Include="weapons\Lance.cpp" />
     <ClCompile Include="weapons\Torch.cpp" />
@@ -1474,6 +1475,7 @@
     <ClInclude Include="pch.h" />
     <ClInclude Include="ui\HUD.h" />
     <ClInclude Include="ui\Menu.h" />
+    <ClInclude Include="ui\UI.h" />
     <ClInclude Include="weapons\Dagger.h" />
     <ClInclude Include="weapons\IThrowable.h" />
     <ClInclude Include="weapons\Lance.h" />

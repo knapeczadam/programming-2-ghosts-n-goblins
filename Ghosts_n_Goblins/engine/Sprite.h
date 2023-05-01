@@ -24,7 +24,9 @@ public:
     void InitDestinationRect();
     void UpdateDestinationRect();
     void DrawFlipped() const;
+    void ResetOriginalClipSize();
 
+    // GETTERS & SETTERS
     float GetLeftOffsetPx() const;
     void SetLeftOffsetPx(float left);
     float GetTopOffsetPx() const;
@@ -52,8 +54,10 @@ public:
     Point2f GetPosition() const;
     void SetPosition(const Point2f& pos);
     float GetClipWidth() const;
+    float GetScaledClipWidth() const;
     void SetClipWidth(float clipWidth);
     float GetClipHeight() const;
+    float GetScaledClipHeight() const;
     void SetClipHeight(float clipHeight);
     float GetCollisionWidth() const;
     void SetCollisionWidth(float collisionWidth);
@@ -85,8 +89,10 @@ private:
     int m_CurrFrame;
     Rectf m_SrcRect;
     Rectf m_DstRect;
-    float m_ClipWidth;
-    float m_ClipHeight;
+    float m_OriginalClipWidth;
+    float m_OriginalClipHeight;
+    float m_CurrClipWidth;
+    float m_CurrClipHeight;
     float m_CollisionWidth;
     float m_CollisionHeight;
 };

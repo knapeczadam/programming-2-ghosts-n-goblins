@@ -24,3 +24,15 @@ bool Timer::IsTimerFinished()
     }
     return false;
 }
+
+int Timer::GetSeconds() const
+{
+    if (not m_pClock) return 0;
+    return int(m_pClock->GetRemainingTime()) % 60;
+}
+
+int Timer::GetMinutes() const
+{
+    if (not m_pClock) return 0;
+    return m_pClock->GetRemainingTime() / 60;
+}

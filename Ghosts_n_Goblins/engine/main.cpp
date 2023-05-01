@@ -14,7 +14,7 @@ int SDL_main(int argv, char** args)
     StartHeapControl();
 
     // The size of the game window should be no larger than 1280 x 800.
-    Game* pGame{new Game{Window{"Ghosts 'n Goblins - Knapecz, Adam - 1DAE11", 512.0f, 448.f}}};
+    Game* pGame{new Game{Window{"Ghosts 'n Goblins - Knapecz, Adam - 1DAE11", 512.0f, 480.f}}}; // 448 + 32 (top margin)
     pGame->Run();
     delete pGame;
 

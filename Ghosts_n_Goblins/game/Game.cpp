@@ -54,6 +54,24 @@ Game::~Game()
     Cleanup();
 }
 
+void Game::Cleanup()
+{
+    delete m_pCamera;
+    delete m_pHUD;
+    delete m_pForeground;
+    delete m_pLevel;
+    delete m_pKillZone;
+    delete m_pPlatform;
+    delete m_pSpriteFactory;
+    delete m_pTextureManager;
+    delete m_pPlayer;
+
+    std::ranges::for_each(m_Waters, [](const Water* pWater) { delete pWater; });
+    std::ranges::for_each(m_Throwables, [](const IThrowable* pThrowable) { delete pThrowable; });
+    std::ranges::for_each(m_GameObjects, [](const GameObject* pGameObject) { delete pGameObject; });
+    std::ranges::for_each(m_Tombstones, [](const Tombstone* pTombstone) { delete pTombstone; });
+}
+
 void Game::Initialize()
 {
     InitLabels();
@@ -79,11 +97,10 @@ void Game::Initialize()
     InitCamera();
 
     // PLAYER
-    Sprite* pPlayerSprite{m_pSpriteFactory->CreateSprite(Label::ARTHUR)};
-    m_pPlayer = new Player{pPlayerSprite, Player::GetSpawnPos(), m_pLevel};
+    m_pPlayer = new Player{m_pSpriteFactory->CreateSprite(Label::ARTHUR), Player::GetSpawnPos(), m_pLevel};
 
     // HUD
-    m_pHUD = new HUD{Point2f{20.0f, 200.0f}, 3};
+    m_pHUD = new HUD{m_pSpriteFactory->CreateSprite(Label::HUD), m_pPlayer, GetViewPort()};
 
     // TEST GAME OBJECT
     m_pTestGameObject = new Dagger{m_pSpriteFactory->CreateSprite(Label::DAGGER), Point2f{218.f, 65.f}, false};
@@ -91,6 +108,73 @@ void Game::Initialize()
 
     // GAME OBJECTS
     m_GameObjects.push_back(m_pTestGameObject);
+}
+
+void Game::InitLabels()
+{
+    // CHARACTERS
+    m_Labels["arthur"] = Label::ARTHUR;
+    m_Labels["big_man"] = Label::BIG_MAN;
+    m_Labels["crow"] = Label::CROW;
+    m_Labels["flying_knight"] = Label::FLYING_KNIGHT;
+    m_Labels["green_monster"] = Label::GREEN_MONSTER;
+    m_Labels["magician"] = Label::MAGICIAN;
+    m_Labels["princess"] = Label::PRINCESS;
+    m_Labels["red_arremer"] = Label::RED_ARREMER;
+    m_Labels["satan"] = Label::SATAN;
+    m_Labels["woody_pig"] = Label::WOODY_PIG;
+    m_Labels["zombie"] = Label::ZOMBIE;
+
+    // COLLECTIBLES
+    m_Labels["basket"] = Label::BASKET;
+    m_Labels["coins"] = Label::COINS;
+    m_Labels["money_bag"] = Label::MONEY_BAG;
+    m_Labels["necklace"] = Label::NECKLACE;
+    m_Labels["shield"] = Label::SHIELD;
+
+    // FX
+    m_Labels["fire"] = Label::FIRE;
+    m_Labels["fx"] = Label::FX;
+    m_Labels["vanish"] = Label::VANISH;
+
+    // LEVEL
+    m_Labels["door"] = Label::DOOR;
+    m_Labels["foreground"] = Label::FOREGROUND;
+    m_Labels["level"] = Label::LEVEL;
+    m_Labels["platform"] = Label::PLATFORM;
+    m_Labels["water"] = Label::WATER;
+
+    // UI
+    m_Labels["hud"] = Label::HUD;
+    m_Labels["map"] = Label::MAP;
+    m_Labels["pin"] = Label::PIN;
+
+    // WEAPONS
+    m_Labels["dagger"] = Label::DAGGER;
+    m_Labels["lance"] = Label::LANCE;
+    m_Labels["spear"] = Label::SPEAR;
+    m_Labels["torch"] = Label::TORCH;
+
+    // DEBUG
+    m_Labels["level_debug"] = Label::LEVEL_DEBUG;
+    m_Labels["fallback"] = Label::FALLBACK;
+
+    // MINIGAME
+    m_Labels["avatar"] = Label::AVATAR;
+}
+
+/*
+ * Load data from the data.json file located in the Resource folder
+ * Only works with version 3.8.0 of nlohmann::json : https://github.com/nlohmann/json/tree/v3.8.0
+ * Closing the file is done automatically by the destructor of the ifstream object
+ */
+void Game::LoadData()
+{
+    std::ifstream file{m_DataPath};
+    if (file)
+    {
+        m_Data = json::parse(file, nullptr, false);
+    }
 }
 
 void Game::InitWaters()
@@ -141,72 +225,6 @@ void Game::InitTombstones()
     m_Tombstones.push_back(tombstone13);
 }
 
-void Game::InitLabels()
-{
-    // CHARACTERS
-    m_Labels["arthur"] = Label::ARTHUR;
-    m_Labels["big_man"] = Label::BIG_MAN;
-    m_Labels["crow"] = Label::CROW;
-    m_Labels["flying_knight"] = Label::FLYING_KNIGHT;
-    m_Labels["green_monster"] = Label::GREEN_MONSTER;
-    m_Labels["magician"] = Label::MAGICIAN;
-    m_Labels["princess"] = Label::PRINCESS;
-    m_Labels["red_arremer"] = Label::RED_ARREMER;
-    m_Labels["satan"] = Label::SATAN;
-    m_Labels["woody_pig"] = Label::WOODY_PIG;
-    m_Labels["zombie"] = Label::ZOMBIE;
-
-    // COLLECTIBLES
-    m_Labels["basket"] = Label::BASKET;
-    m_Labels["coins"] = Label::COINS;
-    m_Labels["money_bag"] = Label::MONEY_BAG;
-    m_Labels["necklace"] = Label::NECKLACE;
-    m_Labels["shield"] = Label::SHIELD;
-
-    // FX
-    m_Labels["fire"] = Label::FIRE;
-    m_Labels["fx"] = Label::FX;
-    m_Labels["vanish"] = Label::VANISH;
-
-    // LEVEL
-    m_Labels["door"] = Label::DOOR;
-    m_Labels["foreground"] = Label::FOREGROUND;
-    m_Labels["level"] = Label::LEVEL;
-    m_Labels["platform"] = Label::PLATFORM;
-    m_Labels["water"] = Label::WATER;
-
-    // UI
-    m_Labels["map"] = Label::MAP;
-    m_Labels["pin"] = Label::PIN;
-
-    // WEAPONS
-    m_Labels["dagger"] = Label::DAGGER;
-    m_Labels["lance"] = Label::LANCE;
-    m_Labels["spear"] = Label::SPEAR;
-    m_Labels["torch"] = Label::TORCH;
-
-    // DEBUG
-    m_Labels["level_debug"] = Label::LEVEL_DEBUG;
-    m_Labels["fallback"] = Label::FALLBACK;
-
-    // MINIGAME
-    m_Labels["avatar"] = Label::AVATAR;
-}
-
-/*
- * Load data from the data.json file located in the Resource folder
- * Only works with version 3.8.0 of nlohmann::json : https://github.com/nlohmann/json/tree/v3.8.0
- * Closing the file is done automatically by the destructor of the ifstream object
- */
-void Game::LoadData()
-{
-    std::ifstream file{m_DataPath};
-    if (file)
-    {
-        m_Data = json::parse(file, nullptr, false);
-    }
-}
-
 void Game::InitCamera() const
 {
     m_pCamera->SetLevelBoundaries(m_pLevel->GetBoundaries());
@@ -214,23 +232,10 @@ void Game::InitCamera() const
     m_pCamera->SetHeight(GetViewPort().height);
 }
 
-
-void Game::Cleanup()
+void Game::ClearBackground() const
 {
-    delete m_pCamera;
-    delete m_pHUD;
-    delete m_pForeground;
-    delete m_pLevel;
-    delete m_pKillZone;
-    delete m_pPlatform;
-    delete m_pSpriteFactory;
-    delete m_pTextureManager;
-    delete m_pPlayer;
-
-    std::ranges::for_each(m_Waters, [](const Water* pWater) { delete pWater; });
-    std::ranges::for_each(m_Throwables, [](const IThrowable* pThrowable) { delete pThrowable; });
-    std::ranges::for_each(m_GameObjects, [](const GameObject* pGameObject) { delete pGameObject; });
-    std::ranges::for_each(m_Tombstones, [](const Tombstone* pTombstone) { delete pTombstone; });
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT);
 }
 
 void Game::Draw() const
@@ -254,12 +259,8 @@ void Game::Draw() const
     std::ranges::for_each(m_Tombstones, [](const Tombstone* pTombstone) { pTombstone->Draw(); });
 #endif
     glPopMatrix();
-}
 
-void Game::ClearBackground() const
-{
-    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT);
+    m_pHUD->Draw();
 }
 
 void Game::Update(float elapsedSec)
@@ -277,21 +278,45 @@ void Game::Update(float elapsedSec)
     std::ranges::for_each(m_GameObjects | std::views::filter(isActive), update);
     std::ranges::for_each(m_Throwables | std::views::transform(toGameObject) | std::views::filter(isActive), update);
 
-    // for (GameObject* pGameObject : m_GameObjects)
-    // {
-    //     if (pGameObject->IsActive())
-    //     {
-    //         pGameObject->Update(elapsedSec);
-    // IEnemy* pEnemy{dynamic_cast<IEnemy*>(pGameObject)};
-    // if (pEnemy)
-    // {
-    //     pEnemy->SetTarget(m_pPlayer->GetPosition<Point2f>());
-    // }
-    //     }
-    // }
+    m_pHUD->Update(elapsedSec);
+    // TODO set target
 
     // Do collision
     DoCollisionTests();
+}
+
+void Game::DoCollisionTests()
+{
+    m_pKillZone->HandleCollision(m_pPlayer);
+    if (m_pPlayer->IsActive()) m_pLevel->HandleCollision(m_pPlayer);
+
+    // Game objects on player
+    for (GameObject* pGameObject : m_GameObjects)
+    {
+        if (pGameObject->IsActive())
+        {
+            m_pPlayer->HandleCollision(pGameObject);
+        }
+    }
+
+    // Weapons on game objects and tombstones
+    for (IThrowable* pThrowable : m_Throwables)
+    {
+        GameObject* weapon = dynamic_cast<GameObject*>(pThrowable);
+        if (weapon->IsActive())
+        {
+            // GAME OBJECTS
+            for (GameObject* pGameObject : m_GameObjects)
+            {
+                if (pGameObject->IsActive()) weapon->HandleCollision(pGameObject);
+            }
+            // TOMBSTONE
+            for (Tombstone* pTombstone : m_Tombstones)
+            {
+                if (weapon->IsActive()) pTombstone->HandleCollision(weapon);
+            }
+        }
+    }
 }
 
 void Game::LateUpdate(float elapsedSec)
@@ -305,7 +330,6 @@ void Game::LateUpdate(float elapsedSec)
     std::ranges::for_each(m_GameObjects, lateUpdate);
     std::ranges::for_each(m_Throwables | std::views::transform(toGameObject), lateUpdate);
 }
-
 
 void Game::ProcessKeyDownEvent(const SDL_KeyboardEvent& e)
 {
@@ -355,44 +379,10 @@ void Game::ProcessMouseDownEvent(const SDL_MouseButtonEvent& e)
 {
 }
 
-
+// TODO
 void Game::PrintInfo() const
 {
     std::cout << "Game info:" << std::endl;
-}
-
-void Game::DoCollisionTests()
-{
-    m_pKillZone->HandleCollision(m_pPlayer);
-    if (m_pPlayer->IsActive()) m_pLevel->HandleCollision(m_pPlayer);
-
-    // Game objects on player
-    for (GameObject* pGameObject : m_GameObjects)
-    {
-        if (pGameObject->IsActive())
-        {
-            m_pPlayer->HandleCollision(pGameObject);
-        }
-    }
-
-    // Weapons on game objects and tombstones
-    for (IThrowable* pThrowable : m_Throwables)
-    {
-        GameObject* weapon = dynamic_cast<GameObject*>(pThrowable);
-        if (weapon->IsActive())
-        {
-            // GAME OBJECTS
-            for (GameObject* pGameObject : m_GameObjects)
-            {
-                if (pGameObject->IsActive()) weapon->HandleCollision(pGameObject);
-            }
-            // TOMBSTONE
-            for (Tombstone* pTombstone : m_Tombstones)
-            {
-                if (weapon->IsActive()) pTombstone->HandleCollision(weapon);
-            }
-        }
-    }
 }
 
 void Game::Debug() const

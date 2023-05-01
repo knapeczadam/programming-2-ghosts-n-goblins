@@ -33,7 +33,7 @@ public:
     virtual void Update(float elapsedSec) override;
     void SyncWithPlatform(float elapsedSec);
     virtual void HandleCollision(GameObject* other) override;
-    void valamiMegNemTom() const;
+    void valamiMegNemTom() const; // TODO
 
     void Attack(std::vector<IThrowable*>& throwables, SpriteFactory* spriteFactory);
     bool IsAttacking() const;
@@ -42,6 +42,9 @@ public:
     Vector2f GetVelocity() const;
     void SetVelocity(const Vector2f& velocity);
     void SetIsOnPlatform(bool isOnPlatform);
+    int GetLives() const;
+    Game::Label GetWeapon() const;
+    int GetScore() const;
 
 private:
     void UpdatePosition(float elapsedSec);
@@ -73,9 +76,12 @@ private:
     float m_ShortCooldownTime;
     float m_LongCooldownTime;
     bool m_isAttacking;
-    Game::Label m_CurrWeapon;
+    Game::Label m_Weapon;
     bool m_Overheated;
     bool m_IsOnPlatform;
     Vector2f m_OffsetSnapshot;
     bool m_CanJump;
+    int m_Lives;
+    const int m_MaxLives;
+    int m_Score;
 };

@@ -238,8 +238,8 @@ void GameObject::SetLeft(float left)
 void GameObject::InitShape()
 {
     assert(m_pSprite != nullptr && "GameObject::InitShape() - m_pSprite is null!");
-    m_Shape.width = m_pSprite->GetClipWidth() * m_pSprite->GetScale();
-    m_Shape.height = m_pSprite->GetClipHeight() * m_pSprite->GetScale();
+    m_Shape.width = m_pSprite->GetScaledClipWidth();
+    m_Shape.height = m_pSprite->GetScaledClipHeight();
 }
 
 void GameObject::InitShape(const Point2f& pos)
@@ -247,6 +247,6 @@ void GameObject::InitShape(const Point2f& pos)
     assert(m_pSprite != nullptr && "GameObject::InitShape() - m_pSprite is null!");
     m_Shape.left = pos.x;
     m_Shape.bottom = pos.y;
-    m_Shape.width = m_pSprite->GetClipWidth() * m_pSprite->GetScale();
-    m_Shape.height = m_pSprite->GetClipHeight() * m_pSprite->GetScale();
+    m_Shape.width = m_pSprite->GetScaledClipWidth();
+    m_Shape.height = m_pSprite->GetScaledClipHeight();
 }

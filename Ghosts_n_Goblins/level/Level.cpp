@@ -16,7 +16,9 @@ Level::Level(Sprite* pSprite, Platform* pPlatform)
     : GameObject{Game::Label::LEVEL, pSprite}
       , m_pPlatform{pPlatform}
       , m_Vertices{}
-      , m_Boundaries{0, 0, m_pSprite->GetWidth(), m_pSprite->GetHeight()}
+      , topMargin{32.0f}
+      , m_Boundaries{0, 0, m_pSprite->GetWidth(), m_pSprite->GetHeight() + topMargin}
+      , m_pPlayer{}
 {
     SetVertices();
 }
@@ -79,11 +81,11 @@ Tip: use Raycast with a vertical ray (blue line) in the middle of the actor.
 void Level::HandleCollision(GameObject* other)
 {
     m_pPlatform->HandleCollision(other);
-    
+
     m_pPlayer = other;
     const float epsilon{0.0f};
     utils::HitInfo hit;
-    
+
     // DOWN
     const Point2f playerCenter{other->GetCollisionBoxCenter()};
     Point2f down;
@@ -170,7 +172,9 @@ Rectf Level::GetBoundaries() const
 
 bool Level::HasReachedEnd(const Rectf& collisionBox) const
 {
-    const Point2f playerCenter{collisionBox.left + collisionBox.width / 2.0f, collisionBox.bottom + collisionBox.height / 2.0f};
+    const Point2f playerCenter{
+        collisionBox.left + collisionBox.width / 2.0f, collisionBox.bottom + collisionBox.height / 2.0f
+    };
     const Point2f endSignCenter{};
     const float distance{utils::GetDistance(playerCenter, endSignCenter)};
     const float epsilon{50.0f};

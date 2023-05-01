@@ -101,6 +101,10 @@
       "path": "level/water.png"
     },
     {
+      "label": "hud",
+      "path": "ui/hud.png"
+    },
+    {
       "label": "map",
       "path": "ui/map.png"
     },
@@ -292,6 +296,12 @@
       "rows": 3,
       "columns": 1,
       "frames_per_second": 3
+    },
+    {
+      "label": "hud",
+      "rows": 7,
+      "columns": 11,
+      "scale": 2
     },
     {
       "label": "dagger",

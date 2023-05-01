@@ -65,6 +65,7 @@ public:
         WATER,
 
         // UI
+        HUD,
         MAP,
         PIN,
 

@@ -29,8 +29,10 @@ Sprite::Sprite(Texture* pTexture)
       , m_CurrFrame{0}
       , m_SrcRect{0.0f, 0.0f, 0.0f, 0.0f}
       , m_DstRect{0.0f, 0.0f, 0.0f, 0.0f}
-      , m_ClipWidth{0.0f}
-      , m_ClipHeight{0.0f}
+      , m_OriginalClipWidth{0.0f}
+      , m_OriginalClipHeight{0.0f}
+      , m_CurrClipWidth{0.0f}
+      , m_CurrClipHeight{0.0f}
       , m_CollisionWidth{0.0f}
       , m_CollisionHeight{0.0f}
 {
@@ -104,26 +106,31 @@ void Sprite::SetFrameTime()
 
 void Sprite::InitSourceRect()
 {
-    if (m_ClipWidth > 0.0f and m_ClipHeight > 0.0f)
+    if (m_CurrClipWidth > 0.0f and m_CurrClipHeight > 0.0f)
     {
-        m_SrcRect.width = m_ClipWidth;
-        m_SrcRect.height = m_ClipHeight;
+        m_SrcRect.width = m_CurrClipWidth;
+        m_SrcRect.height = m_CurrClipHeight;
     }
     else
     {
         m_SrcRect.width = m_Width / m_Cols;
         m_SrcRect.height = m_Height / m_Rows;
-        SetClipWidth(m_SrcRect.width);
-        SetClipHeight(m_SrcRect.height);
+
+        m_OriginalClipWidth = m_SrcRect.width;
+        m_OriginalClipHeight = m_SrcRect.height;
+
+        m_CurrClipWidth = m_SrcRect.width;
+        m_CurrClipHeight = m_SrcRect.height;
     }
 }
 
 void Sprite::UpdateSourceRect()
 {
-    m_SrcRect.width = m_ClipWidth;
-    m_SrcRect.height = m_ClipHeight;
-    m_SrcRect.left = m_LeftOffsetPx + m_LeftOffsetCols * m_ClipWidth + m_CurrFrame % m_CurrCols * m_ClipWidth;
-    m_SrcRect.bottom = m_TopOffsetPx + m_TopOffsetRows * m_ClipHeight + (m_CurrFrame / m_CurrCols + 1) * m_ClipHeight;
+    m_SrcRect.width = m_CurrClipWidth;
+    m_SrcRect.height = m_CurrClipHeight;
+    m_SrcRect.left = m_LeftOffsetPx + m_LeftOffsetCols * m_CurrClipWidth + m_CurrFrame % m_CurrCols * m_CurrClipWidth;
+    m_SrcRect.bottom = m_TopOffsetPx + m_TopOffsetRows * m_CurrClipHeight + (m_CurrFrame / m_CurrCols + 1) *
+        m_CurrClipHeight;
 }
 
 void Sprite::InitDestinationRect()
@@ -152,6 +159,12 @@ void Sprite::DrawFlipped() const
     utils::DrawRect(m_DstRect);
 #endif
     glPopMatrix();
+}
+
+void Sprite::ResetOriginalClipSize()
+{
+    m_CurrClipWidth = m_OriginalClipWidth;
+    m_CurrClipHeight = m_OriginalClipHeight;
 }
 
 float Sprite::GetLeftOffsetPx() const
@@ -291,29 +304,39 @@ void Sprite::SetPosition(const Point2f& pos)
 
 float Sprite::GetClipWidth() const
 {
-    return m_ClipWidth;
+    return m_CurrClipWidth;
+}
+
+float Sprite::GetScaledClipWidth() const
+{
+    return m_CurrClipWidth * m_Scale;
 }
 
 void Sprite::SetClipWidth(float clipWidth)
 {
-    m_ClipWidth = clipWidth;
+    m_CurrClipWidth = clipWidth;
 }
 
 float Sprite::GetClipHeight() const
 {
-    return m_ClipHeight;
+    return m_CurrClipHeight;
+}
+
+float Sprite::GetScaledClipHeight() const
+{
+    return m_CurrClipHeight * m_Scale;
 }
 
 void Sprite::SetClipHeight(float clipHeight)
 {
-    m_ClipHeight = clipHeight;
+    m_CurrClipHeight = clipHeight;
 }
 
 float Sprite::GetCollisionWidth() const
 {
     if (m_CollisionWidth == 0.0f)
     {
-        return m_ClipWidth * m_Scale;
+        return m_CurrClipWidth * m_Scale;
     }
     return m_CollisionWidth * m_Scale;
 }
@@ -327,7 +350,7 @@ float Sprite::GetCollisionHeight() const
 {
     if (m_CollisionHeight == 0.0f)
     {
-        return m_ClipHeight * m_Scale;
+        return m_CurrClipHeight * m_Scale;
     }
     return m_CollisionHeight * m_Scale;
 }

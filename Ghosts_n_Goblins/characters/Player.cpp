@@ -18,7 +18,7 @@
 #include "weapons/Lance.h"
 #include "weapons/Torch.h"
 
-const Point2f Player::m_SpawnPos{100.0f, 200.0f};
+const Point2f Player::m_SpawnPos{174.0f, 69.0f};
 
 Player::Player(Sprite* pSprite, const Point2f& pos, Level* pLevel)
     : GameObject{Game::Label::ARTHUR, pSprite, pos}
@@ -34,11 +34,14 @@ Player::Player(Sprite* pSprite, const Point2f& pos, Level* pLevel)
       , m_ShortCooldownTime{0.25f}
       , m_LongCooldownTime{0.30f}
       , m_isAttacking{false}
-      , m_CurrWeapon{Game::Label::LANCE}
+      , m_Weapon{Game::Label::LANCE}
       , m_Overheated{false}
       , m_IsOnPlatform{false}
-      , m_OffsetSnapshot{}
+      , m_OffsetSnapshot{0.0f, 0.0f}
       , m_CanJump{true}
+      , m_Lives{7}
+      , m_MaxLives{7}
+      , m_Score{14700}
 {
 }
 
@@ -301,16 +304,16 @@ void Player::Attack(std::vector<IThrowable*>& throwables, SpriteFactory* spriteF
         m_LongAccuCooldown += m_LongCooldownTime;
         m_isAttacking = true;
 
-        switch (m_CurrWeapon)
+        switch (m_Weapon)
         {
         case Game::Label::DAGGER:
-            throwables.push_back(new Dagger{spriteFactory->CreateSprite(m_CurrWeapon), GetShapeCenter(), m_IsFlipped});
+            throwables.push_back(new Dagger{spriteFactory->CreateSprite(m_Weapon), GetShapeCenter(), m_IsFlipped});
             break;
         case Game::Label::LANCE:
-            throwables.push_back(new Lance{spriteFactory->CreateSprite(m_CurrWeapon), GetShapeCenter(), m_IsFlipped});
+            throwables.push_back(new Lance{spriteFactory->CreateSprite(m_Weapon), GetShapeCenter(), m_IsFlipped});
             break;
         case Game::Label::TORCH:
-            throwables.push_back(new Torch{spriteFactory->CreateSprite(m_CurrWeapon), GetShapeCenter(), m_IsFlipped});
+            throwables.push_back(new Torch{spriteFactory->CreateSprite(m_Weapon), GetShapeCenter(), m_IsFlipped});
             break;
         }
     }
@@ -351,6 +354,21 @@ void Player::SetIsOnPlatform(bool isOnPlatform)
     m_IsOnPlatform = isOnPlatform;
 }
 
+int Player::GetLives() const
+{
+    return m_Lives;
+}
+
+Game::Label Player::GetWeapon() const
+{
+    return m_Weapon;
+}
+
+int Player::GetScore() const
+{
+    return m_Score;
+}
+
 void Player::ApplyGravity(float elapsedSec)
 {
     m_Velocity += m_Acceleration * elapsedSec;
@@ -370,15 +388,15 @@ void Player::HandleCollision(GameObject* other)
         switch (other->GetLabel())
         {
         case Game::Label::DAGGER:
-            m_CurrWeapon = Game::Label::DAGGER;
+            m_Weapon = Game::Label::DAGGER;
             other->SetVisible(false);
             other->SetActive(false);
             break;
         case Game::Label::LANCE:
-            m_CurrWeapon = Game::Label::LANCE;
+            m_Weapon = Game::Label::LANCE;
             break;
         case Game::Label::TORCH:
-            m_CurrWeapon = Game::Label::TORCH;
+            m_Weapon = Game::Label::TORCH;
             break;
         case Game::Label::SHIELD:
             break;

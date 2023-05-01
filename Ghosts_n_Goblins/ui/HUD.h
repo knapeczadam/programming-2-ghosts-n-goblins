@@ -1,28 +1,34 @@
 // Knapecz, Adam - 1DAE11
 #pragma once
+#include "UI.h"
 
-class Texture;
+class Player;
 
-class HUD final
+class HUD : public UI
 {
 public:
-    HUD(const Point2f& bottomLeft, int totalPowerUps);
-    ~HUD();
+    explicit HUD(Sprite* pSprite, Player* pPlayer, const Rectf& viewPort);
+    virtual ~HUD() override = default;
     HUD(const HUD& other) = delete;
     HUD(HUD&& other) noexcept = delete;
     HUD& operator=(const HUD& other) = delete;
     HUD& operator=(HUD&& other) noexcept = delete;
-    void Draw() const;
-    void PowerUpHit();
+
+    virtual void Draw() override;
+private:
+    void DrawLives();
+    void DrawPlayerScore();
+    void DrawHighScore();
+    void DrawTopScore();
+    void DrawTime();
+    void DrawRemainingTime();
+    void DrawFrame() const;
+    void DrawWeapon() const;
+    void DrawPlayer1() const;
+    
+    void ResetSprite() const;
 
 private:
-    void DrawLeft() const;
-    void DrawRight() const;
-    void DrawPowerUps() const;
-    Point2f m_BottomLeft;
-    int m_TotalPowerUps;
-    int m_HitPowerUps;
-    Texture* m_pLeftTexture;
-    Texture* m_pRightTexture;
-    Texture* m_pPowerUpTexture;
+    Player* m_pPlayer;
+    Rectf m_ViewPort;
 };
