@@ -49,7 +49,7 @@ void TextureManager::LoadTextures()
         }
         //m_Textures.emplace(std::make_pair(m_Labels[label], new Texture{m_Path + path}));
         //m_Textures.emplace(m_Labels[label], new Texture{m_Path + path});
-        auto* pTexture = new Texture{m_Path + path};
+        Texture* pTexture = new Texture{m_Path + path};
         m_Textures[m_Labels[label]] = pTexture;
         m_pTextures.push_back(pTexture);
     }

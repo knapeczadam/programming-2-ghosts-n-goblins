@@ -23,6 +23,7 @@
 #include "characters/IEnemy.h"
 #include "engine/Clock.h"
 #include "engine/SoundManager.h"
+#include "engine/Sprite.h"
 #include "level/Water.h"
 #include "weapons/Dagger.h"
 
@@ -45,6 +46,9 @@ Game::Game(const Window& window)
       , m_Labels{}
       , m_AttackKeyReleased{true}
       , m_JumpKeyReleased{true}
+      , m_BootIntervals{}
+      , m_BootCounter{1}
+      , m_MaxBootCount{20}
 {
     Initialize();
 }
@@ -78,6 +82,7 @@ void Game::Initialize()
     InitLabels();
     // Loading data from JSON
     LoadData();
+    InitBootIntervals();
 
     // Order of initialization is important
     // 1. TEXTURE MANAGER
@@ -112,10 +117,7 @@ void Game::Initialize()
 
     // SOUND
     m_pSoundManager = new SoundManager{m_Data, m_Labels};
-    if (m_pSoundManager->GetStream(Label::S_04_GROUND_BGM)->IsLoaded())
-    {
-        m_pSoundManager->GetStream(Label::S_04_GROUND_BGM)->Play(false);
-    }
+    m_pSoundManager->PlayStream(Label::S_04_GROUND_BGM, true);
 }
 
 void Game::InitLabels()
@@ -208,6 +210,28 @@ void Game::InitLabels()
     m_Labels["s_12_below_2nd_place_name_registration"] = Label::S_12_BELOW_2ND_PLACE_NAME_REGISTRATION;
     m_Labels["s_13_below_2nd_place_entry_end"] = Label::S_13_BELOW_2ND_PLACE_ENTRY_END;
 
+    // BOOT
+    m_Labels["b_01"] = Label::B_01;
+    m_Labels["b_02"] = Label::B_02;
+    m_Labels["b_03"] = Label::B_03;
+    m_Labels["b_04"] = Label::B_04;
+    m_Labels["b_05"] = Label::B_05;
+    m_Labels["b_06"] = Label::B_06;
+    m_Labels["b_07"] = Label::B_07;
+    m_Labels["b_08"] = Label::B_08;
+    m_Labels["b_09"] = Label::B_09;
+    m_Labels["b_10"] = Label::B_10;
+    m_Labels["b_11"] = Label::B_11;
+    m_Labels["b_12"] = Label::B_12;
+    m_Labels["b_13"] = Label::B_13;
+    m_Labels["b_14"] = Label::B_14;
+    m_Labels["b_15"] = Label::B_15;
+    m_Labels["b_16"] = Label::B_16;
+    m_Labels["b_17"] = Label::B_17;
+    m_Labels["b_18"] = Label::B_18;
+    m_Labels["b_19"] = Label::B_19;
+    m_Labels["b_20"] = Label::B_20;
+
     // MINIGAME
     m_Labels["avatar"] = Label::AVATAR;
 }
@@ -281,6 +305,30 @@ void Game::InitCamera() const
     m_pCamera->SetHeight(GetViewPort().height);
 }
 
+void Game::InitBootIntervals()
+{
+    m_BootIntervals.push(0.5f);
+    m_BootIntervals.push(0.5f);
+    m_BootIntervals.push(0.5f);
+    m_BootIntervals.push(0.5f);
+    m_BootIntervals.push(0.5f);
+    m_BootIntervals.push(0.5f);
+    m_BootIntervals.push(0.5f);
+    m_BootIntervals.push(0.5f);
+    m_BootIntervals.push(0.5f);
+    m_BootIntervals.push(0.5f);
+    m_BootIntervals.push(0.5f);
+    m_BootIntervals.push(0.5f);
+    m_BootIntervals.push(0.5f);
+    m_BootIntervals.push(0.5f);
+    m_BootIntervals.push(0.5f);
+    m_BootIntervals.push(0.5f);
+    m_BootIntervals.push(0.5f);
+    m_BootIntervals.push(0.5f);
+    m_BootIntervals.push(0.5f);
+    m_BootIntervals.push(0.5f);
+}
+
 void Game::ClearBackground() const
 {
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
@@ -289,6 +337,9 @@ void Game::ClearBackground() const
 
 void Game::Draw() const
 {
+    DrawBoot();
+    if (m_BootCounter < m_MaxBootCount) return;
+    
     static auto draw{[](const GameObject* pGameObject) { pGameObject->Draw(); }};
     static auto toGameObject{[](IThrowable* pThrowable) { return dynamic_cast<GameObject*>(pThrowable); }};
     static auto isVisible{[](const GameObject* pGameObject) { return pGameObject->IsVisible(); }};
@@ -315,7 +366,8 @@ void Game::Draw() const
 void Game::Update(float elapsedSec)
 {
     Clock::Update(elapsedSec);
-
+    Boot();
+    if (m_BootCounter < m_MaxBootCount) return;
     // Update game objects
     m_pLevel->Update(elapsedSec);
     std::ranges::for_each(m_Waters, [&](Water* pWater) { pWater->Update(elapsedSec); });
@@ -408,6 +460,12 @@ void Game::ProcessKeyDownEvent(const SDL_KeyboardEvent& e)
     case SDLK_d:
         Debug();
         break;
+    case SDLK_u:
+        SoundStream::SetVolume(SoundStream::GetVolume() + 1);
+        break;
+    case SDLK_j:
+        SoundStream::SetVolume(SoundStream::GetVolume() - 1);
+        break;
     }
 }
 
@@ -426,6 +484,26 @@ void Game::ProcessKeyUpEvent(const SDL_KeyboardEvent& e)
 
 void Game::ProcessMouseDownEvent(const SDL_MouseButtonEvent& e)
 {
+}
+
+void Game::DrawBoot() const
+{
+    if (m_BootCounter > m_MaxBootCount) return;
+    std::string prefix{"b_"};
+    if (m_BootCounter < 10) prefix += "0";
+    Label label{m_Labels.at(prefix + std::to_string(m_BootCounter))};
+    m_pSpriteFactory->CreateSprite(label)->Draw();
+}
+
+void Game::Boot()
+{
+    if (m_BootCounter > m_MaxBootCount) return;
+    StartTimer(m_BootIntervals.front());
+    if (IsTimerFinished())
+    {
+        m_BootIntervals.pop();
+        ++m_BootCounter;
+    }
 }
 
 // TODO

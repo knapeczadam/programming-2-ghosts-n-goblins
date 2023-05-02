@@ -16,6 +16,22 @@ SoundManager::~SoundManager()
     DeleteSounds();
 }
 
+void SoundManager::PlayEffect(Game::Label label) const
+{
+    if (GetEffect(label)->IsLoaded())
+    {
+        GetEffect(label)->Play(0);
+    }
+}
+
+void SoundManager::PlayStream(Game::Label label, bool repeat) const
+{
+    if(GetStream(label)->IsLoaded())
+    {
+        GetStream(label)->Play(repeat);
+    }
+}
+
 SoundEffect* SoundManager::GetEffect(Game::Label label) const
 {
     return m_Effects.at(label);
@@ -38,7 +54,7 @@ void SoundManager::LoadSounds()
             std::cerr << "SoundManager::LoadSounds() - ERROR: label (" << label <<") found in data.json/effects is not in the label map!" << std::endl;
             std::abort();
         }
-        auto* pEffect = new SoundEffect{m_EffectPath + path};
+        SoundEffect* pEffect = new SoundEffect{m_EffectPath + path};
         m_Effects[m_Labels[label]] = pEffect;
         m_pEffects.push_back(pEffect);
     }
@@ -52,7 +68,7 @@ void SoundManager::LoadSounds()
             std::cerr << "SoundManager::LoadSounds() - ERROR: label (" << label <<") found in data.json/streams is not in the label map!" << std::endl;
             std::abort();
         }
-        auto* pStream = new SoundStream{m_StreamPath + path};
+        SoundStream* pStream = new SoundStream{m_StreamPath + path};
         m_Streams[m_Labels[label]] = pStream;
         m_pStreams.push_back(pStream);
     }

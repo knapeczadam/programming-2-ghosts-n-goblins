@@ -135,6 +135,86 @@
     {
       "label": "avatar",
       "path": "minigame/AvatarSheet.png"
+    },
+    {
+      "label": "b_01",
+      "path": "boot/01.png"
+    },
+    {
+      "label": "b_02",
+      "path": "boot/02.png"
+    },
+    {
+      "label": "b_03",
+      "path": "boot/03.png"
+    },
+    {
+      "label": "b_04",
+      "path": "boot/04.png"
+    },
+    {
+      "label": "b_05",
+      "path": "boot/05.png"
+    },
+    {
+      "label": "b_06",
+      "path": "boot/06.png"
+    },
+    {
+      "label": "b_07",
+      "path": "boot/07.png"
+    },
+    {
+      "label": "b_08",
+      "path": "boot/08.png"
+    },
+    {
+      "label": "b_09",
+      "path": "boot/09.png"
+    },
+    {
+      "label": "b_10",
+      "path": "boot/10.png"
+    },
+    {
+      "label": "b_11",
+      "path": "boot/11.png"
+    },
+    {
+      "label": "b_12",
+      "path": "boot/12.png"
+    },
+    {
+      "label": "b_13",
+      "path": "boot/13.png"
+    },
+    {
+      "label": "b_14",
+      "path": "boot/14.png"
+    },
+    {
+      "label": "b_15",
+      "path": "boot/15.png"
+    },
+    {
+      "label": "b_16",
+      "path": "boot/16.png"
+    },
+    {
+      "label": "b_17",
+      "path": "boot/17.png"
+    },
+    {
+      "label": "b_18",
+      "path": "boot/18.png"
+    },
+    {
+      "label": "b_19",
+      "path": "boot/19.png"
+    },
+    {
+      "label": "b_20",
+      "path": "boot/20.png"
     }
   ],
   "sprites": [
@@ -331,6 +411,86 @@
       "top_offset_pixel": 0,
       "left_offset_columns": 0,
       "top_offset_rows": 0
+    },
+    {
+      "label": "b_01",
+      "scale": 2
+    },
+    {
+      "label": "b_02",
+      "scale": 2
+    },
+    {
+      "label": "b_03",
+      "scale": 2
+    },
+    {
+      "label": "b_04",
+      "scale": 2
+    },
+    {
+      "label": "b_05",
+      "scale": 2
+    },
+    {
+      "label": "b_06",
+      "scale": 2
+    },
+    {
+      "label": "b_07",
+      "scale": 2
+    },
+    {
+      "label": "b_08",
+      "scale": 2
+    },
+    {
+      "label": "b_09",
+      "scale": 2
+    },
+    {
+      "label": "b_10",
+      "scale": 2
+    },
+    {
+      "label": "b_11",
+      "scale": 2
+    },
+    {
+      "label": "b_12",
+      "scale": 2
+    },
+    {
+      "label": "b_13",
+      "scale": 2
+    },
+    {
+      "label": "b_14",
+      "scale": 2
+    },
+    {
+      "label": "b_15",
+      "scale": 2
+    },
+    {
+      "label": "b_16",
+      "scale": 2
+    },
+    {
+      "label": "b_17",
+      "scale": 2
+    },
+    {
+      "label": "b_18",
+      "scale": 2
+    },
+    {
+      "label": "b_19",
+      "scale": 2
+    },
+    {
+      "label": "b_20",
+      "scale": 2
     }
   ],
   "effects": [

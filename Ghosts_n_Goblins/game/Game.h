@@ -1,5 +1,7 @@
 // Knapecz, Adam - 1DAE11
 #pragma once
+#include <queue>
+
 #include "BaseGame.h"
 #include "engine/json.hpp"
 
@@ -121,6 +123,28 @@ public:
         S_11_1ST_PLACE_ENTRY_END,
         S_12_BELOW_2ND_PLACE_NAME_REGISTRATION,
         S_13_BELOW_2ND_PLACE_ENTRY_END,
+
+        // BOOT
+        B_01,
+        B_02,
+        B_03,
+        B_04,
+        B_05,
+        B_06,
+        B_07,
+        B_08,
+        B_09,
+        B_10,
+        B_11,
+        B_12,
+        B_13,
+        B_14,
+        B_15,
+        B_16,
+        B_17,
+        B_18,
+        B_19,
+        B_20,
         
         // MINIGAME
         AVATAR
@@ -145,6 +169,8 @@ public:
 
 private:
     // FUNCTIONS
+    void DrawBoot() const;
+    void Boot();
     void Initialize();
     void InitWaters();
     void InitTombstones();
@@ -157,6 +183,7 @@ private:
     void LoadData();
     void InitLabels();
     void InitCamera() const;
+    void InitBootIntervals();
     
     // DATA MEMBERS
     
@@ -183,5 +210,9 @@ private:
 
     bool m_AttackKeyReleased;
     bool m_JumpKeyReleased;
+
+    std::queue<float> m_BootIntervals;
+    int m_BootCounter;
+    const int m_MaxBootCount;
 
 };

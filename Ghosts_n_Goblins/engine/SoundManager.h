@@ -13,6 +13,9 @@ public:
     SoundManager& operator=(const SoundManager& other) = delete;
     SoundManager& operator=(SoundManager&& other) noexcept = delete;
 
+    void PlayEffect(Game::Label label) const;
+    void PlayStream(Game::Label label, bool repeat) const;
+
     SoundEffect* GetEffect(Game::Label label) const;
     SoundStream* GetStream(Game::Label label) const;
 private:
