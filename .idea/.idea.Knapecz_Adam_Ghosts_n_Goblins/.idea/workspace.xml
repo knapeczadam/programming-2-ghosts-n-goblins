@@ -7,10 +7,77 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0c813320-22e2-4144-ad4a-570649cc50d7" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/ui/UI.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/ui/UI.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Resources/images/ui/distances.psd" afterDir="false" />
+    <list default="true" id="0c813320-22e2-4144-ad4a-570649cc50d7" name="Changes" comment="HUD">
+      <change afterPath="$PROJECT_DIR$/Resources/images/boot/01.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/images/boot/02.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/images/boot/03.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/images/boot/04.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/images/boot/05.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/images/boot/06.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/images/boot/07.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/images/boot/08.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/images/boot/088.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/images/boot/09.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/images/boot/11.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/images/boot/12.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/images/boot/13.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/images/boot/14.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/images/boot/15.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/images/boot/BB.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/images/boot/CC.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/images/boot/DD.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/images/boot/EE.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/images/boot/ZZZ.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/images/ui/frame.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/images/ui/frame.psd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/images/ui/hud_text.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/images/ui/hud_text.psd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/images/ui/life.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/images/ui/life.psd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/images/ui/numbers.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/images/ui/numbers.psd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/images/ui/weapons.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/images/ui/weapons.psd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/sounds/effects/armor_pickup.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/sounds/effects/arthur_hit.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/sounds/effects/arthur_jump.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/sounds/effects/arthur_jump_frog.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/sounds/effects/arthur_land.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/sounds/effects/arthur_throw.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/sounds/effects/arthur_transform.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/sounds/effects/big_enemy_walk.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/sounds/effects/boss_death.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/sounds/effects/boss_hit.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/sounds/effects/crow.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/sounds/effects/door_open.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/sounds/effects/enemy_death.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/sounds/effects/enemy_hit.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/sounds/effects/extra_life.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/sounds/effects/flying_knight.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/sounds/effects/magician.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/sounds/effects/projectile_block.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/sounds/effects/red_arremer_attack.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/sounds/effects/source.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/sounds/effects/torch.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/sounds/effects/treasure_pickup.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/sounds/effects/weapon_pickup.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/sounds/effects/woody_pig.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/sounds/effects/zombie_spawn.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/sounds/streams/01_credit.mp3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/sounds/streams/02_start_demop.mp3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/sounds/streams/03_stage_introduction_map.mp3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/sounds/streams/04_ground_bgm.mp3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/sounds/streams/05_hurry_up.mp3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/sounds/streams/06_player_out.mp3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/sounds/streams/07_game_over.mp3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/sounds/streams/08_boss.mp3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/sounds/streams/09_stage_clear.mp3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/sounds/streams/10_1st_place_name_registration.mp3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/sounds/streams/11_1st_place_entry_end.mp3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/sounds/streams/12_below_2nd_place_name_registration.mp3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/sounds/streams/13_below_2nd_place_entry_end.mp3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/sounds/streams/source.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/videos/boot.mp4" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/Resources/videos/death/03_losing_armor_from_the_right.mp4" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/Resources/videos/death/04_losing_armor_from_the_left.mp4" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/Resources/videos/enemies/flying_knight.mp4" afterDir="false" />
@@ -18,42 +85,58 @@
       <change afterPath="$PROJECT_DIR$/Resources/videos/level/platform.mp4" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/Resources/videos/ui/abc.mp4" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Knapecz_Adam_Ghosts_n_Goblins/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Knapecz_Adam_Ghosts_n_Goblins/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/Ghosts_n_Goblins.vcxproj" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/Ghosts_n_Goblins.vcxproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/characters/Player.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/characters/Player.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/characters/Player.h" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/characters/Player.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/engine/Clock.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/engine/Clock.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/engine/Clock.h" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/engine/Clock.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/engine/Sprite.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/engine/Sprite.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/engine/Sprite.h" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/engine/Sprite.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/engine/Timer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/engine/Timer.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/engine/Timer.h" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/engine/Timer.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/engine/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/engine/main.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/game/Game.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/game/Game.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/game/Game.h" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/game/Game.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/game/GameObject.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/game/GameObject.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/level/Level.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/level/Level.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/level/Level.h" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/level/Level.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/ui/HUD.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/ui/HUD.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/ui/HUD.h" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/ui/HUD.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Resources/data.json" beforeDir="false" afterPath="$PROJECT_DIR$/Resources/data.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Resources/images/characters/arthur.bmp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Resources/images/characters/arthur_2.bmp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Resources/images/characters/big_man.bmp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Resources/images/characters/crow.bmp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Resources/images/characters/flying_knight.bmp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Resources/images/characters/green_monster.bmp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Resources/images/characters/red_arremer.bmp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Resources/images/characters/woody_pig.bmp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Resources/images/characters/zombie.bmp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Resources/images/collectibles/coins.bmp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Resources/images/collectibles/necklace.bmp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Resources/images/ui/NLL.bmp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Resources/images/ui/hud.bmp" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Resources/images/ui/hud.png" beforeDir="false" afterPath="$PROJECT_DIR$/Resources/images/ui/hud.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Resources/images/ui/hud.psd" beforeDir="false" afterPath="$PROJECT_DIR$/Resources/images/ui/hud.psd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Resources/images/ui/hud_misc.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Resources/images/ui/hud_misc.psd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Resources/images/weapons/lance.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Resources/sounds/01 Credit.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Resources/sounds/01 Start Demo.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Resources/sounds/02 Stage Introduction Map.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Resources/sounds/02 Start Demo.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Resources/sounds/03 Ground BGM (1, 2 Stage).mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Resources/sounds/03 Stage Introduction Map.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Resources/sounds/04 Ground BGM (1, 2 Stage).mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Resources/sounds/04 Stage Clear (1).mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Resources/sounds/05 Stage Clear (2).mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Resources/sounds/05 Theme of Giant (1, 2 Stage Boss).mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Resources/sounds/06 Stage Clear (1).mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Resources/sounds/07 Stage Clear (2).mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Resources/sounds/10 1st Lap Clear.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Resources/sounds/11 2nd Lap Clear.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Resources/sounds/12 Hurry Up!.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Resources/sounds/13 Player Out.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Resources/sounds/14 Game Over.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Resources/sounds/effects/bossdefeated.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Resources/sounds/effects/bossfight.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Resources/sounds/effects/crow1.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Resources/sounds/effects/crow2.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Resources/sounds/effects/deathsound.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Resources/sounds/effects/demonsound.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Resources/sounds/effects/enemypain.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Resources/sounds/effects/flyingknight.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Resources/sounds/effects/forestghost1.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Resources/sounds/effects/forestghost2.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Resources/sounds/effects/item1.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Resources/sounds/effects/item2.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Resources/sounds/effects/item3.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Resources/sounds/effects/jump.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Resources/sounds/effects/ogresound.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Resources/sounds/effects/openingdoor.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Resources/sounds/effects/princess_rescued.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Resources/sounds/effects/princess_scream.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Resources/sounds/effects/splattersound.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Resources/sounds/effects/startgam.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Resources/sounds/effects/time_is_up.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Resources/sounds/effects/zombie1.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Resources/sounds/effects/zombie2.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Resources/sounds/effects/zombie3.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Resources/sounds/effects/zombie4.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Resources/sounds/minigame/DonkeyKong.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Resources/sounds/minigame/Mario.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Resources/sounds/minigame/jingles.ogg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Resources/sounds/minigame/laser.ogg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Resources/sounds/minigame/powerUp.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Resources/sounds/streams/G&amp;GMusic.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Resources/sounds/streams/levelone.mp3" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Resources/videos/03_losing_armor_from_the_right.mp4" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Resources/videos/04_losing_armor_from_the_left.mp4" beforeDir="false" />
     </list>
@@ -140,7 +223,18 @@
     <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../../../../../../../../Program Files (x86)/Windows Kits/10/Include/10.0.19041.0/ucrt/float.h" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../../../../../../../../Program Files/Microsoft Visual Studio/2022/Enterprise/VC/Tools/MSVC/14.35.32215/include/limits" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/adam/OneDrive - Hogeschool West-Vlaanderen/DAE/2022 - 2023/Semester 2/Programming 2/00 - Game Project/Knapecz_Adam_Ghosts_n_Goblins/Ghosts_n_Goblins/engine/Clock.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/adam/OneDrive - Hogeschool West-Vlaanderen/DAE/2022 - 2023/Semester 2/Programming 2/00 - Game Project/Knapecz_Adam_Ghosts_n_Goblins/Ghosts_n_Goblins/engine/Sprite.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/adam/OneDrive - Hogeschool West-Vlaanderen/DAE/2022 - 2023/Semester 2/Programming 2/00 - Game Project/Knapecz_Adam_Ghosts_n_Goblins/Ghosts_n_Goblins/engine/Sprite.h" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/adam/OneDrive - Hogeschool West-Vlaanderen/DAE/2022 - 2023/Semester 2/Programming 2/00 - Game Project/Knapecz_Adam_Ghosts_n_Goblins/Ghosts_n_Goblins/engine/Timer.cpp" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Ghosts_n_Goblins/engine/json.hpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/adam/OneDrive - Hogeschool West-Vlaanderen/DAE/2022 - 2023/Semester 2/Programming 2/00 - Game Project/Knapecz_Adam_Ghosts_n_Goblins/Ghosts_n_Goblins/engine/main.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/adam/OneDrive - Hogeschool West-Vlaanderen/DAE/2022 - 2023/Semester 2/Programming 2/00 - Game Project/Knapecz_Adam_Ghosts_n_Goblins/Ghosts_n_Goblins/game/Game.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/adam/OneDrive - Hogeschool West-Vlaanderen/DAE/2022 - 2023/Semester 2/Programming 2/00 - Game Project/Knapecz_Adam_Ghosts_n_Goblins/Ghosts_n_Goblins/game/Game.h" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/adam/OneDrive - Hogeschool West-Vlaanderen/DAE/2022 - 2023/Semester 2/Programming 2/00 - Game Project/Knapecz_Adam_Ghosts_n_Goblins/Ghosts_n_Goblins/game/GameObject.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/adam/OneDrive - Hogeschool West-Vlaanderen/DAE/2022 - 2023/Semester 2/Programming 2/00 - Game Project/Knapecz_Adam_Ghosts_n_Goblins/Ghosts_n_Goblins/level/Level.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/adam/OneDrive - Hogeschool West-Vlaanderen/DAE/2022 - 2023/Semester 2/Programming 2/00 - Game Project/Knapecz_Adam_Ghosts_n_Goblins/Ghosts_n_Goblins/ui/HUD.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/adam/OneDrive - Hogeschool West-Vlaanderen/DAE/2022 - 2023/Semester 2/Programming 2/00 - Game Project/Knapecz_Adam_Ghosts_n_Goblins/Ghosts_n_Goblins/ui/HUD.h" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Libraries/SDLMixer/SDL2_mixer-2.6.3/include/SDL_mixer.h" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
@@ -253,7 +347,7 @@
       <workItem from="1682809076422" duration="7774000" />
       <workItem from="1682846137765" duration="19286000" />
       <workItem from="1682872980154" duration="10582000" />
-      <workItem from="1682931929641" duration="23270000" />
+      <workItem from="1682931929641" duration="27979000" />
     </task>
     <task id="LOCAL-00001" summary="#1">
       <created>1682809240069</created>
@@ -304,7 +398,14 @@
       <option name="project" value="LOCAL" />
       <updated>1682904499089</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="HUD">
+      <created>1682965425411</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1682965425411</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -344,7 +445,8 @@
     <MESSAGE value="Collision box, late update" />
     <MESSAGE value="Foreground, tombstones' collisions" />
     <MESSAGE value="Simple jump, separate timer" />
-    <option name="LAST_COMMIT_MESSAGE" value="Simple jump, separate timer" />
+    <MESSAGE value="HUD" />
+    <option name="LAST_COMMIT_MESSAGE" value="HUD" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

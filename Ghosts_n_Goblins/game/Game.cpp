@@ -5,7 +5,6 @@
 #include "Texture.h"
 #include "utils.h"
 #include "characters/Player.h"
-#include "collectibles/PowerUpManager.h"
 #include "weapons/IThrowable.h"
 #include "engine/json.hpp"
 #include "engine/SpriteFactory.h"

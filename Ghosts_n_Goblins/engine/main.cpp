@@ -13,8 +13,13 @@ int SDL_main(int argv, char** args)
 
     StartHeapControl();
 
-    // The size of the game window should be no larger than 1280 x 800.
-    Game* pGame{new Game{Window{"Ghosts 'n Goblins - Knapecz, Adam - 1DAE11", 512.0f, 480.f}}}; // 448 + 32 (top margin)
+    // Original dimensions: 256 x 224
+    // Original aspect ratio: 8:7
+    // New dimensions: 512 x 480 TODO: should be 512 x 448 (2x)
+    // New aspect ratio: 16:15
+    // Vertical stretch is 1.0714285714
+    // 480 = 448 + 32 (top margin)
+    Game* pGame{new Game{Window{"Ghosts 'n Goblins - Knapecz, Adam - 1DAE11", 512.0f, 480.f}}};
     pGame->Run();
     delete pGame;
 
