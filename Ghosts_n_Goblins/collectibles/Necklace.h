@@ -11,7 +11,4 @@ public:
     Necklace(Necklace&& other) noexcept = delete;
     Necklace& operator=(const Necklace& other) = delete;
     Necklace& operator=(Necklace&& other) noexcept = delete;
-
-    virtual void Draw() const override;
-    virtual void Update(float elapsedSec) override;
 };

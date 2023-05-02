@@ -289,6 +289,9 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">pch.h</PrecompiledHeaderFile>
     </ClCompile>
+    <ClCompile Include="collectibles\Basket.cpp" />
+    <ClCompile Include="collectibles\Bust.cpp" />
+    <ClCompile Include="collectibles\Coin.cpp" />
     <ClCompile Include="collectibles\ICollectible.cpp">
       <RuntimeLibrary>MultiThreadedDebugDll</RuntimeLibrary>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -370,6 +373,8 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(IntDir)$(TargetName).pch</PrecompiledHeaderOutputFile>
     </ClCompile>
+    <ClCompile Include="collectibles\Key.cpp" />
+    <ClCompile Include="collectibles\MoneyBag.cpp" />
     <ClCompile Include="collectibles\Necklace.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">pch.h</PrecompiledHeaderFile>
@@ -460,6 +465,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(IntDir)$(TargetName).pch</PrecompiledHeaderOutputFile>
     </ClCompile>
+    <ClCompile Include="collectibles\Shield.cpp" />
     <ClCompile Include="engine\Clock.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">pch.h</PrecompiledHeaderFile>
@@ -1528,9 +1534,15 @@
     <ClInclude Include="characters\Player.h" />
     <ClInclude Include="characters\RedArremer.h" />
     <ClInclude Include="characters\WoodyPig.h" />
+    <ClInclude Include="collectibles\Basket.h" />
+    <ClInclude Include="collectibles\Bust.h" />
+    <ClInclude Include="collectibles\Coin.h" />
     <ClInclude Include="collectibles\ICollectible.h" />
+    <ClInclude Include="collectibles\Key.h" />
+    <ClInclude Include="collectibles\MoneyBag.h" />
     <ClInclude Include="collectibles\Necklace.h" />
     <ClInclude Include="collectibles\PickUpManager.h" />
+    <ClInclude Include="collectibles\Shield.h" />
     <ClInclude Include="engine\Clock.h" />
     <ClInclude Include="engine\json.hpp" />
     <ClInclude Include="engine\SoundManager.h" />
