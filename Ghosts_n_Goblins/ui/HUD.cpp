@@ -31,7 +31,7 @@ void HUD::DrawLives()
 {
     m_pSprite->SetTopOffsetRows(3);
     m_pSprite->UpdateSourceRect();
-    for (int idx{}; idx < m_pPlayer->GetLives(); ++idx)
+    for (int idx{}; idx < m_pPlayer->GetLives() - 1; ++idx)
     {
         m_pSprite->SetPosition(Point2f{idx * m_pSprite->GetScaledClipWidth(), 0});
         m_pSprite->Draw();

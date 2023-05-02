@@ -3,6 +3,8 @@
 
 #include "weapons/IThrowable.h"
 
+class Sprite;
+
 BigMan::BigMan(Sprite* pSprite, const Point2f& pos)
     : GameObject{Game::Label::C_BIG_MAN, pSprite, pos}
 {

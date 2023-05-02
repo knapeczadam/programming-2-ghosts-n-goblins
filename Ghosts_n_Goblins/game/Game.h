@@ -4,10 +4,10 @@
 
 #include "BaseGame.h"
 #include "engine/json.hpp"
+#include "engine/Timer.h"
 
 #include <string>
 
-#include "engine/Timer.h"
 
 using json = nlohmann::json;
 
@@ -25,6 +25,8 @@ class GameObject;
 class SoundManager;
 
 class IThrowable;
+class IEnemy;
+class ICollectible;
 
 
 class Game : public BaseGame, public Timer
@@ -47,10 +49,13 @@ public:
 
         // COLLECTIBLES
         O_BASKET,
-        O_COINS,
+        O_BUST,
+        O_COIN,
+        O_KEY,
         O_MONEY_BAG,
         O_NECKLACE,
         O_SHIELD,
+        O_STAR,
 
         // FX
         F_FIRE,
@@ -187,10 +192,11 @@ private:
     
     // DATA MEMBERS
     
-    std::vector<GameObject*> m_GameObjects;
+    std::vector<IEnemy*> m_Enemies;
     std::vector<IThrowable*> m_Throwables;
     std::vector<Water*> m_Waters;
     std::vector<Tombstone*> m_Tombstones;
+    std::vector<ICollectible*> m_Collectibles;
     
     SpriteFactory* m_pSpriteFactory;
     TextureManager* m_pTextureManager;
@@ -214,5 +220,6 @@ private:
     std::queue<float> m_BootIntervals;
     int m_BootCounter;
     const int m_MaxBootCount;
+    bool m_Boot;
 
 };

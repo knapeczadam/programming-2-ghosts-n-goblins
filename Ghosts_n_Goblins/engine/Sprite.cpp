@@ -24,7 +24,7 @@ Sprite::Sprite(Texture* pTexture)
       , m_CurrCols{0}
       , m_FramesPerSec{0}
       , m_FrameTime{0.0f}
-      , m_Scale{1.0f}
+      , m_Scale{0.0f}
       , m_AccuSec{0.0f}
       , m_CurrFrame{0}
       , m_SrcRect{0.0f, 0.0f, 0.0f, 0.0f}

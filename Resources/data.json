@@ -49,8 +49,16 @@
       "path": "collectibles/basket.png"
     },
     {
-      "label": "o_coins",
-      "path": "collectibles/coins.png"
+      "label": "o_bust",
+      "path": "collectibles/bust.png"
+    },
+    {
+      "label": "o_coin",
+      "path": "collectibles/coin.png"
+    },
+    {
+      "label": "o_key",
+      "path": "collectibles/key.png"
     },
     {
       "label": "o_money_bag",
@@ -63,6 +71,10 @@
     {
       "label": "o_shield",
       "path": "collectibles/shield.png"
+    },
+    {
+      "label": "o_star",
+      "path": "collectibles/star.png"
     },
     {
       "label": "f_fire",
@@ -316,7 +328,19 @@
       "scale": 2
     },
     {
-      "label": "o_coins",
+      "label": "o_bust",
+      "rows": 1,
+      "columns": 3,
+      "scale": 2
+    },
+    {
+      "label": "o_coin",
+      "scale": 2
+    },
+    {
+      "label": "o_key",
+      "rows": 1,
+      "columns": 3,
       "scale": 2
     },
     {
@@ -326,14 +350,18 @@
     {
       "label": "o_necklace",
       "rows": 1,
-      "columns": 25,
-      "sub_rows": 1,
-      "sub_columns": 25,
+      "columns": 3,
       "frames_per_second": 10,
       "scale": 2
     },
     {
       "label": "o_shield",
+      "scale": 2
+    },
+    {
+      "label": "o_star",
+      "rows": 1,
+      "columns": 3,
       "scale": 2
     },
     {
@@ -385,10 +413,14 @@
     },
     {
       "label": "w_dagger",
+      "rows": 1,
+      "columns": 3,
       "scale": 2
     },
     {
       "label": "w_lance",
+      "rows": 1,
+      "columns": 3,
       "scale": 2
     },
     {
@@ -397,6 +429,8 @@
     },
     {
       "label": "w_torch",
+      "rows": 1,
+      "columns": 3,
       "scale": 2
     },
     {

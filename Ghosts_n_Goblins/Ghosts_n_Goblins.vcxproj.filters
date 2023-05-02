@@ -21,12 +21,6 @@
     <ClCompile Include="collectibles\PickUpManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="collectibles\PowerUp.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="collectibles\PowerUpManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="engine\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -102,18 +96,27 @@
     <ClCompile Include="weapons\Dagger.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="engine\Clock.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\Timer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="level\KillZone.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="level\Tombstone.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ui\UI.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="collectibles\ICollectible.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="collectibles\PickUpManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="collectibles\PowerUp.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="collectibles\PowerUpManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="engine\json.hpp">
@@ -198,6 +201,21 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="weapons\Dagger.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\Clock.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\Timer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="level\KillZone.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="level\Tombstone.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ui\UI.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

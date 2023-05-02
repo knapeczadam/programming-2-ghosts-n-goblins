@@ -29,12 +29,16 @@
 
 Game::Game(const Window& window)
     : BaseGame{window}
-      , m_GameObjects{}
+      , m_Enemies{}
       , m_Throwables{}
       , m_Waters{}
+      , m_Tombstones{}
+      , m_Collectibles{}
       , m_pSpriteFactory{}
       , m_pTextureManager{}
+      , m_pSoundManager{}
       , m_pPlayer{}
+      , m_pForeground{}
       , m_pLevel{}
       , m_pKillZone{}
       , m_pPlatform{}
@@ -49,6 +53,7 @@ Game::Game(const Window& window)
       , m_BootIntervals{}
       , m_BootCounter{1}
       , m_MaxBootCount{20}
+    , m_Boot{}
 {
     Initialize();
 }
@@ -70,11 +75,13 @@ void Game::Cleanup()
     delete m_pTextureManager;
     delete m_pPlayer;
     delete m_pSoundManager;
+    delete m_pTestGameObject;
 
     std::ranges::for_each(m_Waters, [](const Water* pWater) { delete pWater; });
     std::ranges::for_each(m_Throwables, [](const IThrowable* pThrowable) { delete pThrowable; });
-    std::ranges::for_each(m_GameObjects, [](const GameObject* pGameObject) { delete pGameObject; });
+    std::ranges::for_each(m_Enemies, [](const IEnemy* pEnemy) { delete pEnemy; });
     std::ranges::for_each(m_Tombstones, [](const Tombstone* pTombstone) { delete pTombstone; });
+    std::ranges::for_each(m_Collectibles, [](const ICollectible* pCollectible) { delete pCollectible; });
 }
 
 void Game::Initialize()
@@ -109,15 +116,15 @@ void Game::Initialize()
     m_pHUD = new HUD{m_pSpriteFactory->CreateSprite(Label::U_HUD), m_pPlayer, GetViewPort()};
 
     // TEST GAME OBJECT
-    m_pTestGameObject = new Dagger{m_pSpriteFactory->CreateSprite(Label::W_DAGGER), Point2f{218.f, 65.f}, false};
+    m_pTestGameObject = new Dagger{m_pSpriteFactory->CreateSprite(Label::W_DAGGER), Point2f{260.f, 65.f}, false};
     m_pTestGameObject->SetActive(false);
 
     // GAME OBJECTS
-    m_GameObjects.push_back(m_pTestGameObject);
+    //m_Enemies.push_back();
 
     // SOUND
     m_pSoundManager = new SoundManager{m_Data, m_Labels};
-    m_pSoundManager->PlayStream(Label::S_04_GROUND_BGM, true);
+    //m_pSoundManager->PlayStream(Label::S_04_GROUND_BGM, true);
 }
 
 void Game::InitLabels()
@@ -137,10 +144,13 @@ void Game::InitLabels()
 
     // COLLECTIBLES
     m_Labels["o_basket"] = Label::O_BASKET;
-    m_Labels["o_coins"] = Label::O_COINS;
+    m_Labels["o_bust"] = Label::O_BUST;
+    m_Labels["o_coin"] = Label::O_COIN;
+    m_Labels["o_key"] = Label::O_KEY;
     m_Labels["o_money_bag"] = Label::O_MONEY_BAG;
     m_Labels["o_necklace"] = Label::O_NECKLACE;
     m_Labels["o_shield"] = Label::O_SHIELD;
+    m_Labels["o_star"] = Label::O_STAR;
 
     // FX
     m_Labels["f_fire"] = Label::F_FIRE;
@@ -267,7 +277,6 @@ void Game::InitWaters()
 void Game::InitTombstones()
 {
     // BOTTOM
-    // Tombstone* tombstone1 = new Tombstone{Rectf{86.0f, 66.0f, 30.0f, 30.0f}};
     Tombstone* tombstone2 = new Tombstone{Rectf{90.0f, 66.0f, 30.0f, 30.0f}};
     Tombstone* tombstone3 = new Tombstone{Rectf{535.0f, 66.0f, 30.0f, 30.0f}};
     Tombstone* tombstone4 = new Tombstone{Rectf{884.0f, 66.0f, 30.0f, 30.0f}};
@@ -283,7 +292,6 @@ void Game::InitTombstones()
     Tombstone* tombstone12 = new Tombstone{Rectf{1849.0f, 238.0f, 30.0f, 30.0f}};
     Tombstone* tombstone13 = new Tombstone{Rectf{2056.0f, 238.0f, 30.0f, 30.0f}};
 
-    // m_Tombstones.push_back(tombstone1);
     m_Tombstones.push_back(tombstone2);
     m_Tombstones.push_back(tombstone3);
     m_Tombstones.push_back(tombstone4);
@@ -337,50 +345,84 @@ void Game::ClearBackground() const
 
 void Game::Draw() const
 {
-    DrawBoot();
-    if (m_BootCounter < m_MaxBootCount) return;
-    
+    // static lambda functions
     static auto draw{[](const GameObject* pGameObject) { pGameObject->Draw(); }};
-    static auto toGameObject{[](IThrowable* pThrowable) { return dynamic_cast<GameObject*>(pThrowable); }};
+    static auto throwableToGameObject{[](IThrowable* pThrowable) { return dynamic_cast<GameObject*>(pThrowable); }};
+    static auto enemyToGameObject{[](IEnemy* pEnemy) { return dynamic_cast<GameObject*>(pEnemy); }};
+    static auto collectibleToGameObject{[](ICollectible* pCollectible) { return dynamic_cast<GameObject*>(pCollectible); }};
     static auto isVisible{[](const GameObject* pGameObject) { return pGameObject->IsVisible(); }};
 
+    // CLEAR
     ClearBackground();
+    
+    // BOOT
+    if (m_Boot)
+    {
+        DrawBoot();
+        if (m_BootCounter < m_MaxBootCount) return;
+    }
 
     glPushMatrix();
     m_pCamera->Transform(m_pPlayer->GetShape());
     m_pLevel->Draw();
-    std::ranges::for_each(m_GameObjects | std::views::filter(isVisible), draw);
-    std::ranges::for_each(m_Throwables | std::views::transform(toGameObject) | std::views::filter(isVisible), draw);
+    std::ranges::for_each(m_Enemies | std::views::transform(enemyToGameObject) | std::views::filter(isVisible), draw);
+    std::ranges::for_each(m_Throwables | std::views::transform(throwableToGameObject) | std::views::filter(isVisible), draw);
+    std::ranges::for_each(m_Collectibles | std::views::transform(collectibleToGameObject) | std::views::filter(isVisible), draw);
     m_pPlayer->Draw();
     std::ranges::for_each(m_Waters, [](const Water* pWater) { pWater->Draw(); });
     m_pForeground->Draw();
+    // Test object
+    if (m_pTestGameObject->IsVisible()) m_pTestGameObject->Draw();
 #if DEBUG_COLLISION
     m_pKillZone->Draw();
     std::ranges::for_each(m_Tombstones, [](const Tombstone* pTombstone) { pTombstone->Draw(); });
 #endif
     glPopMatrix();
 
+    // HUD
     m_pHUD->Draw();
+
 }
 
 void Game::Update(float elapsedSec)
 {
+    // static lambda functions
+    static auto isActive{[](const GameObject* pGameObject) { return pGameObject->IsActive(); }};
+    static auto throwableToGameObject{[](IThrowable* pThrowable) { return dynamic_cast<GameObject*>(pThrowable); }};
+    static auto enemyToGameObject{[](IEnemy* pEnemy) { return dynamic_cast<GameObject*>(pEnemy); }};
+    static auto collectibleToGameObject{[](ICollectible* pCollectible) { return dynamic_cast<GameObject*>(pCollectible); }};
+    static auto update{[&](GameObject* pGameObject) { pGameObject->Update(elapsedSec); }};
+
     Clock::Update(elapsedSec);
-    Boot();
-    if (m_BootCounter < m_MaxBootCount) return;
-    // Update game objects
+
+    // BOOT
+    if (m_Boot)
+    {
+        Boot();
+        if (m_BootCounter < m_MaxBootCount) return;
+    }
+    
+    // LEVEL
     m_pLevel->Update(elapsedSec);
     std::ranges::for_each(m_Waters, [&](Water* pWater) { pWater->Update(elapsedSec); });
+    
+    // PLAYER
     if (m_pPlayer->IsActive()) m_pPlayer->Update(elapsedSec);
 
-    static auto isActive{[](const GameObject* pGameObject) { return pGameObject->IsActive(); }};
-    static auto toGameObject{[](IThrowable* pThrowable) { return dynamic_cast<GameObject*>(pThrowable); }};
-    static auto update{[&](GameObject* pGameObject) { pGameObject->Update(elapsedSec); }};
-    std::ranges::for_each(m_GameObjects | std::views::filter(isActive), update);
-    std::ranges::for_each(m_Throwables | std::views::transform(toGameObject) | std::views::filter(isActive), update);
+    // EMENIES
+    // TODO set target
+    std::ranges::for_each(m_Enemies | std::views::transform(enemyToGameObject) |std::views::filter(isActive), update);
+
+    // THROWABLES
+    std::ranges::for_each(m_Throwables | std::views::transform(throwableToGameObject) | std::views::filter(isActive), update);
+
+    // COLLECTIBLES
+    std::ranges::for_each(m_Collectibles | std::views::transform(collectibleToGameObject) | std::views::filter(isActive), update);
 
     m_pHUD->Update(elapsedSec);
-    // TODO set target
+
+    // Test object
+    if (m_pTestGameObject->IsActive())m_pTestGameObject->Update(elapsedSec);
 
     // Do collision
     DoCollisionTests();
@@ -388,28 +430,32 @@ void Game::Update(float elapsedSec)
 
 void Game::DoCollisionTests()
 {
+    // kill-z continuous collision detection
     m_pKillZone->HandleCollision(m_pPlayer);
+    
     if (m_pPlayer->IsActive()) m_pLevel->HandleCollision(m_pPlayer);
 
-    // Game objects on player
-    for (GameObject* pGameObject : m_GameObjects)
+    // Player on enemies
+    for (IEnemy* pGameObject : m_Enemies)
     {
-        if (pGameObject->IsActive())
+        GameObject* enemy = dynamic_cast<GameObject*>(pGameObject);
+        if (enemy->IsActive())
         {
-            m_pPlayer->HandleCollision(pGameObject);
+            m_pPlayer->HandleCollision(enemy);
         }
     }
 
-    // Weapons on game objects and tombstones
+    // Weapons on game enemies and tombstones
     for (IThrowable* pThrowable : m_Throwables)
     {
         GameObject* weapon = dynamic_cast<GameObject*>(pThrowable);
         if (weapon->IsActive())
         {
-            // GAME OBJECTS
-            for (GameObject* pGameObject : m_GameObjects)
+            // ENEMIES
+            for (IEnemy* pGameObject : m_Enemies)
             {
-                if (pGameObject->IsActive()) weapon->HandleCollision(pGameObject);
+                GameObject* enemy = dynamic_cast<GameObject*>(pGameObject);
+                if (enemy->IsActive()) weapon->HandleCollision(enemy);
             }
             // TOMBSTONE
             for (Tombstone* pTombstone : m_Tombstones)
@@ -418,18 +464,28 @@ void Game::DoCollisionTests()
             }
         }
     }
+
+    // Test object
+    m_pPlayer->HandleCollision(m_pTestGameObject);
 }
 
 void Game::LateUpdate(float elapsedSec)
 {
-    std::ranges::for_each(m_Waters, [&](Water* pWater) { pWater->LateUpdate(elapsedSec); });
+    // static lambda functions
+    static auto lateUpdate{[&](GameObject* pGameObject) { pGameObject->LateUpdate(elapsedSec); }};
+    static auto throwableToGameObject{[](IThrowable* pThrowable) { return dynamic_cast<GameObject*>(pThrowable); }};
+    static auto enemyToGameObject{[](IEnemy* pEnemy) { return dynamic_cast<GameObject*>(pEnemy); }};
+    static auto collectibleToGameObject{[](ICollectible* pCollectible) { return dynamic_cast<GameObject*>(pCollectible); }};
+    
     m_pPlayer->LateUpdate(elapsedSec);
 
-    static auto lateUpdate{[&](GameObject* pGameObject) { pGameObject->LateUpdate(elapsedSec); }};
-    static auto toGameObject{[](IThrowable* pThrowable) { return dynamic_cast<GameObject*>(pThrowable); }};
+    std::ranges::for_each(m_Waters, [&](Water* pWater) { pWater->LateUpdate(elapsedSec); });
+    std::ranges::for_each(m_Enemies | std::views::transform(enemyToGameObject), lateUpdate);
+    std::ranges::for_each(m_Throwables | std::views::transform(throwableToGameObject), lateUpdate);
+    std::ranges::for_each(m_Collectibles | std::views::transform(collectibleToGameObject), lateUpdate);
 
-    std::ranges::for_each(m_GameObjects, lateUpdate);
-    std::ranges::for_each(m_Throwables | std::views::transform(toGameObject), lateUpdate);
+    // Test object
+    m_pTestGameObject->LateUpdate(elapsedSec);
 }
 
 void Game::ProcessKeyDownEvent(const SDL_KeyboardEvent& e)
