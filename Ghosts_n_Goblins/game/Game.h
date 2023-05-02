@@ -20,7 +20,7 @@ class Camera;
 class TextureManager;
 class SpriteFactory;
 class GameObject;
-class PowerUpManager;
+class SoundManager;
 
 class IThrowable;
 
@@ -31,56 +31,97 @@ public:
     enum class Label
     {
         // CHARACTERS
-        ARTHUR,
-        BIG_MAN,
-        CROW,
-        FLYING_KNIGHT,
-        GREEN_MONSTER,
-        MAGICIAN,
-        PRINCESS,
-        RED_ARREMER,
-        SATAN,
-        WOODY_PIG,
-        ZOMBIE,
+        C_ARTHUR,
+        C_BIG_MAN,
+        C_CROW,
+        C_FLYING_KNIGHT,
+        C_GREEN_MONSTER,
+        C_MAGICIAN,
+        C_PRINCESS,
+        C_RED_ARREMER,
+        C_SATAN,
+        C_WOODY_PIG,
+        C_ZOMBIE,
 
         // COLLECTIBLES
-        BASKET,
-        COINS,
-        MONEY_BAG,
-        NECKLACE,
-        SHIELD,
+        O_BASKET,
+        O_COINS,
+        O_MONEY_BAG,
+        O_NECKLACE,
+        O_SHIELD,
 
         // FX
-        FIRE,
-        FX,
-        VANISH,
+        F_FIRE,
+        F_FX,
+        F_VANISH,
 
         // LEVEL
-        DOOR,
-        FOREGROUND,
-        KILLZONE,
-        LEVEL,
-        PLATFORM,
-        TOMBSTONE,
-        WATER,
+        L_DOOR,
+        L_FOREGROUND,
+        L_KILLZONE,
+        L_LEVEL,
+        L_PLATFORM,
+        L_TOMBSTONE,
+        L_WATER,
 
         // UI
-        HUD,
-        MAP,
-        PIN,
+        U_HUD,
+        U_MAP,
+        U_PIN,
 
         // WEAPONS
-        DAGGER,
-        LANCE,
-        SPEAR,
-        TORCH,
+        W_DAGGER,
+        W_LANCE,
+        W_SPEAR,
+        W_TORCH,
 
         // DEBUG
-        LEVEL_DEBUG,
-        FALLBACK,
-        MISSING,
-        DUMMY,
+        D_LEVEL_DEBUG,
+        D_FALLBACK,
+        D_MISSING,
+        D_DUMMY,
 
+        // EFFECTS
+        E_ARMOR_PICKUP,
+        E_ARTHUR_HIT,
+        E_ARTHUR_JUMP,
+        E_ARTHUR_JUMP_FROG,
+        E_ARTHUR_LAND,
+        E_ARTHUR_THROW,
+        E_ARTHUR_TRANSFORM,
+        E_BIG_ENEMY_WALK,
+        E_BOSS_DEATH,
+        E_BOSS_HIT,
+        E_CROW,
+        E_DOOR_OPEN,
+        E_ENEMY_DEATH,
+        E_ENEMY_HIT,
+        E_EXTRA_LIFE,
+        E_FLYING_KNIGHT,
+        E_MAGICIAN,
+        E_PROJECTILE_BLOCK,
+        E_RED_ARREMER_ATTACK,
+        E_TORCH,
+        E_TREASURE_PICKUP,
+        E_WEAPON_PICKUP,
+        E_WOODY_PIG,
+        E_ZOMBIE_SPAWN,
+        
+        // STREAMS
+        S_01_CREDIT,
+        S_02_START_DEMO,
+        S_03_STAGE_INTRODUCTION_MAP,
+        S_04_GROUND_BGM,
+        S_05_HURRY_UP,
+        S_06_PLAYER_OUT,
+        S_07_GAME_OVER,
+        S_08_BOSS,
+        S_09_STAGE_CLEAR,
+        S_10_1ST_PLACE_NAME_REGISTRATION,
+        S_11_1ST_PLACE_ENTRY_END,
+        S_12_BELOW_2ND_PLACE_NAME_REGISTRATION,
+        S_13_BELOW_2ND_PLACE_ENTRY_END,
+        
         // MINIGAME
         AVATAR
     };
@@ -126,6 +167,7 @@ private:
     
     SpriteFactory* m_pSpriteFactory;
     TextureManager* m_pTextureManager;
+    SoundManager* m_pSoundManager;
     Player* m_pPlayer;
     GameObject* m_pForeground;
     Level* m_pLevel;

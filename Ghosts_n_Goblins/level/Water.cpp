@@ -6,12 +6,12 @@
 #include <iostream>
 
 Water::Water(Sprite* pSprite, const Point2f& pos)
-    : GameObject{Game::Label::WATER, pSprite, pos}
+    : GameObject{Game::Label::L_WATER, pSprite, pos}
 {
 }
 
 Water::Water(Sprite* pSprite, const Point2f& pos, float clipWidth)
-    : GameObject{Game::Label::WATER, pSprite, pos}
+    : GameObject{Game::Label::L_WATER, pSprite, pos}
 {
     m_pSprite->SetClipWidth(clipWidth);
 }

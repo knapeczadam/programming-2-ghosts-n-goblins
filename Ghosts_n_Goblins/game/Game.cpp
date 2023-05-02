@@ -22,6 +22,7 @@
 
 #include "characters/IEnemy.h"
 #include "engine/Clock.h"
+#include "engine/SoundManager.h"
 #include "level/Water.h"
 #include "weapons/Dagger.h"
 
@@ -64,6 +65,7 @@ void Game::Cleanup()
     delete m_pSpriteFactory;
     delete m_pTextureManager;
     delete m_pPlayer;
+    delete m_pSoundManager;
 
     std::ranges::for_each(m_Waters, [](const Water* pWater) { delete pWater; });
     std::ranges::for_each(m_Throwables, [](const IThrowable* pThrowable) { delete pThrowable; });
@@ -84,10 +86,10 @@ void Game::Initialize()
     m_pSpriteFactory = new SpriteFactory{m_Data, m_pTextureManager, m_Labels};
 
     // LEVEL
-    m_pPlatform = new Platform{m_pSpriteFactory->CreateSprite(Label::PLATFORM), Point2f{3555.0f, 30.0f}};
-    m_pForeground = new GameObject{Label::FOREGROUND, m_pSpriteFactory->CreateSprite(Label::FOREGROUND), false};
-    m_pKillZone = new KillZone{m_pTextureManager->GetTexture(Label::LEVEL)->GetWidth(), 20.0f};
-    m_pLevel = new Level{m_pSpriteFactory->CreateSprite(Label::LEVEL), m_pPlatform};
+    m_pPlatform = new Platform{m_pSpriteFactory->CreateSprite(Label::L_PLATFORM), Point2f{3555.0f, 30.0f}};
+    m_pForeground = new GameObject{Label::L_FOREGROUND, m_pSpriteFactory->CreateSprite(Label::L_FOREGROUND), false};
+    m_pKillZone = new KillZone{m_pTextureManager->GetTexture(Label::L_LEVEL)->GetWidth(), 20.0f};
+    m_pLevel = new Level{m_pSpriteFactory->CreateSprite(Label::L_LEVEL), m_pPlatform};
     InitWaters();
     InitTombstones();
 
@@ -96,67 +98,115 @@ void Game::Initialize()
     InitCamera();
 
     // PLAYER
-    m_pPlayer = new Player{m_pSpriteFactory->CreateSprite(Label::ARTHUR), Player::GetSpawnPos(), m_pLevel};
+    m_pPlayer = new Player{m_pSpriteFactory->CreateSprite(Label::C_ARTHUR), Player::GetSpawnPos(), m_pLevel};
 
     // HUD
-    m_pHUD = new HUD{m_pSpriteFactory->CreateSprite(Label::HUD), m_pPlayer, GetViewPort()};
+    m_pHUD = new HUD{m_pSpriteFactory->CreateSprite(Label::U_HUD), m_pPlayer, GetViewPort()};
 
     // TEST GAME OBJECT
-    m_pTestGameObject = new Dagger{m_pSpriteFactory->CreateSprite(Label::DAGGER), Point2f{218.f, 65.f}, false};
+    m_pTestGameObject = new Dagger{m_pSpriteFactory->CreateSprite(Label::W_DAGGER), Point2f{218.f, 65.f}, false};
     m_pTestGameObject->SetActive(false);
 
     // GAME OBJECTS
     m_GameObjects.push_back(m_pTestGameObject);
+
+    // SOUND
+    m_pSoundManager = new SoundManager{m_Data, m_Labels};
+    if (m_pSoundManager->GetStream(Label::S_04_GROUND_BGM)->IsLoaded())
+    {
+        m_pSoundManager->GetStream(Label::S_04_GROUND_BGM)->Play(false);
+    }
 }
 
 void Game::InitLabels()
 {
     // CHARACTERS
-    m_Labels["arthur"] = Label::ARTHUR;
-    m_Labels["big_man"] = Label::BIG_MAN;
-    m_Labels["crow"] = Label::CROW;
-    m_Labels["flying_knight"] = Label::FLYING_KNIGHT;
-    m_Labels["green_monster"] = Label::GREEN_MONSTER;
-    m_Labels["magician"] = Label::MAGICIAN;
-    m_Labels["princess"] = Label::PRINCESS;
-    m_Labels["red_arremer"] = Label::RED_ARREMER;
-    m_Labels["satan"] = Label::SATAN;
-    m_Labels["woody_pig"] = Label::WOODY_PIG;
-    m_Labels["zombie"] = Label::ZOMBIE;
+    m_Labels["c_arthur"] = Label::C_ARTHUR;
+    m_Labels["c_big_man"] = Label::C_BIG_MAN;
+    m_Labels["c_crow"] = Label::C_CROW;
+    m_Labels["c_flying_knight"] = Label::C_FLYING_KNIGHT;
+    m_Labels["c_green_monster"] = Label::C_GREEN_MONSTER;
+    m_Labels["c_magician"] = Label::C_MAGICIAN;
+    m_Labels["c_princess"] = Label::C_PRINCESS;
+    m_Labels["c_red_arremer"] = Label::C_RED_ARREMER;
+    m_Labels["c_satan"] = Label::C_SATAN;
+    m_Labels["c_woody_pig"] = Label::C_WOODY_PIG;
+    m_Labels["c_zombie"] = Label::C_ZOMBIE;
 
     // COLLECTIBLES
-    m_Labels["basket"] = Label::BASKET;
-    m_Labels["coins"] = Label::COINS;
-    m_Labels["money_bag"] = Label::MONEY_BAG;
-    m_Labels["necklace"] = Label::NECKLACE;
-    m_Labels["shield"] = Label::SHIELD;
+    m_Labels["o_basket"] = Label::O_BASKET;
+    m_Labels["o_coins"] = Label::O_COINS;
+    m_Labels["o_money_bag"] = Label::O_MONEY_BAG;
+    m_Labels["o_necklace"] = Label::O_NECKLACE;
+    m_Labels["o_shield"] = Label::O_SHIELD;
 
     // FX
-    m_Labels["fire"] = Label::FIRE;
-    m_Labels["fx"] = Label::FX;
-    m_Labels["vanish"] = Label::VANISH;
+    m_Labels["f_fire"] = Label::F_FIRE;
+    m_Labels["f_fx"] = Label::F_FX;
+    m_Labels["f_vanish"] = Label::F_VANISH;
 
     // LEVEL
-    m_Labels["door"] = Label::DOOR;
-    m_Labels["foreground"] = Label::FOREGROUND;
-    m_Labels["level"] = Label::LEVEL;
-    m_Labels["platform"] = Label::PLATFORM;
-    m_Labels["water"] = Label::WATER;
+    m_Labels["l_door"] = Label::L_DOOR;
+    m_Labels["l_foreground"] = Label::L_FOREGROUND;
+    m_Labels["l_level"] = Label::L_LEVEL;
+    m_Labels["l_platform"] = Label::L_PLATFORM;
+    m_Labels["l_water"] = Label::L_WATER;
 
     // UI
-    m_Labels["hud"] = Label::HUD;
-    m_Labels["map"] = Label::MAP;
-    m_Labels["pin"] = Label::PIN;
+    m_Labels["u_hud"] = Label::U_HUD;
+    m_Labels["u_map"] = Label::U_MAP;
+    m_Labels["u_pin"] = Label::U_PIN;
 
     // WEAPONS
-    m_Labels["dagger"] = Label::DAGGER;
-    m_Labels["lance"] = Label::LANCE;
-    m_Labels["spear"] = Label::SPEAR;
-    m_Labels["torch"] = Label::TORCH;
+    m_Labels["w_dagger"] = Label::W_DAGGER;
+    m_Labels["w_lance"] = Label::W_LANCE;
+    m_Labels["w_spear"] = Label::W_SPEAR;
+    m_Labels["w_torch"] = Label::W_TORCH;
 
     // DEBUG
-    m_Labels["level_debug"] = Label::LEVEL_DEBUG;
-    m_Labels["fallback"] = Label::FALLBACK;
+    m_Labels["d_level_debug"] = Label::D_LEVEL_DEBUG;
+    m_Labels["d_fallback"] = Label::D_FALLBACK;
+
+    // EFFECTS
+    m_Labels["e_armor_pickup"] = Label::E_ARMOR_PICKUP;
+    m_Labels["e_arthur_hit"] = Label::E_ARTHUR_HIT;
+    m_Labels["e_arthur_jump"] = Label::E_ARTHUR_JUMP;
+    m_Labels["e_arthur_jump_frog"] = Label::E_ARTHUR_JUMP_FROG;
+    m_Labels["e_arthur_land"] = Label::E_ARTHUR_LAND;
+    m_Labels["e_arthur_throw"] = Label::E_ARTHUR_THROW;
+    m_Labels["e_arthur_transform"] = Label::E_ARTHUR_TRANSFORM;
+    m_Labels["e_big_enemy_walk"] = Label::E_BIG_ENEMY_WALK;
+    m_Labels["e_boss_death"] = Label::E_BOSS_DEATH;
+    m_Labels["e_boss_hit"] = Label::E_BOSS_HIT;
+    m_Labels["e_crow"] = Label::E_CROW;
+    m_Labels["e_door_open"] = Label::E_DOOR_OPEN;
+    m_Labels["e_enemy_death"] = Label::E_ENEMY_DEATH;
+    m_Labels["e_enemy_hit"] = Label::E_ENEMY_HIT;
+    m_Labels["e_extra_life"] = Label::E_EXTRA_LIFE;
+    m_Labels["e_flying_knight"] = Label::E_FLYING_KNIGHT;
+    m_Labels["e_magician"] = Label::E_MAGICIAN;
+    m_Labels["e_projectile_block"] = Label::E_PROJECTILE_BLOCK;
+    m_Labels["e_red_arremer_attack"] = Label::E_RED_ARREMER_ATTACK;
+    m_Labels["e_torch"] = Label::E_TORCH;
+    m_Labels["e_treasure_pickup"] = Label::E_TREASURE_PICKUP;
+    m_Labels["e_weapon_pickup"] = Label::E_WEAPON_PICKUP;
+    m_Labels["e_woody_pig"] = Label::E_WOODY_PIG;
+    m_Labels["e_zombie_spawn"] = Label::E_ZOMBIE_SPAWN;
+
+    // STREAMS
+    m_Labels["s_01_credit"] = Label::S_01_CREDIT;
+    m_Labels["s_02_start_demo"] = Label::S_02_START_DEMO;
+    m_Labels["s_03_stage_introduction_map"] = Label::S_03_STAGE_INTRODUCTION_MAP;
+    m_Labels["s_04_ground_bgm"] = Label::S_04_GROUND_BGM;
+    m_Labels["s_05_hurry_up"] = Label::S_05_HURRY_UP;
+    m_Labels["s_06_player_out"] = Label::S_06_PLAYER_OUT;
+    m_Labels["s_07_game_over"] = Label::S_07_GAME_OVER;
+    m_Labels["s_08_boss"] = Label::S_08_BOSS;
+    m_Labels["s_09_stage_clear"] = Label::S_09_STAGE_CLEAR;
+    m_Labels["s_10_1st_place_name_registration"] = Label::S_10_1ST_PLACE_NAME_REGISTRATION;
+    m_Labels["s_11_1st_place_entry_end"] = Label::S_11_1ST_PLACE_ENTRY_END;
+    m_Labels["s_12_below_2nd_place_name_registration"] = Label::S_12_BELOW_2ND_PLACE_NAME_REGISTRATION;
+    m_Labels["s_13_below_2nd_place_entry_end"] = Label::S_13_BELOW_2ND_PLACE_ENTRY_END;
 
     // MINIGAME
     m_Labels["avatar"] = Label::AVATAR;
@@ -178,11 +228,11 @@ void Game::LoadData()
 
 void Game::InitWaters()
 {
-    Water* water1 = new Water{m_pSpriteFactory->CreateSprite(Label::WATER), Point2f{3550.0f, 0.0f}};
-    Water* water2 = new Water{m_pSpriteFactory->CreateSprite(Label::WATER), Point2f{4205.0f, 0.0f}, 64.0f};
-    Water* water3 = new Water{m_pSpriteFactory->CreateSprite(Label::WATER), Point2f{4343.0f, 0.0f}, 64.0f};
-    Water* water4 = new Water{m_pSpriteFactory->CreateSprite(Label::WATER), Point2f{5308.0f, 0.0f}, 64.0f};
-    Water* water5 = new Water{m_pSpriteFactory->CreateSprite(Label::WATER), Point2f{5997.0f, 0.0f}, 64.0f};
+    Water* water1 = new Water{m_pSpriteFactory->CreateSprite(Label::L_WATER), Point2f{3550.0f, 0.0f}};
+    Water* water2 = new Water{m_pSpriteFactory->CreateSprite(Label::L_WATER), Point2f{4205.0f, 0.0f}, 64.0f};
+    Water* water3 = new Water{m_pSpriteFactory->CreateSprite(Label::L_WATER), Point2f{4343.0f, 0.0f}, 64.0f};
+    Water* water4 = new Water{m_pSpriteFactory->CreateSprite(Label::L_WATER), Point2f{5308.0f, 0.0f}, 64.0f};
+    Water* water5 = new Water{m_pSpriteFactory->CreateSprite(Label::L_WATER), Point2f{5997.0f, 0.0f}, 64.0f};
     m_Waters.push_back(water1);
     m_Waters.push_back(water2);
     m_Waters.push_back(water3);

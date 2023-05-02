@@ -6,7 +6,7 @@ class Timer
 {
 public:
     explicit Timer();
-    virtual ~Timer() = default;
+    virtual ~Timer();
     Timer(const Timer& other) = delete;
     Timer(Timer&& other) noexcept = delete;
     Timer& operator=(const Timer& other) = delete;

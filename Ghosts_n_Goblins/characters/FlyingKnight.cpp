@@ -4,7 +4,7 @@
 #include "weapons/IThrowable.h"
 
 FlyingKnight::FlyingKnight(Sprite* pSprite, const Point2f& pos)
-    : GameObject{Game::Label::FLYING_KNIGHT, pSprite, pos}
+    : GameObject{Game::Label::C_FLYING_KNIGHT, pSprite, pos}
 {
 }
 

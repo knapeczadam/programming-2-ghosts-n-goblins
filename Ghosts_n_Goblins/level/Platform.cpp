@@ -9,7 +9,7 @@
 #include <iostream>
 
 Platform::Platform(Sprite* pSprite, const Point2f& pos)
-    : GameObject{Game::Label::PLATFORM, pSprite, pos}
+    : GameObject{Game::Label::L_PLATFORM, pSprite, pos}
       , m_AccuSec{0.0f}
       , m_OriginalPos{pos}
       , m_Speed{2.0f}

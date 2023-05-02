@@ -5,7 +5,7 @@
 #include "characters/Player.h"
 
 KillZone::KillZone(float width, float height)
-    : GameObject{Game::Label::KILLZONE, Rectf{0, 0, width, height}}
+    : GameObject{Game::Label::L_KILLZONE, Rectf{0, 0, width, height}}
 {
 }
 

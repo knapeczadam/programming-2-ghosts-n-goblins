@@ -13,7 +13,7 @@
 #include "engine/Sprite.h"
 
 Level::Level(Sprite* pSprite, Platform* pPlatform)
-    : GameObject{Game::Label::LEVEL, pSprite}
+    : GameObject{Game::Label::L_LEVEL, pSprite}
       , m_pPlatform{pPlatform}
       , m_Vertices{}
       , topMargin{32.0f}

@@ -88,7 +88,7 @@ Texture* TextureManager::GetTexture(Game::Label label)
         return it->second;
     }
     // FALLBACK
-    return m_Textures[Game::Label::FALLBACK];
+    return m_Textures[Game::Label::D_FALLBACK];
 }
 
 void TextureManager::SetTexture(Game::Label label, Texture* pTexture)

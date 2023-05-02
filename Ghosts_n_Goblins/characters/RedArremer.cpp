@@ -4,7 +4,7 @@
 #include "weapons/IThrowable.h"
 
 RedArremer::RedArremer(Sprite* pSprite, const Point2f& pos)
-    : GameObject{Game::Label::RED_ARREMER, pSprite, pos}
+    : GameObject{Game::Label::C_RED_ARREMER, pSprite, pos}
 {
 }
 

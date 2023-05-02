@@ -7,6 +7,11 @@ Timer::Timer()
 {
 }
 
+Timer::~Timer()
+{
+    delete m_pClock;
+}
+
 void Timer::StartTimer(float seconds)
 {
     if (m_pClock) return;

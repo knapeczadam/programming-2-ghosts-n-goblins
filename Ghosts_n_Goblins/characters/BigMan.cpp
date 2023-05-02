@@ -4,7 +4,7 @@
 #include "weapons/IThrowable.h"
 
 BigMan::BigMan(Sprite* pSprite, const Point2f& pos)
-    : GameObject{Game::Label::BIG_MAN, pSprite, pos}
+    : GameObject{Game::Label::C_BIG_MAN, pSprite, pos}
 {
 }
 

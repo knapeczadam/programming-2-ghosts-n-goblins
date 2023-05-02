@@ -4,7 +4,7 @@
 #include "weapons/IThrowable.h"
 
 Crow::Crow(Sprite* pSprite, const Point2f& pos)
-    : GameObject{Game::Label::CROW, pSprite, pos}
+    : GameObject{Game::Label::C_CROW, pSprite, pos}
 {
 }
 

@@ -2,7 +2,7 @@
 #include "Necklace.h"
 
 Necklace::Necklace(Sprite* pSprite, const Point2f& pos)
-    : GameObject{Game::Label::NECKLACE, pSprite, pos}
+    : GameObject{Game::Label::O_NECKLACE, pSprite, pos}
 {
 }
 

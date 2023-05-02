@@ -4,7 +4,7 @@
 
 
 Torch::Torch(Sprite* pSprite, const Point2f& pos, bool isFlipped)
-    : GameObject{Game::Label::TORCH, pSprite, pos}
+    : GameObject{Game::Label::W_TORCH, pSprite, pos}
     , m_Speed{300.0f}
 {
     m_IsFlipped = isFlipped;

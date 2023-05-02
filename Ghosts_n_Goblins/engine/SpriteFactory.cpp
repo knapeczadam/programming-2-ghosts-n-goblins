@@ -38,7 +38,7 @@ Sprite* SpriteFactory::CreateSprite(Game::Label label)
         const std::string jsonLabel{sprite["label"]};
         if (not m_Labels.contains(jsonLabel))
         {
-            std::cerr << "SpriteFactory::CreateSprite() - ERROR: label (" << jsonLabel << ") found in data/json/sprites is not in the label map!" << std::endl;
+            std::cerr << "SpriteFactory::CreateSprite() - ERROR: label (" << jsonLabel << ") found in data.json/sprites is not in the label map!" << std::endl;
             std::abort();
         }
         if (m_Labels[jsonLabel] == label)

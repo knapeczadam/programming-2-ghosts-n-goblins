@@ -5,7 +5,7 @@
 
 
 Dagger::Dagger(Sprite* pSprite, const Point2f& pos, bool isFlipped)
-    : GameObject{Game::Label::DAGGER, pSprite, pos}
+    : GameObject{Game::Label::W_DAGGER, pSprite, pos}
     , m_Speed{300.0f}
 {
     m_IsFlipped = isFlipped;

@@ -5,7 +5,7 @@
 #include <iostream>
 
 Tombstone::Tombstone(const Rectf& shape)
-    : GameObject{Game::Label::TOMBSTONE, shape}
+    : GameObject{Game::Label::L_TOMBSTONE, shape}
       , m_HitCount{0}
       , m_MaxHitCount{15}
 {

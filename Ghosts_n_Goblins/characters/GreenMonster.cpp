@@ -4,7 +4,7 @@
 #include "weapons/IThrowable.h"
 
 GreenMonster::GreenMonster(Sprite* pSprite, const Point2f& pos)
-    : GameObject{Game::Label::GREEN_MONSTER, pSprite, pos}
+    : GameObject{Game::Label::C_GREEN_MONSTER, pSprite, pos}
 {
 }
 

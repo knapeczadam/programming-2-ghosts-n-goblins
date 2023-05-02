@@ -21,7 +21,7 @@
 const Point2f Player::m_SpawnPos{174.0f, 69.0f};
 
 Player::Player(Sprite* pSprite, const Point2f& pos, Level* pLevel)
-    : GameObject{Game::Label::ARTHUR, pSprite, pos}
+    : GameObject{Game::Label::C_ARTHUR, pSprite, pos}
       , m_HorVelocity{150.0f}
       , m_VerVelocity{500.0f}
       , m_Velocity{0.0f, 0.0f}
@@ -34,7 +34,7 @@ Player::Player(Sprite* pSprite, const Point2f& pos, Level* pLevel)
       , m_ShortCooldownTime{0.25f}
       , m_LongCooldownTime{0.30f}
       , m_isAttacking{false}
-      , m_Weapon{Game::Label::LANCE}
+      , m_Weapon{Game::Label::W_LANCE}
       , m_Overheated{false}
       , m_IsOnPlatform{false}
       , m_OffsetSnapshot{0.0f, 0.0f}
@@ -306,13 +306,13 @@ void Player::Attack(std::vector<IThrowable*>& throwables, SpriteFactory* spriteF
 
         switch (m_Weapon)
         {
-        case Game::Label::DAGGER:
+        case Game::Label::W_DAGGER:
             throwables.push_back(new Dagger{spriteFactory->CreateSprite(m_Weapon), GetShapeCenter(), m_IsFlipped});
             break;
-        case Game::Label::LANCE:
+        case Game::Label::W_LANCE:
             throwables.push_back(new Lance{spriteFactory->CreateSprite(m_Weapon), GetShapeCenter(), m_IsFlipped});
             break;
-        case Game::Label::TORCH:
+        case Game::Label::W_TORCH:
             throwables.push_back(new Torch{spriteFactory->CreateSprite(m_Weapon), GetShapeCenter(), m_IsFlipped});
             break;
         }
@@ -387,18 +387,18 @@ void Player::HandleCollision(GameObject* other)
     {
         switch (other->GetLabel())
         {
-        case Game::Label::DAGGER:
-            m_Weapon = Game::Label::DAGGER;
+        case Game::Label::W_DAGGER:
+            m_Weapon = Game::Label::W_DAGGER;
             other->SetVisible(false);
             other->SetActive(false);
             break;
-        case Game::Label::LANCE:
-            m_Weapon = Game::Label::LANCE;
+        case Game::Label::W_LANCE:
+            m_Weapon = Game::Label::W_LANCE;
             break;
-        case Game::Label::TORCH:
-            m_Weapon = Game::Label::TORCH;
+        case Game::Label::W_TORCH:
+            m_Weapon = Game::Label::W_TORCH;
             break;
-        case Game::Label::SHIELD:
+        case Game::Label::O_SHIELD:
             break;
         }
     }

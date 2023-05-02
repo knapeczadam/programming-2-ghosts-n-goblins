@@ -1,135 +1,135 @@
 {
   "images": [
     {
-      "label": "arthur",
+      "label": "c_arthur",
       "path": "characters/arthur.png"
     },
     {
-      "label": "big_man",
+      "label": "c_big_man",
       "path": "characters/big_man.png"
     },
     {
-      "label": "crow",
+      "label": "c_crow",
       "path": "characters/crow.png"
     },
     {
-      "label": "flying_knight",
+      "label": "c_flying_knight",
       "path": "characters/flying_knight.png"
     },
     {
-      "label": "green_monster",
+      "label": "c_green_monster",
       "path": "characters/green_monster.png"
     },
     {
-      "label": "magician",
+      "label": "c_magician",
       "path": "characters/magician.png"
     },
     {
-      "label": "princess",
+      "label": "c_princess",
       "path": "characters/princess.png"
     },
     {
-      "label": "red_arremer",
+      "label": "c_red_arremer",
       "path": "characters/red_arremer.png"
     },
     {
-      "label": "satan",
+      "label": "c_satan",
       "path": "characters/satan.png"
     },
     {
-      "label": "woody_pig",
+      "label": "c_woody_pig",
       "path": "characters/woody_pig.png"
     },
     {
-      "label": "zombie",
+      "label": "c_zombie",
       "path": "characters/zombie.png"
     },
     {
-      "label": "basket",
+      "label": "o_basket",
       "path": "collectibles/basket.png"
     },
     {
-      "label": "coins",
+      "label": "o_coins",
       "path": "collectibles/coins.png"
     },
     {
-      "label": "money_bag",
+      "label": "o_money_bag",
       "path": "collectibles/money_bag.png"
     },
     {
-      "label": "necklace",
+      "label": "o_necklace",
       "path": "collectibles/necklace.png"
     },
     {
-      "label": "shield",
+      "label": "o_shield",
       "path": "collectibles/shield.png"
     },
     {
-      "label": "fire",
+      "label": "f_fire",
       "path": "fx/fire.png"
     },
     {
-      "label": "fx",
+      "label": "f_fx",
       "path": "fx/fx.bmp"
     },
     {
-      "label": "vanish",
+      "label": "f_vanish",
       "path": "fx/vanish.png"
     },
     {
-      "label": "door",
+      "label": "l_door",
       "path": "level/door.bmp"
     },
     {
-      "label": "level",
+      "label": "l_level",
       "path": "level/level.bmp"
     },
     {
-      "label": "foreground",
+      "label": "l_foreground",
       "path": "level/foreground.png"
     },
     {
-      "label": "level_debug",
+      "label": "d_level_debug",
       "path": "level/level_debug.bmp"
     },
     {
-      "label": "platform",
+      "label": "l_platform",
       "path": "level/platform.bmp"
     },
     {
-      "label": "water",
+      "label": "l_water",
       "path": "level/water.png"
     },
     {
-      "label": "hud",
+      "label": "u_hud",
       "path": "ui/hud.png"
     },
     {
-      "label": "map",
+      "label": "u_map",
       "path": "ui/map.png"
     },
     {
-      "label": "pin",
+      "label": "u_pin",
       "path": "ui/pin.png"
     },
     {
-      "label": "dagger",
+      "label": "w_dagger",
       "path": "weapons/dagger.png"
     },
     {
-      "label": "lance",
+      "label": "w_lance",
       "path": "weapons/lance.png"
     },
     {
-      "label": "spear",
+      "label": "w_spear",
       "path": "weapons/spear.png"
     },
     {
-      "label": "torch",
+      "label": "w_torch",
       "path": "weapons/torch.png"
     },
     {
-      "label": "fallback",
+      "label": "d_fallback",
       "path": "fallback.png"
     },
     {
@@ -139,7 +139,7 @@
   ],
   "sprites": [
     {
-      "label": "arthur",
+      "label": "c_arthur",
       "rows": 14,
       "columns": 16,
       "frames_per_second": 10,
@@ -147,7 +147,7 @@
       "collision_width": 20
     },
     {
-      "label": "big_man",
+      "label": "c_big_man",
       "rows": 5,
       "columns": 3,
       "sub_rows": 0,
@@ -156,7 +156,7 @@
       "scale": 2
     },
     {
-      "label": "crow",
+      "label": "c_crow",
       "rows": 2,
       "columns": 4,
       "sub_rows": 1,
@@ -165,7 +165,7 @@
       "scale": 2
     },
     {
-      "label": "flying_knight",
+      "label": "c_flying_knight",
       "rows": 1,
       "columns": 4,
       "sub_rows": 1,
@@ -174,7 +174,7 @@
       "scale": 2
     },
     {
-      "label": "green_monster",
+      "label": "c_green_monster",
       "rows": 1,
       "columns": 5,
       "sub_rows": 1,
@@ -183,11 +183,11 @@
       "scale": 2
     },
     {
-      "label": "magician",
+      "label": "c_magician",
       "scale": 2
     },
     {
-      "label": "princess",
+      "label": "c_princess",
       "rows": 1,
       "columns": 3,
       "sub_rows": 0,
@@ -196,7 +196,7 @@
       "scale": 2
     },
     {
-      "label": "red_arremer",
+      "label": "c_red_arremer",
       "rows": 3,
       "columns": 5,
       "sub_rows": 3,
@@ -205,7 +205,7 @@
       "scale": 2
     },
     {
-      "label": "satan",
+      "label": "c_satan",
       "rows": 1,
       "columns": 6,
       "sub_rows": 3,
@@ -214,7 +214,7 @@
       "scale": 2
     },
     {
-      "label": "woody_pig",
+      "label": "c_woody_pig",
       "rows": 3,
       "columns": 4,
       "sub_rows": 3,
@@ -223,7 +223,7 @@
       "scale": 2
     },
     {
-      "label": "zombie",
+      "label": "c_zombie",
       "rows": 1,
       "columns": 6,
       "sub_rows": 1,
@@ -232,19 +232,19 @@
       "scale": 2
     },
     {
-      "label": "basket",
+      "label": "o_basket",
       "scale": 2
     },
     {
-      "label": "coins",
+      "label": "o_coins",
       "scale": 2
     },
     {
-      "label": "money_bag",
+      "label": "o_money_bag",
       "scale": 2
     },
     {
-      "label": "necklace",
+      "label": "o_necklace",
       "rows": 1,
       "columns": 25,
       "sub_rows": 1,
@@ -253,11 +253,11 @@
       "scale": 2
     },
     {
-      "label": "shield",
+      "label": "o_shield",
       "scale": 2
     },
     {
-      "label": "fire",
+      "label": "f_fire",
       "rows": 1,
       "columns": 4,
       "sub_rows": 0,
@@ -266,7 +266,7 @@
       "scale": 2
     },
     {
-      "label": "fx",
+      "label": "f_fx",
       "rows": 1,
       "columns": 4,
       "sub_rows": 0,
@@ -275,48 +275,48 @@
       "scale": 2
     },
     {
-      "label": "vanish",
+      "label": "f_vanish",
       "rows": 1,
       "columns": 3,
       "frames_per_second": 3,
       "scale": 2
     },
     {
-      "label": "level"
+      "label": "l_level"
     },
     {
-      "label": "foreground"
+      "label": "l_foreground"
     },
     {
-      "label": "platform",
+      "label": "l_platform",
       "scale": 2
     },
     {
-      "label": "water",
+      "label": "l_water",
       "rows": 3,
       "columns": 1,
       "frames_per_second": 3
     },
     {
-      "label": "hud",
+      "label": "u_hud",
       "rows": 7,
       "columns": 11,
       "scale": 2
     },
     {
-      "label": "dagger",
+      "label": "w_dagger",
       "scale": 2
     },
     {
-      "label": "lance",
+      "label": "w_lance",
       "scale": 2
     },
     {
-      "label": "spear",
+      "label": "w_spear",
       "scale": 2
     },
     {
-      "label": "torch",
+      "label": "w_torch",
       "scale": 2
     },
     {
@@ -333,10 +333,156 @@
       "top_offset_rows": 0
     }
   ],
-  "sounds": [
+  "effects": [
     {
-      "label": "",
-      "path": ""
+      "label": "e_armor_pickup",
+      "path": "armor_pickup.wav"
+    },
+    {
+      "label": "e_arthur_hit",
+      "path": "arthur_hit.wav"
+    },
+    {
+      "label": "e_arthur_jump",
+      "path": "arthur_jump.wav"
+    },
+    {
+      "label": "e_arthur_jump_frog",
+      "path": "arthur_jump_frog.wav"
+    },
+    {
+      "label": "e_arthur_land",
+      "path": "arthur_land.wav"
+    },
+    {
+      "label": "e_arthur_throw",
+      "path": "arthur_throw.wav"
+    },
+    {
+      "label": "e_arthur_transform",
+      "path": "arthur_transform.wav"
+    },
+    {
+      "label": "e_big_enemy_walk",
+      "path": "big_enemy_walk.wav"
+    },
+    {
+      "label": "e_boss_death",
+      "path": "boss_death.wav"
+    },
+    {
+      "label": "e_boss_hit",
+      "path": "boss_hit.wav"
+    },
+    {
+      "label": "e_crow",
+      "path": "crow.wav"
+    },
+    {
+      "label": "e_door_open",
+      "path": "door_open.wav"
+    },
+    {
+      "label": "e_enemy_death",
+      "path": "enemy_death.wav"
+    },
+    {
+      "label": "e_enemy_hit",
+      "path": "enemy_hit.wav"
+    },
+    {
+      "label": "e_extra_life",
+      "path": "extra_life.wav"
+    },
+    {
+      "label": "e_flying_knight",
+      "path": "flying_knight.wav"
+    },
+    {
+      "label": "e_magician",
+      "path": "magician.wav"
+    },
+    {
+      "label": "e_projectile_block",
+      "path": "projectile_block.wav"
+    },
+    {
+      "label": "e_red_arremer_attack",
+      "path": "red_arremer_attack.wav"
+    },
+    {
+      "label": "e_torch",
+      "path": "torch.wav"
+    },
+    {
+      "label": "e_treasure_pickup",
+      "path": "treasure_pickup.wav"
+    },
+    {
+      "label": "e_weapon_pickup",
+      "path": "weapon_pickup.wav"
+    },
+    {
+      "label": "e_woody_pig",
+      "path": "woody_pig.wav"
+    },
+    {
+      "label": "e_zombie_spawn",
+      "path": "zombie_spawn.wav"
+    }
+  ],
+  "streams": [
+    {
+      "label": "s_01_credit",
+      "path": "01_credit.mp3"
+    },
+    {
+      "label": "s_02_start_demo",
+      "path": "02_start_demo.mp3"
+    },
+    {
+      "label": "s_03_stage_introduction_map",
+      "path": "03_stage_introduction_map.mp3"
+    },
+    {
+      "label": "s_04_ground_bgm",
+      "path": "04_ground_bgm.mp3"
+    },
+    {
+      "label": "s_05_hurry_up",
+      "path": "05_hurry_up.mp3"
+    },
+    {
+      "label": "s_06_player_out",
+      "path": "06_player_out.mp3"
+    },
+    {
+      "label": "s_07_game_over",
+      "path": "07_game_over.mp3"
+    },
+    {
+      "label": "s_08_boss",
+      "path": "08_boss.mp3"
+    },
+    {
+      "label": "s_09_stage_clear",
+      "path": "09_stage_clear.mp3"
+    },
+    {
+      "label": "s_10_1st_place_name_registration",
+      "path": "10_1st_place_name_registration.mp3"
+    },
+    {
+      "label": "s_11_1st_place_entry_end",
+      "path": "11_1st_place_entry_end.mp3"
+    },
+    {
+      "label": "s_12_below_2nd_place_name_registration",
+      "path": "12_below_2nd_place_name_registration.mp3"
+    },
+    {
+      "label": "s_13_below_2nd_place_entry_end",
+      "path": "13_below_2nd_place_entry_end.mp3"
     }
   ]
 }

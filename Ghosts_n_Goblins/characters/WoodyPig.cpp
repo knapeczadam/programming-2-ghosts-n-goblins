@@ -4,7 +4,7 @@
 #include "weapons/IThrowable.h"
 
 WoodyPig::WoodyPig(Sprite* pSprite, const Point2f& pos)
-    : GameObject{Game::Label::WOODY_PIG, pSprite, pos}
+    : GameObject{Game::Label::C_WOODY_PIG, pSprite, pos}
 {
 }
 

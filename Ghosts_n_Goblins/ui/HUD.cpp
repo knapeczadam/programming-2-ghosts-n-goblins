@@ -8,7 +8,7 @@
 
 
 HUD::HUD(Sprite* pSprite, Player* pPlayer, const Rectf& viewPort)
-    : UI{Game::Label::HUD, pSprite}
+    : UI{Game::Label::U_HUD, pSprite}
       , m_pPlayer{pPlayer}
       , m_ViewPort{viewPort}
 {
@@ -190,12 +190,12 @@ void HUD::DrawWeapon() const
     m_pSprite->SetTopOffsetRows(2);
     switch (m_pPlayer->GetWeapon())
     {
-    case Game::Label::DAGGER:
+    case Game::Label::W_DAGGER:
         m_pSprite->SetLeftOffsetCols(2);
         break;
-    case Game::Label::LANCE:
+    case Game::Label::W_LANCE:
         break;
-    case Game::Label::TORCH:
+    case Game::Label::W_TORCH:
         m_pSprite->SetLeftOffsetCols(1);
         break;
     }

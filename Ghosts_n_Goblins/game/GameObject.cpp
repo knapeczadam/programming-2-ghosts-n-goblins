@@ -8,7 +8,7 @@
 #include "engine/Clock.h"
 
 GameObject::GameObject()
-    : m_Label{Game::Label::DUMMY}
+    : m_Label{Game::Label::D_DUMMY}
       , m_pSprite{}
       , m_Shape{}
       , m_CollisionBox{}
