@@ -23,6 +23,7 @@ class TextureManager;
 class SpriteFactory;
 class GameObject;
 class SoundManager;
+class Ladder;
 
 class IThrowable;
 class IEnemy;
@@ -198,12 +199,12 @@ private:
     
     // DATA MEMBERS
     
-    std::vector<IEnemy*> m_Enemies;
-    std::vector<IThrowable*> m_Throwables;
-    std::vector<Water*> m_Waters;
-    std::vector<Tombstone*> m_Tombstones;
-    std::vector<ICollectible*> m_Collectibles;
-    std::vector<IClimable*> m_Ladders;
+    std::vector<GameObject*> m_Enemies;
+    std::vector<GameObject*> m_Throwables;
+    std::vector<GameObject*> m_Waters;
+    std::vector<GameObject*> m_Tombstones;
+    std::vector<GameObject*> m_Collectibles;
+    std::vector<GameObject*> m_Ladders;
     
     SpriteFactory* m_pSpriteFactory;
     TextureManager* m_pTextureManager;

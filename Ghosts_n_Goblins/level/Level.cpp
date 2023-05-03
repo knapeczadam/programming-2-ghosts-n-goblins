@@ -9,15 +9,16 @@
 #include "utils.h"
 #include "ranges"
 #include "algorithm"
+#include "Ladder.h"
 #include "characters/Player.h"
 #include "engine/Sprite.h"
 
-Level::Level(Sprite* pSprite, Platform* pPlatform)
+Level::Level(Sprite* pSprite, Platform* pPlatform, std::vector<GameObject*> pLadders)
     : GameObject{Game::Label::L_LEVEL, pSprite}
       , m_pPlatform{pPlatform}
+      , m_pLadders{std::move(pLadders)}
       , m_Vertices{}
       , m_Boundaries{0, 0, m_pSprite->GetWidth(), m_pSprite->GetHeight()}
-      , m_pPlayer{}
 {
     SetVertices();
 }
@@ -34,31 +35,6 @@ void Level::Draw() const
     for (const std::vector<Point2f>& collisionShapes : m_Vertices)
     {
         utils::DrawPolygon(collisionShapes);
-    }
-#endif
-#if DEBUG_RAYCAST
-    if (m_pPlayer)
-    {
-        const float epsilon{0.0f};
-        Point2f playerCenter{m_pPlayer->GetCollisionBoxCenter()};
-        // LEFT
-        Point2f left;
-        left.x = m_pPlayer->GetCollisionBox().left - epsilon;
-        left.y = playerCenter.y;
-        // RIGHT
-        Point2f right;
-        right.x = m_pPlayer->GetCollisionBox().left + m_pPlayer->GetCollisionBox().width + epsilon;
-        right.y = playerCenter.y;
-        // DOWN
-        Point2f down;
-        down.x = playerCenter.x;
-        down.y = m_pPlayer->GetCollisionBox().bottom - epsilon;
-        utils::SetColor(Color4f{0, 1, 0, 1});
-        utils::DrawLine(playerCenter, left);
-        utils::SetColor(Color4f{1, 0, 0, 1});
-        utils::DrawLine(playerCenter, right);
-        utils::SetColor(Color4f{1, 1, 0, 1});
-        utils::DrawLine(playerCenter, down);
     }
 #endif
 }
@@ -79,9 +55,13 @@ Tip: use Raycast with a vertical ray (blue line) in the middle of the actor.
  */
 void Level::HandleCollision(GameObject* other)
 {
+    Player* pPlayer{dynamic_cast<Player*>(other)};
     m_pPlatform->HandleCollision(other);
+    const bool canClimb{ std::any_of(m_pLadders.begin(), m_pLadders.end(), [&](GameObject* pLadder){return pLadder->IsOverlapping(other);})};
+    pPlayer->CanClimb(canClimb);
+    
+    std::ranges::for_each(m_pLadders, [&](GameObject* pLadder){   pLadder->HandleCollision(other);});
 
-    m_pPlayer = other;
     const float epsilon{0.0f};
     utils::HitInfo hit;
 
@@ -142,9 +122,9 @@ pixel deeper than the bottom.
  */
 bool Level::IsOnGround(GameObject* pGameObject) const
 {
-    const float epsilon{1.0f};
+    const float epsilon{0.0f};
     utils::HitInfo hit;
-    Point2f p1{pGameObject->GetCollisionBoxCenter()};
+    const Point2f p1{pGameObject->GetCollisionBoxCenter()};
     Point2f p2;
     p2.x = p1.x;
     p2.y = pGameObject->GetCollisionBox().bottom - epsilon;

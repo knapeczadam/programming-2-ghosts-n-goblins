@@ -21,6 +21,7 @@
 #include <iostream>
 #include <ranges>
 
+#include "CollisionBox.h"
 #include "characters/GreenMonster.h"
 #include "characters/IEnemy.h"
 #include "collectibles/Coin.h"
@@ -73,6 +74,7 @@ Game::~Game()
 
 void Game::Cleanup()
 {
+    auto deleteGameObject = [](const GameObject* pGameObject) { delete pGameObject; };
     delete m_pCamera;
     delete m_pHUD;
     delete m_pForeground;
@@ -85,12 +87,12 @@ void Game::Cleanup()
     delete m_pSoundManager;
     delete m_pTestGameObject;
 
-    std::ranges::for_each(m_Waters, [](const Water* pWater) { delete pWater; });
-    std::ranges::for_each(m_Throwables, [](const IThrowable* pThrowable) { delete pThrowable; });
-    std::ranges::for_each(m_Enemies, [](const IEnemy* pEnemy) { delete pEnemy; });
-    std::ranges::for_each(m_Tombstones, [](const Tombstone* pTombstone) { delete pTombstone; });
-    std::ranges::for_each(m_Collectibles, [](const ICollectible* pCollectible) { delete pCollectible; });
-    std::ranges::for_each(m_Ladders, [](const IClimable* pLadder) { delete pLadder; });
+    std::ranges::for_each(m_Waters, deleteGameObject);
+    std::ranges::for_each(m_Throwables, deleteGameObject);
+    std::ranges::for_each(m_Enemies, deleteGameObject);
+    std::ranges::for_each(m_Tombstones, deleteGameObject);
+    std::ranges::for_each(m_Collectibles, deleteGameObject);
+    std::ranges::for_each(m_Ladders, deleteGameObject);
 }
 
 void Game::Initialize()
@@ -107,13 +109,13 @@ void Game::Initialize()
     m_pSpriteFactory = new SpriteFactory{m_Data, m_pTextureManager, m_Labels};
 
     // LEVEL
-    m_pPlatform = new Platform{m_pSpriteFactory->CreateSprite(Label::L_PLATFORM), Point2f{3295.0f, 26.0f}};
-    m_pForeground = new GameObject{Label::L_FOREGROUND, m_pSpriteFactory->CreateSprite(Label::L_FOREGROUND), false};
-    m_pKillZone = new KillZone{m_pTextureManager->GetTexture(Label::L_LEVEL)->GetWidth(), 20.0f};
-    m_pLevel = new Level{m_pSpriteFactory->CreateSprite(Label::L_LEVEL), m_pPlatform};
     InitWaters();
     InitTombstones();
     InitLadders();
+    m_pPlatform = new Platform{m_pSpriteFactory->CreateSprite(Label::L_PLATFORM), Point2f{3295.0f, 28.0f}};
+    m_pForeground = new GameObject{Label::L_FOREGROUND, m_pSpriteFactory->CreateSprite(Label::L_FOREGROUND), false};
+    m_pKillZone = new KillZone{m_pTextureManager->GetTexture(Label::L_LEVEL)->GetWidth(), 20.0f};
+    m_pLevel = new Level{m_pSpriteFactory->CreateSprite(Label::L_LEVEL), m_pPlatform, m_Ladders};
 
     // COLLECTIBLES
     InitCoins();
@@ -133,7 +135,7 @@ void Game::Initialize()
     m_pTestGameObject = new Lance{m_pSpriteFactory->CreateSprite(Label::W_LANCE), Point2f{260.f, 65.f}, false, true};
 
     // ENEMIES
-    InitGreenMonsters(); 
+    InitGreenMonsters();
 
     // SOUND
     m_pSoundManager = new SoundManager{m_Data, m_Labels};
@@ -276,36 +278,36 @@ void Game::LoadData()
 void Game::InitWaters()
 {
     m_Waters.insert(m_Waters.end(), {
-        new Water{m_pSpriteFactory->CreateSprite(Label::L_WATER), Point2f{3295.0f, 0.0f}},
-        new Water{m_pSpriteFactory->CreateSprite(Label::L_WATER), Point2f{3903.0f, 0.0f}, 64.0f},
-        new Water{m_pSpriteFactory->CreateSprite(Label::L_WATER), Point2f{4031.0f, 0.0f}, 64.0f},
-        new Water{m_pSpriteFactory->CreateSprite(Label::L_WATER), Point2f{4927.0f, 0.0f}, 64.0f},
-        new Water{m_pSpriteFactory->CreateSprite(Label::L_WATER), Point2f{5566.0f, 0.0f}, 64.0f}
-        });
+                        new Water{m_pSpriteFactory->CreateSprite(Label::L_WATER), Point2f{3295.0f, 0.0f}},
+                        new Water{m_pSpriteFactory->CreateSprite(Label::L_WATER), Point2f{3903.0f, 0.0f}, 64.0f},
+                        new Water{m_pSpriteFactory->CreateSprite(Label::L_WATER), Point2f{4031.0f, 0.0f}, 64.0f},
+                        new Water{m_pSpriteFactory->CreateSprite(Label::L_WATER), Point2f{4927.0f, 0.0f}, 64.0f},
+                        new Water{m_pSpriteFactory->CreateSprite(Label::L_WATER), Point2f{5566.0f, 0.0f}, 64.0f}
+                    });
 }
 
 void Game::InitTombstones()
 {
     // BOTTOM
     m_Tombstones.insert(m_Tombstones.end(), {
-        new Tombstone{Rectf{83.0f, 66.0f, 30.0f, 30.0f}},
-        new Tombstone{Rectf{499.0f, 66.0f, 30.0f, 30.0f}},
-        new Tombstone{Rectf{817.0f, 66.0f, 30.0f, 30.0f}},
-        new Tombstone{Rectf{1044.0f, 66.0f, 30.0f, 30.0f}},
-        new Tombstone{Rectf{1490.0f, 66.0f, 30.0f, 30.0f}},
-        new Tombstone{Rectf{1903.0f, 66.0f, 30.0f, 30.0f}},
-        new Tombstone{Rectf{2191.0f, 66.0f, 30.0f, 30.0f}},
-        new Tombstone{Rectf{2516.0f, 66.0f, 30.0f, 30.0f}},
-        new Tombstone{Rectf{3028.0f, 66.0f, 30.0f, 30.0f}},
-        
-    });
+                            new Tombstone{Rectf{83.0f, 66.0f, 30.0f, 30.0f}},
+                            new Tombstone{Rectf{499.0f, 66.0f, 30.0f, 30.0f}},
+                            new Tombstone{Rectf{817.0f, 66.0f, 30.0f, 30.0f}},
+                            new Tombstone{Rectf{1044.0f, 66.0f, 30.0f, 30.0f}},
+                            new Tombstone{Rectf{1490.0f, 66.0f, 30.0f, 30.0f}},
+                            new Tombstone{Rectf{1903.0f, 66.0f, 30.0f, 30.0f}},
+                            new Tombstone{Rectf{2191.0f, 66.0f, 30.0f, 30.0f}},
+                            new Tombstone{Rectf{2516.0f, 66.0f, 30.0f, 30.0f}},
+                            new Tombstone{Rectf{3028.0f, 66.0f, 30.0f, 30.0f}},
+
+                        });
 
     // TOP
     m_Tombstones.insert(m_Tombstones.end(), {
-        new Tombstone{Rectf{1519.0f, 221.0f, 30.0f, 30.0f}},
-        new Tombstone{Rectf{1716.0f, 221.0f, 30.0f, 30.0f}},
-        new Tombstone{Rectf{1909.0f, 221.0f, 30.0f, 30.0f}}
-    });
+                            new Tombstone{Rectf{1519.0f, 221.0f, 30.0f, 30.0f}},
+                            new Tombstone{Rectf{1716.0f, 221.0f, 30.0f, 30.0f}},
+                            new Tombstone{Rectf{1909.0f, 221.0f, 30.0f, 30.0f}}
+                        });
 }
 
 void Game::InitCamera() const
@@ -341,43 +343,48 @@ void Game::InitBootIntervals()
 
 void Game::InitLadders()
 {
-   m_Ladders.insert(m_Ladders.end(),{
-       new Ladder{Rectf{0.0f, 0.0f, 30.0f, 30.0f}},
-       new Ladder{Rectf{0.0f, 0.0f, 30.0f, 30.0f}},
-       new Ladder{Rectf{0.0f, 0.0f, 30.0f, 30.0f}},
-       new Ladder{Rectf{0.0f, 0.0f, 30.0f, 30.0f}},
-       new Ladder{Rectf{0.0f, 0.0f, 30.0f, 30.0f}},
-       new Ladder{Rectf{0.0f, 0.0f, 30.0f, 30.0f}},
-   }); 
+    m_Ladders.insert(m_Ladders.end(), {
+                         new Ladder{Rectf{1424.0f, 62.0f, 32.0f, 158.0f}},
+                         new Ladder{Rectf{1808.0f, 62.0f, 32.0f, 158.0f}},
+                         new Ladder{Rectf{2128.0f, 62.0f, 32.0f, 158.0f}},
+                     });
 }
 
 void Game::InitCoins()
 {
     m_Collectibles.insert(m_Collectibles.end(), {
-        new Coin{m_pSpriteFactory->CreateSprite(Label::O_COIN), Point2f{720.0f, 62.0f}},
-        new Coin{m_pSpriteFactory->CreateSprite(Label::O_COIN), Point2f{6190.0f, 72.0f}},
-        new Coin{m_pSpriteFactory->CreateSprite(Label::O_COIN), Point2f{1232.0f, 223.0f}},
-        new Coin{m_pSpriteFactory->CreateSprite(Label::O_COIN), Point2f{1616.0f, 223.0f}},
-        new Coin{m_pSpriteFactory->CreateSprite(Label::O_COIN), Point2f{2158.0f, 223.0f}},
-    });
+                              new Coin{m_pSpriteFactory->CreateSprite(Label::O_COIN), Point2f{720.0f, 62.0f}},
+                              new Coin{m_pSpriteFactory->CreateSprite(Label::O_COIN), Point2f{6190.0f, 72.0f}},
+                              new Coin{m_pSpriteFactory->CreateSprite(Label::O_COIN), Point2f{1232.0f, 223.0f}},
+                              new Coin{m_pSpriteFactory->CreateSprite(Label::O_COIN), Point2f{1616.0f, 223.0f}},
+                              new Coin{m_pSpriteFactory->CreateSprite(Label::O_COIN), Point2f{2158.0f, 223.0f}},
+                          });
 }
 
 void Game::InitMoneyBags()
 {
-    m_Collectibles.insert(m_Collectibles.end(),{
-        new MoneyBag{m_pSpriteFactory->CreateSprite(Label::O_MONEY_BAG), Point2f{2799.0f, 63.0f}},
-        new MoneyBag{m_pSpriteFactory->CreateSprite(Label::O_MONEY_BAG), Point2f{4814.0f, 63.0f}},
-    });
+    m_Collectibles.insert(m_Collectibles.end(), {
+                              new MoneyBag{m_pSpriteFactory->CreateSprite(Label::O_MONEY_BAG), Point2f{2799.0f, 63.0f}},
+                              new MoneyBag{m_pSpriteFactory->CreateSprite(Label::O_MONEY_BAG), Point2f{4814.0f, 63.0f}},
+                          });
 }
 
 void Game::InitGreenMonsters()
 {
-    m_Enemies.insert(m_Enemies.end(),{
-        new GreenMonster{m_pSpriteFactory->CreateSprite(Label::C_GREEN_MONSTER), Point2f{4622.0f, 54.0f}},
-        new GreenMonster{m_pSpriteFactory->CreateSprite(Label::C_GREEN_MONSTER), Point2f{6190.0f, 54.0f}},
-        new GreenMonster{m_pSpriteFactory->CreateSprite(Label::C_GREEN_MONSTER), Point2f{1615.0f, 213.0f}},
-        new GreenMonster{m_pSpriteFactory->CreateSprite(Label::C_GREEN_MONSTER), Point2f{2191.0f, 213.0f}},
-    });
+    m_Enemies.insert(m_Enemies.end(), {
+                         new GreenMonster{
+                             m_pSpriteFactory->CreateSprite(Label::C_GREEN_MONSTER), Point2f{4622.0f, 54.0f}
+                         },
+                         new GreenMonster{
+                             m_pSpriteFactory->CreateSprite(Label::C_GREEN_MONSTER), Point2f{6190.0f, 54.0f}
+                         },
+                         new GreenMonster{
+                             m_pSpriteFactory->CreateSprite(Label::C_GREEN_MONSTER), Point2f{1615.0f, 213.0f}
+                         },
+                         new GreenMonster{
+                             m_pSpriteFactory->CreateSprite(Label::C_GREEN_MONSTER), Point2f{2191.0f, 213.0f}
+                         },
+                     });
 }
 
 void Game::ClearBackground() const
@@ -410,19 +417,18 @@ void Game::Draw() const
     glPushMatrix();
     m_pCamera->Transform(m_pPlayer->GetShape());
     m_pLevel->Draw();
-    std::ranges::for_each(m_Enemies | std::views::transform(enemyToGameObject) | std::views::filter(isVisible), draw);
-    std::ranges::for_each(m_Throwables | std::views::transform(throwableToGameObject) | std::views::filter(isVisible),
-                          draw);
-    std::ranges::for_each(
-        m_Collectibles | std::views::transform(collectibleToGameObject) | std::views::filter(isVisible), draw);
+    std::ranges::for_each(m_Enemies | std::views::filter(isVisible), draw);
+    std::ranges::for_each(m_Throwables | std::views::filter(isVisible), draw);
+    std::ranges::for_each(m_Collectibles | std::views::filter(isVisible), draw);
     m_pPlayer->Draw();
-    std::ranges::for_each(m_Waters, [](const Water* pWater) { pWater->Draw(); });
+    std::ranges::for_each(m_Waters, draw);
     m_pForeground->Draw();
     // Test object
     if (m_pTestGameObject->IsVisible()) m_pTestGameObject->Draw();
 #if DEBUG_COLLISION
     m_pKillZone->Draw();
-    std::ranges::for_each(m_Tombstones, [](const Tombstone* pTombstone) { pTombstone->Draw(); });
+    std::ranges::for_each(m_Tombstones, draw);
+    std::ranges::for_each(m_Ladders, draw);
 #endif
     glPopMatrix();
 
@@ -452,22 +458,20 @@ void Game::Update(float elapsedSec)
 
     // LEVEL
     m_pLevel->Update(elapsedSec);
-    std::ranges::for_each(m_Waters, [&](Water* pWater) { pWater->Update(elapsedSec); });
+    std::ranges::for_each(m_Waters, update);
 
     // PLAYER
     if (m_pPlayer->IsActive()) m_pPlayer->Update(elapsedSec);
 
     // EMENIES
     // TODO set target
-    std::ranges::for_each(m_Enemies | std::views::transform(enemyToGameObject) | std::views::filter(isActive), update);
+    std::ranges::for_each(m_Enemies | std::views::filter(isActive), update);
 
     // THROWABLES
-    std::ranges::for_each(m_Throwables | std::views::transform(throwableToGameObject) | std::views::filter(isActive),
-                          update);
+    std::ranges::for_each(m_Throwables | std::views::filter(isActive), update);
 
     // COLLECTIBLES
-    std::ranges::for_each(
-        m_Collectibles | std::views::transform(collectibleToGameObject) | std::views::filter(isActive), update);
+    std::ranges::for_each(m_Collectibles | std::views::filter(isActive), update);
 
     m_pHUD->Update(elapsedSec);
 
@@ -486,9 +490,8 @@ void Game::DoCollisionTests()
     if (m_pPlayer->IsActive()) m_pLevel->HandleCollision(m_pPlayer);
 
     // Player on enemies
-    for (IEnemy* pGameObject : m_Enemies)
+    for (GameObject* enemy : m_Enemies)
     {
-        GameObject* enemy = dynamic_cast<GameObject*>(pGameObject);
         if (enemy->IsActive())
         {
             m_pPlayer->HandleCollision(enemy);
@@ -496,30 +499,23 @@ void Game::DoCollisionTests()
     }
 
     // Weapons on game enemies and tombstones
-    for (IThrowable* pThrowable : m_Throwables)
+    for (GameObject* weapon : m_Throwables)
     {
-        GameObject* weapon = dynamic_cast<GameObject*>(pThrowable);
         if (weapon->IsActive())
         {
             // ENEMIES
-            for (IEnemy* pGameObject : m_Enemies)
+            for (GameObject* enemy : m_Enemies)
             {
-                GameObject* enemy = dynamic_cast<GameObject*>(pGameObject);
                 if (enemy->IsActive()) weapon->HandleCollision(enemy);
             }
             // TOMBSTONE
-            for (Tombstone* pTombstone : m_Tombstones)
+            for (GameObject* pTombstone : m_Tombstones)
             {
                 if (weapon->IsActive()) pTombstone->HandleCollision(weapon);
             }
         }
     }
-    for (IClimable* pClimable : m_Ladders)
-    {
-        Ladder* ladder = dynamic_cast<Ladder*>(pClimable);
-        m_pPlayer->HandleCollision(ladder);
-    }
-
+    
     // Test object
     m_pPlayer->HandleCollision(m_pTestGameObject);
 }
@@ -536,10 +532,10 @@ void Game::LateUpdate(float elapsedSec)
 
     m_pPlayer->LateUpdate(elapsedSec);
 
-    std::ranges::for_each(m_Waters, [&](Water* pWater) { pWater->LateUpdate(elapsedSec); });
-    std::ranges::for_each(m_Enemies | std::views::transform(enemyToGameObject), lateUpdate);
-    std::ranges::for_each(m_Throwables | std::views::transform(throwableToGameObject), lateUpdate);
-    std::ranges::for_each(m_Collectibles | std::views::transform(collectibleToGameObject), lateUpdate);
+    std::ranges::for_each(m_Waters, lateUpdate);
+    std::ranges::for_each(m_Enemies, lateUpdate);
+    std::ranges::for_each(m_Throwables, lateUpdate);
+    std::ranges::for_each(m_Collectibles, lateUpdate);
 
     // Test object
     m_pTestGameObject->LateUpdate(elapsedSec);

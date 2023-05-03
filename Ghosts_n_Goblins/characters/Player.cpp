@@ -8,11 +8,13 @@
 #include "collectibles/ICollectible.h"
 #include "engine/Sprite.h"
 #include "engine/SpriteFactory.h"
+#include "game/Macros.h"
 
 #include <iostream>
 #include <numeric>
 
 #include "Matrix2x3.h"
+#include "game/CollisionBox.h"
 #include "level/IClimable.h"
 #include "level/Platform.h"
 #include "weapons/Dagger.h"
@@ -24,29 +26,62 @@ const Point2f Player::m_SpawnPos{174.0f, 64.0f};
 Player::Player(Sprite* pSprite, const Point2f& pos, Level* pLevel)
     : GameObject{Game::Label::C_ARTHUR, pSprite, pos}
       , m_HorVelocity{150.0f}
-      , m_VerVelocity{500.0f}
+      , m_VerVelocity{100.0f}
+      , m_JumpVelocity{500.0f}
       , m_Velocity{0.0f, 0.0f}
       , m_Acceleration{0.0f, -1391.0f} // -981.0f
       , m_State{State::idle}
       , m_pLevel{pLevel}
-      , m_IsCrouching{false}
+      , m_Crouching{false}
       , m_ShortAccuCooldown{0.0f}
       , m_LongAccuCooldown{0.0f}
       , m_ShortCooldownTime{0.25f}
       , m_LongCooldownTime{0.30f}
-      , m_isAttacking{false}
+      , m_Attacking{false}
       , m_Weapon{Game::Label::W_LANCE}
       , m_Overheated{false}
-      , m_IsOnPlatform{false}
+      , m_OnPlatform{false}
       , m_OffsetSnapshot{0.0f, 0.0f}
       , m_CanJump{true}
       , m_Lives{7}
       , m_MaxLives{7}
       , m_Score{14700}
+      , m_CanClimb{false}
+      , m_Climbing{false}
+      , m_OnLadder{false}
+      , m_OnGround{false}
 {
 }
 
-void Player::valamiMegNemTom() const
+void Player::Draw() const
+{
+    GameObject::Draw();
+
+#if DEBUG_RAYCAST
+    const float epsilon{0.0f};
+    Point2f playerCenter{GetCollisionBoxCenter()};
+    // LEFT
+    Point2f left;
+    left.x = GetCollisionBox().left - epsilon;
+    left.y = playerCenter.y;
+    // RIGHT
+    Point2f right;
+    right.x = GetCollisionBox().left + GetCollisionBox().width + epsilon;
+    right.y = playerCenter.y;
+    // DOWN
+    Point2f down;
+    down.x = playerCenter.x;
+    down.y = GetCollisionBox().bottom - epsilon;
+    utils::SetColor(Color4f{0, 1, 0, 1});
+    utils::DrawLine(playerCenter, left);
+    utils::SetColor(Color4f{1, 0, 0, 1});
+    utils::DrawLine(playerCenter, right);
+    utils::SetColor(Color4f{0, 0, 1, 1});
+    utils::DrawLine(playerCenter, down);
+#endif
+}
+
+void Player::UpdateSprite() const
 {
     m_pSprite->SetTopOffsetRows(0);
     m_pSprite->SetLeftOffsetCols(0);
@@ -61,6 +96,7 @@ void Player::valamiMegNemTom() const
         m_pSprite->SetTopOffsetRows(1);
         m_pSprite->SetSubRows(1);
         m_pSprite->SetSubCols(4);
+        m_pSprite->SetFramesPerSec(10);
         break;
     case State::jumping_running:
         m_pSprite->SetTopOffsetRows(2);
@@ -82,22 +118,46 @@ void Player::valamiMegNemTom() const
         m_pSprite->SetSubRows(1);
         m_pSprite->SetSubCols(2);
         m_pSprite->SetFramesPerSec(9);
-        m_pSprite->SetFrameTime();
         break;
     case State::attacking_crouching:
         m_pSprite->SetTopOffsetRows(6);
         m_pSprite->SetSubRows(1);
         m_pSprite->SetSubCols(2);
         m_pSprite->SetFramesPerSec(9);
-        m_pSprite->SetFrameTime();
         break;
     case State::climbing:
+        m_pSprite->SetTopOffsetRows(7);
+        m_pSprite->SetSubRows(1);
+        m_pSprite->SetSubCols(2);
+        if (m_Climbing)
+        {
+            m_pSprite->SetFramesPerSec(4);
+        }
+        else
+        {
+            m_pSprite->SetFramesPerSec(0);
+        }
         break;
     case State::climbing_top:
         break;
     }
+    m_pSprite->SetFrameTime();
     m_pSprite->SetCurrRowsCols();
     m_pSprite->UpdateSourceRect();
+}
+
+void Player::Update(float elapsedSec)
+{
+    UpdateCooldown(elapsedSec);
+    UpdatePosition(elapsedSec);
+    UpdateCollisionBox();
+}
+
+void Player::LateUpdate(float elapsedSec)
+{
+    UpdateSprite();
+    UpdateState();
+    GameObject::LateUpdate(elapsedSec);
 }
 
 void Player::UpdateCooldown(float elapsedSec)
@@ -112,13 +172,13 @@ void Player::UpdateCooldown(float elapsedSec)
         m_LongAccuCooldown = 0;
         m_Overheated = false;
     }
-    if (m_isAttacking)
+    if (m_Attacking)
     {
         m_ShortAccuCooldown -= elapsedSec;
         if (m_ShortAccuCooldown < 0)
         {
             m_ShortAccuCooldown = 0;
-            m_isAttacking = false;
+            m_Attacking = false;
         }
     }
     else
@@ -131,114 +191,72 @@ void Player::UpdateCooldown(float elapsedSec)
     }
 }
 
-void Player::Update(float elapsedSec)
+void Player::Attack(std::vector<GameObject*>& throwables, SpriteFactory* spriteFactory)
 {
-    UpdateCooldown(elapsedSec);
-
-    switch (m_State)
+    if (not m_Attacking)
     {
-    case State::climbing:
-        break;
-    case State::climbing_top:
-        break;
-    default:
-        UpdatePosition(elapsedSec);
-        break;
-    }
-    valamiMegNemTom();
-    // late update
-    UpdateCollisionBox();
-    m_pSprite->Update(elapsedSec);
-}
+        m_ShortAccuCooldown += m_ShortCooldownTime;
+        m_LongAccuCooldown += m_LongCooldownTime;
+        m_Attacking = true;
 
-void Player::SyncWithPlatform(float elapsedSec)
-{
-    if (m_OffsetSnapshot == Vector2f{0, 0})
-    {
-        m_OffsetSnapshot.x = GetPosition<Point2f>().x - m_pLevel->GetPlatform()->GetPosition<Point2f>().x;
-        m_OffsetSnapshot.y = m_Shape.bottom - m_pLevel->GetPlatform()->GetPosition<Point2f>().y;
+        switch (m_Weapon)
+        {
+        case Game::Label::W_DAGGER:
+            throwables.push_back(new Dagger{spriteFactory->CreateSprite(m_Weapon), GetShapeCenter(), m_Flipped});
+            break;
+        case Game::Label::W_LANCE:
+            throwables.push_back(new Lance{spriteFactory->CreateSprite(m_Weapon), GetShapeCenter(), m_Flipped});
+            break;
+        case Game::Label::W_TORCH:
+            throwables.push_back(new Torch{spriteFactory->CreateSprite(m_Weapon), GetShapeCenter(), m_Flipped});
+            break;
+        }
     }
-    m_OffsetSnapshot.x += m_Velocity.x * elapsedSec;
-    Matrix2x3 pos{};
-    Matrix2x3 T2{Matrix2x3::CreateTranslationMatrix(m_OffsetSnapshot)};
-    Matrix2x3 T1{Matrix2x3::CreateTranslationMatrix(m_pLevel->GetPlatform()->GetPosition<Vector2f>())};
-    pos = T1 * T2 * pos;
-    m_Shape.left = pos.orig.x;
 }
 
 void Player::UpdatePosition(float elapsedSec)
 {
+    const Uint8* pState{SDL_GetKeyboardState(nullptr)};
     if (m_pLevel->IsOnGround(this))
     {
-        const Uint8* pState{SDL_GetKeyboardState(nullptr)};
         Move(elapsedSec, pState);
+        m_OnGround = true;
     }
-    UpdateState();
+    else
+    {
+        m_OnGround = false;
+    }
+
+
+    // if (m_CanClimb)
+    // {
+    //     Climb(pState);
+    //     if (m_OnLadder)
+    //     {
+    //         m_State = State::climbing;
+    //     }
+    // }
 
     ApplyGravity(elapsedSec);
 
-    if (m_IsOnPlatform)
+    if (m_OnPlatform)
     {
         SyncWithPlatform(elapsedSec);
     }
     else
     {
         m_OffsetSnapshot = Vector2f{0, 0};
-        m_Shape.left += m_Velocity.x * elapsedSec;
-        m_Shape.bottom += m_Velocity.y * elapsedSec;
+        m_Shape.left += m_Velocity.x * elapsedSec; // TODO: in else statement?
     }
+    m_Shape.bottom += m_Velocity.y * elapsedSec;
 
     CheckForBoundaries(m_pLevel->GetBoundaries());
-}
-
-void Player::UpdateState()
-{
-    // std::numeric_limits<float>::epsilon()
-    constexpr float epsilon{std::numeric_limits<float>::epsilon()};
-    const float absVelX{std::abs(m_Velocity.x)};
-    const float absVelY{std::abs(m_Velocity.y)};
-
-    if (not m_IsCrouching and m_Velocity == Vector2f{})
-    {
-        m_State = State::idle;
-    }
-    else if (absVelX > 0.0f and absVelY < epsilon)
-    {
-        m_State = State::running;
-    }
-    else if (absVelX > 0.0f and absVelY > epsilon)
-    {
-        m_State = State::jumping_running;
-        m_IsCrouching = false;
-    }
-    else if (absVelX < epsilon and absVelY > epsilon)
-    {
-        m_State = State::jumping_standing;
-        m_IsCrouching = false;
-    }
-
-    if (m_IsCrouching)
-    {
-        m_State = State::crouching;
-    }
-
-    if (m_isAttacking)
-    {
-        if (m_IsCrouching)
-        {
-            m_State = State::attacking_crouching;
-        }
-        else
-        {
-            m_State = State::attacking_normal;
-        }
-    }
 }
 
 void Player::Move(float elapsedSec, const Uint8* pState)
 {
     Crouch(pState);
-    if (m_IsCrouching or m_isAttacking)
+    if (m_Crouching or m_Attacking)
     {
         Jump(pState);
         m_Velocity.x = 0;
@@ -275,7 +293,7 @@ void Player::Jump(const Uint8* pState)
     {
         if (pState[SDL_SCANCODE_S])
         {
-            m_Velocity.y = m_VerVelocity;
+            m_Velocity.y = m_JumpVelocity;
             m_CanJump = false;
         }
         else
@@ -289,34 +307,11 @@ void Player::Crouch(const Uint8* pState)
 {
     if (pState[SDL_SCANCODE_DOWN])
     {
-        m_IsCrouching = true;
+        m_Crouching = true;
     }
     else
     {
-        m_IsCrouching = false;
-    }
-}
-
-void Player::Attack(std::vector<IThrowable*>& throwables, SpriteFactory* spriteFactory)
-{
-    if (not m_isAttacking)
-    {
-        m_ShortAccuCooldown += m_ShortCooldownTime;
-        m_LongAccuCooldown += m_LongCooldownTime;
-        m_isAttacking = true;
-
-        switch (m_Weapon)
-        {
-        case Game::Label::W_DAGGER:
-            throwables.push_back(new Dagger{spriteFactory->CreateSprite(m_Weapon), GetShapeCenter(), m_Flipped});
-            break;
-        case Game::Label::W_LANCE:
-            throwables.push_back(new Lance{spriteFactory->CreateSprite(m_Weapon), GetShapeCenter(), m_Flipped});
-            break;
-        case Game::Label::W_TORCH:
-            throwables.push_back(new Torch{spriteFactory->CreateSprite(m_Weapon), GetShapeCenter(), m_Flipped});
-            break;
-        }
+        m_Crouching = false;
     }
 }
 
@@ -324,20 +319,102 @@ void Player::Climb(const Uint8* pState)
 {
     if (pState[SDL_SCANCODE_UP])
     {
+        m_Velocity.y = m_VerVelocity;
+        m_State = State::climbing;
     }
     else if (pState[SDL_SCANCODE_DOWN])
     {
+        if (not m_OnGround)
+        {
+            m_Velocity.y = -m_VerVelocity;
+            m_State = State::climbing;
+        }
+    }
+}
+
+void Player::ApplyGravity(float elapsedSec)
+{
+    m_Velocity += m_Acceleration * elapsedSec;
+}
+
+void Player::SyncWithPlatform(float elapsedSec)
+{
+    if (m_OffsetSnapshot == Vector2f{0, 0})
+    {
+        m_OffsetSnapshot.x = GetPosition<Point2f>().x - m_pLevel->GetPlatform()->GetPosition<Point2f>().x;
+        m_OffsetSnapshot.y = m_Shape.bottom - m_pLevel->GetPlatform()->GetPosition<Point2f>().y;
+    }
+    m_OffsetSnapshot.x += m_Velocity.x * elapsedSec;
+    Matrix2x3 pos{};
+    Matrix2x3 T2{Matrix2x3::CreateTranslationMatrix(m_OffsetSnapshot)};
+    Matrix2x3 T1{Matrix2x3::CreateTranslationMatrix(m_pLevel->GetPlatform()->GetPosition<Vector2f>())};
+    pos = T1 * T2 * pos;
+    m_Shape.left = pos.orig.x;
+}
+
+void Player::UpdateState()
+{
+    // std::numeric_limits<float>::epsilon()
+    constexpr float epsilon{std::numeric_limits<float>::epsilon()};
+    const float absVelX{std::abs(m_Velocity.x)};
+    const float absVelY{std::abs(m_Velocity.y)};
+
+    if (not m_Crouching and m_Velocity == Vector2f{})
+    {
+        m_State = State::idle;
+    }
+    else if (absVelX > 0.0f and absVelY < epsilon)
+    {
+        m_State = State::running;
+    }
+    else if (absVelX > 0.0f and absVelY > epsilon)
+    {
+        m_State = State::jumping_running;
+        m_Crouching = false;
+        m_CanClimb = false;
+    }
+    else if (absVelX < epsilon and absVelY > epsilon)
+    {
+        m_State = State::jumping_standing;
+        m_Crouching = false;
+        m_CanClimb = false;
+    }
+
+    if (m_Crouching)
+    {
+        m_State = State::crouching;
+    }
+
+    if (m_Attacking)
+    {
+        if (m_Crouching)
+        {
+            m_State = State::attacking_crouching;
+        }
+        else
+        {
+            m_State = State::attacking_normal;
+        }
+    }
+    if (m_OnLadder)
+    {
+        m_State = State::climbing;
     }
 }
 
 bool Player::IsAttacking() const
 {
-    return m_isAttacking;
+    return m_Attacking;
 }
 
 void Player::CanJump(bool canJump)
 {
     m_CanJump = canJump;
+}
+
+void Player::CanClimb(bool canClimb)
+{
+    m_CanClimb = canClimb;
 }
 
 Vector2f Player::GetVelocity() const
@@ -352,7 +429,7 @@ void Player::SetVelocity(const Vector2f& velocity)
 
 void Player::SetIsOnPlatform(bool isOnPlatform)
 {
-    m_IsOnPlatform = isOnPlatform;
+    m_OnPlatform = isOnPlatform;
 }
 
 int Player::GetLives() const
@@ -368,11 +445,6 @@ Game::Label Player::GetWeapon() const
 int Player::GetScore() const
 {
     return m_Score;
-}
-
-void Player::ApplyGravity(float elapsedSec)
-{
-    m_Velocity += m_Acceleration * elapsedSec;
 }
 
 void Player::HandleCollision(GameObject* other)
@@ -407,8 +479,13 @@ void Player::HandleCollision(GameObject* other)
             break;
         }
     }
-    IClimable *pClimable{dynamic_cast<IClimable*>(other)};
+    IClimable* pClimable{dynamic_cast<IClimable*>(other)};
     if (pClimable)
+    {
+        m_OnLadder = true;
+    }
+    CollisionBox* pBox{dynamic_cast<CollisionBox*>(other)};
+    if (pBox)
     {
     }
 }

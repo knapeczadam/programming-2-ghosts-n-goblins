@@ -11,4 +11,6 @@ public:
     Ladder(Ladder&& other) noexcept = delete;
     Ladder& operator=(const Ladder& other) = delete;
     Ladder& operator=(Ladder&& other) noexcept = delete;
+
+    virtual void HandleCollision(GameObject* other) override;
 };

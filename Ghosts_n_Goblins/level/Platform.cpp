@@ -13,7 +13,7 @@ Platform::Platform(Sprite* pSprite, const Point2f& pos)
       , m_AccuSec{0.0f}
       , m_OriginalPos{pos}
       , m_Speed{2.0f}
-      , m_MaxAmplitude{253.0f}
+      , m_MaxAmplitude{221.0f}
       , m_ShortAmplitude{100.0f}
       , m_CurrAmplitude{m_MaxAmplitude}
       , m_Shortened{false}
@@ -82,7 +82,15 @@ void Platform::HandleCollision(GameObject* other)
     const Point2f p1{other->GetCollisionBoxCenter()};
     const Point2f p2{p1.x, other->GetCollisionBox().bottom};
     utils::HitInfo hit;
-    const bool isHit{utils::Raycast(m_Vertices, p1, p2, hit)};
+    const bool isHit{utils::Raycast(GetCollisionBoxVertices(), p1, p2, hit)};
+    if (isHit)
+    {
+        Player* pPlayer{static_cast<Player*>(other)};
+        other->SetBottom(hit.intersectPoint.y);
+        Vector2f playerVelocity{pPlayer->GetVelocity()};
+        playerVelocity.y = 0.f;
+        pPlayer->SetVelocity(playerVelocity);
+    }
     // Swamp effect
     // if (isHit)
     // {
@@ -92,6 +100,7 @@ void Platform::HandleCollision(GameObject* other)
     //        actorVelocity.y = 0.0f;
     //    } 
     // }
+    return;
     Player* pPlayer{static_cast<Player*>(other)};
     if (isHit and pPlayer->GetVelocity().y < 0)
     {
@@ -108,10 +117,18 @@ platform’s top.
  */
 bool Platform::IsOnGround(GameObject* pGameObject) const
 {
-    const float epsilon{1.0f};
+    const float epsilon{0.0f};
+    utils::HitInfo hit;
     const Point2f p1{pGameObject->GetCollisionBoxCenter()};
     const Point2f p2{p1.x, pGameObject->GetCollisionBox().bottom - epsilon};
     Player* pPlayer{static_cast<Player*>(pGameObject)};
+    if (utils::Raycast(GetCollisionBoxVertices(), p1, p2, hit))
+    {
+        pPlayer->SetIsOnPlatform(true);
+        return true;
+    }
+    pPlayer->SetIsOnPlatform(false);
+    return false;
     if (pPlayer->GetVelocity().y <= 0.0f && utils::IsOverlapping(p1, p2, m_Shape))
     {
         pPlayer->SetIsOnPlatform(true);

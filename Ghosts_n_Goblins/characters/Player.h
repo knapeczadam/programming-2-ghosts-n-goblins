@@ -29,15 +29,18 @@ public:
     Player& operator=(const Player& other) = delete;
     Player& operator=(Player&& other) noexcept = delete;
 
+    virtual void Draw() const override;
     void UpdateCooldown(float elapsedSec);
     virtual void Update(float elapsedSec) override;
+    virtual void LateUpdate(float elapsedSec) override;
     void SyncWithPlatform(float elapsedSec);
     virtual void HandleCollision(GameObject* other) override;
-    void valamiMegNemTom() const; // TODO
+    void UpdateSprite() const; // TODO
 
-    void Attack(std::vector<IThrowable*>& throwables, SpriteFactory* spriteFactory);
+    void Attack(std::vector<GameObject*>& throwables, SpriteFactory* spriteFactory);
     bool IsAttacking() const;
     void CanJump(bool canJump);
+    void CanClimb(bool canClimb);
 
     Vector2f GetVelocity() const;
     void SetVelocity(const Vector2f& velocity);
@@ -46,9 +49,9 @@ public:
     Game::Label GetWeapon() const;
     int GetScore() const;
 
+    void UpdateState();
 private:
     void UpdatePosition(float elapsedSec);
-    void UpdateState();
     
     void Move(float elapsedSec, const Uint8* pState);
     void MoveHorizontal(const Uint8* pState);
@@ -66,22 +69,27 @@ private:
     
     float m_HorVelocity;
     float m_VerVelocity;
+    float m_JumpVelocity;
     Vector2f m_Velocity;
     Vector2f m_Acceleration;
     State m_State;
     Level* m_pLevel;
-    bool m_IsCrouching;
+    bool m_Crouching;
     float m_ShortAccuCooldown;
     float m_LongAccuCooldown;
     float m_ShortCooldownTime;
     float m_LongCooldownTime;
-    bool m_isAttacking;
+    bool m_Attacking;
     Game::Label m_Weapon;
     bool m_Overheated;
-    bool m_IsOnPlatform;
+    bool m_OnPlatform;
     Vector2f m_OffsetSnapshot;
     bool m_CanJump;
     int m_Lives;
     const int m_MaxLives;
     int m_Score;
+    bool m_CanClimb;
+    bool m_Climbing;
+    bool m_OnLadder;
+    bool m_OnGround;
 };

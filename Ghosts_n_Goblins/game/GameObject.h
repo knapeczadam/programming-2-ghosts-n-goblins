@@ -12,7 +12,7 @@ public:
     explicit GameObject();
     explicit GameObject(Game::Label label, bool collisionEnabled = true);
     explicit GameObject(Game::Label label, Sprite* pSprite, bool collisionEnabled = true);
-    explicit GameObject(Game::Label label, const Rectf& shape, bool collisionEnabled = true);
+    explicit GameObject(Game::Label label, const Rectf& shape, bool collisionEnabled = true, const Color4f& color = Color4f{0.f, 1.f, 1.f, 1.f});
     explicit GameObject(Game::Label label, Sprite* pSprite, const Point2f& pos, bool collisionEnabled = true);
     virtual ~GameObject() override = default;
     GameObject(const GameObject& other) = delete;
@@ -27,7 +27,6 @@ public:
 
     // GETTERS & SETTERS
     Game::Label GetLabel() const;
-    void SetLabel(Game::Label label);
 
     template <typename T>
     T GetPosition() const
@@ -55,11 +54,12 @@ public:
     virtual Point2f GetCollisionBoxCenter() const final;
     virtual void SetBottom(float bottom) final;
     virtual void SetLeft(float left) final;
+    virtual bool IsOverlapping(GameObject* other) const final;
 
 protected:
-    virtual bool IsOverlapping(GameObject* other) const final;
     virtual void InitCollisionBox() final;
     virtual void UpdateCollisionBox() final;
+    virtual std::vector<Point2f> GetCollisionBoxVertices() const final;
 
 private:
     void InitShape();
@@ -74,4 +74,5 @@ protected:
     bool m_Active;
     bool m_Visible;
     bool m_Flipped;
+    Color4f m_Color;
 };
