@@ -27,6 +27,7 @@ class SoundManager;
 class IThrowable;
 class IEnemy;
 class ICollectible;
+class IClimable;
 
 
 class Game : public BaseGame, public Timer
@@ -66,6 +67,7 @@ public:
         L_DOOR,
         L_FOREGROUND,
         L_KILLZONE,
+        L_LADDER,
         L_LEVEL,
         L_PLATFORM,
         L_TOMBSTONE,
@@ -189,6 +191,7 @@ private:
     void InitLabels();
     void InitCamera() const;
     void InitBootIntervals();
+    void InitLadders();
     
     // DATA MEMBERS
     
@@ -197,6 +200,7 @@ private:
     std::vector<Water*> m_Waters;
     std::vector<Tombstone*> m_Tombstones;
     std::vector<ICollectible*> m_Collectibles;
+    std::vector<IClimable*> m_Ladders;
     
     SpriteFactory* m_pSpriteFactory;
     TextureManager* m_pTextureManager;

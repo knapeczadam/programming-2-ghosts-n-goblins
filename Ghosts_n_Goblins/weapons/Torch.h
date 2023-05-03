@@ -6,7 +6,7 @@
 class Torch : public GameObject, public IThrowable, public ICollectible
 {
 public:
-	Torch(Sprite* pSprite, const Point2f& pos, bool isFlipped);
+	Torch(Sprite* pSprite, const Point2f& pos, bool isFlipped, bool collectible = false);
 	virtual ~Torch() override = default;
 	Torch(const Torch& other) = delete;
 	Torch(Torch&& other) noexcept = delete;
@@ -14,7 +14,9 @@ public:
 	Torch& operator=(Torch&& other) noexcept = delete;
 
 	virtual void Update(float elapsedSec) override;
-
+private:
+	void SetSprite() const;	
 private:
 	float m_Speed;
+	bool m_Collectible;
 };

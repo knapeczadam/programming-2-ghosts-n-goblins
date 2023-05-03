@@ -35,7 +35,6 @@ private:
 private:
     Platform* m_pPlatform;
     std::vector<std::vector<Point2f>> m_Vertices;
-    const float topMargin;
     Rectf m_Boundaries;
     GameObject* m_pPlayer;
 };

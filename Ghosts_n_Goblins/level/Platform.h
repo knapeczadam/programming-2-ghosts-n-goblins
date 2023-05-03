@@ -35,7 +35,7 @@ private:
     const float m_MaxAmplitude;
     const float m_ShortAmplitude;
     float m_CurrAmplitude;
-    bool m_IsShortened;
+    bool m_Shortened;
     bool m_Flip;
     
 };

@@ -190,6 +190,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">pch.h</PrecompiledHeaderFile>
     </ClCompile>
+    <ClCompile Include="characters\Magician.cpp" />
     <ClCompile Include="characters\Player.cpp">
       <RuntimeLibrary>MultiThreadedDebugDll</RuntimeLibrary>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -1069,6 +1070,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">pch.h</PrecompiledHeaderFile>
     </ClCompile>
+    <ClCompile Include="level\Ladder.cpp" />
     <ClCompile Include="level\Level.cpp">
       <RuntimeLibrary>MultiThreadedDebugDll</RuntimeLibrary>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -1531,6 +1533,7 @@
     <ClInclude Include="characters\FlyingKnight.h" />
     <ClInclude Include="characters\GreenMonster.h" />
     <ClInclude Include="characters\IEnemy.h" />
+    <ClInclude Include="characters\Magician.h" />
     <ClInclude Include="characters\Player.h" />
     <ClInclude Include="characters\RedArremer.h" />
     <ClInclude Include="characters\WoodyPig.h" />
@@ -1554,7 +1557,9 @@
     <ClInclude Include="game\Game.h" />
     <ClInclude Include="game\GameObject.h" />
     <ClInclude Include="game\Macros.h" />
+    <ClInclude Include="level\IClimable.h" />
     <ClInclude Include="level\KillZone.h" />
+    <ClInclude Include="level\Ladder.h" />
     <ClInclude Include="level\Level.h" />
     <ClInclude Include="level\Platform.h" />
     <ClInclude Include="level\Tombstone.h" />

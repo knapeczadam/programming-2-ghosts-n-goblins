@@ -13,9 +13,9 @@ GameObject::GameObject()
       , m_Shape{}
       , m_CollisionBox{}
       , m_CollisionEnabled{false}
-      , m_IsActive{true}
-      , m_IsVisible{true}
-      , m_IsFlipped{false}
+      , m_Active{true}
+      , m_Visible{true}
+      , m_Flipped{false}
 {
 }
 
@@ -25,9 +25,9 @@ GameObject::GameObject(Game::Label label, bool collisionEnabled)
       , m_Shape{}
       , m_CollisionBox{}
       , m_CollisionEnabled{collisionEnabled}
-      , m_IsActive{true}
-      , m_IsVisible{true}
-      , m_IsFlipped{false}
+      , m_Active{true}
+      , m_Visible{true}
+      , m_Flipped{false}
 {
 }
 
@@ -37,9 +37,9 @@ GameObject::GameObject(Game::Label label, Sprite* pSprite, bool collisionEnabled
       , m_Shape{}
       , m_CollisionBox{}
       , m_CollisionEnabled{collisionEnabled}
-      , m_IsActive{true}
-      , m_IsVisible{true}
-      , m_IsFlipped{false}
+      , m_Active{true}
+      , m_Visible{true}
+      , m_Flipped{false}
 {
     InitShape();
     if (m_CollisionEnabled)
@@ -54,9 +54,9 @@ GameObject::GameObject(Game::Label label, const Rectf& shape, bool collisionEnab
       , m_Shape{shape}
       , m_CollisionBox{shape}
       , m_CollisionEnabled{collisionEnabled}
-      , m_IsActive{true}
-      , m_IsVisible{true}
-      , m_IsFlipped{false}
+      , m_Active{true}
+      , m_Visible{true}
+      , m_Flipped{false}
 {
 }
 
@@ -66,9 +66,9 @@ GameObject::GameObject(Game::Label label, Sprite* pSprite, const Point2f& pos, b
       , m_Shape{}
       , m_CollisionBox{}
       , m_CollisionEnabled{collisionEnabled}
-      , m_IsActive{true}
-      , m_IsVisible{true}
-      , m_IsFlipped{false}
+      , m_Active{true}
+      , m_Visible{true}
+      , m_Flipped{false}
 {
     InitShape(pos);
     if (m_CollisionEnabled)
@@ -81,7 +81,7 @@ void GameObject::Draw() const
 {
     if (m_pSprite)
     {
-        if (m_IsFlipped)
+        if (m_Flipped)
         {
             m_pSprite->DrawFlipped();
         }
@@ -154,22 +154,22 @@ Rectf GameObject::GetShape() const
 
 bool GameObject::IsActive() const
 {
-    return m_IsActive;
+    return m_Active;
 }
 
 void GameObject::SetActive(bool isActive)
 {
-    m_IsActive = isActive;
+    m_Active = isActive;
 }
 
 bool GameObject::IsVisible() const
 {
-    return m_IsVisible;
+    return m_Visible;
 }
 
 void GameObject::SetVisible(bool isVisible)
 {
-    m_IsVisible = isVisible;
+    m_Visible = isVisible;
 }
 
 bool GameObject::IsOverlapping(GameObject* other) const

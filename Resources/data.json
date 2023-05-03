@@ -94,7 +94,7 @@
     },
     {
       "label": "l_level",
-      "path": "level/level.bmp"
+      "path": "level/level32.bmp"
     },
     {
       "label": "l_foreground",
@@ -331,10 +331,14 @@
       "label": "o_bust",
       "rows": 1,
       "columns": 3,
+      "frames_per_second": 10,
       "scale": 2
     },
     {
       "label": "o_coin",
+      "rows": 1,
+      "columns": 3,
+      "frames_per_second": 10,
       "scale": 2
     },
     {
@@ -362,6 +366,7 @@
       "label": "o_star",
       "rows": 1,
       "columns": 3,
+      "frames_per_second": 10,
       "scale": 2
     },
     {
@@ -415,12 +420,14 @@
       "label": "w_dagger",
       "rows": 1,
       "columns": 3,
+      "frames_per_second": 10,
       "scale": 2
     },
     {
       "label": "w_lance",
       "rows": 1,
       "columns": 3,
+      "frames_per_second": 10,
       "scale": 2
     },
     {
@@ -431,6 +438,7 @@
       "label": "w_torch",
       "rows": 1,
       "columns": 3,
+      "frames_per_second": 10,
       "scale": 2
     },
     {

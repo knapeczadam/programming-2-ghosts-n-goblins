@@ -13,6 +13,7 @@
 #include "level/KillZone.h"
 #include "level/Platform.h"
 #include "level/Tombstone.h"
+#include "level/IClimable.h"
 #include "ui/HUD.h"
 #include "game/Macros.h"
 
@@ -24,8 +25,11 @@
 #include "engine/Clock.h"
 #include "engine/SoundManager.h"
 #include "engine/Sprite.h"
+#include "level/Ladder.h"
 #include "level/Water.h"
 #include "weapons/Dagger.h"
+#include "weapons/Lance.h"
+#include "weapons/Torch.h"
 
 Game::Game(const Window& window)
     : BaseGame{window}
@@ -34,6 +38,7 @@ Game::Game(const Window& window)
       , m_Waters{}
       , m_Tombstones{}
       , m_Collectibles{}
+      , m_Ladders{}
       , m_pSpriteFactory{}
       , m_pTextureManager{}
       , m_pSoundManager{}
@@ -53,7 +58,7 @@ Game::Game(const Window& window)
       , m_BootIntervals{}
       , m_BootCounter{1}
       , m_MaxBootCount{20}
-    , m_Boot{}
+      , m_Boot{}
 {
     Initialize();
 }
@@ -82,6 +87,7 @@ void Game::Cleanup()
     std::ranges::for_each(m_Enemies, [](const IEnemy* pEnemy) { delete pEnemy; });
     std::ranges::for_each(m_Tombstones, [](const Tombstone* pTombstone) { delete pTombstone; });
     std::ranges::for_each(m_Collectibles, [](const ICollectible* pCollectible) { delete pCollectible; });
+    std::ranges::for_each(m_Ladders, [](const IClimable* pLadder) { delete pLadder; });
 }
 
 void Game::Initialize()
@@ -98,12 +104,13 @@ void Game::Initialize()
     m_pSpriteFactory = new SpriteFactory{m_Data, m_pTextureManager, m_Labels};
 
     // LEVEL
-    m_pPlatform = new Platform{m_pSpriteFactory->CreateSprite(Label::L_PLATFORM), Point2f{3555.0f, 30.0f}};
+    m_pPlatform = new Platform{m_pSpriteFactory->CreateSprite(Label::L_PLATFORM), Point2f{3295.0f, 26.0f}};
     m_pForeground = new GameObject{Label::L_FOREGROUND, m_pSpriteFactory->CreateSprite(Label::L_FOREGROUND), false};
     m_pKillZone = new KillZone{m_pTextureManager->GetTexture(Label::L_LEVEL)->GetWidth(), 20.0f};
     m_pLevel = new Level{m_pSpriteFactory->CreateSprite(Label::L_LEVEL), m_pPlatform};
     InitWaters();
     InitTombstones();
+    InitLadders();
 
     // CAMERA - has to be after level initialization
     m_pCamera = new Camera{};
@@ -116,8 +123,7 @@ void Game::Initialize()
     m_pHUD = new HUD{m_pSpriteFactory->CreateSprite(Label::U_HUD), m_pPlayer, GetViewPort()};
 
     // TEST GAME OBJECT
-    m_pTestGameObject = new Dagger{m_pSpriteFactory->CreateSprite(Label::W_DAGGER), Point2f{260.f, 65.f}, false};
-    m_pTestGameObject->SetActive(false);
+    m_pTestGameObject = new Lance{m_pSpriteFactory->CreateSprite(Label::W_LANCE), Point2f{260.f, 65.f}, false, true};
 
     // GAME OBJECTS
     //m_Enemies.push_back();
@@ -262,11 +268,11 @@ void Game::LoadData()
 
 void Game::InitWaters()
 {
-    Water* water1 = new Water{m_pSpriteFactory->CreateSprite(Label::L_WATER), Point2f{3550.0f, 0.0f}};
-    Water* water2 = new Water{m_pSpriteFactory->CreateSprite(Label::L_WATER), Point2f{4205.0f, 0.0f}, 64.0f};
-    Water* water3 = new Water{m_pSpriteFactory->CreateSprite(Label::L_WATER), Point2f{4343.0f, 0.0f}, 64.0f};
-    Water* water4 = new Water{m_pSpriteFactory->CreateSprite(Label::L_WATER), Point2f{5308.0f, 0.0f}, 64.0f};
-    Water* water5 = new Water{m_pSpriteFactory->CreateSprite(Label::L_WATER), Point2f{5997.0f, 0.0f}, 64.0f};
+    Water* water1 = new Water{m_pSpriteFactory->CreateSprite(Label::L_WATER), Point2f{3295.0f, 0.0f}};
+    Water* water2 = new Water{m_pSpriteFactory->CreateSprite(Label::L_WATER), Point2f{3903.0f, 0.0f}, 64.0f};
+    Water* water3 = new Water{m_pSpriteFactory->CreateSprite(Label::L_WATER), Point2f{4031.0f, 0.0f}, 64.0f};
+    Water* water4 = new Water{m_pSpriteFactory->CreateSprite(Label::L_WATER), Point2f{4927.0f, 0.0f}, 64.0f};
+    Water* water5 = new Water{m_pSpriteFactory->CreateSprite(Label::L_WATER), Point2f{5566.0f, 0.0f}, 64.0f};
     m_Waters.push_back(water1);
     m_Waters.push_back(water2);
     m_Waters.push_back(water3);
@@ -277,20 +283,20 @@ void Game::InitWaters()
 void Game::InitTombstones()
 {
     // BOTTOM
-    Tombstone* tombstone2 = new Tombstone{Rectf{90.0f, 66.0f, 30.0f, 30.0f}};
-    Tombstone* tombstone3 = new Tombstone{Rectf{535.0f, 66.0f, 30.0f, 30.0f}};
-    Tombstone* tombstone4 = new Tombstone{Rectf{884.0f, 66.0f, 30.0f, 30.0f}};
-    Tombstone* tombstone5 = new Tombstone{Rectf{1124.0f, 66.0f, 30.0f, 30.0f}};
-    Tombstone* tombstone6 = new Tombstone{Rectf{1608.0f, 66.0f, 30.0f, 30.0f}};
-    Tombstone* tombstone7 = new Tombstone{Rectf{2056.0f, 66.0f, 30.0f, 30.0f}};
-    Tombstone* tombstone8 = new Tombstone{Rectf{2365.0f, 66.0f, 30.0f, 30.0f}};
-    Tombstone* tombstone9 = new Tombstone{Rectf{2707.0f, 66.0f, 30.0f, 30.0f}};
-    Tombstone* tombstone10 = new Tombstone{Rectf{3261.0f, 66.0f, 30.0f, 30.0f}};
+    Tombstone* tombstone2 = new Tombstone{Rectf{83.0f, 66.0f, 30.0f, 30.0f}};
+    Tombstone* tombstone3 = new Tombstone{Rectf{499.0f, 66.0f, 30.0f, 30.0f}};
+    Tombstone* tombstone4 = new Tombstone{Rectf{817.0f, 66.0f, 30.0f, 30.0f}};
+    Tombstone* tombstone5 = new Tombstone{Rectf{1044.0f, 66.0f, 30.0f, 30.0f}};
+    Tombstone* tombstone6 = new Tombstone{Rectf{1490.0f, 66.0f, 30.0f, 30.0f}};
+    Tombstone* tombstone7 = new Tombstone{Rectf{1903.0f, 66.0f, 30.0f, 30.0f}};
+    Tombstone* tombstone8 = new Tombstone{Rectf{2191.0f, 66.0f, 30.0f, 30.0f}};
+    Tombstone* tombstone9 = new Tombstone{Rectf{2516.0f, 66.0f, 30.0f, 30.0f}};
+    Tombstone* tombstone10 = new Tombstone{Rectf{3028.0f, 66.0f, 30.0f, 30.0f}};
 
     // TOP
-    Tombstone* tombstone11 = new Tombstone{Rectf{1643.0f, 238.0f, 30.0f, 30.0f}};
-    Tombstone* tombstone12 = new Tombstone{Rectf{1849.0f, 238.0f, 30.0f, 30.0f}};
-    Tombstone* tombstone13 = new Tombstone{Rectf{2056.0f, 238.0f, 30.0f, 30.0f}};
+    Tombstone* tombstone11 = new Tombstone{Rectf{1519.0f, 221.0f, 30.0f, 30.0f}};
+    Tombstone* tombstone12 = new Tombstone{Rectf{1716.0f, 221.0f, 30.0f, 30.0f}};
+    Tombstone* tombstone13 = new Tombstone{Rectf{1909.0f, 221.0f, 30.0f, 30.0f}};
 
     m_Tombstones.push_back(tombstone2);
     m_Tombstones.push_back(tombstone3);
@@ -337,6 +343,11 @@ void Game::InitBootIntervals()
     m_BootIntervals.push(0.5f);
 }
 
+void Game::InitLadders()
+{
+    
+}
+
 void Game::ClearBackground() const
 {
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
@@ -349,12 +360,14 @@ void Game::Draw() const
     static auto draw{[](const GameObject* pGameObject) { pGameObject->Draw(); }};
     static auto throwableToGameObject{[](IThrowable* pThrowable) { return dynamic_cast<GameObject*>(pThrowable); }};
     static auto enemyToGameObject{[](IEnemy* pEnemy) { return dynamic_cast<GameObject*>(pEnemy); }};
-    static auto collectibleToGameObject{[](ICollectible* pCollectible) { return dynamic_cast<GameObject*>(pCollectible); }};
+    static auto collectibleToGameObject{
+        [](ICollectible* pCollectible) { return dynamic_cast<GameObject*>(pCollectible); }
+    };
     static auto isVisible{[](const GameObject* pGameObject) { return pGameObject->IsVisible(); }};
 
     // CLEAR
     ClearBackground();
-    
+
     // BOOT
     if (m_Boot)
     {
@@ -366,8 +379,10 @@ void Game::Draw() const
     m_pCamera->Transform(m_pPlayer->GetShape());
     m_pLevel->Draw();
     std::ranges::for_each(m_Enemies | std::views::transform(enemyToGameObject) | std::views::filter(isVisible), draw);
-    std::ranges::for_each(m_Throwables | std::views::transform(throwableToGameObject) | std::views::filter(isVisible), draw);
-    std::ranges::for_each(m_Collectibles | std::views::transform(collectibleToGameObject) | std::views::filter(isVisible), draw);
+    std::ranges::for_each(m_Throwables | std::views::transform(throwableToGameObject) | std::views::filter(isVisible),
+                          draw);
+    std::ranges::for_each(
+        m_Collectibles | std::views::transform(collectibleToGameObject) | std::views::filter(isVisible), draw);
     m_pPlayer->Draw();
     std::ranges::for_each(m_Waters, [](const Water* pWater) { pWater->Draw(); });
     m_pForeground->Draw();
@@ -381,7 +396,6 @@ void Game::Draw() const
 
     // HUD
     m_pHUD->Draw();
-
 }
 
 void Game::Update(float elapsedSec)
@@ -390,7 +404,9 @@ void Game::Update(float elapsedSec)
     static auto isActive{[](const GameObject* pGameObject) { return pGameObject->IsActive(); }};
     static auto throwableToGameObject{[](IThrowable* pThrowable) { return dynamic_cast<GameObject*>(pThrowable); }};
     static auto enemyToGameObject{[](IEnemy* pEnemy) { return dynamic_cast<GameObject*>(pEnemy); }};
-    static auto collectibleToGameObject{[](ICollectible* pCollectible) { return dynamic_cast<GameObject*>(pCollectible); }};
+    static auto collectibleToGameObject{
+        [](ICollectible* pCollectible) { return dynamic_cast<GameObject*>(pCollectible); }
+    };
     static auto update{[&](GameObject* pGameObject) { pGameObject->Update(elapsedSec); }};
 
     Clock::Update(elapsedSec);
@@ -401,23 +417,25 @@ void Game::Update(float elapsedSec)
         Boot();
         if (m_BootCounter < m_MaxBootCount) return;
     }
-    
+
     // LEVEL
     m_pLevel->Update(elapsedSec);
     std::ranges::for_each(m_Waters, [&](Water* pWater) { pWater->Update(elapsedSec); });
-    
+
     // PLAYER
     if (m_pPlayer->IsActive()) m_pPlayer->Update(elapsedSec);
 
     // EMENIES
     // TODO set target
-    std::ranges::for_each(m_Enemies | std::views::transform(enemyToGameObject) |std::views::filter(isActive), update);
+    std::ranges::for_each(m_Enemies | std::views::transform(enemyToGameObject) | std::views::filter(isActive), update);
 
     // THROWABLES
-    std::ranges::for_each(m_Throwables | std::views::transform(throwableToGameObject) | std::views::filter(isActive), update);
+    std::ranges::for_each(m_Throwables | std::views::transform(throwableToGameObject) | std::views::filter(isActive),
+                          update);
 
     // COLLECTIBLES
-    std::ranges::for_each(m_Collectibles | std::views::transform(collectibleToGameObject) | std::views::filter(isActive), update);
+    std::ranges::for_each(
+        m_Collectibles | std::views::transform(collectibleToGameObject) | std::views::filter(isActive), update);
 
     m_pHUD->Update(elapsedSec);
 
@@ -432,7 +450,7 @@ void Game::DoCollisionTests()
 {
     // kill-z continuous collision detection
     m_pKillZone->HandleCollision(m_pPlayer);
-    
+
     if (m_pPlayer->IsActive()) m_pLevel->HandleCollision(m_pPlayer);
 
     // Player on enemies
@@ -464,6 +482,11 @@ void Game::DoCollisionTests()
             }
         }
     }
+    for (IClimable* pClimable : m_Ladders)
+    {
+        Ladder* ladder = dynamic_cast<Ladder*>(pClimable);
+        m_pPlayer->HandleCollision(ladder);
+    }
 
     // Test object
     m_pPlayer->HandleCollision(m_pTestGameObject);
@@ -475,8 +498,10 @@ void Game::LateUpdate(float elapsedSec)
     static auto lateUpdate{[&](GameObject* pGameObject) { pGameObject->LateUpdate(elapsedSec); }};
     static auto throwableToGameObject{[](IThrowable* pThrowable) { return dynamic_cast<GameObject*>(pThrowable); }};
     static auto enemyToGameObject{[](IEnemy* pEnemy) { return dynamic_cast<GameObject*>(pEnemy); }};
-    static auto collectibleToGameObject{[](ICollectible* pCollectible) { return dynamic_cast<GameObject*>(pCollectible); }};
-    
+    static auto collectibleToGameObject{
+        [](ICollectible* pCollectible) { return dynamic_cast<GameObject*>(pCollectible); }
+    };
+
     m_pPlayer->LateUpdate(elapsedSec);
 
     std::ranges::for_each(m_Waters, [&](Water* pWater) { pWater->LateUpdate(elapsedSec); });

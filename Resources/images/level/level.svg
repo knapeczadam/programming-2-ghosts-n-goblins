@@ -1,30 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Generator: Adobe Illustrator 27.4.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!-- Generator: Adobe Illustrator 27.5.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 viewBox="0 0 7719 448" style="enable-background:new 0 0 7719 448;" xml:space="preserve">
+	 viewBox="0 0 7167 448" style="enable-background:new 0 0 7167 448;" xml:space="preserve">
 <style type="text/css">
 	.st0{fill:none;stroke:#000000;stroke-miterlimit:10;}
 	.st1{fill:none;stroke:#231F20;stroke-miterlimit:10;}
 </style>
-<image style="overflow:visible;enable-background:new    ;" width="7719" height="448" xlink:href="3B0477B8.jpg" >
+<image style="display:none;overflow:visible;enable-background:new    ;" width="7719" height="448" xlink:href="3B0477B8.jpg"  transform="matrix(0.9285 0 0 1 0 0)">
 </image>
-<path class="st0" d="M3567.3,382.5V448H0v-65.5H3567.3z"/>
-<path class="st0" d="M3847.8,382.5h371.5V448h-372.7L3847.8,382.5z"/>
-<path class="st0" d="M4258.1,382.5h100.3V448h-100.3V382.5z"/>
-<path class="st0" d="M4394.5,382.5h928.7V448h-928.7V382.5z"/>
-<path class="st0" d="M5362.7,382.5h644.7V448h-644.7V382.5z"/>
-<path class="st1" d="M6054,382.5h1665V448H6054V382.5z"/>
-<path class="st0" d="M1289.6,210.1H2427v6.6H1289.6V210.1z"/>
-<path class="st0" d="M86.8,388v-46.3h30.1V388H86.8z"/>
-<path class="st0" d="M535.7,340.7h25.4v49.9h-25.4V340.7z"/>
-<path class="st0" d="M885,340.5h23.2v48.1H885V340.5z"/>
-<path class="st0" d="M1124.5,343.4h25.9v45.2h-25.9V343.4z"/>
-<path class="st0" d="M1608.5,341.7h23.2v46.6h-23.2V341.7z"/>
-<path class="st0" d="M1641.7,168.1h22.7v53.6h-22.7V168.1z"/>
-<path class="st0" d="M1847.7,171.4h24.4v48.5h-24.4V171.4z"/>
-<path class="st0" d="M2053.3,171.6h28l0,49.9h-28L2053.3,171.6z"/>
-<path class="st0" d="M2056.6,341.8h22.4v45.3h-22.4V341.8z"/>
-<path class="st0" d="M2364.6,341h25.3v44.9h-25.3V341z"/>
-<path class="st0" d="M2708.2,341.3h23v45h-23.5L2708.2,341.3z"/>
-<path class="st0" d="M3258.8,343h26.8v43.3h-26.8V343z"/>
+<image style="overflow:visible;enable-background:new    ;" width="7167" height="448" xlink:href="level.png" >
+</image>
+<image style="overflow:visible;" width="3584" height="208" xlink:href="Ghosts&apos;NGoblins-Stage1.png"  transform="matrix(1.9992 0 0 1.9992 0 32.058)">
+</image>
+<path class="st0" d="M3310.5,385.9v62H0v-62H3310.5z"/>
+<path class="st0" d="M3577.3,386.2h334.4v62h-335.5L3577.3,386.2z"/>
+<path class="st0" d="M3962.8,386.2h77.2v62h-77.2V386.2z"/>
+<path class="st0" d="M4089.3,386h842v62h-842L4089.3,386L4089.3,386z"/>
+<path class="st0" d="M4985.4,386h588.9v62h-588.9V386z"/>
+<path class="st1" d="M5626.8,386H7167v62H5626.8V386z"/>
+<path class="st0" d="M1196.6,227.1h1063.6v17H1196.6V227.1z"/>
+<path class="st0" d="M82.5,395.4v-46.3h30.1v46.3H82.5z"/>
+<path class="st0" d="M495.9,347.9h25.4v49.9h-25.4V347.9z"/>
+<path class="st0" d="M820.7,347.5h23.2v48.1h-23.2V347.5z"/>
+<path class="st0" d="M1043,352.4h25.9v45.2H1043V352.4z"/>
+<path class="st0" d="M1493.6,348.3h23.2v46.6h-23.2V348.3z"/>
+<path class="st0" d="M1522.5,187.9h22.7v53.6h-22.7V187.9z"/>
+<path class="st0" d="M1715.1,193.9h24.4v48.5h-24.4V193.9z"/>
+<path class="st0" d="M1906.1,194.1h28V244h-28V194.1z"/>
+<path class="st0" d="M1907.9,348.7h22.4V394h-22.4V348.7z"/>
+<path class="st0" d="M2193.9,348.7h25.3v44.9h-25.3V348.7z"/>
+<path class="st0" d="M2514.8,348.3h23v45h-23.5L2514.8,348.3z"/>
+<path class="st0" d="M3025.6,353.3h26.8v43.3h-26.8V353.3z"/>
 </svg>

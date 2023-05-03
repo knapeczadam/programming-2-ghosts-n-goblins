@@ -13,12 +13,13 @@
 #include <numeric>
 
 #include "Matrix2x3.h"
+#include "level/IClimable.h"
 #include "level/Platform.h"
 #include "weapons/Dagger.h"
 #include "weapons/Lance.h"
 #include "weapons/Torch.h"
 
-const Point2f Player::m_SpawnPos{174.0f, 69.0f};
+const Point2f Player::m_SpawnPos{174.0f, 64.0f};
 
 Player::Player(Sprite* pSprite, const Point2f& pos, Level* pLevel)
     : GameObject{Game::Label::C_ARTHUR, pSprite, pos}
@@ -254,12 +255,12 @@ void Player::MoveHorizontal(const Uint8* pState)
     if (pState[SDL_SCANCODE_LEFT])
     {
         m_Velocity.x = -m_HorVelocity;
-        m_IsFlipped = true;
+        m_Flipped = true;
     }
     else if (pState[SDL_SCANCODE_RIGHT])
     {
         m_Velocity.x = m_HorVelocity;
-        m_IsFlipped = false;
+        m_Flipped = false;
     }
     else
     {
@@ -307,13 +308,13 @@ void Player::Attack(std::vector<IThrowable*>& throwables, SpriteFactory* spriteF
         switch (m_Weapon)
         {
         case Game::Label::W_DAGGER:
-            throwables.push_back(new Dagger{spriteFactory->CreateSprite(m_Weapon), GetShapeCenter(), m_IsFlipped});
+            throwables.push_back(new Dagger{spriteFactory->CreateSprite(m_Weapon), GetShapeCenter(), m_Flipped});
             break;
         case Game::Label::W_LANCE:
-            throwables.push_back(new Lance{spriteFactory->CreateSprite(m_Weapon), GetShapeCenter(), m_IsFlipped});
+            throwables.push_back(new Lance{spriteFactory->CreateSprite(m_Weapon), GetShapeCenter(), m_Flipped});
             break;
         case Game::Label::W_TORCH:
-            throwables.push_back(new Torch{spriteFactory->CreateSprite(m_Weapon), GetShapeCenter(), m_IsFlipped});
+            throwables.push_back(new Torch{spriteFactory->CreateSprite(m_Weapon), GetShapeCenter(), m_Flipped});
             break;
         }
     }
@@ -394,13 +395,21 @@ void Player::HandleCollision(GameObject* other)
             break;
         case Game::Label::W_LANCE:
             m_Weapon = Game::Label::W_LANCE;
+            other->SetVisible(false);
+            other->SetActive(false);
             break;
         case Game::Label::W_TORCH:
             m_Weapon = Game::Label::W_TORCH;
+            other->SetVisible(false);
+            other->SetActive(false);
             break;
         case Game::Label::O_SHIELD:
             break;
         }
+    }
+    IClimable *pClimable{dynamic_cast<IClimable*>(other)};
+    if (pClimable)
+    {
     }
 }
 

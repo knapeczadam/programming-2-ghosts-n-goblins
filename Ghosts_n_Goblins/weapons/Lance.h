@@ -6,7 +6,7 @@
 class Lance: public GameObject, public IThrowable, public ICollectible
 {
 public:
-	Lance(Sprite* pSprite, const Point2f& pos, bool isFlipped);
+	Lance(Sprite* pSprite, const Point2f& pos, bool isFlipped, bool collectible = false);
 	virtual ~Lance() override = default;
 	Lance(const Lance& other) = delete;
 	Lance(Lance&& other) noexcept = delete;
@@ -14,7 +14,9 @@ public:
 	Lance& operator=(Lance&& other) noexcept = delete;
 
 	virtual void Update(float elapsedSec) override;
-
+private:
+	void SetSprite() const;
 private:
 	float m_Speed;
+	bool m_Collectible;
 };

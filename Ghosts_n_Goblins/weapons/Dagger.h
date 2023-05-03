@@ -6,7 +6,7 @@
 class Dagger : public GameObject, public IThrowable, public ICollectible
 {
 public:
-	Dagger(Sprite* pSprite, const Point2f& pos, bool isFlipped);
+	Dagger(Sprite* pSprite, const Point2f& pos, bool isFlipped, bool collectible = false);
     virtual ~Dagger() override = default;
     Dagger(const Dagger& other) = delete;
     Dagger(Dagger&& other) noexcept = delete;
@@ -14,7 +14,11 @@ public:
     Dagger& operator=(Dagger&& other) noexcept = delete;
 
     virtual void Update(float elapsedSec) override;
+	
+private:
+	void SetSprite() const;
 
 private:
 	float m_Speed;
+	bool m_Collectible;
 };

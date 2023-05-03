@@ -16,8 +16,7 @@ Level::Level(Sprite* pSprite, Platform* pPlatform)
     : GameObject{Game::Label::L_LEVEL, pSprite}
       , m_pPlatform{pPlatform}
       , m_Vertices{}
-      , topMargin{32.0f}
-      , m_Boundaries{0, 0, m_pSprite->GetWidth(), m_pSprite->GetHeight() + topMargin}
+      , m_Boundaries{0, 0, m_pSprite->GetWidth(), m_pSprite->GetHeight()}
       , m_pPlayer{}
 {
     SetVertices();

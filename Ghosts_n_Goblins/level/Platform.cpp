@@ -13,10 +13,10 @@ Platform::Platform(Sprite* pSprite, const Point2f& pos)
       , m_AccuSec{0.0f}
       , m_OriginalPos{pos}
       , m_Speed{2.0f}
-      , m_MaxAmplitude{238.0f}
+      , m_MaxAmplitude{253.0f}
       , m_ShortAmplitude{100.0f}
       , m_CurrAmplitude{m_MaxAmplitude}
-      , m_IsShortened{false}
+      , m_Shortened{false}
       , m_Flip{true}
 {
     InitVertices();
@@ -35,13 +35,13 @@ void Platform::Move()
     const bool leftReached{std::abs(m_Shape.left - m_OriginalPos.x) < epsilon};
     const bool rightReached{std::abs(m_Shape.left - (m_OriginalPos.x + m_MaxAmplitude)) < epsilon};
     const bool midReached{std::abs(m_Shape.left - (m_OriginalPos.x + m_MaxAmplitude -  m_ShortAmplitude)) < epsilon};
-    if (m_IsShortened)
+    if (m_Shortened)
     {
         m_Shape.left = m_OriginalPos.x + (m_MaxAmplitude - m_ShortAmplitude) + normalizedWave * m_CurrAmplitude;
         if (m_Flip and rightReached)
         {
             m_Flip = false;
-            m_IsShortened = false;
+            m_Shortened = false;
             m_CurrAmplitude = m_MaxAmplitude;
         }
         else if (midReached)
@@ -54,7 +54,7 @@ void Platform::Move()
         m_Shape.left = m_OriginalPos.x + normalizedWave * m_CurrAmplitude;
         if (m_Flip and rightReached)
         {
-            m_IsShortened = true;
+            m_Shortened = true;
             m_CurrAmplitude = m_ShortAmplitude;
             m_Flip = false;
         }

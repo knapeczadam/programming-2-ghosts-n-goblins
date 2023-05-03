@@ -65,7 +65,7 @@ void HUD::DrawHighScore()
     m_pSprite->SetClipWidth(8);
     m_pSprite->SetClipHeight(8);
     const int testHighScore{10000};
-    Point2f pos{314.0f, m_ViewPort.height - m_pSprite->GetScaledClipHeight() * 2};
+    Point2f pos{305.0f, m_ViewPort.height - m_pSprite->GetScaledClipHeight() * 2};
     const float offset{m_pSprite->GetScaledClipWidth()};
     for (int score = testHighScore; score > 0; score /= 10)
     {
@@ -87,7 +87,7 @@ void HUD::DrawTopScore()
     m_pSprite->SetClipWidth(80);
     m_pSprite->SetTopOffsetRows(12);
     m_pSprite->SetLeftOffsetCols(1);
-    m_pSprite->SetPosition(Point2f{188.0f, m_ViewPort.height - m_pSprite->GetScaledClipHeight()});
+    m_pSprite->SetPosition(Point2f{175.0f, m_ViewPort.height - m_pSprite->GetScaledClipHeight()});
     m_pSprite->UpdateSourceRect();
     m_pSprite->UpdateDestinationRect();
     m_pSprite->Draw();
@@ -116,7 +116,7 @@ void HUD::DrawRemainingTime()
     firstDigit = minutes;
     if (seconds > 9)
     {
-        secondDigit = seconds / 10; 
+        secondDigit = seconds / 10;
         thirdDigit = seconds % 10;
     }
     else
@@ -172,7 +172,7 @@ void HUD::DrawFrame() const
     m_pSprite->SetClipHeight(m_pSprite->GetClipHeight() * 2);
     m_pSprite->SetTopOffsetRows(2);
     Point2f pos;
-    pos.x = 244.0f;
+    pos.x = m_ViewPort.width / 2 - m_pSprite->GetScaledClipWidth() / 2;
     m_pSprite->SetPosition(pos);
     m_pSprite->UpdateSourceRect();
     m_pSprite->UpdateDestinationRect();
@@ -184,9 +184,9 @@ void HUD::DrawWeapon() const
 {
     const Point2f offset{0.0f, 20.0f};
     Point2f pos;
-    pos.x = 244.0f + m_pSprite->GetScaledClipWidth() / 2;
-    pos.y = offset.y;
-    
+    pos.x = m_ViewPort.width / 2 - m_pSprite->GetScaledClipWidth() / 2;
+    pos.y = m_pSprite->GetScaledClipHeight() / 2;
+
     m_pSprite->SetTopOffsetRows(2);
     switch (m_pPlayer->GetWeapon())
     {

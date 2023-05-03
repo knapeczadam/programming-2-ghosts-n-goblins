@@ -71,7 +71,7 @@ protected:
     Rectf m_Shape;
     Rectf m_CollisionBox;
     bool m_CollisionEnabled;
-    bool m_IsActive;
-    bool m_IsVisible;
-    bool m_IsFlipped;
+    bool m_Active;
+    bool m_Visible;
+    bool m_Flipped;
 };
