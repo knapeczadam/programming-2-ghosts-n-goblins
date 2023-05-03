@@ -8,6 +8,7 @@ class Sprite;
 BigMan::BigMan(Sprite* pSprite, const Point2f& pos)
     : GameObject{Game::Label::C_BIG_MAN, pSprite, pos}
 {
+    m_Score = 2000;
 }
 
 void BigMan::Draw() const
@@ -23,9 +24,4 @@ void BigMan::Update(float elapsedSec)
 void BigMan::HandleCollision(GameObject* other)
 {
     if (not IsOverlapping(other)) return;
-    
-    IThrowable* pThrowable{dynamic_cast<IThrowable*>(other)};
-    if (pThrowable)
-    {
-    }
 }

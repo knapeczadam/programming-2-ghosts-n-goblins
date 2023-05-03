@@ -3,7 +3,7 @@
 class ICollectible
 {
 public:
-    ICollectible() = default;
+    ICollectible();
     virtual ~ICollectible() = default;
     ICollectible(const ICollectible& other) = delete;
     ICollectible(ICollectible&& other) noexcept = delete;
@@ -13,6 +13,6 @@ public:
     int GetScore() const;
     void SetScore(int score);
 
-private:
-    int m_Score{};
+protected:
+    int m_Score;
 };

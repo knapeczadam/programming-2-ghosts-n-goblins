@@ -1,6 +1,7 @@
 // Knapecz, Adam - 1DAE11
 #pragma once
 
+
 class Camera final
 {
 public:

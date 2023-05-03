@@ -10,4 +10,5 @@ public:
     Shield(const Shield& other) = delete;
     Shield(Shield&& other) noexcept = delete;
     Shield& operator=(const Shield& other) = delete;
+    Shield& operator=(Shield&& other) noexcept = delete;
 };

@@ -11,14 +11,16 @@
 #include "algorithm"
 #include "Ladder.h"
 #include "characters/Player.h"
+#include "engine/SoundManager.h"
 #include "engine/Sprite.h"
 
-Level::Level(Sprite* pSprite, Platform* pPlatform, std::vector<GameObject*> pLadders)
+Level::Level(Sprite* pSprite, Platform* pPlatform, std::vector<GameObject*> pLadders, SoundManager* pSoundManager)
     : GameObject{Game::Label::L_LEVEL, pSprite}
       , m_pPlatform{pPlatform}
       , m_pLadders{std::move(pLadders)}
       , m_Vertices{}
       , m_Boundaries{0, 0, m_pSprite->GetWidth(), m_pSprite->GetHeight()}
+      , m_pSoundManager{pSoundManager}
 {
     SetVertices();
 }
@@ -57,10 +59,10 @@ void Level::HandleCollision(GameObject* other)
 {
     Player* pPlayer{dynamic_cast<Player*>(other)};
     m_pPlatform->HandleCollision(other);
-    const bool canClimb{ std::any_of(m_pLadders.begin(), m_pLadders.end(), [&](GameObject* pLadder){return pLadder->IsOverlapping(other);})};
-    pPlayer->CanClimb(canClimb);
-    
-    std::ranges::for_each(m_pLadders, [&](GameObject* pLadder){   pLadder->HandleCollision(other);});
+    // const bool canClimb{ std::any_of(m_pLadders.begin(), m_pLadders.end(), [&](GameObject* pLadder){return pLadder->IsOverlapping(other);})};
+    // pPlayer->CanClimb(canClimb);
+
+    //std::ranges::for_each(m_pLadders, [&](GameObject* pLadder){   pLadder->HandleCollision(other);});
 
     const float epsilon{0.0f};
     utils::HitInfo hit;

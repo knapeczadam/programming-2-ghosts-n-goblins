@@ -6,6 +6,7 @@
 RedArremer::RedArremer(Sprite* pSprite, const Point2f& pos)
     : GameObject{Game::Label::C_RED_ARREMER, pSprite, pos}
 {
+    m_Score = 1000;
 }
 
 void RedArremer::Draw() const
@@ -21,9 +22,4 @@ void RedArremer::Update(float elapsedSec)
 void RedArremer::HandleCollision(GameObject* other)
 {
     if (not IsOverlapping(other)) return;
-    
-    IThrowable* pThrowable{dynamic_cast<IThrowable*>(other)};
-    if (pThrowable)
-    {
-    }
 }

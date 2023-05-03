@@ -22,7 +22,7 @@ public:
     };
 
 public:
-    Player(Sprite* pSprite, const Point2f& pos, Level* pLevel);
+    Player(Sprite* pSprite, const Point2f& pos, Level* pLevel, SoundManager* pSoundManager);
     virtual ~Player() override = default;
     Player(const Player& other) = delete;
     Player(Player&& other) noexcept = delete;
@@ -92,4 +92,5 @@ private:
     bool m_Climbing;
     bool m_OnLadder;
     bool m_OnGround;
+    SoundManager* m_pSoundManager;
 };

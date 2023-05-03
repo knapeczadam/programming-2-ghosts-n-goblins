@@ -108,14 +108,18 @@ void Game::Initialize()
     m_pTextureManager = new TextureManager{m_Data, m_Labels};
     m_pSpriteFactory = new SpriteFactory{m_Data, m_pTextureManager, m_Labels};
 
+    // SOUND
+    m_pSoundManager = new SoundManager{m_Data, m_Labels};
+    //m_pSoundManager->PlayStream(Label::S_04_GROUND_BGM, true);
+    
     // LEVEL
     InitWaters();
     InitTombstones();
     InitLadders();
-    m_pPlatform = new Platform{m_pSpriteFactory->CreateSprite(Label::L_PLATFORM), Point2f{3295.0f, 28.0f}};
+    m_pPlatform = new Platform{m_pSpriteFactory->CreateSprite(Label::L_PLATFORM), Point2f{3295.0f, 28.0f}, m_pSoundManager};
     m_pForeground = new GameObject{Label::L_FOREGROUND, m_pSpriteFactory->CreateSprite(Label::L_FOREGROUND), false};
     m_pKillZone = new KillZone{m_pTextureManager->GetTexture(Label::L_LEVEL)->GetWidth(), 20.0f};
-    m_pLevel = new Level{m_pSpriteFactory->CreateSprite(Label::L_LEVEL), m_pPlatform, m_Ladders};
+    m_pLevel = new Level{m_pSpriteFactory->CreateSprite(Label::L_LEVEL), m_pPlatform, m_Ladders, m_pSoundManager};
 
     // COLLECTIBLES
     InitCoins();
@@ -126,7 +130,7 @@ void Game::Initialize()
     InitCamera();
 
     // PLAYER
-    m_pPlayer = new Player{m_pSpriteFactory->CreateSprite(Label::C_ARTHUR), Player::GetSpawnPos(), m_pLevel};
+    m_pPlayer = new Player{m_pSpriteFactory->CreateSprite(Label::C_ARTHUR), Player::GetSpawnPos(), m_pLevel, m_pSoundManager};
 
     // HUD
     m_pHUD = new HUD{m_pSpriteFactory->CreateSprite(Label::U_HUD), m_pPlayer, GetViewPort()};
@@ -137,9 +141,6 @@ void Game::Initialize()
     // ENEMIES
     InitGreenMonsters();
 
-    // SOUND
-    m_pSoundManager = new SoundManager{m_Data, m_Labels};
-    //m_pSoundManager->PlayStream(Label::S_04_GROUND_BGM, true);
 }
 
 void Game::InitLabels()
@@ -290,23 +291,23 @@ void Game::InitTombstones()
 {
     // BOTTOM
     m_Tombstones.insert(m_Tombstones.end(), {
-                            new Tombstone{Rectf{83.0f, 66.0f, 30.0f, 30.0f}},
-                            new Tombstone{Rectf{499.0f, 66.0f, 30.0f, 30.0f}},
-                            new Tombstone{Rectf{817.0f, 66.0f, 30.0f, 30.0f}},
-                            new Tombstone{Rectf{1044.0f, 66.0f, 30.0f, 30.0f}},
-                            new Tombstone{Rectf{1490.0f, 66.0f, 30.0f, 30.0f}},
-                            new Tombstone{Rectf{1903.0f, 66.0f, 30.0f, 30.0f}},
-                            new Tombstone{Rectf{2191.0f, 66.0f, 30.0f, 30.0f}},
-                            new Tombstone{Rectf{2516.0f, 66.0f, 30.0f, 30.0f}},
-                            new Tombstone{Rectf{3028.0f, 66.0f, 30.0f, 30.0f}},
+                            new Tombstone{Rectf{83.0f, 66.0f, 30.0f, 30.0f}, m_pSoundManager},
+                            new Tombstone{Rectf{499.0f, 66.0f, 30.0f, 30.0f}, m_pSoundManager},
+                            new Tombstone{Rectf{817.0f, 66.0f, 30.0f, 30.0f}, m_pSoundManager},
+                            new Tombstone{Rectf{1044.0f, 66.0f, 30.0f, 30.0f}, m_pSoundManager},
+                            new Tombstone{Rectf{1490.0f, 66.0f, 30.0f, 30.0f}, m_pSoundManager},
+                            new Tombstone{Rectf{1903.0f, 66.0f, 30.0f, 30.0f}, m_pSoundManager},
+                            new Tombstone{Rectf{2191.0f, 66.0f, 30.0f, 30.0f}, m_pSoundManager},
+                            new Tombstone{Rectf{2516.0f, 66.0f, 30.0f, 30.0f}, m_pSoundManager},
+                            new Tombstone{Rectf{3028.0f, 66.0f, 30.0f, 30.0f}, m_pSoundManager},
 
                         });
 
     // TOP
     m_Tombstones.insert(m_Tombstones.end(), {
-                            new Tombstone{Rectf{1519.0f, 221.0f, 30.0f, 30.0f}},
-                            new Tombstone{Rectf{1716.0f, 221.0f, 30.0f, 30.0f}},
-                            new Tombstone{Rectf{1909.0f, 221.0f, 30.0f, 30.0f}}
+                            new Tombstone{Rectf{1519.0f, 221.0f, 30.0f, 30.0f}, m_pSoundManager},
+                            new Tombstone{Rectf{1716.0f, 221.0f, 30.0f, 30.0f}, m_pSoundManager},
+                            new Tombstone{Rectf{1909.0f, 221.0f, 30.0f, 30.0f}, m_pSoundManager},
                         });
 }
 
@@ -506,7 +507,7 @@ void Game::DoCollisionTests()
             // ENEMIES
             for (GameObject* enemy : m_Enemies)
             {
-                if (enemy->IsActive()) weapon->HandleCollision(enemy);
+                if (enemy->IsActive()) enemy->HandleCollision(weapon);
             }
             // TOMBSTONE
             for (GameObject* pTombstone : m_Tombstones)
@@ -515,9 +516,18 @@ void Game::DoCollisionTests()
             }
         }
     }
+
+    for (GameObject* pCollectible : m_Collectibles)
+    {
+        if (pCollectible->IsActive()) m_pPlayer->HandleCollision(pCollectible);
+    }
+    
+    const bool canClimb{ std::any_of(m_Ladders.begin(), m_Ladders.end(), [&](GameObject* pLadder){return pLadder->IsOverlapping(m_pPlayer);})};
+    m_pPlayer->CanClimb(canClimb);
+    std::ranges::for_each(m_Ladders, [&](GameObject* pLadder){pLadder->HandleCollision(m_pPlayer);});
     
     // Test object
-    m_pPlayer->HandleCollision(m_pTestGameObject);
+    if (m_pTestGameObject->IsActive()) m_pPlayer->HandleCollision(m_pTestGameObject);
 }
 
 void Game::LateUpdate(float elapsedSec)

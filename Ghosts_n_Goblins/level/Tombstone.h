@@ -4,7 +4,7 @@
 class Tombstone : public GameObject
 {
 public:
-    Tombstone(const Rectf& shape);
+    Tombstone(const Rectf& shape, SoundManager* pSoundManager);
     virtual ~Tombstone() override = default;
     Tombstone(const Tombstone& other) = delete;
     Tombstone(Tombstone&& other) noexcept = delete;
@@ -15,4 +15,5 @@ public:
 private:
     int m_HitCount;
     const int m_MaxHitCount;
+    SoundManager* m_pSoundManager;
 };

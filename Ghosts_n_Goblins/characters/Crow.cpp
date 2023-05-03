@@ -6,6 +6,7 @@
 Crow::Crow(Sprite* pSprite, const Point2f& pos)
     : GameObject{Game::Label::C_CROW, pSprite, pos}
 {
+    m_Score = 100;
 }
 
 void Crow::Draw() const
@@ -21,9 +22,4 @@ void Crow::Update(float elapsedSec)
 void Crow::HandleCollision(GameObject* other)
 {
     if (not IsOverlapping(other)) return;
-    
-    IThrowable* pThrowable{dynamic_cast<IThrowable*>(other)};
-    if (pThrowable)
-    {
-    }
 }

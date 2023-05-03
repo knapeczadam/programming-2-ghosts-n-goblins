@@ -14,6 +14,7 @@
 #include <numeric>
 
 #include "Matrix2x3.h"
+#include "engine/SoundManager.h"
 #include "game/CollisionBox.h"
 #include "level/IClimable.h"
 #include "level/Platform.h"
@@ -23,7 +24,7 @@
 
 const Point2f Player::m_SpawnPos{174.0f, 64.0f};
 
-Player::Player(Sprite* pSprite, const Point2f& pos, Level* pLevel)
+Player::Player(Sprite* pSprite, const Point2f& pos, Level* pLevel, SoundManager* pSoundManager)
     : GameObject{Game::Label::C_ARTHUR, pSprite, pos}
       , m_HorVelocity{150.0f}
       , m_VerVelocity{100.0f}
@@ -50,6 +51,7 @@ Player::Player(Sprite* pSprite, const Point2f& pos, Level* pLevel)
       , m_Climbing{false}
       , m_OnLadder{false}
       , m_OnGround{false}
+      , m_pSoundManager{pSoundManager}
 {
 }
 
@@ -195,6 +197,7 @@ void Player::Attack(std::vector<GameObject*>& throwables, SpriteFactory* spriteF
 {
     if (not m_Attacking)
     {
+        m_pSoundManager->PlayEffect(Game::Label::E_ARTHUR_THROW);
         m_ShortAccuCooldown += m_ShortCooldownTime;
         m_LongAccuCooldown += m_LongCooldownTime;
         m_Attacking = true;
@@ -293,6 +296,7 @@ void Player::Jump(const Uint8* pState)
     {
         if (pState[SDL_SCANCODE_S])
         {
+            m_pSoundManager->PlayEffect(Game::Label::E_ARTHUR_JUMP);
             m_Velocity.y = m_JumpVelocity;
             m_CanJump = false;
         }
@@ -454,10 +458,13 @@ void Player::HandleCollision(GameObject* other)
     IEnemy* pEnemy{dynamic_cast<IEnemy*>(other)};
     if (pEnemy)
     {
+        m_pSoundManager->PlayEffect(Game::Label::E_ARTHUR_HIT);
+        return;
     }
-    ICollectible* pCollectible{dynamic_cast<ICollectible*>(other)};
-    if (pCollectible)
+    IThrowable* pWeapon{dynamic_cast<IThrowable*>(other)};
+    if (pWeapon)
     {
+        m_pSoundManager->PlayEffect(Game::Label::E_WEAPON_PICKUP);
         switch (other->GetLabel())
         {
         case Game::Label::W_DAGGER:
@@ -478,15 +485,37 @@ void Player::HandleCollision(GameObject* other)
         case Game::Label::O_SHIELD:
             break;
         }
+        return;
+    }
+    ICollectible* pCollectable{dynamic_cast<ICollectible*>(other)};
+    if (pCollectable)
+    {
+        switch (other->GetLabel())
+        {
+        case Game::Label::O_KEY:
+            break;
+        case Game::Label::O_SHIELD:
+            m_pSoundManager->PlayEffect(Game::Label::E_ARMOR_PICKUP);
+            break;
+        default:
+            m_pSoundManager->PlayEffect(Game::Label::E_TREASURE_PICKUP);
+            m_Score += pCollectable->GetScore();
+            other->SetVisible(false);
+            other->SetActive(false);
+            break;
+        }
+        return;
     }
     IClimable* pClimable{dynamic_cast<IClimable*>(other)};
     if (pClimable)
     {
         m_OnLadder = true;
+        return;
     }
     CollisionBox* pBox{dynamic_cast<CollisionBox*>(other)};
     if (pBox)
     {
+        return;
     }
 }
 

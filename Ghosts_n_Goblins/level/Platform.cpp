@@ -5,10 +5,11 @@
 #include "utils.h"
 #include "engine/Sprite.h"
 #include "characters/Player.h"
+#include "engine/SoundManager.h"
 
 #include <iostream>
 
-Platform::Platform(Sprite* pSprite, const Point2f& pos)
+Platform::Platform(Sprite* pSprite, const Point2f& pos, SoundManager* pSoundManager)
     : GameObject{Game::Label::L_PLATFORM, pSprite, pos}
       , m_AccuSec{0.0f}
       , m_OriginalPos{pos}
@@ -18,13 +19,8 @@ Platform::Platform(Sprite* pSprite, const Point2f& pos)
       , m_CurrAmplitude{m_MaxAmplitude}
       , m_Shortened{false}
       , m_Flip{true}
+        , m_pSoundManager{pSoundManager}
 {
-    InitVertices();
-}
-
-void Platform::Draw() const
-{
-    GameObject::Draw();
 }
 
 void Platform::Move()
@@ -69,7 +65,6 @@ void Platform::Update(float elapsedSec)
 {
     m_AccuSec += elapsedSec;
     Move();
-    UpdateVertices();
     m_pSprite->SetPosition(GetPosition<Point2f>());
     UpdateCollisionBox();
 }
@@ -100,7 +95,7 @@ void Platform::HandleCollision(GameObject* other)
     //        actorVelocity.y = 0.0f;
     //    } 
     // }
-    return;
+    return; // TODO: review this
     Player* pPlayer{static_cast<Player*>(other)};
     if (isHit and pPlayer->GetVelocity().y < 0)
     {
@@ -137,29 +132,4 @@ bool Platform::IsOnGround(GameObject* pGameObject) const
     }
     pPlayer->SetIsOnPlatform(false);
     return false;
-}
-
-void Platform::InitVertices()
-{
-    m_Vertices.insert(m_Vertices.end(), {
-                          Point2f{m_Shape.left, m_Shape.bottom},
-                          Point2f{m_Shape.left + m_Shape.width, m_Shape.bottom},
-                          Point2f{m_Shape.left + m_Shape.width, m_Shape.bottom + m_Shape.height},
-                          Point2f{m_Shape.left, m_Shape.bottom + m_Shape.height},
-                          Point2f{m_Shape.left, m_Shape.bottom}
-                      });
-}
-
-void Platform::UpdateVertices()
-{
-    m_Vertices[0].x = m_Shape.left;
-    m_Vertices[0].y = m_Shape.bottom;
-    m_Vertices[1].x = m_Shape.left + m_Shape.width;
-    m_Vertices[1].y = m_Shape.bottom;
-    m_Vertices[2].x = m_Shape.left + m_Shape.width;
-    m_Vertices[2].y = m_Shape.bottom + m_Shape.height;
-    m_Vertices[3].x = m_Shape.left;
-    m_Vertices[3].y = m_Shape.bottom + m_Shape.height;
-    m_Vertices[4].x = m_Shape.left;
-    m_Vertices[4].y = m_Shape.bottom;
 }

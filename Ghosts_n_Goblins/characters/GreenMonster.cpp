@@ -6,6 +6,7 @@
 GreenMonster::GreenMonster(Sprite* pSprite, const Point2f& pos)
     : GameObject{Game::Label::C_GREEN_MONSTER, pSprite, pos}
 {
+    m_Score = 100;
 }
 
 void GreenMonster::Draw() const
@@ -21,9 +22,4 @@ void GreenMonster::Update(float elapsedSec)
 void GreenMonster::HandleCollision(GameObject* other)
 {
     if (not IsOverlapping(other)) return;
-    
-    IThrowable* pThrowable{dynamic_cast<IThrowable*>(other)};
-    if (pThrowable)
-    {
-    }
 }

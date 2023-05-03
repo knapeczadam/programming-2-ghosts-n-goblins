@@ -10,22 +10,17 @@ class Texture;
 class Platform : public GameObject
 {
 public:
-    Platform(Sprite* pSprite, const Point2f& pos);
+    Platform(Sprite* pSprite, const Point2f& pos, SoundManager* pSoundManager);
     virtual ~Platform() override = default;
     Platform(const Platform& other) = delete;
     Platform(Platform&& other) noexcept = delete;
     Platform& operator=(const Platform& other) = delete;
     Platform& operator=(Platform&& other) noexcept = delete;
     
-    virtual void Draw() const override;
     void Move();
     virtual void Update(float elapsedSec) override;
     virtual void HandleCollision(GameObject* other) override;
     bool IsOnGround(GameObject* pGameObject) const;
-
-private:
-    void InitVertices();
-    void UpdateVertices();
 
 private:
     std::vector<Point2f> m_Vertices;
@@ -37,5 +32,6 @@ private:
     float m_CurrAmplitude;
     bool m_Shortened;
     bool m_Flip;
+    SoundManager* m_pSoundManager;
     
 };
