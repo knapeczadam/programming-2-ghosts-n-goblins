@@ -21,7 +21,10 @@
 #include <iostream>
 #include <ranges>
 
+#include "characters/GreenMonster.h"
 #include "characters/IEnemy.h"
+#include "collectibles/Coin.h"
+#include "collectibles/MoneyBag.h"
 #include "engine/Clock.h"
 #include "engine/SoundManager.h"
 #include "engine/Sprite.h"
@@ -112,6 +115,10 @@ void Game::Initialize()
     InitTombstones();
     InitLadders();
 
+    // COLLECTIBLES
+    InitCoins();
+    InitMoneyBags();
+
     // CAMERA - has to be after level initialization
     m_pCamera = new Camera{};
     InitCamera();
@@ -125,8 +132,8 @@ void Game::Initialize()
     // TEST GAME OBJECT
     m_pTestGameObject = new Lance{m_pSpriteFactory->CreateSprite(Label::W_LANCE), Point2f{260.f, 65.f}, false, true};
 
-    // GAME OBJECTS
-    //m_Enemies.push_back();
+    // ENEMIES
+    InitGreenMonsters(); 
 
     // SOUND
     m_pSoundManager = new SoundManager{m_Data, m_Labels};
@@ -268,48 +275,37 @@ void Game::LoadData()
 
 void Game::InitWaters()
 {
-    Water* water1 = new Water{m_pSpriteFactory->CreateSprite(Label::L_WATER), Point2f{3295.0f, 0.0f}};
-    Water* water2 = new Water{m_pSpriteFactory->CreateSprite(Label::L_WATER), Point2f{3903.0f, 0.0f}, 64.0f};
-    Water* water3 = new Water{m_pSpriteFactory->CreateSprite(Label::L_WATER), Point2f{4031.0f, 0.0f}, 64.0f};
-    Water* water4 = new Water{m_pSpriteFactory->CreateSprite(Label::L_WATER), Point2f{4927.0f, 0.0f}, 64.0f};
-    Water* water5 = new Water{m_pSpriteFactory->CreateSprite(Label::L_WATER), Point2f{5566.0f, 0.0f}, 64.0f};
-    m_Waters.push_back(water1);
-    m_Waters.push_back(water2);
-    m_Waters.push_back(water3);
-    m_Waters.push_back(water4);
-    m_Waters.push_back(water5);
+    m_Waters.insert(m_Waters.end(), {
+        new Water{m_pSpriteFactory->CreateSprite(Label::L_WATER), Point2f{3295.0f, 0.0f}},
+        new Water{m_pSpriteFactory->CreateSprite(Label::L_WATER), Point2f{3903.0f, 0.0f}, 64.0f},
+        new Water{m_pSpriteFactory->CreateSprite(Label::L_WATER), Point2f{4031.0f, 0.0f}, 64.0f},
+        new Water{m_pSpriteFactory->CreateSprite(Label::L_WATER), Point2f{4927.0f, 0.0f}, 64.0f},
+        new Water{m_pSpriteFactory->CreateSprite(Label::L_WATER), Point2f{5566.0f, 0.0f}, 64.0f}
+        });
 }
 
 void Game::InitTombstones()
 {
     // BOTTOM
-    Tombstone* tombstone2 = new Tombstone{Rectf{83.0f, 66.0f, 30.0f, 30.0f}};
-    Tombstone* tombstone3 = new Tombstone{Rectf{499.0f, 66.0f, 30.0f, 30.0f}};
-    Tombstone* tombstone4 = new Tombstone{Rectf{817.0f, 66.0f, 30.0f, 30.0f}};
-    Tombstone* tombstone5 = new Tombstone{Rectf{1044.0f, 66.0f, 30.0f, 30.0f}};
-    Tombstone* tombstone6 = new Tombstone{Rectf{1490.0f, 66.0f, 30.0f, 30.0f}};
-    Tombstone* tombstone7 = new Tombstone{Rectf{1903.0f, 66.0f, 30.0f, 30.0f}};
-    Tombstone* tombstone8 = new Tombstone{Rectf{2191.0f, 66.0f, 30.0f, 30.0f}};
-    Tombstone* tombstone9 = new Tombstone{Rectf{2516.0f, 66.0f, 30.0f, 30.0f}};
-    Tombstone* tombstone10 = new Tombstone{Rectf{3028.0f, 66.0f, 30.0f, 30.0f}};
+    m_Tombstones.insert(m_Tombstones.end(), {
+        new Tombstone{Rectf{83.0f, 66.0f, 30.0f, 30.0f}},
+        new Tombstone{Rectf{499.0f, 66.0f, 30.0f, 30.0f}},
+        new Tombstone{Rectf{817.0f, 66.0f, 30.0f, 30.0f}},
+        new Tombstone{Rectf{1044.0f, 66.0f, 30.0f, 30.0f}},
+        new Tombstone{Rectf{1490.0f, 66.0f, 30.0f, 30.0f}},
+        new Tombstone{Rectf{1903.0f, 66.0f, 30.0f, 30.0f}},
+        new Tombstone{Rectf{2191.0f, 66.0f, 30.0f, 30.0f}},
+        new Tombstone{Rectf{2516.0f, 66.0f, 30.0f, 30.0f}},
+        new Tombstone{Rectf{3028.0f, 66.0f, 30.0f, 30.0f}},
+        
+    });
 
     // TOP
-    Tombstone* tombstone11 = new Tombstone{Rectf{1519.0f, 221.0f, 30.0f, 30.0f}};
-    Tombstone* tombstone12 = new Tombstone{Rectf{1716.0f, 221.0f, 30.0f, 30.0f}};
-    Tombstone* tombstone13 = new Tombstone{Rectf{1909.0f, 221.0f, 30.0f, 30.0f}};
-
-    m_Tombstones.push_back(tombstone2);
-    m_Tombstones.push_back(tombstone3);
-    m_Tombstones.push_back(tombstone4);
-    m_Tombstones.push_back(tombstone5);
-    m_Tombstones.push_back(tombstone6);
-    m_Tombstones.push_back(tombstone7);
-    m_Tombstones.push_back(tombstone8);
-    m_Tombstones.push_back(tombstone9);
-    m_Tombstones.push_back(tombstone10);
-    m_Tombstones.push_back(tombstone11);
-    m_Tombstones.push_back(tombstone12);
-    m_Tombstones.push_back(tombstone13);
+    m_Tombstones.insert(m_Tombstones.end(), {
+        new Tombstone{Rectf{1519.0f, 221.0f, 30.0f, 30.0f}},
+        new Tombstone{Rectf{1716.0f, 221.0f, 30.0f, 30.0f}},
+        new Tombstone{Rectf{1909.0f, 221.0f, 30.0f, 30.0f}}
+    });
 }
 
 void Game::InitCamera() const
@@ -345,7 +341,43 @@ void Game::InitBootIntervals()
 
 void Game::InitLadders()
 {
-    
+   m_Ladders.insert(m_Ladders.end(),{
+       new Ladder{Rectf{0.0f, 0.0f, 30.0f, 30.0f}},
+       new Ladder{Rectf{0.0f, 0.0f, 30.0f, 30.0f}},
+       new Ladder{Rectf{0.0f, 0.0f, 30.0f, 30.0f}},
+       new Ladder{Rectf{0.0f, 0.0f, 30.0f, 30.0f}},
+       new Ladder{Rectf{0.0f, 0.0f, 30.0f, 30.0f}},
+       new Ladder{Rectf{0.0f, 0.0f, 30.0f, 30.0f}},
+   }); 
+}
+
+void Game::InitCoins()
+{
+    m_Collectibles.insert(m_Collectibles.end(), {
+        new Coin{m_pSpriteFactory->CreateSprite(Label::O_COIN), Point2f{720.0f, 62.0f}},
+        new Coin{m_pSpriteFactory->CreateSprite(Label::O_COIN), Point2f{6190.0f, 72.0f}},
+        new Coin{m_pSpriteFactory->CreateSprite(Label::O_COIN), Point2f{1232.0f, 223.0f}},
+        new Coin{m_pSpriteFactory->CreateSprite(Label::O_COIN), Point2f{1616.0f, 223.0f}},
+        new Coin{m_pSpriteFactory->CreateSprite(Label::O_COIN), Point2f{2158.0f, 223.0f}},
+    });
+}
+
+void Game::InitMoneyBags()
+{
+    m_Collectibles.insert(m_Collectibles.end(),{
+        new MoneyBag{m_pSpriteFactory->CreateSprite(Label::O_MONEY_BAG), Point2f{2799.0f, 63.0f}},
+        new MoneyBag{m_pSpriteFactory->CreateSprite(Label::O_MONEY_BAG), Point2f{4814.0f, 63.0f}},
+    });
+}
+
+void Game::InitGreenMonsters()
+{
+    m_Enemies.insert(m_Enemies.end(),{
+        new GreenMonster{m_pSpriteFactory->CreateSprite(Label::C_GREEN_MONSTER), Point2f{4622.0f, 54.0f}},
+        new GreenMonster{m_pSpriteFactory->CreateSprite(Label::C_GREEN_MONSTER), Point2f{6190.0f, 54.0f}},
+        new GreenMonster{m_pSpriteFactory->CreateSprite(Label::C_GREEN_MONSTER), Point2f{1615.0f, 213.0f}},
+        new GreenMonster{m_pSpriteFactory->CreateSprite(Label::C_GREEN_MONSTER), Point2f{2191.0f, 213.0f}},
+    });
 }
 
 void Game::ClearBackground() const

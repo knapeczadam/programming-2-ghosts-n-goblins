@@ -192,6 +192,9 @@ private:
     void InitCamera() const;
     void InitBootIntervals();
     void InitLadders();
+    void InitCoins();
+    void InitMoneyBags();
+    void InitGreenMonsters();
     
     // DATA MEMBERS
     
