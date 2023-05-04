@@ -154,7 +154,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="characters\BigMan.cpp">
+    <ClCompile Include="characters\Unicorn.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">pch.h</PrecompiledHeaderFile>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
@@ -292,7 +292,7 @@
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">pch.h</PrecompiledHeaderFile>
     </ClCompile>
     <ClCompile Include="characters\Zombie.cpp" />
-    <ClCompile Include="collectibles\Basket.cpp" />
+    <ClCompile Include="collectibles\Pot.cpp" />
     <ClCompile Include="collectibles\Bust.cpp" />
     <ClCompile Include="collectibles\Coin.cpp" />
     <ClCompile Include="collectibles\ICollectible.cpp">
@@ -388,7 +388,7 @@
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">pch.h</PrecompiledHeaderFile>
     </ClCompile>
     <ClCompile Include="collectibles\Shield.cpp" />
-    <ClCompile Include="collectibles\Star.cpp" />
+    <ClCompile Include="collectibles\Yashichi.cpp" />
     <ClCompile Include="engine\Clock.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">pch.h</PrecompiledHeaderFile>
@@ -1452,7 +1452,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="characters\BigMan.h" />
+    <ClInclude Include="characters\Unicorn.h" />
     <ClInclude Include="characters\Crow.h" />
     <ClInclude Include="characters\FlyingKnight.h" />
     <ClInclude Include="characters\GreenMonster.h" />
@@ -1462,7 +1462,7 @@
     <ClInclude Include="characters\RedArremer.h" />
     <ClInclude Include="characters\WoodyPig.h" />
     <ClInclude Include="characters\Zombie.h" />
-    <ClInclude Include="collectibles\Basket.h" />
+    <ClInclude Include="collectibles\Pot.h" />
     <ClInclude Include="collectibles\Bust.h" />
     <ClInclude Include="collectibles\Coin.h" />
     <ClInclude Include="collectibles\ICollectible.h" />
@@ -1470,7 +1470,7 @@
     <ClInclude Include="collectibles\MoneyBag.h" />
     <ClInclude Include="collectibles\Necklace.h" />
     <ClInclude Include="collectibles\Shield.h" />
-    <ClInclude Include="collectibles\Star.h" />
+    <ClInclude Include="collectibles\Yashichi.h" />
     <ClInclude Include="engine\Clock.h" />
     <ClInclude Include="engine\json.hpp" />
     <ClInclude Include="engine\SoundManager.h" />

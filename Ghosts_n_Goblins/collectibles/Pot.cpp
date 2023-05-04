@@ -1,7 +1,7 @@
 ﻿#include "pch.h"
-#include "Basket.h"
+#include "Pot.h"
 
-Basket::Basket(Sprite* pSprite, const Point2f& pos)
+Pot::Pot(Sprite* pSprite, const Point2f& pos)
     : GameObject{Game::Label::O_BASKET, pSprite, pos}
 {
 }

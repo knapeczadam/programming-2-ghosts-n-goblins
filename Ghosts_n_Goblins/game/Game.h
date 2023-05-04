@@ -38,7 +38,6 @@ public:
     {
         // CHARACTERS
         C_ARTHUR,
-        C_BIG_MAN,
         C_CROW,
         C_FLYING_KNIGHT,
         C_GREEN_MONSTER,
@@ -46,18 +45,19 @@ public:
         C_PRINCESS,
         C_RED_ARREMER,
         C_SATAN,
+        C_UNICORN,
         C_WOODY_PIG,
         C_ZOMBIE,
 
         // COLLECTIBLES
-        O_BASKET,
         O_BUST,
         O_COIN,
         O_KEY,
         O_MONEY_BAG,
         O_NECKLACE,
+        O_POT,
         O_SHIELD,
-        O_STAR,
+        O_YASHICHI,
 
         // FX
         F_FIRE,
@@ -193,6 +193,7 @@ private:
     void Debug() const;
     void DeactivateEnemiesOutOfView();
     void DeactivateThrowablesOutOfView();
+    void UpdateRemainingTime();
 
     
     void Initialize();

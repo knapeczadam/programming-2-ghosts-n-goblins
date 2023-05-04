@@ -18,6 +18,15 @@ void GreenMonster::Draw() const
 void GreenMonster::Update(float elapsedSec)
 {
     IEnemy::Update(elapsedSec);
+    if (not m_Awake)
+    {
+        Wait(elapsedSec);
+    }
+    else
+    {
+       Shoot(elapsedSec);
+        m_Flipped = IsFlipped();
+    }
 }
 
 void GreenMonster::HandleCollision(GameObject* other)

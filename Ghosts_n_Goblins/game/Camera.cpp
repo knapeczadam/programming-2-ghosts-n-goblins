@@ -37,7 +37,6 @@ void Camera::Transform()
     Track();
     Clamp();
     glTranslatef(-m_Pos.x, -m_Pos.y, 0.0f);
-    std::cout << m_Pos.x << " " << m_Pos.y << std::endl;
 }
 
 bool Camera::IsOutOfWindow(const GameObject* pGameObject) const

@@ -10,8 +10,11 @@
 
 
 HUD::HUD(Sprite* pSprite, Player* pPlayer, const Rectf& viewPort, SoundManager* pSoundManager)
-    : UI{Game::Label::U_HUD, pSprite,viewPort, pSoundManager}
+    : UI{Game::Label::U_HUD, pSprite, viewPort, pSoundManager}
       , m_pPlayer{pPlayer}
+      , m_FirstDigit{}
+      , m_SecondDigit{}
+      , m_ThirdDigit{}
 {
 }
 
@@ -26,6 +29,21 @@ void HUD::Draw()
     DrawFrame();
     DrawWeapon();
     DrawPlayer1();
+}
+
+void HUD::SetFirstDigit(int digit)
+{
+    m_FirstDigit = digit;
+}
+
+void HUD::SetSecondDigit(int digit)
+{
+    m_SecondDigit = digit;
+}
+
+void HUD::SetThirdDigit(int digit)
+{
+    m_ThirdDigit = digit;
 }
 
 void HUD::DrawLives()
@@ -118,37 +136,12 @@ void HUD::DrawTime()
 
 void HUD::DrawRemainingTime()
 {
-    StartTimer(120);
-    const int seconds{GetSeconds()};
-    const int minutes{GetMinutes()};
-
-    int firstDigit, secondDigit, thirdDigit;
-    firstDigit = minutes;
-    if (seconds > 9)
-    {
-        secondDigit = seconds / 10;
-        thirdDigit = seconds % 10;
-    }
-    else
-    {
-        secondDigit = 0;
-        thirdDigit = seconds;
-    }
-    if (GetRemainingTime() <= 15.0f) // TODO move to game rules?
-    {
-        m_pSoundManager->PlayStream(Game::Label::S_05_HURRY_UP, false);
-    }
-    if (IsTimerFinished())
-    {
-        std::cout << "Time is up!\n";
-        // TODO: Game over
-    }
     m_pSprite->SetClipWidth(8);
     m_pSprite->SetClipHeight(8);
     Point2f pos{32, m_ViewPort.height - m_pSprite->GetScaledClipHeight() * 4};
     const float offset{m_pSprite->GetScaledClipWidth()};
     // FIRST DIGIT
-    m_pSprite->SetLeftOffsetCols(firstDigit);
+    m_pSprite->SetLeftOffsetCols(m_FirstDigit);
     m_pSprite->SetPosition(pos);
     m_pSprite->UpdateSourceRect();
     m_pSprite->UpdateDestinationRect();
@@ -164,7 +157,7 @@ void HUD::DrawRemainingTime()
 
     // SECOND DIGIT
     pos.x += offset;
-    m_pSprite->SetLeftOffsetCols(secondDigit);
+    m_pSprite->SetLeftOffsetCols(m_SecondDigit);
     m_pSprite->SetPosition(pos);
     m_pSprite->UpdateSourceRect();
     m_pSprite->UpdateDestinationRect();
@@ -172,7 +165,7 @@ void HUD::DrawRemainingTime()
 
     // THIRD DIGIT
     pos.x += offset;
-    m_pSprite->SetLeftOffsetCols(thirdDigit);
+    m_pSprite->SetLeftOffsetCols(m_ThirdDigit);
     m_pSprite->SetPosition(pos);
     m_pSprite->UpdateSourceRect();
     m_pSprite->UpdateDestinationRect();

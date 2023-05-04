@@ -5,8 +5,8 @@
       "path": "characters/arthur.png"
     },
     {
-      "label": "c_big_man",
-      "path": "characters/big_man.png"
+      "label": "c_unicorn",
+      "path": "characters/unicorn.png"
     },
     {
       "label": "c_crow",
@@ -45,8 +45,8 @@
       "path": "characters/zombie.png"
     },
     {
-      "label": "o_basket",
-      "path": "collectibles/basket.png"
+      "label": "o_pot",
+      "path": "collectibles/pot.png"
     },
     {
       "label": "o_bust",
@@ -73,8 +73,8 @@
       "path": "collectibles/shield.png"
     },
     {
-      "label": "o_star",
-      "path": "collectibles/star.png"
+      "label": "o_yashichi",
+      "path": "collectibles/yashichi.png"
     },
     {
       "label": "f_fire",
@@ -263,7 +263,7 @@
       "collision_width": 20
     },
     {
-      "label": "c_big_man",
+      "label": "c_unicorn",
       "rows": 5,
       "columns": 3,
       "sub_rows": 0,
@@ -348,7 +348,7 @@
       "scale": 2
     },
     {
-      "label": "o_basket",
+      "label": "o_pot",
       "scale": 2
     },
     {
@@ -387,7 +387,7 @@
       "scale": 2
     },
     {
-      "label": "o_star",
+      "label": "o_yashichi",
       "rows": 1,
       "columns": 3,
       "frames_per_second": 10,

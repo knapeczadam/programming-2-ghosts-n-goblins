@@ -1,15 +1,15 @@
 ﻿#pragma once
 #include "IEnemy.h"
 
-class BigMan : public IEnemy
+class Unicorn : public IEnemy
 {
 public:
-    BigMan(Sprite* pSprite, const Point2f& pos, Player* pPlayer, Sprite* pFX, SoundManager* pSoundManager);
-    virtual ~BigMan() override = default;
-    BigMan(const BigMan& other) = delete;
-    BigMan(BigMan&& other) noexcept = delete;
-    BigMan& operator=(const BigMan& other) = delete;
-    BigMan& operator=(BigMan&& other) noexcept = delete;
+    Unicorn(Sprite* pSprite, const Point2f& pos, Player* pPlayer, Sprite* pFX, SoundManager* pSoundManager);
+    virtual ~Unicorn() override = default;
+    Unicorn(const Unicorn& other) = delete;
+    Unicorn(Unicorn&& other) noexcept = delete;
+    Unicorn& operator=(const Unicorn& other) = delete;
+    Unicorn& operator=(Unicorn&& other) noexcept = delete;
     
     virtual void Draw() const override;
     virtual void Update(float elapsedSec) override;

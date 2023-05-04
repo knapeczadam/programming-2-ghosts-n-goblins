@@ -22,7 +22,7 @@
 #include <numeric>
 
 
-const Point2f Player::m_SpawnPos{2628.0f, 64.0f};
+const Point2f Player::m_SpawnPos{50.0f, 64.0f};
 
 Player::Player(Sprite* pSprite, const Point2f& pos, Level* pLevel, SoundManager* pSoundManager)
     : GameObject{Game::Label::C_ARTHUR, pSprite, pos, true, pSoundManager}
@@ -404,7 +404,7 @@ void Player::UpdateState()
         m_State = State::climbing;
     }
 }
-
+// TODO: köze van a CheckForBoundaries függvényhez
 void Player::UpdateCollisionBox()
 {
     if (m_Crouching)

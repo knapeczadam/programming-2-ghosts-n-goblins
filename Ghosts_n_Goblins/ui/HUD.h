@@ -15,6 +15,10 @@ public:
     HUD& operator=(HUD&& other) noexcept = delete;
 
     virtual void Draw() override;
+    virtual void SetFirstDigit(int digit) final;
+    virtual void SetSecondDigit(int digit) final;
+    virtual void SetThirdDigit(int digit) final;
+    
 private:
     void DrawLives();
     void DrawPlayerScore();
@@ -30,4 +34,7 @@ private:
 
 private:
     Player* m_pPlayer;
+    int m_FirstDigit;
+    int m_SecondDigit;
+    int m_ThirdDigit;
 };

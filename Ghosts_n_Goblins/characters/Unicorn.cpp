@@ -1,26 +1,26 @@
 ﻿#include "pch.h"
-#include "BigMan.h"
+#include "Unicorn.h"
 
 #include "Player.h"
 #include "engine/SoundManager.h"
 
-BigMan::BigMan(Sprite* pSprite, const Point2f& pos, Player* pPlayer, Sprite* pFX,SoundManager* pSoundManager)
-    : IEnemy{Game::Label::C_BIG_MAN, pSprite, pos, pPlayer, pFX, pSoundManager}
+Unicorn::Unicorn(Sprite* pSprite, const Point2f& pos, Player* pPlayer, Sprite* pFX,SoundManager* pSoundManager)
+    : IEnemy{Game::Label::C_UNICORN, pSprite, pos, pPlayer, pFX, pSoundManager}
 {
     m_Score = 2000;
 }
 
-void BigMan::Draw() const
+void Unicorn::Draw() const
 {
     GameObject::Draw();
 }
 
-void BigMan::Update(float elapsedSec)
+void Unicorn::Update(float elapsedSec)
 {
     GameObject::Update(elapsedSec);
 }
 
-void BigMan::HandleCollision(GameObject* other)
+void Unicorn::HandleCollision(GameObject* other)
 {
     if (not IsOverlapping(other)) return;
     m_pSoundManager->PlayEffect(Game::Label::E_BOSS_HIT);
@@ -32,23 +32,23 @@ void BigMan::HandleCollision(GameObject* other)
     }
 }
 
-void BigMan::Wait(float elapsedSec)
+void Unicorn::Wait(float elapsedSec)
 {
     IEnemy::Wait(elapsedSec);
 }
 
-void BigMan::Walk(float elapsedSec)
+void Unicorn::Walk(float elapsedSec)
 {
     IEnemy::Walk(elapsedSec);
     m_pSoundManager->PlayEffect(Game::Label::E_BIG_ENEMY_WALK);
 }
 
-void BigMan::Jump(float elapsedSec)
+void Unicorn::Jump(float elapsedSec)
 {
     IEnemy::Jump(elapsedSec);
 }
 
-void BigMan::Shoot(float elapsedSec)
+void Unicorn::Shoot(float elapsedSec)
 {
     IEnemy::Shoot(elapsedSec);
 }

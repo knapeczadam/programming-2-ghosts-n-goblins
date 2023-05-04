@@ -140,7 +140,6 @@ void Game::InitLabels()
 {
     // CHARACTERS
     m_Labels["c_arthur"] = Label::C_ARTHUR;
-    m_Labels["c_big_man"] = Label::C_BIG_MAN;
     m_Labels["c_crow"] = Label::C_CROW;
     m_Labels["c_flying_knight"] = Label::C_FLYING_KNIGHT;
     m_Labels["c_green_monster"] = Label::C_GREEN_MONSTER;
@@ -148,18 +147,19 @@ void Game::InitLabels()
     m_Labels["c_princess"] = Label::C_PRINCESS;
     m_Labels["c_red_arremer"] = Label::C_RED_ARREMER;
     m_Labels["c_satan"] = Label::C_SATAN;
+    m_Labels["c_unicorn"] = Label::C_UNICORN;
     m_Labels["c_woody_pig"] = Label::C_WOODY_PIG;
     m_Labels["c_zombie"] = Label::C_ZOMBIE;
 
     // COLLECTIBLES
-    m_Labels["o_basket"] = Label::O_BASKET;
     m_Labels["o_bust"] = Label::O_BUST;
     m_Labels["o_coin"] = Label::O_COIN;
     m_Labels["o_key"] = Label::O_KEY;
     m_Labels["o_money_bag"] = Label::O_MONEY_BAG;
     m_Labels["o_necklace"] = Label::O_NECKLACE;
     m_Labels["o_shield"] = Label::O_SHIELD;
-    m_Labels["o_star"] = Label::O_STAR;
+    m_Labels["o_pot"] = Label::O_POT;
+    m_Labels["o_yashichi"] = Label::O_YASHICHI;
 
     // FX
     m_Labels["f_fire"] = Label::F_FIRE;
@@ -617,6 +617,8 @@ void Game::LateUpdate(float elapsedSec)
     DeactivateEnemiesOutOfView();
     DeactivateThrowablesOutOfView();
     
+    UpdateRemainingTime();
+    
 #if TEST_OBJECT
     m_pTestObject->LateUpdate(elapsedSec);
 #endif
@@ -732,5 +734,39 @@ void Game::DeactivateThrowablesOutOfView()
             weapon->SetActive(false);
             weapon->SetVisible(false);
         }
+    }
+}
+
+void Game::UpdateRemainingTime()
+{
+    
+    StartTimer(120);
+    const int seconds{GetSeconds()};
+    const int minutes{GetMinutes()};
+
+    int firstDigit, secondDigit, thirdDigit;
+    firstDigit = minutes;
+    if (seconds > 9)
+    {
+        secondDigit = seconds / 10;
+        thirdDigit = seconds % 10;
+    }
+    else
+    {
+        secondDigit = 0;
+        thirdDigit = seconds;
+    }
+    if (GetRemainingTime() <= 15.0f) 
+    {
+        m_pSoundManager->PlayStream(Game::Label::S_05_HURRY_UP, false);
+    }
+    m_pHUD->SetFirstDigit(firstDigit);
+    m_pHUD->SetSecondDigit(secondDigit);
+    m_pHUD->SetThirdDigit(thirdDigit);
+    
+    if (IsTimerFinished())
+    {
+        std::cout << "Time is up!\n";
+        // TODO: Game over
     }
 }

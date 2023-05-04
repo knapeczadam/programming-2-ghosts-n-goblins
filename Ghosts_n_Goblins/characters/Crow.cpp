@@ -12,7 +12,7 @@ Crow::Crow(Sprite* pSprite, const Point2f& pos, Player* pPlayer, Sprite* pFX, So
     , m_Amplitude{10.0f}
 {
     m_Score = 100;
-    m_AwakeDistance = 100.0f;
+    m_AwakeDistance = 256.0f;
     m_HorVelocity = 100.0f;
     m_VerVelocity = 10.0f;
     

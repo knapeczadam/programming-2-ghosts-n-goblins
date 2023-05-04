@@ -10,9 +10,9 @@
 </image>
 <image style="overflow:visible;enable-background:new    ;" width="7167" height="448" xlink:href="level.png" >
 </image>
-<image style="overflow:visible;" width="3584" height="208" xlink:href="Ghosts&apos;NGoblins-Stage1.png"  transform="matrix(1.9992 0 0 1.9992 0 32.058)">
+<image style="overflow:visible;enable-background:new    ;" width="3584" height="208" xlink:href="Ghosts&apos;NGoblins-Stage1.png"  transform="matrix(1.9992 0 0 1.9992 0 32.058)">
 </image>
-<path class="st0" d="M3310.5,385.9v62H0v-62H3310.5z"/>
+<path class="st0" d="M3306.6,385.9v61.9H0v-61.9H3306.6z"/>
 <path class="st0" d="M3577.3,386.2h334.4v62h-335.5L3577.3,386.2z"/>
 <path class="st0" d="M3962.8,386.2h77.2v62h-77.2V386.2z"/>
 <path class="st0" d="M4089.3,386h842v62h-842L4089.3,386L4089.3,386z"/>
