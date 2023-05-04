@@ -13,6 +13,8 @@ public:
     
     virtual void Update(float elapsedSec) override;
 
+    virtual bool IsAwake() const final;
+
 protected:
     virtual void Awake();
     virtual void Wait(float elapsedSec);

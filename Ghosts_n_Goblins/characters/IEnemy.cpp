@@ -39,6 +39,11 @@ void IEnemy::Update(float elapsedSec)
     }
 }
 
+bool IEnemy::IsAwake() const
+{
+    return m_Awake;
+}
+
 void IEnemy::Awake()
 {
 }

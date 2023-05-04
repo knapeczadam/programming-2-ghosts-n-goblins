@@ -3,6 +3,7 @@
 
 class Level;
 class Player;
+class GameObject;
 
 class Camera final
 {
@@ -14,12 +15,14 @@ public:
     Camera& operator=(const Camera& other) = delete;
     Camera& operator=(Camera&& other) noexcept = delete;
     
-    void Draw(const Rectf& target) const;
-    void Transform(const Rectf& target) const;
+    void Draw() const;
+    void Transform();
+
+    bool IsOutOfWindow(const GameObject* pGameObject) const;
 
 private:
-    Point2f Track(const Rectf& target) const;
-    void Clamp(Point2f& bottomLeftPos) const;
+    void Track();
+    void Clamp();
 
 private:
     Rectf m_ViewPort;
@@ -28,4 +31,6 @@ private:
     Rectf m_LevelBoundaries;
     float m_Width;
     float m_Height;
+    Point2f m_Pos;
+    const float m_OutOfWindowOffset;
 };

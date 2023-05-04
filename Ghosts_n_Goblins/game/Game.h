@@ -1,12 +1,12 @@
 // Knapecz, Adam - 1DAE11
 #pragma once
+
 #include <queue>
 
 #include "BaseGame.h"
 #include "engine/json.hpp"
 #include "engine/ITimer.h"
-
-#include <string>
+#include "Macros.h"
 
 
 using json = nlohmann::json;
@@ -168,11 +168,11 @@ public:
 
 public:
     explicit Game(const Window& window);
+    virtual ~Game() override;
     Game(const Game& other) = delete;
     Game& operator=(const Game& other) = delete;
     Game(Game&& other) = delete;
     Game& operator=(Game&& other) = delete;
-    virtual ~Game() override;
 
     virtual void Update(float elapsedSec) override;
     virtual void LateUpdate(float elapsedSec) override;
@@ -184,14 +184,15 @@ public:
     virtual void ProcessMouseDownEvent(const SDL_MouseButtonEvent& e) override;
 
 private:
-    // FUNCTIONS
-    void DrawBoot() const;
     void Cleanup();
-    void Boot();
     void ClearBackground() const;
+    void DrawBoot() const;
+    void Boot();
     void PrintInfo() const;
-    void Debug() const;
     void DoCollisionTests();
+    void Debug() const;
+    void DeactivateEnemiesOutOfView();
+    void DeactivateThrowablesOutOfView();
 
     
     void Initialize();
@@ -242,7 +243,10 @@ private:
     Platform* m_pPlatform;
     Camera* m_pCamera;
     HUD* m_pHUD;
-    GameObject* m_pTestGameObject;
+#if TEST_OBJECT
+    GameObject* m_pTestObject;
+#endif
+    
     
     json m_Data;
     const std::string m_DataPath;
@@ -253,7 +257,6 @@ private:
 
     std::queue<std::pair<Label, float>> m_BootIntervals;
     Label m_CurrBoot;
-    const int m_MaxBootCount;
     bool m_Boot;
 
 };

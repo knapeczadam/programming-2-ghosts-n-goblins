@@ -51,15 +51,16 @@ Game::Game(const Window& window)
       , m_pPlatform{nullptr}
       , m_pCamera{nullptr}
       , m_pHUD{nullptr}
-      , m_pTestGameObject{nullptr}
+#if TEST_OBJECT
+      , m_pTestObject{nullptr}
+#endif
       , m_Data{nullptr}
       , m_DataPath{"../../Resources/data.json"}
       , m_Labels{}
       , m_AttackKeyReleased{true}
       , m_JumpKeyReleased{true}
       , m_BootIntervals{}
-      , m_CurrBoot{1}
-      , m_MaxBootCount{20}
+      , m_CurrBoot{Label::B_01}
       , m_Boot{false}
 {
     Initialize();
@@ -83,7 +84,9 @@ void Game::Cleanup()
     delete m_pTextureManager;
     delete m_pPlayer;
     delete m_pSoundManager;
-    delete m_pTestGameObject;
+#if TEST_OBJECT
+    delete m_pTestObject;
+#endif
 
     std::ranges::for_each(m_Waters, deleteGameObject);
     std::ranges::for_each(m_Throwables, deleteGameObject);
@@ -125,12 +128,12 @@ void Game::Initialize()
     // HUD
     m_pHUD = new HUD{m_pSpriteFactory->CreateSprite(Label::U_HUD), m_pPlayer, GetViewPort(), m_pSoundManager};
 
-    // TEST GAME OBJECT
-    m_pTestGameObject = new Crow{m_pSpriteFactory->CreateSprite(Label::C_CROW), Point2f{500.f, 65.f}, m_pPlayer,nullptr,  m_pSoundManager};
-
     // ENEMIES
     InitEnemies();
-
+    
+#if TEST_OBJECT
+    m_pTestObject = new Crow{m_pSpriteFactory->CreateSprite(Label::C_CROW), Point2f{600.f, 65.f}, m_pPlayer,nullptr,  m_pSoundManager};
+#endif
 }
 
 void Game::InitLabels()
@@ -416,6 +419,13 @@ void Game::InitBigMan()
 
 void Game::InitCrows()
 {
+    m_Enemies.insert(m_Enemies.end(), {
+        new Crow{m_pSpriteFactory->CreateSprite(Label::C_CROW), Point2f{1505.0f, 100.0f}, m_pPlayer, nullptr, m_pSoundManager},
+        new Crow{m_pSpriteFactory->CreateSprite(Label::C_CROW), Point2f{2210.0f, 100.0f}, m_pPlayer, nullptr, m_pSoundManager},
+        new Crow{m_pSpriteFactory->CreateSprite(Label::C_CROW), Point2f{2526.0f, 100.0f}, m_pPlayer, nullptr, m_pSoundManager},
+        new Crow{m_pSpriteFactory->CreateSprite(Label::C_CROW), Point2f{3035.0f, 102.0f}, m_pPlayer, nullptr, m_pSoundManager},
+        new Crow{m_pSpriteFactory->CreateSprite(Label::C_CROW), Point2f{1724.0f, 262.0f}, m_pPlayer, nullptr, m_pSoundManager},
+    });
 }
 
 void Game::InitFlyingKnights()
@@ -467,11 +477,6 @@ void Game::Draw() const
 {
     // static lambda functions
     static auto draw{[](const GameObject* pGameObject) { pGameObject->Draw(); }};
-    static auto throwableToGameObject{[](IThrowable* pThrowable) { return dynamic_cast<GameObject*>(pThrowable); }};
-    static auto enemyToGameObject{[](IEnemy* pEnemy) { return dynamic_cast<GameObject*>(pEnemy); }};
-    static auto collectibleToGameObject{
-        [](ICollectible* pCollectible) { return dynamic_cast<GameObject*>(pCollectible); }
-    };
     static auto isVisible{[](const GameObject* pGameObject) { return pGameObject->IsVisible(); }};
 
     // CLEAR
@@ -485,7 +490,7 @@ void Game::Draw() const
     }
 
     glPushMatrix();
-    m_pCamera->Transform(m_pPlayer->GetShape());
+    m_pCamera->Transform();
     m_pLevel->Draw();
     std::ranges::for_each(m_Enemies | std::views::filter(isVisible), draw);
     std::ranges::for_each(m_Throwables | std::views::filter(isVisible), draw);
@@ -493,8 +498,9 @@ void Game::Draw() const
     m_pPlayer->Draw();
     std::ranges::for_each(m_Waters, draw);
     m_pForeground->Draw();
-    // Test object
-    if (m_pTestGameObject->IsVisible()) m_pTestGameObject->Draw();
+#if TEST_OBJECT
+    if (m_pTestObject->IsVisible()) m_pTestObject->Draw();
+#endif
 #if DEBUG_COLLISION
     m_pKillZone->Draw();
     std::ranges::for_each(m_Tombstones, draw);
@@ -510,11 +516,6 @@ void Game::Update(float elapsedSec)
 {
     // static lambda functions
     static auto isActive{[](const GameObject* pGameObject) { return pGameObject->IsActive(); }};
-    static auto throwableToGameObject{[](IThrowable* pThrowable) { return dynamic_cast<GameObject*>(pThrowable); }};
-    static auto enemyToGameObject{[](IEnemy* pEnemy) { return dynamic_cast<GameObject*>(pEnemy); }};
-    static auto collectibleToGameObject{
-        [](ICollectible* pCollectible) { return dynamic_cast<GameObject*>(pCollectible); }
-    };
     static auto update{[&](GameObject* pGameObject) { pGameObject->Update(elapsedSec); }};
 
     Clock::Update(elapsedSec);
@@ -545,8 +546,9 @@ void Game::Update(float elapsedSec)
 
     m_pHUD->Update(elapsedSec);
 
-    // Test object
-    if (m_pTestGameObject->IsActive())m_pTestGameObject->Update(elapsedSec);
+#if TEST_OBJECT
+    if (m_pTestObject->IsActive())m_pTestObject->Update(elapsedSec);
+#endif
 
     // Do collision
     DoCollisionTests();
@@ -595,19 +597,15 @@ void Game::DoCollisionTests()
     m_pPlayer->CanClimb(canClimb);
     std::ranges::for_each(m_Ladders, [&](GameObject* pLadder){pLadder->HandleCollision(m_pPlayer);});
     
-    // Test object
-    if (m_pTestGameObject->IsActive()) m_pPlayer->HandleCollision(m_pTestGameObject);
+#if TEST_OBJECT
+    if (m_pTestObject->IsActive()) m_pPlayer->HandleCollision(m_pTestObject);
+#endif
 }
 
 void Game::LateUpdate(float elapsedSec)
 {
     // static lambda functions
     static auto lateUpdate{[&](GameObject* pGameObject) { pGameObject->LateUpdate(elapsedSec); }};
-    static auto throwableToGameObject{[](IThrowable* pThrowable) { return dynamic_cast<GameObject*>(pThrowable); }};
-    static auto enemyToGameObject{[](IEnemy* pEnemy) { return dynamic_cast<GameObject*>(pEnemy); }};
-    static auto collectibleToGameObject{
-        [](ICollectible* pCollectible) { return dynamic_cast<GameObject*>(pCollectible); }
-    };
 
     m_pPlayer->LateUpdate(elapsedSec);
 
@@ -616,8 +614,12 @@ void Game::LateUpdate(float elapsedSec)
     std::ranges::for_each(m_Throwables, lateUpdate);
     std::ranges::for_each(m_Collectibles, lateUpdate);
 
-    // Test object
-    m_pTestGameObject->LateUpdate(elapsedSec);
+    DeactivateEnemiesOutOfView();
+    DeactivateThrowablesOutOfView();
+    
+#if TEST_OBJECT
+    m_pTestObject->LateUpdate(elapsedSec);
+#endif
 }
 
 void Game::ProcessKeyDownEvent(const SDL_KeyboardEvent& e)
@@ -707,4 +709,28 @@ void Game::Debug() const
     std::cout << " -- Player --" << std::endl;
     std::cout << "Position: x - " << m_pPlayer->GetPosition<Point2f>().x << " y - " << m_pPlayer->GetPosition<Point2f>()
         .y << std::endl;
+}
+
+void Game::DeactivateEnemiesOutOfView()
+{
+    for (GameObject* pEnemy : m_Enemies)
+    {
+        IEnemy* pIEnemy{dynamic_cast<IEnemy*>(pEnemy)};
+        if (pIEnemy->IsAwake() and m_pCamera->IsOutOfWindow(pEnemy))
+        {
+            pEnemy->SetActive(false);
+        }
+    }
+}
+
+void Game::DeactivateThrowablesOutOfView()
+{
+    for (GameObject* weapon : m_Throwables)
+    {
+        if (weapon->IsActive() and not m_pCamera->IsOutOfWindow(weapon))
+        {
+            weapon->SetActive(false);
+            weapon->SetVisible(false);
+        }
+    }
 }
