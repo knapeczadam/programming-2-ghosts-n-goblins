@@ -4,7 +4,7 @@
 #include <numeric>
 
 ITimer::ITimer()
-    : m_pClock{}
+    : m_pClock{nullptr}
 {
 }
 

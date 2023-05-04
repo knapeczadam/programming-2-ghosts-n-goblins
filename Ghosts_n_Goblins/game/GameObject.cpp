@@ -9,9 +9,11 @@
 
 GameObject::GameObject()
     : m_Label{Game::Label::D_DUMMY}
-      , m_pSprite{}
-      , m_Shape{}
-      , m_CollisionBox{}
+      , m_pSprite{nullptr}
+      , m_pSoundManager{nullptr}
+      , m_Shape{0.0f, 0.0f, 0.0f, 0.0f}
+      , m_CollisionBox{0.0f, 0.0f, 0.0f, 0.0f}
+      , m_OriginalCollisionBox{m_CollisionBox}
       , m_CollisionEnabled{false}
       , m_Active{true}
       , m_Visible{true}
@@ -22,9 +24,11 @@ GameObject::GameObject()
 
 GameObject::GameObject(Game::Label label, bool collisionEnabled)
     : m_Label{label}
-      , m_pSprite{}
-      , m_Shape{}
-      , m_CollisionBox{}
+      , m_pSprite{nullptr}
+      , m_pSoundManager{nullptr}
+      , m_Shape{0.0f, 0.0f, 0.0f, 0.0f}
+      , m_CollisionBox{0.0f, 0.0f, 0.0f, 0.0f}
+      , m_OriginalCollisionBox{m_CollisionBox}
       , m_CollisionEnabled{collisionEnabled}
       , m_Active{true}
       , m_Visible{true}
@@ -36,8 +40,10 @@ GameObject::GameObject(Game::Label label, bool collisionEnabled)
 GameObject::GameObject(Game::Label label, Sprite* pSprite, bool collisionEnabled)
     : m_Label{label}
       , m_pSprite{pSprite}
-      , m_Shape{}
-      , m_CollisionBox{}
+      , m_pSoundManager{nullptr}
+      , m_Shape{0.0f, 0.0f, 0.0f, 0.0f}
+      , m_CollisionBox{0.0f, 0.0f, 0.0f, 0.0f}
+      , m_OriginalCollisionBox{m_CollisionBox}
       , m_CollisionEnabled{collisionEnabled}
       , m_Active{true}
       , m_Visible{true}
@@ -54,8 +60,10 @@ GameObject::GameObject(Game::Label label, Sprite* pSprite, bool collisionEnabled
 GameObject::GameObject(Game::Label label, const Rectf& shape, bool collisionEnabled, const Color4f& color)
     : m_Label{label}
       , m_pSprite{}
+      , m_pSoundManager{nullptr}
       , m_Shape{shape}
       , m_CollisionBox{shape}
+      , m_OriginalCollisionBox{m_CollisionBox}
       , m_CollisionEnabled{collisionEnabled}
       , m_Active{true}
       , m_Visible{true}
@@ -64,11 +72,14 @@ GameObject::GameObject(Game::Label label, const Rectf& shape, bool collisionEnab
 {
 }
 
-GameObject::GameObject(Game::Label label, Sprite* pSprite, const Point2f& pos, bool collisionEnabled)
+GameObject::GameObject(Game::Label label, Sprite* pSprite, const Point2f& pos, bool collisionEnabled,
+                       SoundManager* pSoundManager)
     : m_Label{label}
       , m_pSprite{pSprite}
-      , m_Shape{}
-      , m_CollisionBox{}
+      , m_pSoundManager{pSoundManager}
+      , m_Shape{0.0f, 0.0f, 0.0f, 0.0f}
+      , m_CollisionBox{0.0f, 0.0f, 0.0f, 0.0f}
+      , m_OriginalCollisionBox{m_CollisionBox}
       , m_CollisionEnabled{collisionEnabled}
       , m_Active{true}
       , m_Visible{true}
@@ -197,6 +208,7 @@ void GameObject::InitCollisionBox()
     const float verticalOffset{(m_Shape.height - m_pSprite->GetCollisionHeight()) / 2};
     m_CollisionBox.left = m_Shape.left + verticalOffset;
     m_CollisionBox.bottom = m_Shape.bottom + horizontalOffset;
+    m_OriginalCollisionBox = m_CollisionBox;
 }
 
 void GameObject::UpdateCollisionBox()
@@ -223,6 +235,16 @@ std::vector<Point2f> GameObject::GetCollisionBoxVertices() const
         Point2f{m_CollisionBox.left, m_CollisionBox.bottom + m_CollisionBox.height}
     };
     return vertices;
+}
+
+void GameObject::SetCollisionBoxHeight(float height)
+{
+    m_CollisionBox.height = height;
+}
+
+void GameObject::ResetCollisionBox()
+{
+    m_CollisionBox = m_OriginalCollisionBox;
 }
 
 Point2f GameObject::GetShapeCenter() const

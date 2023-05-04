@@ -24,3 +24,8 @@ float Clock::GetRemainingTime() const
 {
     return m_TotalTime - (s_AccuTime - m_StartTime);
 }
+
+float Clock::GetAccuTime()
+{
+    return s_AccuTime;
+}

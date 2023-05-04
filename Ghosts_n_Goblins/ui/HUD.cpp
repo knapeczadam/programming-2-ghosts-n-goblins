@@ -45,7 +45,7 @@ void HUD::DrawPlayerScore()
     m_pSprite->SetClipWidth(8);
     m_pSprite->SetClipHeight(8);
     const int playerScore{m_pPlayer->GetScore()};
-    Point2f pos{144.0f, m_ViewPort.height - m_pSprite->GetScaledClipHeight() * 2};
+    Point2f pos{128.0f, m_ViewPort.height - m_pSprite->GetScaledClipHeight() * 2};
     const float offset{m_pSprite->GetScaledClipWidth()};
     if (playerScore == 0)
     {
@@ -75,7 +75,7 @@ void HUD::DrawHighScore()
     m_pSprite->SetClipWidth(8);
     m_pSprite->SetClipHeight(8);
     const int testHighScore{10000};
-    Point2f pos{305.0f, m_ViewPort.height - m_pSprite->GetScaledClipHeight() * 2};
+    Point2f pos{304.0f, m_ViewPort.height - m_pSprite->GetScaledClipHeight() * 2};
     const float offset{m_pSprite->GetScaledClipWidth()};
     for (int score = testHighScore; score > 0; score /= 10)
     {
@@ -97,7 +97,7 @@ void HUD::DrawTopScore()
     m_pSprite->SetClipWidth(80);
     m_pSprite->SetTopOffsetRows(12);
     m_pSprite->SetLeftOffsetCols(1);
-    m_pSprite->SetPosition(Point2f{175.0f, m_ViewPort.height - m_pSprite->GetScaledClipHeight()});
+    m_pSprite->SetPosition(Point2f{176.0f, m_ViewPort.height - m_pSprite->GetScaledClipHeight()});
     m_pSprite->UpdateSourceRect();
     m_pSprite->UpdateDestinationRect();
     m_pSprite->Draw();
@@ -134,8 +134,7 @@ void HUD::DrawRemainingTime()
         secondDigit = 0;
         thirdDigit = seconds;
     }
-    std::cout << "remaining time: " << GetRemainingTime() << '\n';
-    if (GetRemainingTime() <= 15.0f)
+    if (GetRemainingTime() <= 15.0f) // TODO move to game rules?
     {
         m_pSoundManager->PlayStream(Game::Label::S_05_HURRY_UP, false);
     }
@@ -226,7 +225,7 @@ void HUD::DrawPlayer1() const
     m_pSprite->SetClipHeight(8);
     m_pSprite->SetClipWidth(64);
     m_pSprite->SetTopOffsetRows(12);
-    m_pSprite->SetPosition(Point2f{32.0f, m_ViewPort.height - m_pSprite->GetScaledClipHeight()});
+    m_pSprite->SetPosition(Point2f{16.0f, m_ViewPort.height - m_pSprite->GetScaledClipHeight()});
     m_pSprite->UpdateSourceRect();
     m_pSprite->UpdateDestinationRect();
     m_pSprite->Draw();

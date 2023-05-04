@@ -4,7 +4,7 @@
 #include "engine/Sprite.h"
 
 Lance::Lance(Sprite* pSprite, const Point2f& pos, bool isFlipped, bool collectible)
-    : GameObject{Game::Label::W_LANCE, pSprite, pos}
+    : GameObject{Game::Label::W_LANCE, pSprite, pos, true, nullptr}
       , m_Speed{300.0f}
       , m_Collectible{collectible}
 {

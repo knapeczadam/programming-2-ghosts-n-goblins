@@ -4,7 +4,7 @@
 class BigMan : public IEnemy
 {
 public:
-    BigMan(Sprite* pSprite, const Point2f& pos, Player* pPlayer, SoundManager* pSoundManager);
+    BigMan(Sprite* pSprite, const Point2f& pos, Player* pPlayer, Sprite* pFX, SoundManager* pSoundManager);
     virtual ~BigMan() override = default;
     BigMan(const BigMan& other) = delete;
     BigMan(BigMan&& other) noexcept = delete;
@@ -15,10 +15,10 @@ public:
     virtual void Update(float elapsedSec) override;
     virtual void HandleCollision(GameObject* other) override;
 protected:
-    virtual void Wait() override;
-    virtual void Walk() override;
-    virtual void Jump() override;
-    virtual void Shoot() override;
+    virtual void Wait(float elapsedSec) override;
+    virtual void Walk(float elapsedSec) override;
+    virtual void Jump(float elapsedSec) override;
+    virtual void Shoot(float elapsedSec) override;
 
 private:
 };

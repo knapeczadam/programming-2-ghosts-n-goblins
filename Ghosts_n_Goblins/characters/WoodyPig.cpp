@@ -3,8 +3,8 @@
 #include "engine/SoundManager.h"
 #include "Player.h"
 
-WoodyPig::WoodyPig(Sprite* pSprite, const Point2f& pos, Player* pPlayer, SoundManager* pSoundManager)
-    : IEnemy{Game::Label::C_WOODY_PIG, pSprite, pos, pPlayer, pSoundManager}
+WoodyPig::WoodyPig(Sprite* pSprite, const Point2f& pos, Player* pPlayer,Sprite* pFX, SoundManager* pSoundManager)
+    : IEnemy{Game::Label::C_WOODY_PIG, pSprite, pos, pPlayer, pFX, pSoundManager}
 {
     m_Score = 100;
 }
@@ -16,7 +16,7 @@ void WoodyPig::Draw() const
 
 void WoodyPig::Update(float elapsedSec)
 {
-    GameObject::Update(elapsedSec);
+    IEnemy::Update(elapsedSec);
 }
 
 void WoodyPig::HandleCollision(GameObject* other)
@@ -29,13 +29,13 @@ void WoodyPig::HandleCollision(GameObject* other)
     }
 }
 
-void WoodyPig::Shoot()
+void WoodyPig::Shoot(float elapsedSec)
 {
-    IEnemy::Shoot();
+    IEnemy::Shoot(elapsedSec);
 }
 
-void WoodyPig::Fly()
+void WoodyPig::Fly(float elapsedSec)
 {
-    IEnemy::Fly();
+    IEnemy::Fly(elapsedSec);
     m_pSoundManager->PlayEffect(Game::Label::E_WOODY_PIG);
 }

@@ -3,8 +3,8 @@
 #include "engine/SoundManager.h"
 #include "Player.h"
 
-Zombie::Zombie(Sprite* pSprite, const Point2f& pos, Player* pPlayer, SoundManager* pSoundManager)
-    : IEnemy{Game::Label::C_ZOMBIE, pSprite, pos, pPlayer, pSoundManager}
+Zombie::Zombie(Sprite* pSprite, const Point2f& pos, Player* pPlayer, Sprite* pFX, SoundManager* pSoundManager)
+    : IEnemy{Game::Label::C_ZOMBIE, pSprite, pos, pPlayer, pFX, pSoundManager}
 {
     m_Score = 200;
 }
@@ -16,7 +16,7 @@ void Zombie::Draw() const
 
 void Zombie::Update(float elapsedSec)
 {
-    GameObject::Update(elapsedSec);
+    IEnemy::Update(elapsedSec);
 }
 
 void Zombie::HandleCollision(GameObject* other)
@@ -29,9 +29,9 @@ void Zombie::HandleCollision(GameObject* other)
     }
 }
 
-void Zombie::Walk()
+void Zombie::Walk(float elapsedSec)
 {
-    IEnemy::Walk();
+    IEnemy::Walk(elapsedSec);
 }
 
 void Zombie::Spawn()

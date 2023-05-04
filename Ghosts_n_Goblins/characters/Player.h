@@ -51,6 +51,9 @@ public:
     void AddScore(int score);
 
     void UpdateState();
+protected:
+    virtual void UpdateCollisionBox() override;
+
 private:
     void UpdatePosition(float elapsedSec);
     
@@ -93,5 +96,4 @@ private:
     bool m_Climbing;
     bool m_OnLadder;
     bool m_OnGround;
-    SoundManager* m_pSoundManager;
 };

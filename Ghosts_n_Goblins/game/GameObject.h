@@ -13,7 +13,7 @@ public:
     explicit GameObject(Game::Label label, bool collisionEnabled = true);
     explicit GameObject(Game::Label label, Sprite* pSprite, bool collisionEnabled = true);
     explicit GameObject(Game::Label label, const Rectf& shape, bool collisionEnabled = true, const Color4f& color = Color4f{0.f, 1.f, 1.f, 1.f});
-    explicit GameObject(Game::Label label, Sprite* pSprite, const Point2f& pos, bool collisionEnabled = true);
+    explicit GameObject(Game::Label label, Sprite* pSprite, const Point2f& pos, bool collisionEnabled = true, SoundManager* pSoundManager = nullptr);
     virtual ~GameObject() override = default;
     GameObject(const GameObject& other) = delete;
     GameObject(GameObject&& other) noexcept = delete;
@@ -55,12 +55,14 @@ public:
     virtual void SetBottom(float bottom) final;
     virtual void SetLeft(float left) final;
     virtual bool IsOverlapping(GameObject* other) const final;
-
 protected:
     virtual void InitCollisionBox() final;
-    virtual void UpdateCollisionBox() final;
     virtual std::vector<Point2f> GetCollisionBoxVertices() const final;
+    virtual void SetCollisionBoxHeight(float height) final;
+    virtual void ResetCollisionBox() final;
 
+protected:
+    virtual void UpdateCollisionBox();
 private:
     void InitShape();
     void InitShape(const Point2f& pos);
@@ -68,8 +70,10 @@ private:
 protected:
     Game::Label m_Label;
     Sprite* m_pSprite;
+    SoundManager* m_pSoundManager;
     Rectf m_Shape;
     Rectf m_CollisionBox;
+    Rectf m_OriginalCollisionBox;
     bool m_CollisionEnabled;
     bool m_Active;
     bool m_Visible;

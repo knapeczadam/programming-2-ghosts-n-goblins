@@ -26,6 +26,7 @@ public:
     
     bool IsOnGround(GameObject* pGameObject) const;
     Rectf GetBoundaries() const;
+    void SetBoundaries(const Rectf& boundaries);
     bool HasReachedEnd(const Rectf& collisionBox) const;
 
     Platform* GetPlatform() const;

@@ -186,24 +186,42 @@ public:
 private:
     // FUNCTIONS
     void DrawBoot() const;
-    void Boot();
-    void Initialize();
-    void InitWaters();
-    void InitTombstones();
     void Cleanup();
+    void Boot();
     void ClearBackground() const;
     void PrintInfo() const;
     void Debug() const;
     void DoCollisionTests();
 
-    void LoadData();
+    
+    void Initialize();
+    
     void InitLabels();
-    void InitCamera() const;
+    void LoadData();
     void InitBootIntervals();
+    void InitCamera();
+
+    // LEVEL
+    void InitLevel();
     void InitLadders();
+    void InitTombstones();
+    void InitWaters();
+
+    // COLLECTIBLES
+    void InitCollectibles();
     void InitCoins();
     void InitMoneyBags();
+
+    // ENEMIES
+    void InitEnemies();
+    void InitBigMan();
+    void InitCrows();
+    void InitFlyingKnights();
     void InitGreenMonsters();
+    void InitMagicians();
+    void InitRedArremer();
+    void InitWoodyPigs();
+    void InitZombies();
     
     // DATA MEMBERS
     

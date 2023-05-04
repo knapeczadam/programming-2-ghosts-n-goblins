@@ -3,8 +3,8 @@
 #include "engine/SoundManager.h"
 #include "Player.h"
 
-RedArremer::RedArremer(Sprite* pSprite, const Point2f& pos, Player* pPlayer, SoundManager* pSoundManager)
-    : IEnemy{Game::Label::C_RED_ARREMER, pSprite, pos, pPlayer, pSoundManager}
+RedArremer::RedArremer(Sprite* pSprite, const Point2f& pos, Player* pPlayer,Sprite* pFX, SoundManager* pSoundManager)
+    : IEnemy{Game::Label::C_RED_ARREMER, pSprite, pos, pPlayer, pFX, pSoundManager}
 {
     m_Score = 1000;
 }
@@ -16,7 +16,7 @@ void RedArremer::Draw() const
 
 void RedArremer::Update(float elapsedSec)
 {
-    GameObject::Update(elapsedSec);
+    IEnemy::Update(elapsedSec);
 }
 
 void RedArremer::HandleCollision(GameObject* other)
@@ -29,23 +29,23 @@ void RedArremer::HandleCollision(GameObject* other)
     }
 }
 
-void RedArremer::Wait()
+void RedArremer::Wait(float elapsedSec)
 {
-    IEnemy::Wait();
+    IEnemy::Wait(elapsedSec);
 }
 
-void RedArremer::Walk()
+void RedArremer::Walk(float elapsedSec)
 {
-    IEnemy::Walk();
+    IEnemy::Walk(elapsedSec);
 }
 
-void RedArremer::Shoot()
+void RedArremer::Shoot(float elapsedSec)
 {
-    IEnemy::Shoot();
+    IEnemy::Shoot(elapsedSec);
     m_pSoundManager->PlayEffect(Game::Label::E_RED_ARREMER_ATTACK);
 }
 
-void RedArremer::Fly()
+void RedArremer::Fly(float elapsedSec)
 {
-    IEnemy::Fly();
+    IEnemy::Fly(elapsedSec);
 }

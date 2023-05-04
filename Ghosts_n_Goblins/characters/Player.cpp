@@ -1,31 +1,31 @@
 // Knapecz, Adam - 1DAE11
 #include "pch.h"
 #include "Player.h"
-#include "utils.h"
 #include "IEnemy.h"
-#include "level/Level.h"
+#include "Matrix2x3.h"
 #include "Texture.h"
+#include "utils.h"
 #include "collectibles/ICollectible.h"
+#include "engine/SoundManager.h"
 #include "engine/Sprite.h"
 #include "engine/SpriteFactory.h"
-#include "game/Macros.h"
-
-#include <iostream>
-#include <numeric>
-
-#include "Matrix2x3.h"
-#include "engine/SoundManager.h"
 #include "game/CollisionBox.h"
+#include "game/Macros.h"
 #include "level/IClimable.h"
+#include "level/Level.h"
 #include "level/Platform.h"
 #include "weapons/Dagger.h"
 #include "weapons/Lance.h"
 #include "weapons/Torch.h"
 
+#include <iostream>
+#include <numeric>
+
+
 const Point2f Player::m_SpawnPos{174.0f, 64.0f};
 
 Player::Player(Sprite* pSprite, const Point2f& pos, Level* pLevel, SoundManager* pSoundManager)
-    : GameObject{Game::Label::C_ARTHUR, pSprite, pos}
+    : GameObject{Game::Label::C_ARTHUR, pSprite, pos, true, pSoundManager}
       , m_HorVelocity{150.0f}
       , m_VerVelocity{100.0f}
       , m_JumpVelocity{500.0f}
@@ -51,7 +51,6 @@ Player::Player(Sprite* pSprite, const Point2f& pos, Level* pLevel, SoundManager*
       , m_Climbing{false}
       , m_OnLadder{false}
       , m_OnGround{false}
-      , m_pSoundManager{pSoundManager}
 {
 }
 
@@ -406,6 +405,19 @@ void Player::UpdateState()
     }
 }
 
+void Player::UpdateCollisionBox()
+{
+    if (m_Crouching)
+    {
+       SetCollisionBoxHeight(44.0f); 
+    }
+    else
+    {
+        ResetCollisionBox();
+    }
+    GameObject::UpdateCollisionBox();
+}
+
 bool Player::IsAttacking() const
 {
     return m_Attacking;
@@ -527,6 +539,7 @@ void Player::HandleCollision(GameObject* other)
 void Player::CheckForBoundaries(const Rectf& boundaries)
 {
     const float horizontalOffset{(m_Shape.width - m_pSprite->GetCollisionWidth()) / 2};
+    const float epsilon{1.0f};
     if (m_CollisionBox.left < boundaries.left)
     {
         m_Shape.left = boundaries.left - horizontalOffset;

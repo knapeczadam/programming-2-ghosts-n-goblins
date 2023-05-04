@@ -151,6 +151,12 @@ Rectf Level::GetBoundaries() const
     return m_Boundaries;
 }
 
+// TODO: egy bizonyos idő után már nem lehet visszamenni
+void Level::SetBoundaries(const Rectf& boundaries)
+{
+    m_Boundaries = boundaries;
+}
+
 bool Level::HasReachedEnd(const Rectf& collisionBox) const
 {
     const Point2f playerCenter{

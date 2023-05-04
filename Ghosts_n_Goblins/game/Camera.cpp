@@ -2,24 +2,17 @@
 #include "pch.h"
 #include "Camera.h"
 #include "utils.h"
+#include "characters/Player.h"
+#include "level/Level.h"
 
-Camera::Camera()
-    : m_Width{}
-      , m_Height{}
-      , m_LevelBoundaries{}
+Camera::Camera(const Rectf& viewPort, Level* pLevel, Player* pPlayer)
+    : m_ViewPort{viewPort}
+      , m_pLevel{pLevel}
+      , m_pPlayer{pPlayer}
+      , m_LevelBoundaries{pLevel->GetBoundaries()}
+      , m_Width(viewPort.width)
+      , m_Height(viewPort.height)
 {
-}
-
-Camera::Camera(float width, float height)
-    : m_Width{width}
-      , m_Height{height}
-      , m_LevelBoundaries{0, 0, width, height}
-{
-}
-
-void Camera::SetLevelBoundaries(const Rectf& levelBoundaries)
-{
-    m_LevelBoundaries = levelBoundaries;
 }
 
 /*
@@ -78,14 +71,4 @@ void Camera::Clamp(Point2f& bottomLeftPos) const
     {
         bottomLeftPos.y = m_LevelBoundaries.bottom + m_LevelBoundaries.height - m_Height;
     }
-}
-
-void Camera::SetWidth(float width)
-{
-    m_Width = width;
-}
-
-void Camera::SetHeight(float height)
-{
-    m_Height = height;
 }

@@ -4,8 +4,8 @@
 #include "Player.h"
 #include "engine/SoundManager.h"
 
-BigMan::BigMan(Sprite* pSprite, const Point2f& pos, Player* pPlayer, SoundManager* pSoundManager)
-    : IEnemy{Game::Label::C_BIG_MAN, pSprite, pos, pPlayer, pSoundManager}
+BigMan::BigMan(Sprite* pSprite, const Point2f& pos, Player* pPlayer, Sprite* pFX,SoundManager* pSoundManager)
+    : IEnemy{Game::Label::C_BIG_MAN, pSprite, pos, pPlayer, pFX, pSoundManager}
 {
     m_Score = 2000;
 }
@@ -32,23 +32,23 @@ void BigMan::HandleCollision(GameObject* other)
     }
 }
 
-void BigMan::Wait()
+void BigMan::Wait(float elapsedSec)
 {
-    IEnemy::Wait();
+    IEnemy::Wait(elapsedSec);
 }
 
-void BigMan::Walk()
+void BigMan::Walk(float elapsedSec)
 {
-    IEnemy::Walk();
+    IEnemy::Walk(elapsedSec);
     m_pSoundManager->PlayEffect(Game::Label::E_BIG_ENEMY_WALK);
 }
 
-void BigMan::Jump()
+void BigMan::Jump(float elapsedSec)
 {
-    IEnemy::Jump();
+    IEnemy::Jump(elapsedSec);
 }
 
-void BigMan::Shoot()
+void BigMan::Shoot(float elapsedSec)
 {
-    IEnemy::Shoot();
+    IEnemy::Shoot(elapsedSec);
 }

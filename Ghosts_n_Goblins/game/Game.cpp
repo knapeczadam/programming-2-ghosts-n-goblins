@@ -4,36 +4,34 @@
 #include "Camera.h"
 #include "Texture.h"
 #include "utils.h"
+#include "characters/GreenMonster.h"
+#include "characters/IEnemy.h"
 #include "characters/Player.h"
-#include "weapons/IThrowable.h"
+#include "collectibles/Coin.h"
+#include "collectibles/MoneyBag.h"
+#include "engine/Clock.h"
 #include "engine/json.hpp"
+#include "engine/SoundManager.h"
+#include "engine/Sprite.h"
 #include "engine/SpriteFactory.h"
 #include "engine/TextureManager.h"
-#include "level/Level.h"
+#include "game/Macros.h"
 #include "level/KillZone.h"
+#include "level/Ladder.h"
+#include "level/Level.h"
 #include "level/Platform.h"
 #include "level/Tombstone.h"
-#include "level/IClimable.h"
+#include "level/Water.h"
 #include "ui/HUD.h"
-#include "game/Macros.h"
+#include "weapons/IThrowable.h"
+#include "weapons/Lance.h"
 
 #include <fstream>
 #include <iostream>
 #include <ranges>
 
-#include "CollisionBox.h"
-#include "characters/GreenMonster.h"
-#include "characters/IEnemy.h"
-#include "collectibles/Coin.h"
-#include "collectibles/MoneyBag.h"
-#include "engine/Clock.h"
-#include "engine/SoundManager.h"
-#include "engine/Sprite.h"
-#include "level/Ladder.h"
-#include "level/Water.h"
-#include "weapons/Dagger.h"
-#include "weapons/Lance.h"
-#include "weapons/Torch.h"
+#include "characters/Crow.h"
+
 
 Game::Game(const Window& window)
     : BaseGame{window}
@@ -43,18 +41,18 @@ Game::Game(const Window& window)
       , m_Tombstones{}
       , m_Collectibles{}
       , m_Ladders{}
-      , m_pSpriteFactory{}
-      , m_pTextureManager{}
-      , m_pSoundManager{}
-      , m_pPlayer{}
-      , m_pForeground{}
-      , m_pLevel{}
-      , m_pKillZone{}
-      , m_pPlatform{}
-      , m_pCamera{}
-      , m_pHUD{}
-      , m_pTestGameObject{}
-      , m_Data{}
+      , m_pSpriteFactory{nullptr}
+      , m_pTextureManager{nullptr}
+      , m_pSoundManager{nullptr}
+      , m_pPlayer{nullptr}
+      , m_pForeground{nullptr}
+      , m_pLevel{nullptr}
+      , m_pKillZone{nullptr}
+      , m_pPlatform{nullptr}
+      , m_pCamera{nullptr}
+      , m_pHUD{nullptr}
+      , m_pTestGameObject{nullptr}
+      , m_Data{nullptr}
       , m_DataPath{"../../Resources/data.json"}
       , m_Labels{}
       , m_AttackKeyReleased{true}
@@ -62,7 +60,7 @@ Game::Game(const Window& window)
       , m_BootIntervals{}
       , m_CurrBoot{1}
       , m_MaxBootCount{20}
-      , m_Boot{true}
+      , m_Boot{false}
 {
     Initialize();
 }
@@ -113,33 +111,25 @@ void Game::Initialize()
     //m_pSoundManager->PlayStream(Label::S_04_GROUND_BGM, true);
     
     // LEVEL
-    InitWaters();
-    InitTombstones();
-    InitLadders();
-    m_pPlatform = new Platform{m_pSpriteFactory->CreateSprite(Label::L_PLATFORM), Point2f{3295.0f, 28.0f}, m_pSoundManager};
-    m_pForeground = new GameObject{Label::L_FOREGROUND, m_pSpriteFactory->CreateSprite(Label::L_FOREGROUND), false};
-    m_pKillZone = new KillZone{m_pTextureManager->GetTexture(Label::L_LEVEL)->GetWidth(), 20.0f};
-    m_pLevel = new Level{m_pSpriteFactory->CreateSprite(Label::L_LEVEL), m_pPlatform, m_Ladders, m_pSoundManager};
+    InitLevel();
 
     // COLLECTIBLES
-    InitCoins();
-    InitMoneyBags();
-
-    // CAMERA - has to be after level initialization
-    m_pCamera = new Camera{};
-    InitCamera();
+    InitCollectibles();
 
     // PLAYER
     m_pPlayer = new Player{m_pSpriteFactory->CreateSprite(Label::C_ARTHUR), Player::GetSpawnPos(), m_pLevel, m_pSoundManager};
+
+    // CAMERA - has to be after level and player initialization
+    InitCamera();
 
     // HUD
     m_pHUD = new HUD{m_pSpriteFactory->CreateSprite(Label::U_HUD), m_pPlayer, GetViewPort(), m_pSoundManager};
 
     // TEST GAME OBJECT
-    m_pTestGameObject = new Lance{m_pSpriteFactory->CreateSprite(Label::W_LANCE), Point2f{260.f, 65.f}, false, true};
+    m_pTestGameObject = new Crow{m_pSpriteFactory->CreateSprite(Label::C_CROW), Point2f{500.f, 65.f}, m_pPlayer,nullptr,  m_pSoundManager};
 
     // ENEMIES
-    InitGreenMonsters();
+    InitEnemies();
 
 }
 
@@ -282,46 +272,9 @@ void Game::LoadData()
     }
 }
 
-void Game::InitWaters()
+void Game::InitCamera() 
 {
-    m_Waters.insert(m_Waters.end(), {
-                        new Water{m_pSpriteFactory->CreateSprite(Label::L_WATER), Point2f{3295.0f, 0.0f}},
-                        new Water{m_pSpriteFactory->CreateSprite(Label::L_WATER), Point2f{3903.0f, 0.0f}, 64.0f},
-                        new Water{m_pSpriteFactory->CreateSprite(Label::L_WATER), Point2f{4031.0f, 0.0f}, 64.0f},
-                        new Water{m_pSpriteFactory->CreateSprite(Label::L_WATER), Point2f{4927.0f, 0.0f}, 64.0f},
-                        new Water{m_pSpriteFactory->CreateSprite(Label::L_WATER), Point2f{5566.0f, 0.0f}, 64.0f}
-                    });
-}
-
-void Game::InitTombstones()
-{
-    // BOTTOM
-    m_Tombstones.insert(m_Tombstones.end(), {
-                            new Tombstone{Rectf{83.0f, 66.0f, 30.0f, 30.0f}, m_pSoundManager},
-                            new Tombstone{Rectf{499.0f, 66.0f, 30.0f, 30.0f}, m_pSoundManager},
-                            new Tombstone{Rectf{817.0f, 66.0f, 30.0f, 30.0f}, m_pSoundManager},
-                            new Tombstone{Rectf{1044.0f, 66.0f, 30.0f, 30.0f}, m_pSoundManager},
-                            new Tombstone{Rectf{1490.0f, 66.0f, 30.0f, 30.0f}, m_pSoundManager},
-                            new Tombstone{Rectf{1903.0f, 66.0f, 30.0f, 30.0f}, m_pSoundManager},
-                            new Tombstone{Rectf{2191.0f, 66.0f, 30.0f, 30.0f}, m_pSoundManager},
-                            new Tombstone{Rectf{2516.0f, 66.0f, 30.0f, 30.0f}, m_pSoundManager},
-                            new Tombstone{Rectf{3028.0f, 66.0f, 30.0f, 30.0f}, m_pSoundManager},
-
-                        });
-
-    // TOP
-    m_Tombstones.insert(m_Tombstones.end(), {
-                            new Tombstone{Rectf{1519.0f, 221.0f, 30.0f, 30.0f}, m_pSoundManager},
-                            new Tombstone{Rectf{1716.0f, 221.0f, 30.0f, 30.0f}, m_pSoundManager},
-                            new Tombstone{Rectf{1909.0f, 221.0f, 30.0f, 30.0f}, m_pSoundManager},
-                        });
-}
-
-void Game::InitCamera() const
-{
-    m_pCamera->SetLevelBoundaries(m_pLevel->GetBoundaries());
-    m_pCamera->SetWidth(GetViewPort().width);
-    m_pCamera->SetHeight(GetViewPort().height);
+    m_pCamera = new Camera{GetViewPort(), m_pLevel, m_pPlayer};
 }
 
 void Game::InitBootIntervals()
@@ -364,6 +317,18 @@ void Game::InitBootIntervals()
     
 }
 
+void Game::InitLevel()
+{
+    m_pPlatform = new Platform{m_pSpriteFactory->CreateSprite(Label::L_PLATFORM), Point2f{3295.0f, 28.0f}, m_pSoundManager};
+    m_pForeground = new GameObject{Label::L_FOREGROUND, m_pSpriteFactory->CreateSprite(Label::L_FOREGROUND), false};
+    m_pKillZone = new KillZone{m_pTextureManager->GetTexture(Label::L_LEVEL)->GetWidth(), 20.0f};
+    m_pLevel = new Level{m_pSpriteFactory->CreateSprite(Label::L_LEVEL), m_pPlatform, m_Ladders, m_pSoundManager};
+    
+    InitLadders();
+    InitTombstones();
+    InitWaters();
+}
+
 void Game::InitLadders()
 {
     m_Ladders.insert(m_Ladders.end(), {
@@ -371,6 +336,47 @@ void Game::InitLadders()
                          new Ladder{Rectf{1808.0f, 62.0f, 32.0f, 158.0f}},
                          new Ladder{Rectf{2128.0f, 62.0f, 32.0f, 158.0f}},
                      });
+}
+
+void Game::InitTombstones()
+{
+    // BOTTOM
+    m_Tombstones.insert(m_Tombstones.end(), {
+                            new Tombstone{Rectf{83.0f, 66.0f, 30.0f, 30.0f}, m_pSoundManager},
+                            new Tombstone{Rectf{499.0f, 66.0f, 30.0f, 30.0f}, m_pSoundManager},
+                            new Tombstone{Rectf{817.0f, 66.0f, 30.0f, 30.0f}, m_pSoundManager},
+                            new Tombstone{Rectf{1044.0f, 66.0f, 30.0f, 30.0f}, m_pSoundManager},
+                            new Tombstone{Rectf{1490.0f, 66.0f, 30.0f, 30.0f}, m_pSoundManager},
+                            new Tombstone{Rectf{1903.0f, 66.0f, 30.0f, 30.0f}, m_pSoundManager},
+                            new Tombstone{Rectf{2191.0f, 66.0f, 30.0f, 30.0f}, m_pSoundManager},
+                            new Tombstone{Rectf{2516.0f, 66.0f, 30.0f, 30.0f}, m_pSoundManager},
+                            new Tombstone{Rectf{3028.0f, 66.0f, 30.0f, 30.0f}, m_pSoundManager},
+
+                        });
+
+    // TOP
+    m_Tombstones.insert(m_Tombstones.end(), {
+                            new Tombstone{Rectf{1519.0f, 221.0f, 30.0f, 30.0f}, m_pSoundManager},
+                            new Tombstone{Rectf{1716.0f, 221.0f, 30.0f, 30.0f}, m_pSoundManager},
+                            new Tombstone{Rectf{1909.0f, 221.0f, 30.0f, 30.0f}, m_pSoundManager},
+                        });
+}
+
+void Game::InitWaters()
+{
+    m_Waters.insert(m_Waters.end(), {
+                        new Water{m_pSpriteFactory->CreateSprite(Label::L_WATER), Point2f{3295.0f, 0.0f}},
+                        new Water{m_pSpriteFactory->CreateSprite(Label::L_WATER), Point2f{3903.0f, 0.0f}, 64.0f},
+                        new Water{m_pSpriteFactory->CreateSprite(Label::L_WATER), Point2f{4031.0f, 0.0f}, 64.0f},
+                        new Water{m_pSpriteFactory->CreateSprite(Label::L_WATER), Point2f{4927.0f, 0.0f}, 64.0f},
+                        new Water{m_pSpriteFactory->CreateSprite(Label::L_WATER), Point2f{5566.0f, 0.0f}, 64.0f}
+                    });
+}
+
+void Game::InitCollectibles()
+{
+    InitCoins();
+    InitMoneyBags();
 }
 
 void Game::InitCoins()
@@ -392,23 +398,63 @@ void Game::InitMoneyBags()
                           });
 }
 
+void Game::InitEnemies()
+{
+    InitBigMan();
+    InitCrows();
+    InitFlyingKnights();
+    InitGreenMonsters();
+    InitMagicians();
+    InitRedArremer();
+    InitWoodyPigs();
+    InitZombies();
+}
+
+void Game::InitBigMan()
+{
+}
+
+void Game::InitCrows()
+{
+}
+
+void Game::InitFlyingKnights()
+{
+}
+
 void Game::InitGreenMonsters()
 {
     // GREEN MONSTERS
     m_Enemies.insert(m_Enemies.end(), {
                          new GreenMonster{
                              m_pSpriteFactory->CreateSprite(Label::C_GREEN_MONSTER), Point2f{4622.0f, 54.0f},
-                         m_pPlayer, m_pSoundManager},
+                             m_pPlayer,nullptr, m_pSoundManager},
                          new GreenMonster{
                              m_pSpriteFactory->CreateSprite(Label::C_GREEN_MONSTER), Point2f{6190.0f, 54.0f},
-                         m_pPlayer, m_pSoundManager},
+                             m_pPlayer,nullptr, m_pSoundManager},
                          new GreenMonster{
                              m_pSpriteFactory->CreateSprite(Label::C_GREEN_MONSTER), Point2f{1615.0f, 213.0f},
-                         m_pPlayer, m_pSoundManager},
+                             m_pPlayer,nullptr, m_pSoundManager},
                          new GreenMonster{
                              m_pSpriteFactory->CreateSprite(Label::C_GREEN_MONSTER), Point2f{2191.0f, 213.0f},
-                         m_pPlayer, m_pSoundManager},
+                             m_pPlayer,nullptr, m_pSoundManager},
                      });
+}
+
+void Game::InitMagicians()
+{
+}
+
+void Game::InitRedArremer()
+{
+}
+
+void Game::InitWoodyPigs()
+{
+}
+
+void Game::InitZombies()
+{
 }
 
 void Game::ClearBackground() const
@@ -545,7 +591,7 @@ void Game::DoCollisionTests()
         if (pCollectible->IsActive()) m_pPlayer->HandleCollision(pCollectible);
     }
     
-    const bool canClimb{ std::any_of(m_Ladders.begin(), m_Ladders.end(), [&](GameObject* pLadder){return pLadder->IsOverlapping(m_pPlayer);})};
+    const bool canClimb{ std::ranges::any_of(m_Ladders, [&](const GameObject* pLadder){return pLadder->IsOverlapping(m_pPlayer);})};
     m_pPlayer->CanClimb(canClimb);
     std::ranges::for_each(m_Ladders, [&](GameObject* pLadder){pLadder->HandleCollision(m_pPlayer);});
     

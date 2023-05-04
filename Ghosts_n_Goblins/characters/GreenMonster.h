@@ -4,7 +4,7 @@
 class GreenMonster : public IEnemy
 {
 public:
-    GreenMonster(Sprite* pSprite, const Point2f& pos, Player* pPlayer, SoundManager* pSoundManager);
+    GreenMonster(Sprite* pSprite, const Point2f& pos, Player* pPlayer,Sprite* pFX, SoundManager* pSoundManager);
     virtual ~GreenMonster() override = default;
     GreenMonster(const GreenMonster& other) = delete;
     GreenMonster(GreenMonster&& other) noexcept = delete;
@@ -15,6 +15,6 @@ public:
     virtual void Update(float elapsedSec) override;
     virtual void HandleCollision(GameObject* other) override;
 protected:
-    virtual void Wait() override;
-    virtual void Shoot() override;
+    virtual void Wait(float elapsedSec) override;
+    virtual void Shoot(float elapsedSec) override;
 };

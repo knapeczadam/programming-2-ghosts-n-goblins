@@ -3,8 +3,8 @@
 #include "engine/SoundManager.h"
 #include "Player.h"
 
-Magician::Magician(Sprite* pSprite, const Point2f& pos, Player* pPlayer, SoundManager* pSoundManager)
-    : IEnemy{Game::Label::E_MAGICIAN, pSprite, pos, pPlayer, pSoundManager}
+Magician::Magician(Sprite* pSprite, const Point2f& pos, Player* pPlayer, Sprite* pFX, SoundManager* pSoundManager)
+    : IEnemy{Game::Label::E_MAGICIAN, pSprite, pos, pPlayer, pFX, pSoundManager}
 {
     m_Score = 2000;
 }
@@ -16,7 +16,6 @@ void Magician::Draw() const
 
 void Magician::Update(float elapsedSec)
 {
-    GameObject::Update(elapsedSec);
 }
 
 void Magician::HandleCollision(GameObject* other)
@@ -29,8 +28,8 @@ void Magician::HandleCollision(GameObject* other)
     }
 }
 
-void Magician::Shoot()
+void Magician::Shoot(float elapsedSec)
 {
-    IEnemy::Shoot();
+    IEnemy::Shoot(elapsedSec);
     m_pSoundManager->PlayEffect(Game::Label::E_MAGICIAN);
 }

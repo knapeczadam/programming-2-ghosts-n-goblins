@@ -3,10 +3,19 @@
 #include "engine/SoundManager.h"
 #include "Player.h"
 
-Crow::Crow(Sprite* pSprite, const Point2f& pos, Player* pPlayer, SoundManager* pSoundManager)
-    : IEnemy{Game::Label::C_CROW, pSprite, pos, pPlayer, pSoundManager}
+#include <iostream>
+
+#include "engine/Clock.h"
+
+Crow::Crow(Sprite* pSprite, const Point2f& pos, Player* pPlayer, Sprite* pFX, SoundManager* pSoundManager)
+    : IEnemy{Game::Label::C_CROW, pSprite, pos, pPlayer, pFX, pSoundManager}
+    , m_Amplitude{10.0f}
 {
     m_Score = 100;
+    m_AwakeDistance = 100.0f;
+    m_HorVelocity = 100.0f;
+    m_VerVelocity = 10.0f;
+    
 }
 
 void Crow::Draw() const
@@ -16,26 +25,51 @@ void Crow::Draw() const
 
 void Crow::Update(float elapsedSec)
 {
-    GameObject::Update(elapsedSec);
+    IEnemy::Update(elapsedSec);
+    if (not m_Awake)
+    {
+        Wait(elapsedSec);
+    }
+    else
+    {
+       Fly(elapsedSec);
+    }
+    UpdateCollisionBox();
 }
 
 void Crow::HandleCollision(GameObject* other)
 {
     if (not IsOverlapping(other)) return;
     --m_Health;
+    other->SetActive(false);
+    other->SetVisible(false);
     if (m_Health == 0)
     {
         m_pPlayer->AddScore(m_Score);
+        m_Active = false;
+        m_Visible = false;
     }
 }
 
-void Crow::Wait()
+void Crow::Awake()
 {
-    IEnemy::Wait();
+    std::cout << "Crow::Awake()\n";
     m_pSoundManager->PlayEffect(Game::Label::E_CROW);
+    m_Flipped = IsFlipped();
+    StartTimer(0.5f);
 }
 
-void Crow::Fly()
+void Crow::Wait(float elapsedSec)
 {
-    IEnemy::Fly();
+    IEnemy::Wait(elapsedSec);
+}
+
+void Crow::Fly(float elapsedSec)
+{
+   if (IsTimerFinished())
+   {
+       m_Shape.left += m_HorVelocity * elapsedSec * (m_Flipped ? 1.0f : -1.0f);
+       m_Shape.bottom =m_SpawnPos.y + std::sin(Clock::GetAccuTime() * m_VerVelocity) * m_Amplitude;
+         
+    }
 }

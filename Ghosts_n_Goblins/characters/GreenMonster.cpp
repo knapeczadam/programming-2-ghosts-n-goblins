@@ -3,8 +3,8 @@
 #include "engine/SoundManager.h"
 #include "Player.h"
 
-GreenMonster::GreenMonster(Sprite* pSprite, const Point2f& pos, Player* pPlayer, SoundManager* pSoundManager)
-    : IEnemy{Game::Label::C_GREEN_MONSTER, pSprite, pos, pPlayer, pSoundManager}
+GreenMonster::GreenMonster(Sprite* pSprite, const Point2f& pos, Player* pPlayer,Sprite* pFX, SoundManager* pSoundManager)
+    : IEnemy{Game::Label::C_GREEN_MONSTER, pSprite, pos, pPlayer, pFX, pSoundManager}
 {
     m_Score = 100;
     
@@ -17,7 +17,7 @@ void GreenMonster::Draw() const
 
 void GreenMonster::Update(float elapsedSec)
 {
-    GameObject::Update(elapsedSec);
+    IEnemy::Update(elapsedSec);
 }
 
 void GreenMonster::HandleCollision(GameObject* other)
@@ -30,12 +30,12 @@ void GreenMonster::HandleCollision(GameObject* other)
     }
 }
 
-void GreenMonster::Wait()
+void GreenMonster::Wait(float elapsedSec)
 {
-    IEnemy::Wait();
+    IEnemy::Wait(elapsedSec);
 }
 
-void GreenMonster::Shoot()
+void GreenMonster::Shoot(float elapsedSec)
 {
-    IEnemy::Shoot();
+    IEnemy::Shoot(elapsedSec);
 }

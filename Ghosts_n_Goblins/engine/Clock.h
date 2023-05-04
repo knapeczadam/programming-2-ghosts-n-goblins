@@ -13,6 +13,8 @@ public:
    static void Update(float elapsedSec);
    bool IsFinished() const;
    float GetRemainingTime() const;
+
+   static float GetAccuTime();
    
 private:
    static float s_AccuTime; // accumulated time in seconds

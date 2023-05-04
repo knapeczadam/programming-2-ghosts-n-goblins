@@ -4,7 +4,7 @@
 
 
 Torch::Torch(Sprite* pSprite, const Point2f& pos, bool isFlipped, bool collectible)
-    : GameObject{Game::Label::W_TORCH, pSprite, pos}
+    : GameObject{Game::Label::W_TORCH, pSprite, pos, true, nullptr}
     , m_Speed{300.0f}
     , m_Collectible{collectible}
 {
