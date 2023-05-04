@@ -1,10 +1,9 @@
 ﻿#include "pch.h"
 #include "RedArremer.h"
+#include "engine/SoundManager.h"
 
-#include "weapons/IThrowable.h"
-
-RedArremer::RedArremer(Sprite* pSprite, const Point2f& pos)
-    : GameObject{Game::Label::C_RED_ARREMER, pSprite, pos}
+RedArremer::RedArremer(Sprite* pSprite, const Point2f& pos, Player* pPlayer, SoundManager* pSoundManager)
+    : IEnemy{Game::Label::C_RED_ARREMER, pSprite, pos, pPlayer, pSoundManager}
 {
     m_Score = 1000;
 }
@@ -22,4 +21,30 @@ void RedArremer::Update(float elapsedSec)
 void RedArremer::HandleCollision(GameObject* other)
 {
     if (not IsOverlapping(other)) return;
+    --m_Health;
+    if (m_Health == 0)
+    {
+        
+    }
+}
+
+void RedArremer::Wait()
+{
+    IEnemy::Wait();
+}
+
+void RedArremer::Walk()
+{
+    IEnemy::Walk();
+}
+
+void RedArremer::Shoot()
+{
+    IEnemy::Shoot();
+    m_pSoundManager->PlayEffect(Game::Label::E_RED_ARREMER_ATTACK);
+}
+
+void RedArremer::Fly()
+{
+    IEnemy::Fly();
 }

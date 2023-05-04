@@ -451,6 +451,11 @@ int Player::GetScore() const
     return m_Score;
 }
 
+void Player::AddScore(int score)
+{
+    m_Score += score;
+}
+
 void Player::HandleCollision(GameObject* other)
 {
     if (not IsOverlapping(other)) return;

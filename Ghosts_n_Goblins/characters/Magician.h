@@ -1,11 +1,10 @@
 ﻿#pragma once
 #include "IEnemy.h"
-#include "game/GameObject.h"
 
-class Magician : public GameObject, public IEnemy
+class Magician : public IEnemy
 {
 public:
-    Magician(Sprite* pSprite, const Point2f& pos);
+    Magician(Sprite* pSprite, const Point2f& pos, Player* pPlayer, SoundManager* pSoundManager);
     virtual ~Magician() override = default;
     Magician(const Magician& other) = delete;
     Magician(Magician&& other) noexcept = delete;
@@ -15,4 +14,6 @@ public:
     virtual void Draw() const override;
     virtual void Update(float elapsedSec) override;
     virtual void HandleCollision(GameObject* other) override;
+protected:
+    virtual void Shoot() override;
 };

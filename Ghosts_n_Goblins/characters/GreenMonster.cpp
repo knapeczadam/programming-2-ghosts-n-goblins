@@ -1,12 +1,12 @@
 ﻿#include "pch.h"
 #include "GreenMonster.h"
+#include "engine/SoundManager.h"
 
-#include "weapons/IThrowable.h"
-
-GreenMonster::GreenMonster(Sprite* pSprite, const Point2f& pos)
-    : GameObject{Game::Label::C_GREEN_MONSTER, pSprite, pos}
+GreenMonster::GreenMonster(Sprite* pSprite, const Point2f& pos, Player* pPlayer, SoundManager* pSoundManager)
+    : IEnemy{Game::Label::C_GREEN_MONSTER, pSprite, pos, pPlayer, pSoundManager}
 {
     m_Score = 100;
+    
 }
 
 void GreenMonster::Draw() const
@@ -22,4 +22,19 @@ void GreenMonster::Update(float elapsedSec)
 void GreenMonster::HandleCollision(GameObject* other)
 {
     if (not IsOverlapping(other)) return;
+    --m_Health;
+    if (m_Health == 0)
+    {
+        
+    }
+}
+
+void GreenMonster::Wait()
+{
+    IEnemy::Wait();
+}
+
+void GreenMonster::Shoot()
+{
+    IEnemy::Shoot();
 }

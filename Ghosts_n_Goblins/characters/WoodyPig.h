@@ -1,11 +1,10 @@
 ﻿#pragma once
 #include "IEnemy.h"
-#include "game/GameObject.h"
 
-class WoodyPig : public GameObject, IEnemy
+class WoodyPig : IEnemy
 {
 public:
-   WoodyPig(Sprite* pSprite, const Point2f& pos);
+   WoodyPig(Sprite* pSprite, const Point2f& pos, Player* pPlayer, SoundManager* pSoundManager);
    virtual ~WoodyPig() override = default;
    WoodyPig(const WoodyPig& other) = delete;
    WoodyPig(WoodyPig&& other) noexcept = delete;
@@ -15,4 +14,7 @@ public:
    virtual void Draw() const override;
    virtual void Update(float elapsedSec) override;
    virtual void HandleCollision(GameObject* other) override;
+protected:
+   virtual void Shoot() override;
+   virtual void Fly() override;
 };

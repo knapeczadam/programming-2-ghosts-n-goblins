@@ -1,18 +1,28 @@
 ﻿#pragma once
+#include "game/GameObject.h"
 
-class IEnemy
+class IEnemy : public GameObject
 {
 public:
-    IEnemy();
-    virtual ~IEnemy() = default;
+    IEnemy(Game::Label label, Sprite* pSprite, const Point2f& pos, Player* pPlayer, SoundManager* pSoundManager);
+    virtual ~IEnemy() override = default;
     IEnemy(const IEnemy& other) = delete;
     IEnemy(IEnemy&& other) noexcept = delete;
     IEnemy& operator=(const IEnemy& other) = delete;
     IEnemy& operator=(IEnemy&& other) noexcept = delete;
 
-    virtual void SetTarget(const Point2f& target) final;
 protected:
-    Point2f m_Target;
+    virtual void Wait();
+    virtual void Walk();
+    virtual void Jump();
+    virtual void Shoot();
+    virtual void Fly();
+    virtual void Spawn();
+    virtual float GetAngle() const final;
+    virtual bool IsFlipped() const final;
+protected:
+    Player* m_pPlayer;
+    SoundManager* m_pSoundManager;
     int m_Score;
     int m_Health;
 };

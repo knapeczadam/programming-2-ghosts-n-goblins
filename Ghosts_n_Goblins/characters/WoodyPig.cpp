@@ -1,10 +1,9 @@
 ﻿#include "pch.h"
 #include "WoodyPig.h"
+#include "engine/SoundManager.h"
 
-#include "weapons/IThrowable.h"
-
-WoodyPig::WoodyPig(Sprite* pSprite, const Point2f& pos)
-    : GameObject{Game::Label::C_WOODY_PIG, pSprite, pos}
+WoodyPig::WoodyPig(Sprite* pSprite, const Point2f& pos, Player* pPlayer, SoundManager* pSoundManager)
+    : IEnemy{Game::Label::C_WOODY_PIG, pSprite, pos, pPlayer, pSoundManager}
 {
     m_Score = 100;
 }
@@ -22,4 +21,20 @@ void WoodyPig::Update(float elapsedSec)
 void WoodyPig::HandleCollision(GameObject* other)
 {
     if (not IsOverlapping(other)) return;
+    --m_Health;
+    if (m_Health == 0)
+    {
+        
+    }
+}
+
+void WoodyPig::Shoot()
+{
+    IEnemy::Shoot();
+}
+
+void WoodyPig::Fly()
+{
+    IEnemy::Fly();
+    m_pSoundManager->PlayEffect(Game::Label::E_WOODY_PIG);
 }

@@ -48,6 +48,7 @@ public:
     int GetLives() const;
     Game::Label GetWeapon() const;
     int GetScore() const;
+    void AddScore(int score);
 
     void UpdateState();
 private:

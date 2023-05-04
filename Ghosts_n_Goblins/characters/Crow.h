@@ -1,11 +1,10 @@
 ﻿#pragma once
 #include "IEnemy.h"
-#include "game/GameObject.h"
 
-class Crow : public GameObject, public IEnemy
+class Crow :  public IEnemy
 {
 public:
-    Crow(Sprite* pSprite, const Point2f& pos);
+    Crow(Sprite* pSprite, const Point2f& pos, Player* pPlayer, SoundManager* pSoundManager);
     virtual ~Crow() override = default;
     Crow(const Crow& other) = delete;
     Crow(Crow&& other) noexcept = delete;
@@ -15,4 +14,7 @@ public:
     virtual void Draw() const override;
     virtual void Update(float elapsedSec) override;
     virtual void HandleCollision(GameObject* other) override;
+protected:
+    virtual void Wait() override;
+    virtual void Fly() override;
 };
