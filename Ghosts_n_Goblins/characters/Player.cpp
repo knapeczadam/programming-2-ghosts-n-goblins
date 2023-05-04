@@ -46,7 +46,7 @@ Player::Player(Sprite* pSprite, const Point2f& pos, Level* pLevel, SoundManager*
       , m_CanJump{true}
       , m_Lives{7}
       , m_MaxLives{7}
-      , m_Score{14700}
+      , m_Score{0}
       , m_CanClimb{false}
       , m_Climbing{false}
       , m_OnLadder{false}

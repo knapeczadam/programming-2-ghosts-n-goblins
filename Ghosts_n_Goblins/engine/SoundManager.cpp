@@ -28,8 +28,49 @@ void SoundManager::PlayStream(Game::Label label, bool repeat) const
 {
     if(GetStream(label)->IsLoaded())
     {
+        if (SoundStream::IsPlaying()) return;
         GetStream(label)->Play(repeat);
     }
+}
+
+void SoundManager::StopStream() const
+{
+    SoundStream::Stop();
+}
+
+void SoundManager::StopAllEffects() const
+{
+    SoundEffect::StopAll();
+}
+
+void SoundManager::PauseStream() const
+{
+    SoundStream::Pause();
+}
+
+void SoundManager::ResumeStream() const
+{
+    SoundStream::Resume();
+}
+
+void SoundManager::PauseAllEffects() const
+{
+    SoundEffect::PauseAll();
+}
+
+void SoundManager::ResumeAllEffects() const
+{
+    SoundEffect::ResumeAll();
+}
+
+void SoundManager::SetStreamVolume(int volume) const
+{
+    SoundStream::SetVolume(volume);
+}
+
+void SoundManager::SetEffectVolume(Game::Label label, int volume) const
+{
+    GetEffect(label)->SetVolume(volume);
 }
 
 SoundEffect* SoundManager::GetEffect(Game::Label label) const

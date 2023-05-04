@@ -3,10 +3,10 @@
 
 class Sprite;
 
-class UI : public Timer
+class UI : public ITimer
 {
 public:
-    explicit UI(Game::Label label, Sprite* pSprite);
+    explicit UI(Game::Label label, Sprite* pSprite, const Rectf& viewPort, SoundManager* pSoundManager);
     virtual ~UI() override = default;
     UI(const UI& other) = delete;
     UI(UI&& other) noexcept = delete;
@@ -20,4 +20,6 @@ public:
 protected:
     Game::Label m_Label;
     Sprite* m_pSprite;
+    Rectf m_ViewPort;
+    SoundManager* m_pSoundManager;
 };

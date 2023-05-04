@@ -15,6 +15,14 @@ public:
 
     void PlayEffect(Game::Label label) const;
     void PlayStream(Game::Label label, bool repeat) const;
+    void StopStream() const;
+    void StopAllEffects() const;
+    void PauseStream() const;
+    void ResumeStream() const;
+    void PauseAllEffects() const;
+    void ResumeAllEffects() const;
+    void SetStreamVolume(int volume) const;
+    void SetEffectVolume(Game::Label label, int volume) const;
 
     SoundEffect* GetEffect(Game::Label label) const;
     SoundStream* GetStream(Game::Label label) const;

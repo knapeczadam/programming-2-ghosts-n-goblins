@@ -1,6 +1,7 @@
 ﻿#include "pch.h"
 #include "Crow.h"
 #include "engine/SoundManager.h"
+#include "Player.h"
 
 Crow::Crow(Sprite* pSprite, const Point2f& pos, Player* pPlayer, SoundManager* pSoundManager)
     : IEnemy{Game::Label::C_CROW, pSprite, pos, pPlayer, pSoundManager}
@@ -24,7 +25,7 @@ void Crow::HandleCollision(GameObject* other)
     --m_Health;
     if (m_Health == 0)
     {
-        
+        m_pPlayer->AddScore(m_Score);
     }
 }
 

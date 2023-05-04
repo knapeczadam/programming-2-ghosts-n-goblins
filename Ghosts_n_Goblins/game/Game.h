@@ -4,7 +4,7 @@
 
 #include "BaseGame.h"
 #include "engine/json.hpp"
-#include "engine/Timer.h"
+#include "engine/ITimer.h"
 
 #include <string>
 
@@ -31,7 +31,7 @@ class ICollectible;
 class IClimable;
 
 
-class Game : public BaseGame, public Timer
+class Game : public BaseGame, public ITimer
 {
 public:
     enum class Label
@@ -77,6 +77,7 @@ public:
         // UI
         U_HUD,
         U_MAP,
+        U_MENU,
         U_PIN,
 
         // WEAPONS
@@ -133,6 +134,7 @@ public:
         S_13_BELOW_2ND_PLACE_ENTRY_END,
 
         // BOOT
+        B_BLACK,
         B_01,
         B_02,
         B_03,
@@ -153,6 +155,12 @@ public:
         B_18,
         B_19,
         B_20,
+        B_21,
+        B_22,
+        B_23,
+        B_24,
+        B_25,
+        B_END,
         
         // MINIGAME
         AVATAR
@@ -225,8 +233,8 @@ private:
     bool m_AttackKeyReleased;
     bool m_JumpKeyReleased;
 
-    std::queue<float> m_BootIntervals;
-    int m_BootCounter;
+    std::queue<std::pair<Label, float>> m_BootIntervals;
+    Label m_CurrBoot;
     const int m_MaxBootCount;
     bool m_Boot;
 

@@ -1,11 +1,11 @@
 ﻿#pragma once
 #include "Game.h"
 #include "utils.h"
-#include "engine/Timer.h"
+#include "engine/ITimer.h"
 
 class Sprite;
 
-class GameObject : public Timer
+class GameObject : public ITimer
 {
 public:
     // CONSTRUCTORS & DESTRUCTOR

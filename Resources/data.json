@@ -149,6 +149,10 @@
       "path": "minigame/AvatarSheet.png"
     },
     {
+      "label": "b_black",
+      "path": "boot/black.png"
+    },
+    {
       "label": "b_01",
       "path": "boot/01.png"
     },
@@ -227,6 +231,26 @@
     {
       "label": "b_20",
       "path": "boot/20.png"
+    },
+    {
+      "label": "b_21",
+      "path": "boot/21.png"
+    },
+    {
+      "label": "b_22",
+      "path": "boot/22.png"
+    },
+    {
+      "label": "b_23",
+      "path": "boot/23.png"
+    },
+    {
+      "label": "b_24",
+      "path": "boot/24.png"
+    },
+    {
+      "label": "b_25",
+      "path": "boot/25.png"
     }
   ],
   "sprites": [
@@ -455,6 +479,10 @@
       "top_offset_rows": 0
     },
     {
+      "label": "b_black",
+      "scale": 2
+    },
+    {
       "label": "b_01",
       "scale": 2
     },
@@ -512,7 +540,7 @@
     },
     {
       "label": "b_15",
-      "scale": 2
+      "scale":2 
     },
     {
       "label": "b_16",
@@ -532,6 +560,26 @@
     },
     {
       "label": "b_20",
+      "scale": 2
+    },
+    {
+      "label": "b_21",
+      "scale": 2
+    },
+    {
+      "label": "b_22",
+      "scale": 2
+    },
+    {
+      "label": "b_23",
+      "scale": 2
+    },
+    {
+      "label": "b_24",
+      "scale": 2
+    },
+    {
+      "label": "b_25",
       "scale": 2
     }
   ],

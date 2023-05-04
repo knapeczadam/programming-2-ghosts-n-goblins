@@ -731,7 +731,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(IntDir)$(TargetName).pch</PrecompiledHeaderOutputFile>
     </ClCompile>
-    <ClCompile Include="engine\Timer.cpp">
+    <ClCompile Include="engine\ITimer.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">pch.h</PrecompiledHeaderFile>
@@ -1477,7 +1477,7 @@
     <ClInclude Include="engine\Sprite.h" />
     <ClInclude Include="engine\SpriteFactory.h" />
     <ClInclude Include="engine\TextureManager.h" />
-    <ClInclude Include="engine\Timer.h" />
+    <ClInclude Include="engine\ITimer.h" />
     <ClInclude Include="game\Camera.h" />
     <ClInclude Include="game\CollisionBox.h" />
     <ClInclude Include="game\Game.h" />

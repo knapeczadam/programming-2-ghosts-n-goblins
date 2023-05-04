@@ -1,10 +1,11 @@
 ﻿#pragma once
+#include "UI.h"
 
-class Menu final
+class Menu : public UI
 {
 public:
-    Menu() = default;
-    ~Menu() = default;
+    Menu();
+    virtual ~Menu() override = default;
     Menu(const Menu& other) = delete;
     Menu(Menu&& other) noexcept = delete;
     Menu& operator=(const Menu& other) = delete;

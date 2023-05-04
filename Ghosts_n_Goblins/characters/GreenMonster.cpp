@@ -1,6 +1,7 @@
 ﻿#include "pch.h"
 #include "GreenMonster.h"
 #include "engine/SoundManager.h"
+#include "Player.h"
 
 GreenMonster::GreenMonster(Sprite* pSprite, const Point2f& pos, Player* pPlayer, SoundManager* pSoundManager)
     : IEnemy{Game::Label::C_GREEN_MONSTER, pSprite, pos, pPlayer, pSoundManager}
@@ -25,7 +26,7 @@ void GreenMonster::HandleCollision(GameObject* other)
     --m_Health;
     if (m_Health == 0)
     {
-        
+        m_pPlayer->AddScore(m_Score);
     }
 }
 

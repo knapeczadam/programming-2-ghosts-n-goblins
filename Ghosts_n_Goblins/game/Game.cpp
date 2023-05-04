@@ -60,9 +60,9 @@ Game::Game(const Window& window)
       , m_AttackKeyReleased{true}
       , m_JumpKeyReleased{true}
       , m_BootIntervals{}
-      , m_BootCounter{1}
+      , m_CurrBoot{1}
       , m_MaxBootCount{20}
-      , m_Boot{}
+      , m_Boot{true}
 {
     Initialize();
 }
@@ -133,7 +133,7 @@ void Game::Initialize()
     m_pPlayer = new Player{m_pSpriteFactory->CreateSprite(Label::C_ARTHUR), Player::GetSpawnPos(), m_pLevel, m_pSoundManager};
 
     // HUD
-    m_pHUD = new HUD{m_pSpriteFactory->CreateSprite(Label::U_HUD), m_pPlayer, GetViewPort()};
+    m_pHUD = new HUD{m_pSpriteFactory->CreateSprite(Label::U_HUD), m_pPlayer, GetViewPort(), m_pSoundManager};
 
     // TEST GAME OBJECT
     m_pTestGameObject = new Lance{m_pSpriteFactory->CreateSprite(Label::W_LANCE), Point2f{260.f, 65.f}, false, true};
@@ -237,6 +237,7 @@ void Game::InitLabels()
     m_Labels["s_13_below_2nd_place_entry_end"] = Label::S_13_BELOW_2ND_PLACE_ENTRY_END;
 
     // BOOT
+    m_Labels["b_black"] = Label::B_BLACK;
     m_Labels["b_01"] = Label::B_01;
     m_Labels["b_02"] = Label::B_02;
     m_Labels["b_03"] = Label::B_03;
@@ -257,6 +258,11 @@ void Game::InitLabels()
     m_Labels["b_18"] = Label::B_18;
     m_Labels["b_19"] = Label::B_19;
     m_Labels["b_20"] = Label::B_20;
+    m_Labels["b_21"] = Label::B_21;
+    m_Labels["b_22"] = Label::B_22;
+    m_Labels["b_23"] = Label::B_23;
+    m_Labels["b_24"] = Label::B_24;
+    m_Labels["b_25"] = Label::B_25;
 
     // MINIGAME
     m_Labels["avatar"] = Label::AVATAR;
@@ -320,26 +326,42 @@ void Game::InitCamera() const
 
 void Game::InitBootIntervals()
 {
-    m_BootIntervals.push(0.5f);
-    m_BootIntervals.push(0.5f);
-    m_BootIntervals.push(0.5f);
-    m_BootIntervals.push(0.5f);
-    m_BootIntervals.push(0.5f);
-    m_BootIntervals.push(0.5f);
-    m_BootIntervals.push(0.5f);
-    m_BootIntervals.push(0.5f);
-    m_BootIntervals.push(0.5f);
-    m_BootIntervals.push(0.5f);
-    m_BootIntervals.push(0.5f);
-    m_BootIntervals.push(0.5f);
-    m_BootIntervals.push(0.5f);
-    m_BootIntervals.push(0.5f);
-    m_BootIntervals.push(0.5f);
-    m_BootIntervals.push(0.5f);
-    m_BootIntervals.push(0.5f);
-    m_BootIntervals.push(0.5f);
-    m_BootIntervals.push(0.5f);
-    m_BootIntervals.push(0.5f);
+    m_BootIntervals.push({Label::B_01, 1.16f});
+    m_BootIntervals.push({Label::B_BLACK, 0.192f});
+    m_BootIntervals.push({Label::B_02, 0.09613f});
+    m_BootIntervals.push({Label::B_BLACK, 0.0961f});
+    m_BootIntervals.push({Label::B_03, 0.08f});
+    m_BootIntervals.push({Label::B_BLACK, 0.064f});
+    m_BootIntervals.push({Label::B_04, 0.0961f});   
+    m_BootIntervals.push({Label::B_BLACK, 0.08f});
+    m_BootIntervals.push({Label::B_05, 0.016f});
+    m_BootIntervals.push({Label::B_06, 0.064f});
+    m_BootIntervals.push({Label::B_BLACK, 0.08f});
+    m_BootIntervals.push({Label::B_07, 0.07956f});
+    m_BootIntervals.push({Label::B_BLACK, 0.38445f});
+    m_BootIntervals.push({Label::B_08, 0.03201f});
+    m_BootIntervals.push({Label::B_09, 0.01f});
+    m_BootIntervals.push({Label::B_10, 0.016f});
+    m_BootIntervals.push({Label::B_11, 0.016f});
+    m_BootIntervals.push({Label::B_12, 0.016f});
+    m_BootIntervals.push({Label::B_13, 0.016f});
+    m_BootIntervals.push({Label::B_14, 0.016f});
+    m_BootIntervals.push({Label::B_15, 0.032f});
+    m_BootIntervals.push({Label::B_BLACK, 0.016f});
+    m_BootIntervals.push({Label::B_09, 0.016f});
+    m_BootIntervals.push({Label::B_BLACK, 0.16f});
+    m_BootIntervals.push({Label::B_16, 0.096f});
+    m_BootIntervals.push({Label::B_17, 0.14401f});
+    m_BootIntervals.push({Label::B_18, 1.016f});
+    m_BootIntervals.push({Label::B_19, 0.048f}); 
+    m_BootIntervals.push({Label::B_20, 0.032f}); // edit
+    m_BootIntervals.push({Label::B_21, 3.0f}); // blue
+    m_BootIntervals.push({Label::B_22, 0.016f}); // blue
+    m_BootIntervals.push({Label::B_23, 4.016f}); // blue
+    m_BootIntervals.push({Label::B_24, 5.0f}); // best ranking
+    m_BootIntervals.push({Label::B_25, 0.033f}); 
+    m_BootIntervals.push({Label::B_END, 0.0f}); 
+    
 }
 
 void Game::InitLadders()
@@ -372,19 +394,20 @@ void Game::InitMoneyBags()
 
 void Game::InitGreenMonsters()
 {
+    // GREEN MONSTERS
     m_Enemies.insert(m_Enemies.end(), {
                          new GreenMonster{
-                             m_pSpriteFactory->CreateSprite(Label::C_GREEN_MONSTER), Point2f{4622.0f, 54.0f}
-                         },
+                             m_pSpriteFactory->CreateSprite(Label::C_GREEN_MONSTER), Point2f{4622.0f, 54.0f},
+                         m_pPlayer, m_pSoundManager},
                          new GreenMonster{
-                             m_pSpriteFactory->CreateSprite(Label::C_GREEN_MONSTER), Point2f{6190.0f, 54.0f}
-                         },
+                             m_pSpriteFactory->CreateSprite(Label::C_GREEN_MONSTER), Point2f{6190.0f, 54.0f},
+                         m_pPlayer, m_pSoundManager},
                          new GreenMonster{
-                             m_pSpriteFactory->CreateSprite(Label::C_GREEN_MONSTER), Point2f{1615.0f, 213.0f}
-                         },
+                             m_pSpriteFactory->CreateSprite(Label::C_GREEN_MONSTER), Point2f{1615.0f, 213.0f},
+                         m_pPlayer, m_pSoundManager},
                          new GreenMonster{
-                             m_pSpriteFactory->CreateSprite(Label::C_GREEN_MONSTER), Point2f{2191.0f, 213.0f}
-                         },
+                             m_pSpriteFactory->CreateSprite(Label::C_GREEN_MONSTER), Point2f{2191.0f, 213.0f},
+                         m_pPlayer, m_pSoundManager},
                      });
 }
 
@@ -412,7 +435,7 @@ void Game::Draw() const
     if (m_Boot)
     {
         DrawBoot();
-        if (m_BootCounter < m_MaxBootCount) return;
+        return;
     }
 
     glPushMatrix();
@@ -454,7 +477,7 @@ void Game::Update(float elapsedSec)
     if (m_Boot)
     {
         Boot();
-        if (m_BootCounter < m_MaxBootCount) return;
+        return;
     }
 
     // LEVEL
@@ -607,21 +630,22 @@ void Game::ProcessMouseDownEvent(const SDL_MouseButtonEvent& e)
 
 void Game::DrawBoot() const
 {
-    if (m_BootCounter > m_MaxBootCount) return;
-    std::string prefix{"b_"};
-    if (m_BootCounter < 10) prefix += "0";
-    Label label{m_Labels.at(prefix + std::to_string(m_BootCounter))};
-    m_pSpriteFactory->CreateSprite(label)->Draw();
+    if (m_CurrBoot == Label::B_END) return;
+    m_pSpriteFactory->CreateSprite(m_CurrBoot)->Draw();
 }
 
 void Game::Boot()
 {
-    if (m_BootCounter > m_MaxBootCount) return;
-    StartTimer(m_BootIntervals.front());
+    StartTimer(m_BootIntervals.front().second);
+    m_CurrBoot = m_BootIntervals.front().first;
+    if (m_CurrBoot == Label::B_END)
+    {
+        m_Boot = false;
+        return;
+    }
     if (IsTimerFinished())
     {
         m_BootIntervals.pop();
-        ++m_BootCounter;
     }
 }
 

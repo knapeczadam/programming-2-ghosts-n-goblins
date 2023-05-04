@@ -7,7 +7,7 @@ class Player;
 class HUD : public UI
 {
 public:
-    explicit HUD(Sprite* pSprite, Player* pPlayer, const Rectf& viewPort);
+    explicit HUD(Sprite* pSprite, Player* pPlayer, const Rectf& viewPort, SoundManager* pSoundManager);
     virtual ~HUD() override = default;
     HUD(const HUD& other) = delete;
     HUD(HUD&& other) noexcept = delete;
@@ -30,5 +30,4 @@ private:
 
 private:
     Player* m_pPlayer;
-    Rectf m_ViewPort;
 };

@@ -1,6 +1,7 @@
 ﻿#include "pch.h"
 #include "Magician.h"
 #include "engine/SoundManager.h"
+#include "Player.h"
 
 Magician::Magician(Sprite* pSprite, const Point2f& pos, Player* pPlayer, SoundManager* pSoundManager)
     : IEnemy{Game::Label::E_MAGICIAN, pSprite, pos, pPlayer, pSoundManager}
@@ -24,7 +25,7 @@ void Magician::HandleCollision(GameObject* other)
     --m_Health;
     if (m_Health == 0)
     {
-        
+       m_pPlayer->AddScore(m_Score); 
     }
 }
 

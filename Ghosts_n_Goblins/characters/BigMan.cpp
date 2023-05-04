@@ -1,5 +1,7 @@
 ﻿#include "pch.h"
 #include "BigMan.h"
+
+#include "Player.h"
 #include "engine/SoundManager.h"
 
 BigMan::BigMan(Sprite* pSprite, const Point2f& pos, Player* pPlayer, SoundManager* pSoundManager)
@@ -26,6 +28,7 @@ void BigMan::HandleCollision(GameObject* other)
     if (m_Health == 0)
     {
         m_pSoundManager->PlayEffect(Game::Label::E_BOSS_DEATH);
+        m_pPlayer->AddScore(m_Score);
     }
 }
 

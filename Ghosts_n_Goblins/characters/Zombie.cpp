@@ -1,6 +1,7 @@
 ﻿#include "pch.h"
 #include "Zombie.h"
 #include "engine/SoundManager.h"
+#include "Player.h"
 
 Zombie::Zombie(Sprite* pSprite, const Point2f& pos, Player* pPlayer, SoundManager* pSoundManager)
     : IEnemy{Game::Label::C_ZOMBIE, pSprite, pos, pPlayer, pSoundManager}
@@ -24,7 +25,7 @@ void Zombie::HandleCollision(GameObject* other)
     --m_Health;
     if (m_Health == 0)
     {
-        
+       m_pPlayer->AddScore(m_Score); 
     }
 }
 

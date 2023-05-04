@@ -6,11 +6,12 @@
 
 #include <iostream>
 
+#include "engine/SoundManager.h"
 
-HUD::HUD(Sprite* pSprite, Player* pPlayer, const Rectf& viewPort)
-    : UI{Game::Label::U_HUD, pSprite}
+
+HUD::HUD(Sprite* pSprite, Player* pPlayer, const Rectf& viewPort, SoundManager* pSoundManager)
+    : UI{Game::Label::U_HUD, pSprite,viewPort, pSoundManager}
       , m_pPlayer{pPlayer}
-      , m_ViewPort{viewPort}
 {
 }
 
@@ -46,6 +47,15 @@ void HUD::DrawPlayerScore()
     const int playerScore{m_pPlayer->GetScore()};
     Point2f pos{144.0f, m_ViewPort.height - m_pSprite->GetScaledClipHeight() * 2};
     const float offset{m_pSprite->GetScaledClipWidth()};
+    if (playerScore == 0)
+    {
+        m_pSprite->SetTopOffsetRows(1);
+        m_pSprite->SetLeftOffsetCols(0);
+        m_pSprite->SetPosition(pos);
+        m_pSprite->UpdateSourceRect();
+        m_pSprite->UpdateDestinationRect();
+        m_pSprite->Draw();
+    }
     for (int score = playerScore; score > 0; score /= 10)
     {
         const int digit{score % 10};
@@ -124,9 +134,15 @@ void HUD::DrawRemainingTime()
         secondDigit = 0;
         thirdDigit = seconds;
     }
+    std::cout << "remaining time: " << GetRemainingTime() << '\n';
+    if (GetRemainingTime() <= 15.0f)
+    {
+        m_pSoundManager->PlayStream(Game::Label::S_05_HURRY_UP, false);
+    }
     if (IsTimerFinished())
     {
         std::cout << "Time is up!\n";
+        // TODO: Game over
     }
     m_pSprite->SetClipWidth(8);
     m_pSprite->SetClipHeight(8);
