@@ -7,6 +7,7 @@ RedArremer::RedArremer(Sprite* pSprite, const Point2f& pos, Player* pPlayer,Spri
     : IEnemy{Game::Label::C_RED_ARREMER, pSprite, pos, pPlayer, pFX, pSoundManager}
 {
     m_Score = 1000;
+    m_Health = 3;
 }
 
 void RedArremer::Draw() const

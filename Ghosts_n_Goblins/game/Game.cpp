@@ -152,13 +152,13 @@ void Game::InitLabels()
     m_Labels["c_zombie"] = Label::C_ZOMBIE;
 
     // COLLECTIBLES
-    m_Labels["o_bust"] = Label::O_BUST;
     m_Labels["o_coin"] = Label::O_COIN;
     m_Labels["o_key"] = Label::O_KEY;
     m_Labels["o_money_bag"] = Label::O_MONEY_BAG;
     m_Labels["o_necklace"] = Label::O_NECKLACE;
-    m_Labels["o_shield"] = Label::O_SHIELD;
     m_Labels["o_pot"] = Label::O_POT;
+    m_Labels["o_shield"] = Label::O_SHIELD;
+    m_Labels["o_statue"] = Label::O_STATUE;
     m_Labels["o_yashichi"] = Label::O_YASHICHI;
 
     // FX
@@ -180,8 +180,12 @@ void Game::InitLabels()
 
     // WEAPONS
     m_Labels["w_dagger"] = Label::W_DAGGER;
+    m_Labels["w_eyeball"] = Label::W_EYEBALL;
+    m_Labels["w_fireball_red_arremer"] = Label::W_FIREBALL_RED_ARREMER;
+    m_Labels["w_fireball_unicorn"] = Label::W_FIREBALL_UNICORN;
     m_Labels["w_lance"] = Label::W_LANCE;
     m_Labels["w_spear"] = Label::W_SPEAR;
+    m_Labels["w_spell"] = Label::W_SPELL;
     m_Labels["w_torch"] = Label::W_TORCH;
 
     // DEBUG
@@ -438,16 +442,16 @@ void Game::InitGreenMonsters()
     m_Enemies.insert(m_Enemies.end(), {
                          new GreenMonster{
                              m_pSpriteFactory->CreateSprite(Label::C_GREEN_MONSTER), Point2f{4622.0f, 54.0f},
-                             m_pPlayer,nullptr, m_pSoundManager},
+                             m_pPlayer,nullptr,m_Enemies, m_pSoundManager},
                          new GreenMonster{
                              m_pSpriteFactory->CreateSprite(Label::C_GREEN_MONSTER), Point2f{6190.0f, 54.0f},
-                             m_pPlayer,nullptr, m_pSoundManager},
+                             m_pPlayer,nullptr,m_Enemies, m_pSoundManager},
                          new GreenMonster{
                              m_pSpriteFactory->CreateSprite(Label::C_GREEN_MONSTER), Point2f{1615.0f, 213.0f},
-                             m_pPlayer,nullptr, m_pSoundManager},
+                             m_pPlayer,nullptr,m_Enemies, m_pSoundManager},
                          new GreenMonster{
                              m_pSpriteFactory->CreateSprite(Label::C_GREEN_MONSTER), Point2f{2191.0f, 213.0f},
-                             m_pPlayer,nullptr, m_pSoundManager},
+                             m_pPlayer,nullptr,m_Enemies, m_pSoundManager},
                      });
 }
 

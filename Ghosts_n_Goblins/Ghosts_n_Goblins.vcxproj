@@ -293,7 +293,7 @@
     </ClCompile>
     <ClCompile Include="characters\Zombie.cpp" />
     <ClCompile Include="collectibles\Pot.cpp" />
-    <ClCompile Include="collectibles\Bust.cpp" />
+    <ClCompile Include="collectibles\Statue.cpp" />
     <ClCompile Include="collectibles\Coin.cpp" />
     <ClCompile Include="collectibles\ICollectible.cpp">
       <RuntimeLibrary>MultiThreadedDebugDll</RuntimeLibrary>
@@ -1432,6 +1432,8 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">pch.h</PrecompiledHeaderFile>
     </ClCompile>
+    <ClCompile Include="weapons\Eyeball.cpp" />
+    <ClCompile Include="weapons\Fireball.cpp" />
     <ClCompile Include="weapons\Lance.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">pch.h</PrecompiledHeaderFile>
@@ -1441,6 +1443,8 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">pch.h</PrecompiledHeaderFile>
     </ClCompile>
+    <ClCompile Include="weapons\Spear.cpp" />
+    <ClCompile Include="weapons\Spell.cpp" />
     <ClCompile Include="weapons\Torch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">pch.h</PrecompiledHeaderFile>
@@ -1463,7 +1467,7 @@
     <ClInclude Include="characters\WoodyPig.h" />
     <ClInclude Include="characters\Zombie.h" />
     <ClInclude Include="collectibles\Pot.h" />
-    <ClInclude Include="collectibles\Bust.h" />
+    <ClInclude Include="collectibles\Statue.h" />
     <ClInclude Include="collectibles\Coin.h" />
     <ClInclude Include="collectibles\ICollectible.h" />
     <ClInclude Include="collectibles\Key.h" />
@@ -1496,8 +1500,12 @@
     <ClInclude Include="ui\Menu.h" />
     <ClInclude Include="ui\UI.h" />
     <ClInclude Include="weapons\Dagger.h" />
+    <ClInclude Include="weapons\Eyeball.h" />
+    <ClInclude Include="weapons\Fireball.h" />
     <ClInclude Include="weapons\IThrowable.h" />
     <ClInclude Include="weapons\Lance.h" />
+    <ClInclude Include="weapons\Spear.h" />
+    <ClInclude Include="weapons\Spell.h" />
     <ClInclude Include="weapons\Torch.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

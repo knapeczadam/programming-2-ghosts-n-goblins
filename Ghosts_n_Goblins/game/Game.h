@@ -50,13 +50,13 @@ public:
         C_ZOMBIE,
 
         // COLLECTIBLES
-        O_BUST,
         O_COIN,
         O_KEY,
         O_MONEY_BAG,
         O_NECKLACE,
         O_POT,
         O_SHIELD,
+        O_STATUE,
         O_YASHICHI,
 
         // FX
@@ -82,8 +82,12 @@ public:
 
         // WEAPONS
         W_DAGGER,
+        W_EYEBALL,
+        W_FIREBALL_RED_ARREMER,
+        W_FIREBALL_UNICORN,
         W_LANCE,
         W_SPEAR,
+        W_SPELL,
         W_TORCH,
 
         // DEBUG

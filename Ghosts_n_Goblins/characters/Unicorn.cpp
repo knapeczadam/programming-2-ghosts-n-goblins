@@ -8,6 +8,7 @@ Unicorn::Unicorn(Sprite* pSprite, const Point2f& pos, Player* pPlayer, Sprite* p
     : IEnemy{Game::Label::C_UNICORN, pSprite, pos, pPlayer, pFX, pSoundManager}
 {
     m_Score = 2000;
+    m_Health = 10;
 }
 
 void Unicorn::Draw() const

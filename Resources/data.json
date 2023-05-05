@@ -49,8 +49,8 @@
       "path": "collectibles/pot.png"
     },
     {
-      "label": "o_bust",
-      "path": "collectibles/bust.png"
+      "label": "o_statue",
+      "path": "collectibles/statue.png"
     },
     {
       "label": "o_coin",
@@ -129,12 +129,28 @@
       "path": "weapons/dagger.png"
     },
     {
+      "label": "w_eyeball",
+      "path": "weapons/eyeball.png"
+    },
+    {
+      "label": "w_fireball_red_arremer",
+      "path": "weapons/fireball_red_arremer.png"
+    },
+    {
+      "label": "w_fireball_unicorn",
+      "path": "weapons/fireball_unicorn.png"
+    },
+    {
       "label": "w_lance",
       "path": "weapons/lance.png"
     },
     {
       "label": "w_spear",
       "path": "weapons/spear.png"
+    },
+    {
+      "label": "w_spell",
+      "path": "weapons/spell.png"
     },
     {
       "label": "w_torch",
@@ -352,7 +368,7 @@
       "scale": 2
     },
     {
-      "label": "o_bust",
+      "label": "o_statue",
       "rows": 1,
       "columns": 3,
       "frames_per_second": 10,
@@ -448,6 +464,27 @@
       "scale": 2
     },
     {
+      "label": "w_eyeball",
+      "rows": 1,
+      "columns": 4,
+      "frames_per_second": 10,
+      "scale": 2
+    },
+    {
+      "label": "w_fireball_red_arremer",
+      "rows": 1,
+      "columns": 2,
+      "frames_per_second": 10,
+      "scale": 2
+    },
+    {
+      "label": "w_fireball_unicorn",
+      "rows": 1,
+      "columns": 2,
+      "frames_per_second": 10,
+      "scale": 2
+    },
+    {
       "label": "w_lance",
       "rows": 1,
       "columns": 3,
@@ -456,6 +493,13 @@
     },
     {
       "label": "w_spear",
+      "scale": 2
+    },
+    {
+      "label": "w_spell",
+      "rows": 1,
+      "columns": 2,
+      "frames_per_second": 10,
       "scale": 2
     },
     {
@@ -540,7 +584,7 @@
     },
     {
       "label": "b_15",
-      "scale":2 
+      "scale": 2
     },
     {
       "label": "b_16",

@@ -3,8 +3,10 @@
 #include "engine/SoundManager.h"
 #include "Player.h"
 
-GreenMonster::GreenMonster(Sprite* pSprite, const Point2f& pos, Player* pPlayer,Sprite* pFX, SoundManager* pSoundManager)
+GreenMonster::GreenMonster(Sprite* pSprite, const Point2f& pos, Player* pPlayer,Sprite* pFX,
+                           std::vector<GameObject*> enemies, SoundManager* pSoundManager)
     : IEnemy{Game::Label::C_GREEN_MONSTER, pSprite, pos, pPlayer, pFX, pSoundManager}
+    , m_Enemies{std::move(enemies)}
 {
     m_Score = 100;
     
@@ -46,5 +48,10 @@ void GreenMonster::Wait(float elapsedSec)
 
 void GreenMonster::Shoot(float elapsedSec)
 {
-    IEnemy::Shoot(elapsedSec);
+    const int randInterval{std::rand() % 2 + 1}; 
+    StartTimer(randInterval);
+    if (IsTimerFinished())
+    {
+    }
+    
 }

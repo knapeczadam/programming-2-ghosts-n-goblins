@@ -1,6 +1,18 @@
 ﻿#pragma once
 #include "IEnemy.h"
 
+/*
+ * One Unicorn guards the gate at the end of Stage 1, while two of them double as the final boss of Stage 2.
+ * Also known as Cyclops, these brutes don't mess around.
+ * They like to intimidate their opponents by jumping high into the air and crashing down on the ground.
+ * They can even leap directly over Arthur's head to quickly appear on his other side.
+ * They can spit fireballs at Arthur as well, all though they tend not to do this too frequently.
+ * When the moment strikes them, they like the charge across the ground, and attack that is particularly difficult to avoid.
+ * You will need to fire 10 shots at them to destroy them, and they like to leap into the air when you are throwing weapons at them, so you should leap into the air as well in order to hit them.
+ * If you take one down, they are worth 2000, and they might even be carrying a pot with them.
+ * Unicorns occupy some parts of Stage 6 as well, but not as bosses.
+ * In the Famicom/NES-based versions of the game, Unicorns are invulnerable to the Shield/Cross.
+ */
 class Unicorn : public IEnemy
 {
 public:

@@ -1,10 +1,16 @@
 ﻿#pragma once
 #include "IEnemy.h"
 
+/*
+ * The Green Monsters, also known as Eyeball Plants, are carnivorous plants whose favorite snack is knights in crunchy armor.
+ * They are stationary and their tops are covered with eyeballs.
+ * They have so many eyeballs to spare, that occasionally, they open their mouths and spit one at you.
+ * They take only one shot to hit, and are worth 100 points, but watch out for the eyeball projectile that they shoot at you.
+ */
 class GreenMonster : public IEnemy
 {
 public:
-    GreenMonster(Sprite* pSprite, const Point2f& pos, Player* pPlayer,Sprite* pFX, SoundManager* pSoundManager);
+    GreenMonster(Sprite* pSprite, const Point2f& pos, Player* pPlayer,Sprite* pFX, std::vector<GameObject*> enemies, SoundManager* pSoundManager);
     virtual ~GreenMonster() override = default;
     GreenMonster(const GreenMonster& other) = delete;
     GreenMonster(GreenMonster&& other) noexcept = delete;
@@ -17,4 +23,6 @@ public:
 protected:
     virtual void Wait(float elapsedSec) override;
     virtual void Shoot(float elapsedSec) override;
+private:
+    std::vector<GameObject*> m_Enemies;
 };
