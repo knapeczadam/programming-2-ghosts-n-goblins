@@ -5,7 +5,7 @@
 class MoneyBag : public GameObject, public ICollectible
 {
 public:
-    MoneyBag(const Point2f& pos, SpriteFactory* pSpriteFactory);
+    explicit MoneyBag(const Point2f& pos, GameController* pGameController);
     virtual ~MoneyBag() override = default;
     MoneyBag(const MoneyBag& other) = delete;
     MoneyBag(MoneyBag&& other) noexcept = delete;

@@ -5,8 +5,9 @@
 #include "characters/Player.h"
 
 KillZone::KillZone(float width, float height)
-    : GameObject{Game::Label::L_KILLZONE, Rectf{0, 0, width, height}, true, Color4f{1.0f, 0.0f, 0.0f, 1.0f}}
+    : GameObject{Game::Label::L_KILLZONE, Rectf{0, 0, width, height}, true, false, Color4f{1.0f, 0.0f, 0.0f, 1.0f}}
 {
+    m_HasSprite = false;
 }
 
 void KillZone::HandleCollision(GameObject* other)

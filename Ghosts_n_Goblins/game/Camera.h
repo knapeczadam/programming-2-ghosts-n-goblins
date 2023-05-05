@@ -4,11 +4,12 @@
 class Level;
 class Player;
 class GameObject;
+class GameController;
 
 class Camera final
 {
 public:
-    explicit Camera(const Rectf& viewPort, Level* pLevel, Player* pPlayer);
+    explicit Camera(GameController* pGameController);
     ~Camera() = default;
     Camera(const Camera& other) = delete;
     Camera(Camera&& other) noexcept = delete;
@@ -25,9 +26,7 @@ private:
     void Clamp();
 
 private:
-    Rectf m_ViewPort;
-    Level* m_pLevel;
-    Player* m_pPlayer;
+    GameController* m_pGameController;
     Rectf m_LevelBoundaries;
     float m_Width;
     float m_Height;

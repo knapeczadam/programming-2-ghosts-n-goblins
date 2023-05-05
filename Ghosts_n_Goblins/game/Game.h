@@ -30,6 +30,8 @@ class IEnemy;
 class ICollectible;
 class IClimable;
 
+class GameController;
+
 
 class Game : public BaseGame, public ITimer
 {
@@ -249,6 +251,7 @@ private:
     Platform* m_pPlatform;
     Camera* m_pCamera;
     HUD* m_pHUD;
+    GameController* m_pGameController;
 #if TEST_OBJECT
     GameObject* m_pTestObject;
 #endif

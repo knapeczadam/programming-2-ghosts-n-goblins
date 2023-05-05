@@ -5,7 +5,7 @@
 class Ladder : public GameObject, public IClimable
 {
 public:
-    Ladder(const Rectf& shape);
+    explicit Ladder(const Rectf& shape);
     virtual ~Ladder() override = default;
     Ladder(const Ladder& other) = delete;
     Ladder(Ladder&& other) noexcept = delete;

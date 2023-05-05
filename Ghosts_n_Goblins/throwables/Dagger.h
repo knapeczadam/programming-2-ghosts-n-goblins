@@ -6,7 +6,7 @@
 class Dagger : public GameObject, public IThrowable, public ICollectible
 {
 public:
-	Dagger(const Point2f& pos, bool isFlipped, bool collectible, SpriteFactory* pSpriteFactory);
+	explicit Dagger(const Point2f& pos, bool isFlipped, bool collectible, GameController* pGameController);
     virtual ~Dagger() override = default;
     Dagger(const Dagger& other) = delete;
     Dagger(Dagger&& other) noexcept = delete;

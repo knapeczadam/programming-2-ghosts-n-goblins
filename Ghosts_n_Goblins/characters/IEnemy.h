@@ -4,7 +4,7 @@
 class IEnemy : public GameObject
 {
 public:
-    IEnemy(Game::Label label, const Point2f& pos, Player* pPlayer, SpriteFactory* pSpriteFactory, SoundManager* pSoundManager);
+    explicit IEnemy(Game::Label label, const Point2f& pos, GameController* pGameController);
     virtual ~IEnemy() override = default;
     IEnemy(const IEnemy& other) = delete;
     IEnemy(IEnemy&& other) noexcept = delete;
@@ -30,7 +30,6 @@ protected:
     virtual void Ping();
     virtual void Pong();
 protected:
-    Player* m_pPlayer;
     const Point2f m_SpawnPos;
     int m_Score;
     int m_Health;

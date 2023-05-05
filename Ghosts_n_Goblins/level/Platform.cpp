@@ -9,8 +9,8 @@
 
 #include <iostream>
 
-Platform::Platform(const Point2f& pos,SpriteFactory* pSpriteFactory, SoundManager* pSoundManager)
-    : GameObject{Game::Label::L_PLATFORM, pos, true, pSpriteFactory, pSoundManager}
+Platform::Platform(const Point2f& pos,GameController* pGameController)
+    : GameObject{Game::Label::L_PLATFORM, pos, true, pGameController}
       , m_AccuSec{0.0f}
       , m_OriginalPos{pos}
       , m_Speed{2.0f}
@@ -19,7 +19,6 @@ Platform::Platform(const Point2f& pos,SpriteFactory* pSpriteFactory, SoundManage
       , m_CurrAmplitude{m_MaxAmplitude}
       , m_Shortened{false}
       , m_Flip{true}
-        , m_pSoundManager{pSoundManager}
 {
 }
 

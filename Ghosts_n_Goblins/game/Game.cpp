@@ -15,6 +15,7 @@
 #include "engine/Sprite.h"
 #include "engine/SpriteFactory.h"
 #include "engine/TextureManager.h"
+#include "game/GameController.h"
 #include "game/Macros.h"
 #include "level/KillZone.h"
 #include "level/Ladder.h"
@@ -58,6 +59,7 @@ Game::Game(const Window& window)
       , m_pPlatform{nullptr}
       , m_pCamera{nullptr}
       , m_pHUD{nullptr}
+      , m_pGameController{nullptr}
 #if TEST_OBJECT
       , m_pTestObject{nullptr}
 #endif
@@ -91,6 +93,7 @@ void Game::Cleanup()
     delete m_pTextureManager;
     delete m_pPlayer;
     delete m_pSoundManager;
+    delete m_pGameController;
 #if TEST_OBJECT
     delete m_pTestObject;
 #endif
@@ -119,16 +122,27 @@ void Game::Initialize()
 
     // SOUND
     m_pSoundManager = new SoundManager{m_Data, m_Labels};
-    m_pSoundManager->PlayStream(Label::S_04_GROUND_BGM, true);
 
+    // GAME CONTROLLER
+    m_pGameController = new GameController{
+        GetViewPort(),
+        m_pSpriteFactory,
+        m_pSoundManager,
+        m_PlayerThrowables,
+        m_EnemyThrowables
+    };
+    
     // LEVEL
     InitLevel();
+    m_pGameController->m_pLevel = m_pLevel;
+    m_pGameController->m_pPlatform = m_pPlatform;
 
     // COLLECTIBLES
     InitCollectibles();
 
     // PLAYER
-    m_pPlayer = new Player{Player::GetSpawnPos(), m_PlayerThrowables, m_pLevel, m_pSpriteFactory, m_pSoundManager};
+    m_pPlayer = new Player{Player::GetSpawnPos(), m_pGameController};
+    m_pGameController->m_pPlayer = m_pPlayer;
 
     // CAMERA - has to be after level and player initialization
     InitCamera();
@@ -139,8 +153,9 @@ void Game::Initialize()
     // ENEMIES
     InitEnemies();
 
+
 #if TEST_OBJECT
-    m_pTestObject = new Crow{Point2f{600.f, 65.f}, m_pPlayer, m_pSpriteFactory, m_pSoundManager};
+    m_pTestObject = new Crow{Point2f{600.f, 65.f}, m_pGameController};
 #endif
 }
 
@@ -289,7 +304,7 @@ void Game::LoadData()
 
 void Game::InitCamera()
 {
-    m_pCamera = new Camera{GetViewPort(), m_pLevel, m_pPlayer};
+    m_pCamera = new Camera{m_pGameController};
 }
 
 void Game::InitBootIntervals()
@@ -333,10 +348,10 @@ void Game::InitBootIntervals()
 
 void Game::InitLevel()
 {
-    m_pPlatform = new Platform{Point2f{3295.0f, 28.0f}, m_pSpriteFactory, m_pSoundManager};
-    m_pForeground = new GameObject{Label::L_FOREGROUND, m_pSpriteFactory};
+    m_pPlatform = new Platform{Point2f{3295.0f, 28.0f}, m_pGameController};
+    m_pForeground = new GameObject{Label::L_FOREGROUND, m_pGameController};
     m_pKillZone = new KillZone{m_pTextureManager->GetTexture(Label::L_LEVEL)->GetWidth(), 10.0f};
-    m_pLevel = new Level{m_pPlatform, m_Ladders, m_pSpriteFactory, m_pSoundManager};
+    m_pLevel = new Level{m_pGameController};
 
     InitLadders();
     InitTombstones();
@@ -356,34 +371,34 @@ void Game::InitTombstones()
 {
     // BOTTOM
     m_Tombstones.insert(m_Tombstones.end(), {
-                            new Tombstone{Rectf{83.0f, 66.0f, 30.0f, 30.0f}, m_pSoundManager},
-                            new Tombstone{Rectf{499.0f, 66.0f, 30.0f, 30.0f}, m_pSoundManager},
-                            new Tombstone{Rectf{817.0f, 66.0f, 30.0f, 30.0f}, m_pSoundManager},
-                            new Tombstone{Rectf{1044.0f, 66.0f, 30.0f, 30.0f}, m_pSoundManager},
-                            new Tombstone{Rectf{1490.0f, 66.0f, 30.0f, 30.0f}, m_pSoundManager},
-                            new Tombstone{Rectf{1903.0f, 66.0f, 30.0f, 30.0f}, m_pSoundManager},
-                            new Tombstone{Rectf{2191.0f, 66.0f, 30.0f, 30.0f}, m_pSoundManager},
-                            new Tombstone{Rectf{2516.0f, 66.0f, 30.0f, 30.0f}, m_pSoundManager},
-                            new Tombstone{Rectf{3028.0f, 66.0f, 30.0f, 30.0f}, m_pSoundManager},
+                            new Tombstone{Rectf{83.0f, 66.0f, 30.0f, 30.0f}, m_pGameController},
+                            new Tombstone{Rectf{499.0f, 66.0f, 30.0f, 30.0f}, m_pGameController},
+                            new Tombstone{Rectf{817.0f, 66.0f, 30.0f, 30.0f}, m_pGameController},
+                            new Tombstone{Rectf{1044.0f, 66.0f, 30.0f, 30.0f}, m_pGameController},
+                            new Tombstone{Rectf{1490.0f, 66.0f, 30.0f, 30.0f}, m_pGameController},
+                            new Tombstone{Rectf{1903.0f, 66.0f, 30.0f, 30.0f}, m_pGameController},
+                            new Tombstone{Rectf{2191.0f, 66.0f, 30.0f, 30.0f}, m_pGameController},
+                            new Tombstone{Rectf{2516.0f, 66.0f, 30.0f, 30.0f}, m_pGameController},
+                            new Tombstone{Rectf{3028.0f, 66.0f, 30.0f, 30.0f}, m_pGameController},
 
                         });
 
     // TOP
     m_Tombstones.insert(m_Tombstones.end(), {
-                            new Tombstone{Rectf{1519.0f, 221.0f, 30.0f, 30.0f}, m_pSoundManager},
-                            new Tombstone{Rectf{1716.0f, 221.0f, 30.0f, 30.0f}, m_pSoundManager},
-                            new Tombstone{Rectf{1909.0f, 221.0f, 30.0f, 30.0f}, m_pSoundManager},
+                            new Tombstone{Rectf{1519.0f, 221.0f, 30.0f, 30.0f}, m_pGameController},
+                            new Tombstone{Rectf{1716.0f, 221.0f, 30.0f, 30.0f}, m_pGameController},
+                            new Tombstone{Rectf{1909.0f, 221.0f, 30.0f, 30.0f}, m_pGameController},
                         });
 }
 
 void Game::InitWaters()
 {
     m_Waters.insert(m_Waters.end(), {
-                        new Water{Point2f{3295.0f, 0.0f}, m_pSpriteFactory},
-                        new Water{Point2f{3903.0f, 0.0f}, 64.0f, m_pSpriteFactory},
-                        new Water{Point2f{4031.0f, 0.0f}, 64.0f, m_pSpriteFactory},
-                        new Water{Point2f{4927.0f, 0.0f}, 64.0f, m_pSpriteFactory},
-                        new Water{Point2f{5566.0f, 0.0f}, 64.0f, m_pSpriteFactory},
+                        new Water{Point2f{3295.0f, 0.0f}, m_pGameController},
+                        new Water{Point2f{3903.0f, 0.0f}, 64.0f, m_pGameController},
+                        new Water{Point2f{4031.0f, 0.0f}, 64.0f, m_pGameController},
+                        new Water{Point2f{4927.0f, 0.0f}, 64.0f, m_pGameController},
+                        new Water{Point2f{5566.0f, 0.0f}, 64.0f, m_pGameController},
                     });
 }
 
@@ -396,19 +411,19 @@ void Game::InitCollectibles()
 void Game::InitCoins()
 {
     m_Collectibles.insert(m_Collectibles.end(), {
-                              new Coin{Point2f{720.0f, 62.0f}, m_pSpriteFactory},
-                              new Coin{Point2f{6190.0f, 72.0f}, m_pSpriteFactory},
-                              new Coin{Point2f{1232.0f, 223.0f}, m_pSpriteFactory},
-                              new Coin{Point2f{1616.0f, 223.0f}, m_pSpriteFactory},
-                              new Coin{Point2f{2158.0f, 223.0f}, m_pSpriteFactory}
+                              new Coin{Point2f{720.0f, 62.0f}, m_pGameController},
+                              new Coin{Point2f{6190.0f, 72.0f}, m_pGameController},
+                              new Coin{Point2f{1232.0f, 223.0f}, m_pGameController},
+                              new Coin{Point2f{1616.0f, 223.0f}, m_pGameController},
+                              new Coin{Point2f{2158.0f, 223.0f}, m_pGameController}
                           });
 }
 
 void Game::InitMoneyBags()
 {
     m_Collectibles.insert(m_Collectibles.end(), {
-                              new MoneyBag{Point2f{2799.0f, 63.0f}, m_pSpriteFactory},
-                              new MoneyBag{Point2f{4814.0f, 63.0f}, m_pSpriteFactory}
+                              new MoneyBag{Point2f{2799.0f, 63.0f}, m_pGameController},
+                              new MoneyBag{Point2f{4814.0f, 63.0f}, m_pGameController}
                           });
 }
 
@@ -426,25 +441,25 @@ void Game::InitEnemies()
 
 void Game::InitUnicorn()
 {
-    m_Enemies.push_back(new Unicorn{Point2f{400.0f, 62.0f}, m_pPlayer, m_pSpriteFactory, m_pSoundManager});
+    m_Enemies.push_back(new Unicorn{Point2f{400.0f, 62.0f}, m_pGameController});
 }
 
 void Game::InitCrows()
 {
     m_Enemies.insert(m_Enemies.end(), {
-                         new Crow{Point2f{1505.0f, 100.0f}, m_pPlayer, m_pSpriteFactory, m_pSoundManager},
-                         new Crow{Point2f{2210.0f, 100.0f}, m_pPlayer, m_pSpriteFactory, m_pSoundManager},
-                         new Crow{Point2f{2526.0f, 100.0f}, m_pPlayer, m_pSpriteFactory, m_pSoundManager},
-                         new Crow{Point2f{3035.0f, 102.0f}, m_pPlayer, m_pSpriteFactory, m_pSoundManager},
-                         new Crow{Point2f{1724.0f, 262.0f}, m_pPlayer, m_pSpriteFactory, m_pSoundManager},
+                         new Crow{Point2f{1505.0f, 100.0f}, m_pGameController},
+                         new Crow{Point2f{2210.0f, 100.0f}, m_pGameController},
+                         new Crow{Point2f{2526.0f, 100.0f}, m_pGameController},
+                         new Crow{Point2f{3035.0f, 102.0f}, m_pGameController},
+                         new Crow{Point2f{1724.0f, 262.0f}, m_pGameController},
                      });
 }
 
 void Game::InitFlyingKnights()
 {
     m_Enemies.insert(m_Enemies.end(), {
-        new FlyingKnight{Point2f{500.0f, 200.0f}, m_pPlayer, m_pSpriteFactory, m_pSoundManager},
-    });
+                         new FlyingKnight{Point2f{500.0f, 200.0f}, m_pGameController},
+                     });
 }
 
 void Game::InitGreenMonsters()
@@ -452,43 +467,35 @@ void Game::InitGreenMonsters()
     // GREEN MONSTERS
     // TODO: enemy throwables vector
     m_Enemies.insert(m_Enemies.end(), {
-                         new GreenMonster{
-                             Point2f{4622.0f, 54.0f}, m_pPlayer, m_EnemyThrowables, m_pSpriteFactory, m_pSoundManager
-                         },
-                         new GreenMonster{
-                             Point2f{6190.0f, 54.0f}, m_pPlayer, m_EnemyThrowables, m_pSpriteFactory, m_pSoundManager
-                         },
-                         new GreenMonster{
-                             Point2f{1615.0f, 213.0f}, m_pPlayer, m_EnemyThrowables, m_pSpriteFactory, m_pSoundManager
-                         },
-                         new GreenMonster{
-                             Point2f{2191.0f, 213.0f}, m_pPlayer, m_EnemyThrowables, m_pSpriteFactory, m_pSoundManager
-                         },
+                         new GreenMonster{Point2f{4622.0f, 54.0f}, m_pGameController},
+                         new GreenMonster{Point2f{6190.0f, 54.0f},m_pGameController},
+                         new GreenMonster{Point2f{1615.0f, 213.0f}, m_pGameController},
+                         new GreenMonster{Point2f{2191.0f, 213.0f}, m_pGameController},
                      });
 }
 
 void Game::InitMagicians()
 {
-    m_Enemies.push_back(new Magician{Point2f{600.0f, 62.0f}, m_pPlayer, m_pSpriteFactory, m_pSoundManager});
+    m_Enemies.push_back(new Magician{Point2f{600.0f, 62.0f}, m_pGameController});
 }
 
 void Game::InitRedArremer()
 {
-    m_Enemies.push_back(new RedArremer{Point2f{1200.0f, 62.0f}, m_pPlayer, m_pSpriteFactory, m_pSoundManager});
+    m_Enemies.push_back(new RedArremer{Point2f{1200.0f, 62.0f}, m_pGameController});
 }
 
 void Game::InitWoodyPigs()
 {
     m_Enemies.insert(m_Enemies.end(), {
-        new WoodyPig{Point2f{1000.0f, 200.0f}, m_pPlayer, m_pSpriteFactory, m_pSoundManager},
-    });
+                         new WoodyPig{Point2f{1000.0f, 200.0f}, m_pGameController}
+                     });
 }
 
 void Game::InitZombies()
 {
-    m_Enemies.insert(m_Enemies.end(),{
-        new Zombie{Point2f{1000.0f, 62.0f}, m_pPlayer, m_pSpriteFactory, m_pSoundManager},
-    });
+    m_Enemies.insert(m_Enemies.end(), {
+                         new Zombie{Point2f{1000.0f, 62.0f}, m_pGameController}
+                     });
 }
 
 void Game::ClearBackground() const
@@ -806,7 +813,7 @@ void Game::UpdateRemainingTime()
     }
     if (GetRemainingTime() <= 15.0f)
     {
-        m_pSoundManager->PlayStream(Game::Label::S_05_HURRY_UP, false);
+        // m_pSoundManager->PlayStream(Game::Label::S_05_HURRY_UP, false);
     }
     m_pHUD->SetFirstDigit(firstDigit);
     m_pHUD->SetSecondDigit(secondDigit);

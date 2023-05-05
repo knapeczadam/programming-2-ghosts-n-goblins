@@ -7,15 +7,16 @@
 
 #include "engine/Clock.h"
 #include "engine/Sprite.h"
+#include "game/GameController.h"
 
-Crow::Crow(const Point2f& pos, Player* pPlayer, SpriteFactory* pSpriteFactory, SoundManager* pSoundManager)
-    : IEnemy{Game::Label::C_CROW, pos, pPlayer, pSpriteFactory, pSoundManager}
-      , m_Amplitude{10.0f}
+Crow::Crow(const Point2f& pos, GameController* pGameController)
+    : IEnemy{Game::Label::C_CROW, pos, pGameController}
+      , m_Amplitude{15.0f}
 {
     m_Score = 100;
     m_AwakeDistance = 100.0f; // 256.0f
     m_HorVelocity = 100.0f;
-    m_VerVelocity = 10.0f;
+    m_VerVelocity = 20.0f;
 }
 
 void Crow::Draw() const
@@ -45,27 +46,15 @@ void Crow::HandleCollision(GameObject* other)
     // other->SetVisible(false);
     if (m_Health == 0)
     {
-        m_pPlayer->AddScore(m_Score);
+        m_pGameController->m_pPlayer->AddScore(m_Score);
         m_Active = false;
         m_Visible = false;
     }
 }
 
-void Crow::Ping()
-{
-    m_pSprite->SetSubCols(1);
-}
-
-void Crow::Pong()
-{
-    m_pSprite->SetSubCols(3);
-    m_pSprite->SetFramesPerSec(6.0f);
-}
-
 void Crow::Awake()
 {
-    std::cout << "Crow::Awake()\n";
-    m_pSoundManager->PlayEffect(Game::Label::E_CROW);
+    m_pGameController->m_pSoundManager->PlayEffect(Game::Label::E_CROW);
     m_Flipped = IsFlipped();
     m_pSprite->SetSubCols(4);
     m_pSprite->SetCurrRowsCols();
@@ -96,4 +85,15 @@ void Crow::Fly(float elapsedSec)
         m_Shape.left += m_HorVelocity * elapsedSec * (m_Flipped ? 1.0f : -1.0f);
         m_Shape.bottom = m_SpawnPos.y + std::sin(Clock::GetAccuTime() * m_VerVelocity) * m_Amplitude;
     }
+}
+
+void Crow::Ping()
+{
+    m_pSprite->SetSubCols(1);
+}
+
+void Crow::Pong()
+{
+    m_pSprite->SetSubCols(3);
+    m_pSprite->SetFramesPerSec(6.0f);
 }

@@ -2,9 +2,10 @@
 #include "FlyingKnight.h"
 #include "engine/SoundManager.h"
 #include "Player.h"
+#include "game/GameController.h"
 
-FlyingKnight::FlyingKnight(const Point2f& pos, Player* pPlayer, SpriteFactory* pSpriteFactory, SoundManager* pSoundManager)
-    : IEnemy{Game::Label::C_FLYING_KNIGHT, pos, pPlayer, pSpriteFactory, pSoundManager}
+FlyingKnight::FlyingKnight(const Point2f& pos, GameController* pGameController)
+    : IEnemy{Game::Label::C_FLYING_KNIGHT, pos, pGameController}
 {
     m_Score = 100;
 }
@@ -25,12 +26,12 @@ void FlyingKnight::HandleCollision(GameObject* other)
     --m_Health;
     if (m_Health == 0)
     {
-        m_pPlayer->AddScore(m_Score);
+        m_pGameController->m_pPlayer->AddScore(m_Score);
     }
 }
 
 void FlyingKnight::Fly(float elapsedSec)
 {
     IEnemy::Fly(elapsedSec);
-    m_pSoundManager->PlayEffect(Game::Label::E_FLYING_KNIGHT);
+    m_pGameController->m_pSoundManager->PlayEffect(Game::Label::E_FLYING_KNIGHT);
 }

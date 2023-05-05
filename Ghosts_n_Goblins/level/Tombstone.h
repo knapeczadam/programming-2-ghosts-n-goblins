@@ -4,7 +4,7 @@
 class Tombstone : public GameObject
 {
 public:
-    Tombstone(const Rectf& shape, SoundManager* pSoundManager);
+    explicit Tombstone(const Rectf& shape, GameController* pGameController);
     virtual ~Tombstone() override = default;
     Tombstone(const Tombstone& other) = delete;
     Tombstone(Tombstone&& other) noexcept = delete;

@@ -10,7 +10,7 @@ class Texture;
 class Platform : public GameObject
 {
 public:
-    Platform(const Point2f& pos,SpriteFactory* pSpriteFactory, SoundManager* pSoundManager);
+    explicit Platform(const Point2f& pos,GameController* pGameController);
     virtual ~Platform() override = default;
     Platform(const Platform& other) = delete;
     Platform(Platform&& other) noexcept = delete;
@@ -32,6 +32,5 @@ private:
     float m_CurrAmplitude;
     bool m_Shortened;
     bool m_Flip;
-    SoundManager* m_pSoundManager;
     
 };

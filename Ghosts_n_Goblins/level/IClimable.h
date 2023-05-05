@@ -3,7 +3,7 @@
 class IClimable
 {
 public:
-    IClimable() = default;
+    explicit IClimable() = default;
     virtual ~IClimable() = default;
     IClimable(const IClimable& other) = delete;
     IClimable(IClimable&& other) noexcept = delete;

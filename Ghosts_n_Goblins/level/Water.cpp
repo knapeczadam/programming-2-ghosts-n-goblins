@@ -5,13 +5,13 @@
 
 #include <iostream>
 
-Water::Water(const Point2f& pos, SpriteFactory* pSpriteFactory)
-    : GameObject{Game::Label::L_WATER, pos, false, pSpriteFactory}
+Water::Water(const Point2f& pos, GameController* pGameController)
+    : GameObject{Game::Label::L_WATER, pos, false, pGameController}
 {
 }
 
-Water::Water(const Point2f& pos, float clipWidth, SpriteFactory* pSpriteFactory)
-    : GameObject{Game::Label::L_WATER, pos, false, pSpriteFactory}
+Water::Water(const Point2f& pos, float clipWidth, GameController* pGameController)
+    : GameObject{Game::Label::L_WATER, pos, false, pGameController}
 {
     m_pSprite->SetClipWidth(clipWidth);
 }

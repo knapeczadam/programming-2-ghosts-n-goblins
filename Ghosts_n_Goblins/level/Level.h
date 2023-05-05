@@ -13,7 +13,7 @@ class Ladder;
 class Level : public GameObject
 {
 public:
-    explicit Level(Platform* pPlatform, std::vector<GameObject*> pLadders, SpriteFactory* pSpriteFactory, SoundManager* pSoundManager);
+    explicit Level(GameController* pGameController);
     virtual ~Level() override = default;
     Level(const Level& other) = delete;
     Level(Level&& other) noexcept = delete;
@@ -35,8 +35,6 @@ private:
     void SetVertices();
 
 private:
-    Platform* m_pPlatform;
-    std::vector<GameObject*> m_pLadders;
     std::vector<std::vector<Point2f>> m_Vertices;
     Rectf m_Boundaries;
 };

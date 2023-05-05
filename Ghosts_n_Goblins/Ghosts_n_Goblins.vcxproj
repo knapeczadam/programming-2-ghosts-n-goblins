@@ -821,6 +821,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(IntDir)$(TargetName).pch</PrecompiledHeaderOutputFile>
     </ClCompile>
+    <ClCompile Include="game\GameController.cpp" />
     <ClCompile Include="game\CollisionBox.cpp" />
     <ClCompile Include="game\Game.cpp">
       <RuntimeLibrary>MultiThreadedDebugDll</RuntimeLibrary>
@@ -1483,6 +1484,7 @@
     <ClInclude Include="engine\TextureManager.h" />
     <ClInclude Include="engine\ITimer.h" />
     <ClInclude Include="game\Camera.h" />
+    <ClInclude Include="game\GameController.h" />
     <ClInclude Include="game\CollisionBox.h" />
     <ClInclude Include="game\Game.h" />
     <ClInclude Include="game\GameObject.h" />

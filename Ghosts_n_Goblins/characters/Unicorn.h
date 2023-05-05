@@ -16,7 +16,7 @@
 class Unicorn : public IEnemy
 {
 public:
-    Unicorn(const Point2f& pos, Player* pPlayer, SpriteFactory* pSpriteFactory, SoundManager* pSoundManager);
+    explicit Unicorn(const Point2f& pos, GameController* pGameController);
     virtual ~Unicorn() override = default;
     Unicorn(const Unicorn& other) = delete;
     Unicorn(Unicorn&& other) noexcept = delete;

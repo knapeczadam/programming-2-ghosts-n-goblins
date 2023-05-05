@@ -10,9 +10,9 @@ class GameObject : public ITimer
 public:
     // CONSTRUCTORS & DESTRUCTOR
     explicit GameObject();
-    explicit GameObject(Game::Label label, SpriteFactory* pSpriteFactory, SoundManager* pSoundManager = nullptr);
-    explicit GameObject(Game::Label label, const Rectf& shape, bool collisionEnabled = true, const Color4f& color = Color4f{0.f, 1.f, 1.f, 1.f}, SoundManager* pSoundManager = nullptr);
-    explicit GameObject(Game::Label label, const Point2f& pos,  bool collisionEnabled = true, SpriteFactory* pSpriteFactor = nullptr, SoundManager* pSoundManager = nullptr);
+    explicit GameObject(Game::Label label, GameController* pGameController);
+    explicit GameObject(Game::Label label, const Rectf& shape, bool collisionEnabled = true, bool hasSprite = false, const Color4f& color = Color4f{0.f, 1.f, 1.f, 1.f}, GameController* pGameController = nullptr);
+    explicit GameObject(Game::Label label, const Point2f& pos,  bool collisionEnabled = true, GameController* pGameController = nullptr);
     virtual ~GameObject() override = default;
     GameObject(const GameObject& other) = delete;
     GameObject(GameObject&& other) noexcept = delete;
@@ -69,9 +69,9 @@ private:
 
 protected:
     Game::Label m_Label;
-    SpriteFactory* m_pSpriteFactory;
+    bool m_HasSprite;
+    GameController* m_pGameController;
     Sprite* m_pSprite;
-    SoundManager* m_pSoundManager;
     Rectf m_Shape;
     Rectf m_CollisionBox;
     Rectf m_OriginalCollisionBox;

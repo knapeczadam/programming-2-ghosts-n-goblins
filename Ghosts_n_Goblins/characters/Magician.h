@@ -11,7 +11,7 @@
 class Magician : public IEnemy
 {
 public:
-    Magician(const Point2f& pos, Player* pPlayer, SpriteFactory* pSpriteFactory, SoundManager* pSoundManager);
+    explicit Magician(const Point2f& pos, GameController* pGameController);
     virtual ~Magician() override = default;
     Magician(const Magician& other) = delete;
     Magician(Magician&& other) noexcept = delete;

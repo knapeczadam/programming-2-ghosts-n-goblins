@@ -3,8 +3,9 @@
 #include "characters/Player.h"
 
 Ladder::Ladder(const Rectf& shape)
-    : GameObject(Game::Label::L_LADDER, shape)
+    : GameObject{Game::Label::L_LADDER, shape}
 {
+    m_HasSprite = false;
 }
 
 void Ladder::HandleCollision(GameObject* other)

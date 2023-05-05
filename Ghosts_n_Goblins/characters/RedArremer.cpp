@@ -2,9 +2,10 @@
 #include "RedArremer.h"
 #include "engine/SoundManager.h"
 #include "Player.h"
+#include "game/GameController.h"
 
-RedArremer::RedArremer(const Point2f& pos, Player* pPlayer, SpriteFactory* pSpriteFactory, SoundManager* pSoundManager)
-    : IEnemy{Game::Label::C_RED_ARREMER, pos, pPlayer, pSpriteFactory, pSoundManager}
+RedArremer::RedArremer(const Point2f& pos, GameController* pGameController)
+    : IEnemy{Game::Label::C_RED_ARREMER, pos, pGameController}
 {
     m_Score = 1000;
     m_Health = 3;
@@ -26,7 +27,7 @@ void RedArremer::HandleCollision(GameObject* other)
     --m_Health;
     if (m_Health == 0)
     {
-       m_pPlayer->AddScore(m_Score); 
+       m_pGameController->m_pPlayer->AddScore(m_Score); 
     }
 }
 
@@ -43,7 +44,7 @@ void RedArremer::Walk(float elapsedSec)
 void RedArremer::Shoot(float elapsedSec)
 {
     IEnemy::Shoot(elapsedSec);
-    m_pSoundManager->PlayEffect(Game::Label::E_RED_ARREMER_ATTACK);
+    m_pGameController->m_pSoundManager->PlayEffect(Game::Label::E_RED_ARREMER_ATTACK);
 }
 
 void RedArremer::Fly(float elapsedSec)

@@ -2,11 +2,11 @@
 #include "GreenMonster.h"
 #include "engine/SoundManager.h"
 #include "Player.h"
+#include "game/GameController.h"
 #include "throwables/Eyeball.h"
 
-GreenMonster::GreenMonster(const Point2f& pos, Player* pPlayer,std::vector<GameObject*>& enemies, SpriteFactory* pSpriteFactory, SoundManager* pSoundManager)
-    : IEnemy{Game::Label::C_GREEN_MONSTER,  pos, pPlayer, pSpriteFactory, pSoundManager}
-    , m_EnemyThrowables{enemies}
+GreenMonster::GreenMonster(const Point2f& pos, GameController* pGameController)
+    : IEnemy{Game::Label::C_GREEN_MONSTER,  pos, pGameController}
 {
     m_Score = 100;
     
@@ -38,7 +38,7 @@ void GreenMonster::HandleCollision(GameObject* other)
     
     if (m_Health == 0)
     {
-        m_pPlayer->AddScore(m_Score);
+        m_pGameController->m_pPlayer->AddScore(m_Score);
         m_Active = false;
         m_Visible = false;
     }
@@ -55,8 +55,8 @@ void GreenMonster::Shoot(float elapsedSec)
     StartTimer(randInterval);
     if (IsTimerFinished())
     {
-        const Vector2f direction{m_pPlayer->GetShapeCenter() - GetShapeCenter()};
-        for (GameObject* pThrowable : m_EnemyThrowables)
+        const Vector2f direction{m_pGameController->m_pPlayer->GetShapeCenter() - GetShapeCenter()};
+        for (GameObject* pThrowable : m_pGameController->m_EnemyThrowables)
         {
             if (pThrowable->GetLabel() == Game::Label::T_EYEBALL and not pThrowable->IsActive())
             {
@@ -67,7 +67,7 @@ void GreenMonster::Shoot(float elapsedSec)
                 return;
             }
         }
-        m_EnemyThrowables.push_back(new Eyeball{GetShapeCenter(),direction.Normalized(), m_pSpriteFactory});
+        m_pGameController->m_EnemyThrowables.push_back(new Eyeball{GetShapeCenter(),direction.Normalized(), m_pGameController});
     }
     
 }

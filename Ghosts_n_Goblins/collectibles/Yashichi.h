@@ -13,7 +13,7 @@
 class Yashichi : public GameObject, public ICollectible
 {
 public:
-    Yashichi(const Point2f& pos, SpriteFactory* pSpriteFactory);
+    explicit Yashichi(const Point2f& pos, GameController* pGameController);
     virtual ~Yashichi() override = default;
     Yashichi(const Yashichi& other) = delete;
     Yashichi(Yashichi&& other) noexcept = delete;

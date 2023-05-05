@@ -21,19 +21,19 @@
 #include <iostream>
 #include <numeric>
 
+#include "game/GameController.h"
+
 
 const Point2f Player::m_SpawnPos{50.0f, 64.0f};
 
-Player::Player(const Point2f& pos, std::vector<GameObject*>& throwables, Level* pLevel,
-               SpriteFactory* pSpriteFactory, SoundManager* pSoundManager)
-    : GameObject{Game::Label::C_ARTHUR, pos, true, pSpriteFactory, pSoundManager}
+Player::Player(const Point2f& pos, GameController* pGameController)
+    : GameObject{Game::Label::C_ARTHUR, pos, true, pGameController}
       , m_HorVelocity{150.0f}
       , m_VerVelocity{100.0f}
       , m_JumpVelocity{500.0f}
       , m_Velocity{0.0f, 0.0f}
       , m_Acceleration{0.0f, -1391.0f} // -981.0f
       , m_State{State::idle}
-      , m_pLevel{pLevel}
       , m_Crouching{false}
       , m_ShortAccuCooldown{0.0f}
       , m_LongAccuCooldown{0.0f}
@@ -52,7 +52,6 @@ Player::Player(const Point2f& pos, std::vector<GameObject*>& throwables, Level* 
       , m_Climbing{false}
       , m_OnLadder{false}
       , m_OnGround{false}
-      , m_PlayerThrowables{throwables}
 {
 }
 
@@ -196,7 +195,7 @@ void Player::UpdateCooldown(float elapsedSec)
 
 void Player::Throw()
 {
-    for (GameObject* pWeapon : m_PlayerThrowables)
+    for (GameObject* pWeapon : m_pGameController->m_PlayerThrowables)
     {
         if (pWeapon->GetLabel() == m_CurrWeapon and not pWeapon->IsActive())
         {
@@ -210,13 +209,13 @@ void Player::Throw()
     switch (m_CurrWeapon)
     {
     case Game::Label::T_DAGGER:
-        m_PlayerThrowables.push_back(new Dagger{GetShapeCenter(), m_Flipped, false, m_pSpriteFactory});
+        m_pGameController->m_PlayerThrowables.push_back(new Dagger{GetShapeCenter(), m_Flipped, false, m_pGameController});
         break;
     case Game::Label::T_LANCE:
-        m_PlayerThrowables.push_back(new Lance{GetShapeCenter(), m_Flipped, false, m_pSpriteFactory});
+        m_pGameController->m_PlayerThrowables.push_back(new Lance{GetShapeCenter(), m_Flipped, false, m_pGameController});
         break;
     case Game::Label::T_TORCH:
-        m_PlayerThrowables.push_back(new Torch{GetShapeCenter(), m_Flipped, false, m_pSpriteFactory});
+        m_pGameController->m_PlayerThrowables.push_back(new Torch{GetShapeCenter(), m_Flipped, false, m_pGameController});
         break;
     }
 }
@@ -225,7 +224,7 @@ void Player::Attack()
 {
     if (not m_Attacking)
     {
-        m_pSoundManager->PlayEffect(Game::Label::E_ARTHUR_THROW);
+        m_pGameController->m_pSoundManager->PlayEffect(Game::Label::E_ARTHUR_THROW);
         m_ShortAccuCooldown += m_ShortCooldownTime;
         m_LongAccuCooldown += m_LongCooldownTime;
         m_Attacking = true;
@@ -237,7 +236,7 @@ void Player::Attack()
 void Player::UpdatePosition(float elapsedSec)
 {
     const Uint8* pState{SDL_GetKeyboardState(nullptr)};
-    if (m_pLevel->IsOnGround(this))
+    if (m_pGameController->m_pLevel->IsOnGround(this))
     {
         Move(elapsedSec, pState);
         m_OnGround = true;
@@ -270,7 +269,7 @@ void Player::UpdatePosition(float elapsedSec)
     }
     m_Shape.bottom += m_Velocity.y * elapsedSec;
 
-    CheckForBoundaries(m_pLevel->GetBoundaries());
+    CheckForBoundaries(m_pGameController->m_pLevel->GetBoundaries());
 }
 
 void Player::Move(float elapsedSec, const Uint8* pState)
@@ -313,7 +312,7 @@ void Player::Jump(const Uint8* pState)
     {
         if (pState[SDL_SCANCODE_S])
         {
-            m_pSoundManager->PlayEffect(Game::Label::E_ARTHUR_JUMP);
+            m_pGameController->m_pSoundManager->PlayEffect(Game::Label::E_ARTHUR_JUMP);
             m_Velocity.y = m_JumpVelocity;
             m_CanJump = false;
         }
@@ -362,13 +361,13 @@ void Player::SyncWithPlatform(float elapsedSec)
 {
     if (m_OffsetSnapshot == Vector2f{0, 0})
     {
-        m_OffsetSnapshot.x = GetPosition<Point2f>().x - m_pLevel->GetPlatform()->GetPosition<Point2f>().x;
-        m_OffsetSnapshot.y = m_Shape.bottom - m_pLevel->GetPlatform()->GetPosition<Point2f>().y;
+        m_OffsetSnapshot.x = GetPosition<Point2f>().x - m_pGameController->m_pLevel->GetPlatform()->GetPosition<Point2f>().x;
+        m_OffsetSnapshot.y = m_Shape.bottom - m_pGameController->m_pLevel->GetPlatform()->GetPosition<Point2f>().y;
     }
     m_OffsetSnapshot.x += m_Velocity.x * elapsedSec;
     Matrix2x3 pos{};
     Matrix2x3 T2{Matrix2x3::CreateTranslationMatrix(m_OffsetSnapshot)};
-    Matrix2x3 T1{Matrix2x3::CreateTranslationMatrix(m_pLevel->GetPlatform()->GetPosition<Vector2f>())};
+    Matrix2x3 T1{Matrix2x3::CreateTranslationMatrix(m_pGameController->m_pLevel->GetPlatform()->GetPosition<Vector2f>())};
     pos = T1 * T2 * pos;
     m_Shape.left = pos.orig.x;
 }
@@ -494,13 +493,13 @@ void Player::HandleCollision(GameObject* other)
     IEnemy* pEnemy{dynamic_cast<IEnemy*>(other)};
     if (pEnemy)
     {
-        m_pSoundManager->PlayEffect(Game::Label::E_ARTHUR_HIT);
+        // m_pSoundManager->PlayEffect(Game::Label::E_ARTHUR_HIT);
         return;
     }
     IThrowable* pWeapon{dynamic_cast<IThrowable*>(other)};
     if (pWeapon)
     {
-        m_pSoundManager->PlayEffect(Game::Label::E_WEAPON_PICKUP);
+        // m_pSoundManager->PlayEffect(Game::Label::E_WEAPON_PICKUP);
         switch (other->GetLabel())
         {
         case Game::Label::T_DAGGER:
@@ -531,10 +530,10 @@ void Player::HandleCollision(GameObject* other)
         case Game::Label::O_KEY:
             break;
         case Game::Label::O_SHIELD:
-            m_pSoundManager->PlayEffect(Game::Label::E_ARMOR_PICKUP);
+            m_pGameController->m_pSoundManager->PlayEffect(Game::Label::E_ARMOR_PICKUP);
             break;
         default:
-            m_pSoundManager->PlayEffect(Game::Label::E_TREASURE_PICKUP);
+            m_pGameController->m_pSoundManager->PlayEffect(Game::Label::E_TREASURE_PICKUP);
             m_Score += pCollectable->GetScore();
             other->SetVisible(false);
             other->SetActive(false);

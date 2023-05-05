@@ -12,7 +12,7 @@
 class Crow : public IEnemy
 {
 public:
-    Crow(const Point2f& pos, Player* pPlayer, SpriteFactory* pSpriteFactory, SoundManager* pSoundManager);
+    explicit Crow(const Point2f& pos, GameController* pGameController);
     virtual ~Crow() override = default;
     Crow(const Crow& other) = delete;
     Crow(Crow&& other) noexcept = delete;
@@ -24,12 +24,12 @@ public:
     virtual void HandleCollision(GameObject* other) override;
 
 protected:
-    virtual void Ping() override;
-    virtual void Pong() override;
-
     virtual void Awake() override;
     virtual void Wait(float elapsedSec) override;
     virtual void Fly(float elapsedSec) override;
+
+    virtual void Ping() override;
+    virtual void Pong() override;
 
 private:
     const float m_Amplitude;

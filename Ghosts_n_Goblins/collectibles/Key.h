@@ -5,7 +5,7 @@
 class Key : public GameObject, public ICollectible
 {
 public:
-    Key(const Point2f& pos, SpriteFactory* pSpriteFactory);
+    explicit Key(const Point2f& pos, GameController* pGameController);
     virtual ~Key() override = default;
     Key(const Key& other) = delete;
     Key(Key&& other) noexcept = delete;

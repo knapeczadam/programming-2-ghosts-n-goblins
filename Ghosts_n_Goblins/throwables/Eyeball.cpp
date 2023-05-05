@@ -1,8 +1,8 @@
 ﻿#include "pch.h"
 #include "Eyeball.h"
 
-Eyeball::Eyeball(const Point2f& pos, const Vector2f& direction, SpriteFactory* pSpriteFactory)
-    : GameObject(Game::Label::T_EYEBALL, pos, true, pSpriteFactory)
+Eyeball::Eyeball(const Point2f& pos, const Vector2f& direction, GameController* pGameController)
+    : GameObject{Game::Label::T_EYEBALL, pos, true, pGameController}
     , m_Direction{direction}
     , m_Speed{100.0f}
 {

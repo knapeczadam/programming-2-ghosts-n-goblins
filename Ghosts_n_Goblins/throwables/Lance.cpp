@@ -4,8 +4,8 @@
 #include "engine/Sprite.h"
 #include "engine/SpriteFactory.h"
 
-Lance::Lance(const Point2f& pos, bool isFlipped, bool collectible, SpriteFactory* pSpriteFactory)
-    : GameObject{Game::Label::T_LANCE, pos, true, pSpriteFactory}
+Lance::Lance(const Point2f& pos, bool isFlipped, bool collectible, GameController* pGameController)
+    : GameObject{Game::Label::T_LANCE, pos, true, pGameController}
       , m_Speed{300.0f}
       , m_Collectible{collectible}
 {

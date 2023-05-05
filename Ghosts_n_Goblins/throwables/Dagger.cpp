@@ -4,8 +4,8 @@
 #include "engine/Sprite.h"
 
 
-Dagger::Dagger(const Point2f& pos, bool isFlipped, bool collectible, SpriteFactory* pSpriteFactory)
-    : GameObject{Game::Label::T_DAGGER, pos, true, pSpriteFactory}
+Dagger::Dagger(const Point2f& pos, bool isFlipped, bool collectible, GameController* pGameController)
+    : GameObject{Game::Label::T_DAGGER, pos, true, pGameController}
       , m_Speed{300.0f}
       , m_Collectible{collectible}
 {

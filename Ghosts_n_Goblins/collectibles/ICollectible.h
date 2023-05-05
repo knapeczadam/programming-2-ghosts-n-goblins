@@ -3,7 +3,7 @@
 class ICollectible
 {
 public:
-    ICollectible();
+    explicit ICollectible();
     virtual ~ICollectible() = default;
     ICollectible(const ICollectible& other) = delete;
     ICollectible(ICollectible&& other) noexcept = delete;

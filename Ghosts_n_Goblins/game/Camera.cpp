@@ -8,15 +8,15 @@
 
 #include <iostream>
 
-Camera::Camera(const Rectf& viewPort, Level* pLevel, Player* pPlayer)
-    : m_ViewPort{viewPort}
-      , m_pLevel{pLevel}
-      , m_pPlayer{pPlayer}
-      , m_LevelBoundaries{pLevel->GetBoundaries()}
-      , m_Width(viewPort.width)
-      , m_Height(viewPort.height)
-      , m_Pos{0.0f, 0.0f}
-      , m_OutOfWindowOffset{50.0f}
+#include "GameController.h"
+
+Camera::Camera(GameController* pGameController)
+    : m_pGameController{pGameController}
+    , m_LevelBoundaries{m_pGameController->m_pLevel->GetBoundaries()}
+    , m_Width(m_pGameController->m_ViewPort.width)
+    , m_Height(m_pGameController->m_ViewPort.height)
+    , m_Pos{0.0f, 0.0f}
+    , m_OutOfWindowOffset{50.0f}
 {
 }
 
@@ -57,7 +57,7 @@ bool Camera::IsOutOfWindow(const GameObject* pGameObject) const
  */
 void Camera::Track()
 {
-    const Point2f targetCenter{m_pPlayer->GetShapeCenter()};
+    const Point2f targetCenter{m_pGameController->m_pPlayer->GetShapeCenter()};
     m_Pos.x = targetCenter.x - m_Width / 2.0f;
     m_Pos.y = targetCenter.y - m_Height / 2.0f;
 }

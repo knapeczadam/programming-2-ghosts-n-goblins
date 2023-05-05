@@ -5,7 +5,7 @@
 class Statue : public GameObject, public ICollectible
 {
 public:
-    Statue(const Point2f& pos, SpriteFactory* pSpriteFactory);
+    explicit Statue(const Point2f& pos, GameController* pGameController);
     virtual ~Statue() override = default;
     Statue(const Statue& other) = delete;
     Statue(Statue&& other) noexcept = delete;

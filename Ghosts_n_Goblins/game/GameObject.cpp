@@ -1,6 +1,8 @@
 ﻿#include "pch.h"
 #include "GameObject.h"
 #include <cassert>
+
+#include "GameController.h"
 #include "game/Macros.h"
 
 #include "utils.h"
@@ -10,9 +12,9 @@
 
 GameObject::GameObject()
     : m_Label{Game::Label::D_DUMMY}
-      , m_pSpriteFactory{nullptr}
+      , m_HasSprite{false}
+      , m_pGameController{nullptr}
       , m_pSprite{nullptr}
-      , m_pSoundManager{nullptr}
       , m_Shape{0.0f, 0.0f, 0.0f, 0.0f}
       , m_CollisionBox{0.0f, 0.0f, 0.0f, 0.0f}
       , m_OriginalCollisionBox{m_CollisionBox}
@@ -24,11 +26,11 @@ GameObject::GameObject()
 {
 }
 
-GameObject::GameObject(Game::Label label, SpriteFactory* pSpriteFactory, SoundManager* pSoundManager)
+GameObject::GameObject(Game::Label label, GameController* pGameController)
     : m_Label{label}
-      , m_pSpriteFactory{pSpriteFactory}
-      , m_pSprite{m_pSpriteFactory ? m_pSpriteFactory->CreateSprite(label) : nullptr}
-      , m_pSoundManager{pSoundManager}
+      , m_HasSprite{true}
+      , m_pGameController{pGameController}
+      , m_pSprite{m_HasSprite and m_pGameController ? m_pGameController->m_pSpriteFactory->CreateSprite(label) : nullptr}
       , m_Shape{0.0f, 0.0f, 0.0f, 0.0f}
       , m_CollisionBox{0.0f, 0.0f, 0.0f, 0.0f}
       , m_OriginalCollisionBox{m_CollisionBox}
@@ -45,11 +47,13 @@ GameObject::GameObject(Game::Label label, SpriteFactory* pSpriteFactory, SoundMa
     }
 }
 
-GameObject::GameObject(Game::Label label, const Rectf& shape, bool collisionEnabled, const Color4f& color, SoundManager* pSoundManager)
+GameObject::GameObject(Game::Label label, const Rectf& shape, bool collisionEnabled, bool hasSprite,
+                       const Color4f& color,
+                       GameController* pGameController)
     : m_Label{label}
-      , m_pSpriteFactory{nullptr}
-      , m_pSprite{nullptr}
-      , m_pSoundManager{pSoundManager}
+      , m_HasSprite{hasSprite}
+      , m_pGameController{pGameController}
+      , m_pSprite{m_HasSprite and m_pGameController ? m_pGameController->m_pSpriteFactory->CreateSprite(label) : nullptr}
       , m_Shape{shape}
       , m_CollisionBox{shape}
       , m_OriginalCollisionBox{m_CollisionBox}
@@ -61,12 +65,11 @@ GameObject::GameObject(Game::Label label, const Rectf& shape, bool collisionEnab
 {
 }
 
-GameObject::GameObject(Game::Label label, const Point2f& pos, bool collisionEnabled,
-                       SpriteFactory* pSpriteFactory, SoundManager* pSoundManager)
+GameObject::GameObject(Game::Label label, const Point2f& pos, bool collisionEnabled, GameController* pGameController)
     : m_Label{label}
-      , m_pSpriteFactory{pSpriteFactory}
-      , m_pSprite{m_pSpriteFactory ? m_pSpriteFactory->CreateSprite(label) : nullptr}
-      , m_pSoundManager{pSoundManager}
+      , m_HasSprite{true}
+      , m_pGameController{pGameController}
+      , m_pSprite{m_HasSprite and m_pGameController ? m_pGameController->m_pSpriteFactory->CreateSprite(label) : nullptr}
       , m_Shape{0.0f, 0.0f, 0.0f, 0.0f}
       , m_CollisionBox{0.0f, 0.0f, 0.0f, 0.0f}
       , m_OriginalCollisionBox{m_CollisionBox}

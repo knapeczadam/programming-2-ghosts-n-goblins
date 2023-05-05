@@ -22,7 +22,7 @@ public:
     };
 
 public:
-    Player(const Point2f& pos,  std::vector<GameObject*>& throwables, Level* pLevel, SpriteFactory* pSpriteFactory, SoundManager* pSoundManager);
+    explicit Player(const Point2f& pos,  GameController* pGameController);
     virtual ~Player() override = default;
     Player(const Player& other) = delete;
     Player(Player&& other) noexcept = delete;
@@ -78,7 +78,6 @@ private:
     Vector2f m_Velocity;
     Vector2f m_Acceleration;
     State m_State;
-    Level* m_pLevel;
     bool m_Crouching;
     float m_ShortAccuCooldown;
     float m_LongAccuCooldown;
@@ -97,5 +96,4 @@ private:
     bool m_Climbing;
     bool m_OnLadder;
     bool m_OnGround;
-    std::vector<GameObject*>& m_PlayerThrowables;
 };

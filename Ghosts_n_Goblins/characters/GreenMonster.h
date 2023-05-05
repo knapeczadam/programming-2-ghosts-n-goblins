@@ -10,7 +10,7 @@
 class GreenMonster : public IEnemy
 {
 public:
-    GreenMonster(const Point2f& pos, Player* pPlayer,std::vector<GameObject*>& enemies, SpriteFactory* pSpriteFactory, SoundManager* pSoundManager);
+    explicit GreenMonster(const Point2f& pos, GameController* pGameController);
     virtual ~GreenMonster() override = default;
     GreenMonster(const GreenMonster& other) = delete;
     GreenMonster(GreenMonster&& other) noexcept = delete;
@@ -23,6 +23,4 @@ public:
 protected:
     virtual void Wait(float elapsedSec) override;
     virtual void Shoot(float elapsedSec) override;
-private:
-    std::vector<GameObject*>& m_EnemyThrowables;
 };

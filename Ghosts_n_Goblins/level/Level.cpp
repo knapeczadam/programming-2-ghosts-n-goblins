@@ -13,11 +13,10 @@
 #include "characters/Player.h"
 #include "engine/SoundManager.h"
 #include "engine/Sprite.h"
+#include "game/GameController.h"
 
-Level::Level(Platform* pPlatform, std::vector<GameObject*> pLadders, SpriteFactory* pSpriteFactory, SoundManager* pSoundManager)
-    : GameObject{Game::Label::L_LEVEL, pSpriteFactory, pSoundManager}
-      , m_pPlatform{pPlatform}
-      , m_pLadders{std::move(pLadders)}
+Level::Level(GameController* pGameController)
+    : GameObject{Game::Label::L_LEVEL, pGameController}
       , m_Vertices{}
       , m_Boundaries{0, 0, m_pSprite->GetWidth(), m_pSprite->GetHeight()}
 {
@@ -30,7 +29,7 @@ Draws the background texture
 void Level::Draw() const
 {
     m_pSprite->Draw();
-    m_pPlatform->Draw();
+    m_pGameController->m_pPlatform->Draw();
 #if DEBUG_LEVEL
     utils::SetColor(Color4f{1, 0, 1, 1});
     for (const std::vector<Point2f>& collisionShapes : m_Vertices)
@@ -42,7 +41,7 @@ void Level::Draw() const
 
 void Level::Update(float elapsedSec)
 {
-    m_pPlatform->Update(elapsedSec);
+    m_pGameController->m_pPlatform->Update(elapsedSec);
 }
 
 /*
@@ -57,7 +56,7 @@ Tip: use Raycast with a vertical ray (blue line) in the middle of the actor.
 void Level::HandleCollision(GameObject* other)
 {
     Player* pPlayer{dynamic_cast<Player*>(other)};
-    m_pPlatform->HandleCollision(other);
+    m_pGameController->m_pPlatform->HandleCollision(other);
     // const bool canClimb{ std::any_of(m_pLadders.begin(), m_pLadders.end(), [&](GameObject* pLadder){return pLadder->IsOverlapping(other);})};
     // pPlayer->CanClimb(canClimb);
 
@@ -137,7 +136,7 @@ bool Level::IsOnGround(GameObject* pGameObject) const
             isHit = true;
         }
     });
-    return isHit or m_pPlatform->IsOnGround(pGameObject);
+    return isHit or m_pGameController->m_pPlatform->IsOnGround(pGameObject);
 }
 
 void Level::SetVertices()
@@ -169,5 +168,5 @@ bool Level::HasReachedEnd(const Rectf& collisionBox) const
 
 Platform* Level::GetPlatform() const
 {
-    return m_pPlatform;
+    return m_pGameController->m_pPlatform;
 }
