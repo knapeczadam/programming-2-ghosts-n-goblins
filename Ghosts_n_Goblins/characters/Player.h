@@ -22,7 +22,7 @@ public:
     };
 
 public:
-    Player(const Point2f& pos, Level* pLevel, SpriteFactory* pSpriteFactory, SoundManager* pSoundManager);
+    Player(const Point2f& pos,  std::vector<GameObject*>& throwables, Level* pLevel, SpriteFactory* pSpriteFactory, SoundManager* pSoundManager);
     virtual ~Player() override = default;
     Player(const Player& other) = delete;
     Player(Player&& other) noexcept = delete;
@@ -37,7 +37,7 @@ public:
     virtual void HandleCollision(GameObject* other) override;
     void UpdateSprite() const; // TODO
 
-    void Attack(std::vector<GameObject*>& throwables, SpriteFactory* spriteFactory);
+    void Attack();
     bool IsAttacking() const;
     void CanJump(bool canJump);
     void CanClimb(bool canClimb);
@@ -96,4 +96,5 @@ private:
     bool m_Climbing;
     bool m_OnLadder;
     bool m_OnGround;
+    std::vector<GameObject*>& m_Throwables;
 };

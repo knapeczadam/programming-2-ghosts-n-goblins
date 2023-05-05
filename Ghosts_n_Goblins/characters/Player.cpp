@@ -24,7 +24,8 @@
 
 const Point2f Player::m_SpawnPos{50.0f, 64.0f};
 
-Player::Player(const Point2f& pos, Level* pLevel, SpriteFactory* pSpriteFactory, SoundManager* pSoundManager)
+Player::Player(const Point2f& pos, std::vector<GameObject*>& throwables, Level* pLevel,
+               SpriteFactory* pSpriteFactory, SoundManager* pSoundManager)
     : GameObject{Game::Label::C_ARTHUR, pos, true, pSpriteFactory, pSoundManager}
       , m_HorVelocity{150.0f}
       , m_VerVelocity{100.0f}
@@ -51,6 +52,7 @@ Player::Player(const Point2f& pos, Level* pLevel, SpriteFactory* pSpriteFactory,
       , m_Climbing{false}
       , m_OnLadder{false}
       , m_OnGround{false}
+      , m_Throwables{throwables}
 {
 }
 
@@ -192,7 +194,7 @@ void Player::UpdateCooldown(float elapsedSec)
     }
 }
 
-void Player::Attack(std::vector<GameObject*>& throwables, SpriteFactory* spriteFactory)
+void Player::Attack()
 {
     if (not m_Attacking)
     {
@@ -204,13 +206,13 @@ void Player::Attack(std::vector<GameObject*>& throwables, SpriteFactory* spriteF
         switch (m_Weapon)
         {
         case Game::Label::W_DAGGER:
-            throwables.push_back(new Dagger{GetShapeCenter(), m_Flipped, false, m_pSpriteFactory});
+            m_Throwables.push_back(new Dagger{GetShapeCenter(), m_Flipped, false, m_pSpriteFactory});
             break;
         case Game::Label::W_LANCE:
-            throwables.push_back(new Lance{GetShapeCenter(), m_Flipped, false, m_pSpriteFactory});
+            m_Throwables.push_back(new Lance{GetShapeCenter(), m_Flipped, false, m_pSpriteFactory});
             break;
         case Game::Label::W_TORCH:
-            throwables.push_back(new Torch{GetShapeCenter(), m_Flipped, false, m_pSpriteFactory});
+            m_Throwables.push_back(new Torch{GetShapeCenter(), m_Flipped, false, m_pSpriteFactory});
             break;
         }
     }
@@ -404,12 +406,13 @@ void Player::UpdateState()
         m_State = State::climbing;
     }
 }
+
 // TODO: köze van a CheckForBoundaries függvényhez
 void Player::UpdateCollisionBox()
 {
     if (m_Crouching)
     {
-       SetCollisionBoxHeight(44.0f); 
+        SetCollisionBoxHeight(44.0f);
     }
     else
     {

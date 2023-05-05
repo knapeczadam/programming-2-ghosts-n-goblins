@@ -10,7 +10,6 @@ class GameObject : public ITimer
 public:
     // CONSTRUCTORS & DESTRUCTOR
     explicit GameObject();
-    // explicit GameObject(Game::Label label, bool collisionEnabled = true);
     explicit GameObject(Game::Label label, SpriteFactory* pSpriteFactory, SoundManager* pSoundManager = nullptr);
     explicit GameObject(Game::Label label, const Rectf& shape, bool collisionEnabled = true, const Color4f& color = Color4f{0.f, 1.f, 1.f, 1.f}, SoundManager* pSoundManager = nullptr);
     explicit GameObject(Game::Label label, const Point2f& pos,  bool collisionEnabled = true, SpriteFactory* pSpriteFactor = nullptr, SoundManager* pSoundManager = nullptr);

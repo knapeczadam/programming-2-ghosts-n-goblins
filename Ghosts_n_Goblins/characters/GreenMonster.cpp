@@ -4,9 +4,9 @@
 #include "Player.h"
 #include "weapons/Eyeball.h"
 
-GreenMonster::GreenMonster(const Point2f& pos, Player* pPlayer, SpriteFactory* pSpriteFactory, SoundManager* pSoundManager)
+GreenMonster::GreenMonster(const Point2f& pos, Player* pPlayer,std::vector<GameObject*>& enemies, SpriteFactory* pSpriteFactory, SoundManager* pSoundManager)
     : IEnemy{Game::Label::C_GREEN_MONSTER,  pos, pPlayer, pSpriteFactory, pSoundManager}
-    // , m_Enemies{std::move(enemies)}
+    , m_Enemies{enemies}
 {
     m_Score = 100;
     
@@ -52,7 +52,8 @@ void GreenMonster::Shoot(float elapsedSec)
     StartTimer(randInterval);
     if (IsTimerFinished())
     {
-        // m_Enemies.push_back(new Eyeball)
+        const Vector2f direction{m_pPlayer->GetShapeCenter() - GetShapeCenter()};
+        m_Enemies.push_back(new Eyeball{GetShapeCenter(),direction.Normalized(), m_pSpriteFactory});
     }
     
 }

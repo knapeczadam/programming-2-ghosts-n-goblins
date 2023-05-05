@@ -120,7 +120,7 @@ void Game::Initialize()
     InitCollectibles();
 
     // PLAYER
-    m_pPlayer = new Player{Player::GetSpawnPos(), m_pLevel, m_pSpriteFactory, m_pSoundManager};
+    m_pPlayer = new Player{Player::GetSpawnPos(), m_Throwables, m_pLevel, m_pSpriteFactory, m_pSoundManager};
 
     // CAMERA - has to be after level and player initialization
     InitCamera();
@@ -130,6 +130,8 @@ void Game::Initialize()
 
     // ENEMIES
     InitEnemies();
+
+    m_Throwables.push_back(new GameObject{});
 
 #if TEST_OBJECT
     m_pTestObject = new Crow{Point2f{600.f, 65.f}, m_pPlayer, m_pSpriteFactory, m_pSoundManager};
@@ -438,11 +440,12 @@ void Game::InitFlyingKnights()
 void Game::InitGreenMonsters()
 {
     // GREEN MONSTERS
+    // TODO: enemy throwables vector
     m_Enemies.insert(m_Enemies.end(), {
-                         new GreenMonster{Point2f{4622.0f, 54.0f}, m_pPlayer, m_pSpriteFactory, m_pSoundManager},
-                         new GreenMonster{Point2f{6190.0f, 54.0f}, m_pPlayer, m_pSpriteFactory, m_pSoundManager},
-                         new GreenMonster{Point2f{1615.0f, 213.0f}, m_pPlayer, m_pSpriteFactory, m_pSoundManager},
-                         new GreenMonster{Point2f{2191.0f, 213.0f}, m_pPlayer, m_pSpriteFactory, m_pSoundManager},
+                         new GreenMonster{Point2f{4622.0f, 54.0f}, m_pPlayer, m_Throwables, m_pSpriteFactory, m_pSoundManager},
+                         new GreenMonster{Point2f{6190.0f, 54.0f}, m_pPlayer, m_Throwables,m_pSpriteFactory,  m_pSoundManager},
+                         new GreenMonster{Point2f{1615.0f, 213.0f}, m_pPlayer,m_Throwables, m_pSpriteFactory, m_pSoundManager},
+                         new GreenMonster{Point2f{2191.0f, 213.0f}, m_pPlayer, m_Throwables, m_pSpriteFactory, m_pSoundManager},
                      });
 }
 
@@ -611,8 +614,8 @@ void Game::LateUpdate(float elapsedSec)
     std::ranges::for_each(m_Throwables, lateUpdate);
     std::ranges::for_each(m_Collectibles, lateUpdate);
 
-    DeactivateEnemiesOutOfView();
-    DeactivateThrowablesOutOfView();
+    // DeactivateEnemiesOutOfView();
+    // DeactivateThrowablesOutOfView();
 
     UpdateRemainingTime();
 
@@ -628,7 +631,7 @@ void Game::ProcessKeyDownEvent(const SDL_KeyboardEvent& e)
     case SDLK_x:
         if (m_AttackKeyReleased)
         {
-            m_pPlayer->Attack(m_Throwables, m_pSpriteFactory);
+            m_pPlayer->Attack();
             m_AttackKeyReleased = false;
         }
         break;

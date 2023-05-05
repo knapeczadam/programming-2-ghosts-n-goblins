@@ -24,22 +24,6 @@ GameObject::GameObject()
 {
 }
 
-// GameObject::GameObject(Game::Label label, bool collisionEnabled)
-//     : m_Label{label}
-//       , m_pSpriteFactory{nullptr}
-//       , m_pSprite{nullptr}
-//       , m_pSoundManager{nullptr}
-//       , m_Shape{0.0f, 0.0f, 0.0f, 0.0f}
-//       , m_CollisionBox{0.0f, 0.0f, 0.0f, 0.0f}
-//       , m_OriginalCollisionBox{m_CollisionBox}
-//       , m_CollisionEnabled{collisionEnabled}
-//       , m_Active{true}
-//       , m_Visible{true}
-//       , m_Flipped{false}
-//       , m_CollisionBoxColor{0.5f, 0.5f, 0.5f, 1.0f}
-// {
-// }
-
 GameObject::GameObject(Game::Label label, SpriteFactory* pSpriteFactory, SoundManager* pSoundManager)
     : m_Label{label}
       , m_pSpriteFactory{pSpriteFactory}
