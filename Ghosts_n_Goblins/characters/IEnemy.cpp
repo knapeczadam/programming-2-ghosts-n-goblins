@@ -5,7 +5,7 @@
 
 IEnemy::IEnemy(Game::Label label, const Point2f& pos, Player* pPlayer, SpriteFactory* pSpriteFactory,
                SoundManager* pSoundManager)
-    : GameObject{label, pos, true,pSpriteFactory, pSoundManager}
+    : GameObject{label, pos, true, pSpriteFactory, pSoundManager}
       , m_pPlayer{pPlayer}
       , m_SpawnPos{pos}
       , m_Score{0}
@@ -15,6 +15,7 @@ IEnemy::IEnemy(Game::Label label, const Point2f& pos, Player* pPlayer, SpriteFac
       , m_AwakeDistance{200.0f}
       , m_HorVelocity{0.0f}
       , m_VerVelocity{0.0f}
+      , m_Ping{true}
 {
 }
 
@@ -88,6 +89,31 @@ bool IEnemy::IsFlipped() const
         return true;
     }
     return false;
+}
+
+void IEnemy::Switch(float interval)
+{
+    StartTimer(interval);
+    if (IsTimerFinished())
+    {
+        m_Ping = not m_Ping;
+    }
+    if (m_Ping)
+    {
+        Ping();
+    }
+    else
+    {
+        Pong();
+    }
+}
+
+void IEnemy::Ping()
+{
+}
+
+void IEnemy::Pong()
+{
 }
 
 float IEnemy::GetAngle() const

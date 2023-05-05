@@ -26,6 +26,9 @@ protected:
     virtual void Spawn();
     virtual float GetAngle() const final;
     virtual bool IsFlipped() const final;
+    virtual void Switch(float interval);
+    virtual void Ping();
+    virtual void Pong();
 protected:
     Player* m_pPlayer;
     const Point2f m_SpawnPos;
@@ -36,4 +39,5 @@ protected:
     float m_AwakeDistance;
     float m_HorVelocity;
     float m_VerVelocity;
+    bool m_Ping;
 };

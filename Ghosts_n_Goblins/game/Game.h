@@ -220,7 +220,7 @@ private:
 
     // ENEMIES
     void InitEnemies();
-    void InitBigMan();
+    void InitUnicorn();
     void InitCrows();
     void InitFlyingKnights();
     void InitGreenMonsters();

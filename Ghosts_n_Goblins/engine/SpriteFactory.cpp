@@ -53,8 +53,8 @@ Sprite* SpriteFactory::CreateSprite(Game::Label label)
             pSprite->SetSubRows(subRows);
             const int subColumns{sprite.contains("sub_columns") ? static_cast<int>(sprite["sub_columns"]) : 0};
             pSprite->SetSubCols(subColumns);
-            const int framesPerSec{
-                sprite.contains("frames_per_second") ? static_cast<int>(sprite["frames_per_second"]) : 0
+            const float framesPerSec{
+                sprite.contains("frames_per_second") ? static_cast<float>(sprite["frames_per_second"]) : 0.0f
             };
             pSprite->SetFramesPerSec(framesPerSec);
             const float scale{sprite.contains("scale") ? static_cast<float>(sprite["scale"]) : 1.0f};

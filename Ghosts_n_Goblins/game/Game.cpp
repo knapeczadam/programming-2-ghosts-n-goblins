@@ -31,6 +31,12 @@
 #include <ranges>
 
 #include "characters/Crow.h"
+#include "characters/FlyingKnight.h"
+#include "characters/Magician.h"
+#include "characters/RedArremer.h"
+#include "characters/Unicorn.h"
+#include "characters/WoodyPig.h"
+#include "characters/Zombie.h"
 
 
 Game::Game(const Window& window)
@@ -113,7 +119,7 @@ void Game::Initialize()
 
     // SOUND
     m_pSoundManager = new SoundManager{m_Data, m_Labels};
-    //m_pSoundManager->PlayStream(Label::S_04_GROUND_BGM, true);
+    m_pSoundManager->PlayStream(Label::S_04_GROUND_BGM, true);
 
     // LEVEL
     InitLevel();
@@ -408,7 +414,7 @@ void Game::InitMoneyBags()
 
 void Game::InitEnemies()
 {
-    InitBigMan();
+    InitUnicorn();
     InitCrows();
     InitFlyingKnights();
     InitGreenMonsters();
@@ -418,8 +424,9 @@ void Game::InitEnemies()
     InitZombies();
 }
 
-void Game::InitBigMan()
+void Game::InitUnicorn()
 {
+    m_Enemies.push_back(new Unicorn{Point2f{400.0f, 62.0f}, m_pPlayer, m_pSpriteFactory, m_pSoundManager});
 }
 
 void Game::InitCrows()
@@ -435,6 +442,9 @@ void Game::InitCrows()
 
 void Game::InitFlyingKnights()
 {
+    m_Enemies.insert(m_Enemies.end(), {
+        new FlyingKnight{Point2f{500.0f, 200.0f}, m_pPlayer, m_pSpriteFactory, m_pSoundManager},
+    });
 }
 
 void Game::InitGreenMonsters()
@@ -459,18 +469,26 @@ void Game::InitGreenMonsters()
 
 void Game::InitMagicians()
 {
+    m_Enemies.push_back(new Magician{Point2f{600.0f, 62.0f}, m_pPlayer, m_pSpriteFactory, m_pSoundManager});
 }
 
 void Game::InitRedArremer()
 {
+    m_Enemies.push_back(new RedArremer{Point2f{1200.0f, 62.0f}, m_pPlayer, m_pSpriteFactory, m_pSoundManager});
 }
 
 void Game::InitWoodyPigs()
 {
+    m_Enemies.insert(m_Enemies.end(), {
+        new WoodyPig{Point2f{1000.0f, 200.0f}, m_pPlayer, m_pSpriteFactory, m_pSoundManager},
+    });
 }
 
 void Game::InitZombies()
 {
+    m_Enemies.insert(m_Enemies.end(),{
+        new Zombie{Point2f{1000.0f, 62.0f}, m_pPlayer, m_pSpriteFactory, m_pSoundManager},
+    });
 }
 
 void Game::ClearBackground() const
@@ -672,11 +690,11 @@ void Game::ProcessKeyDownEvent(const SDL_KeyboardEvent& e)
     case SDLK_d:
         Debug();
         break;
-    case SDLK_u:
-        SoundStream::SetVolume(SoundStream::GetVolume() + 1);
+    case SDLK_o:
+        SoundManager::IncreaseMasterVolume();
         break;
-    case SDLK_j:
-        SoundStream::SetVolume(SoundStream::GetVolume() - 1);
+    case SDLK_l:
+        SoundManager::DecreaseMasterVolume();
         break;
     }
 }

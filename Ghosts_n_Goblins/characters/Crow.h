@@ -24,6 +24,9 @@ public:
     virtual void HandleCollision(GameObject* other) override;
 
 protected:
+    virtual void Ping() override;
+    virtual void Pong() override;
+
     virtual void Awake() override;
     virtual void Wait(float elapsedSec) override;
     virtual void Fly(float elapsedSec) override;

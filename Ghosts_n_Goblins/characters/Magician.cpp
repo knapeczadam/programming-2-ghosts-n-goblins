@@ -4,7 +4,7 @@
 #include "Player.h"
 
 Magician::Magician(const Point2f& pos, Player* pPlayer, SpriteFactory* pSpriteFactory, SoundManager* pSoundManager)
-    : IEnemy{Game::Label::E_MAGICIAN, pos, pPlayer, pSpriteFactory, pSoundManager}
+    : IEnemy{Game::Label::C_MAGICIAN, pos, pPlayer, pSpriteFactory, pSoundManager}
 {
     m_Score = 2000;
 }

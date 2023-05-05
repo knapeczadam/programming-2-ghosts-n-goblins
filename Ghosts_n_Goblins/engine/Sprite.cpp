@@ -40,7 +40,7 @@ Sprite::Sprite(Texture* pTexture)
 
 void Sprite::Init()
 {
-    SetFrameTime();
+    CalculateFrameTime();
     SetCurrRowsCols();
     InitSourceRect();
     InitDestinationRect();
@@ -94,7 +94,7 @@ void Sprite::SetCurrRowsCols()
     }
 }
 
-void Sprite::SetFrameTime()
+void Sprite::CalculateFrameTime()
 {
     if (m_FramesPerSec == 0)
     {
@@ -268,12 +268,12 @@ void Sprite::SetSubCols(int subCols)
 }
 
 
-int Sprite::GetFramesPerSec() const
+float Sprite::GetFramesPerSec() const
 {
     return m_FramesPerSec;
 }
 
-void Sprite::SetFramesPerSec(int framesPerSec)
+void Sprite::SetFramesPerSec(float framesPerSec)
 {
     m_FramesPerSec = framesPerSec;
 }

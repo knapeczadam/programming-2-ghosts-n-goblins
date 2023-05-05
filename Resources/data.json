@@ -293,7 +293,7 @@
       "columns": 4,
       "sub_rows": 1,
       "sub_columns": 4,
-      "frames_per_second": 10,
+      "frames_per_second": 8,
       "scale": 2
     },
     {

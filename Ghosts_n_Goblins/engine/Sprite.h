@@ -18,7 +18,7 @@ public:
     void Update(float elapsedSec);
     void SetCurrRowsCols();
 
-    void SetFrameTime();
+    void CalculateFrameTime();
     void InitSourceRect();
     void UpdateSourceRect();
     void InitDestinationRect();
@@ -47,8 +47,8 @@ public:
     void SetSubRows(int subRows);
     int GetSubCols() const;
     void SetSubCols(int subCols);
-    int GetFramesPerSec() const;
-    void SetFramesPerSec(int framesPerSec);
+    float GetFramesPerSec() const;
+    void SetFramesPerSec(float framesPerSec);
     float GetScale() const;
     void SetScale(float scale);
     Point2f GetPosition() const;
@@ -80,7 +80,7 @@ private:
     int m_SubCols;
     int m_CurrRows;
     int m_CurrCols;
-    int m_FramesPerSec;
+    float m_FramesPerSec;
     float m_FrameTime;
     float m_Scale;
 

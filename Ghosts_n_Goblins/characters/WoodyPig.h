@@ -9,20 +9,21 @@
  * They only take one hit to destroy, are worth 100 points, and can carry a pot, but their motion can be hard to predict.
  * Be especially careful when they are just above the height of your head.
  */
-class WoodyPig : IEnemy
+class WoodyPig : public IEnemy
 {
 public:
     WoodyPig(const Point2f& pos, Player* pPlayer, SpriteFactory* pSpriteFactory, SoundManager* pSoundManager);
-   virtual ~WoodyPig() override = default;
-   WoodyPig(const WoodyPig& other) = delete;
-   WoodyPig(WoodyPig&& other) noexcept = delete;
-   WoodyPig& operator=(const WoodyPig& other) = delete;
-   WoodyPig& operator=(WoodyPig&& other) noexcept = delete;
+    virtual ~WoodyPig() override = default;
+    WoodyPig(const WoodyPig& other) = delete;
+    WoodyPig(WoodyPig&& other) noexcept = delete;
+    WoodyPig& operator=(const WoodyPig& other) = delete;
+    WoodyPig& operator=(WoodyPig&& other) noexcept = delete;
 
-   virtual void Draw() const override;
-   virtual void Update(float elapsedSec) override;
-   virtual void HandleCollision(GameObject* other) override;
+    virtual void Draw() const override;
+    virtual void Update(float elapsedSec) override;
+    virtual void HandleCollision(GameObject* other) override;
+
 protected:
-   virtual void Shoot(float elapsedSec) override;
-   virtual void Fly(float elapsedSec) override;
+    virtual void Shoot(float elapsedSec) override;
+    virtual void Fly(float elapsedSec) override;
 };

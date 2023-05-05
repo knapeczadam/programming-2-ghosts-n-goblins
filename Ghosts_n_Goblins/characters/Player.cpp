@@ -144,7 +144,7 @@ void Player::UpdateSprite() const
     case State::climbing_top:
         break;
     }
-    m_pSprite->SetFrameTime();
+    m_pSprite->CalculateFrameTime();
     m_pSprite->SetCurrRowsCols();
     m_pSprite->UpdateSourceRect();
 }

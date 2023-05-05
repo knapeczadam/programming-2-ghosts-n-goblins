@@ -26,6 +26,10 @@ public:
 
     SoundEffect* GetEffect(Game::Label label) const;
     SoundStream* GetStream(Game::Label label) const;
+
+public:
+    static void IncreaseMasterVolume();
+    static void DecreaseMasterVolume();
 private:
     void LoadSounds();
     void DeleteSounds();

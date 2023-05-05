@@ -83,6 +83,16 @@ SoundStream* SoundManager::GetStream(Game::Label label) const
     return m_Streams.at(label);
 }
 
+void SoundManager::IncreaseMasterVolume()
+{
+    SoundStream::SetVolume(SoundStream::GetVolume() + 1);
+}
+
+void SoundManager::DecreaseMasterVolume()
+{
+    SoundStream::SetVolume(SoundStream::GetVolume() - 1);
+}
+
 void SoundManager::LoadSounds()
 {
     for (const auto& sound : m_Data["effects"])
