@@ -14,7 +14,7 @@
 class RedArremer : public IEnemy
 {
 public:
-   RedArremer(Sprite* pSprite, const Point2f& pos, Player* pPlayer, Sprite* pFX, SoundManager* pSoundManager);
+    RedArremer(const Point2f& pos, Player* pPlayer, SpriteFactory* pSpriteFactory, SoundManager* pSoundManager);
    virtual ~RedArremer() override = default;
    RedArremer(const RedArremer& other) = delete;
    RedArremer(RedArremer&& other) noexcept = delete;

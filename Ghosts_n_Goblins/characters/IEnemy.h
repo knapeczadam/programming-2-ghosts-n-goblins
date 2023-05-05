@@ -4,7 +4,7 @@
 class IEnemy : public GameObject
 {
 public:
-    IEnemy(Game::Label label, Sprite* pSprite, const Point2f& pos, Player* pPlayer, Sprite* pPX, SoundManager* pSoundManager);
+    IEnemy(Game::Label label, const Point2f& pos, Player* pPlayer, SpriteFactory* pSpriteFactory, SoundManager* pSoundManager);
     virtual ~IEnemy() override = default;
     IEnemy(const IEnemy& other) = delete;
     IEnemy(IEnemy&& other) noexcept = delete;
@@ -27,7 +27,6 @@ protected:
     virtual bool IsFlipped() const final;
 protected:
     Player* m_pPlayer;
-    Sprite* m_pFX;
     const Point2f m_SpawnPos;
     int m_Score;
     int m_Health;

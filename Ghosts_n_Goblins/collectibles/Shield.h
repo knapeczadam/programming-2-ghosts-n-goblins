@@ -5,7 +5,7 @@
 class Shield : public GameObject, public ICollectible
 {
 public:
-    Shield(Sprite* pSprite, const Point2f& pos);
+    Shield(const Point2f& pos, SpriteFactory* pSpriteFactory);
     virtual ~Shield() override = default;
     Shield(const Shield& other) = delete;
     Shield(Shield&& other) noexcept = delete;

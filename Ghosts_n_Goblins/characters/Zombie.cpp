@@ -3,8 +3,8 @@
 #include "engine/SoundManager.h"
 #include "Player.h"
 
-Zombie::Zombie(Sprite* pSprite, const Point2f& pos, Player* pPlayer, Sprite* pFX, SoundManager* pSoundManager)
-    : IEnemy{Game::Label::C_ZOMBIE, pSprite, pos, pPlayer, pFX, pSoundManager}
+Zombie::Zombie(const Point2f& pos, Player* pPlayer, SpriteFactory* pSpriteFactory, SoundManager* pSoundManager)
+    : IEnemy{Game::Label::C_ZOMBIE, pos, pPlayer, pSpriteFactory, pSoundManager}
 {
     m_Score = 200;
 }

@@ -6,10 +6,9 @@
 #include <iostream>
 
 Tombstone::Tombstone(const Rectf& shape, SoundManager* pSoundManager)
-    : GameObject{Game::Label::L_TOMBSTONE, shape}
+    : GameObject{Game::Label::L_TOMBSTONE, shape, true, Color4f{0.0f, 0.0f, 1.0f, 0.5f}, pSoundManager}
       , m_HitCount{0}
       , m_MaxHitCount{15}
-      , m_pSoundManager{pSoundManager}
 {
 }
 

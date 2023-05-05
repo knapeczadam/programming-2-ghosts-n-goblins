@@ -12,7 +12,7 @@
 class Zombie : public IEnemy
 {
 public:
-    Zombie(Sprite* pSprite, const Point2f& pos, Player* pPlayer,Sprite* pFX, SoundManager* pSoundManager);
+    Zombie(const Point2f& pos, Player* pPlayer, SpriteFactory* pSpriteFactory, SoundManager* pSoundManager);
     virtual ~Zombie() override = default;
     Zombie(const Zombie& other) = delete;
     Zombie(Zombie&& other) noexcept = delete;

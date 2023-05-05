@@ -6,9 +6,11 @@
 #include "utils.h"
 #include "engine/Sprite.h"
 #include "engine/Clock.h"
+#include "engine/SpriteFactory.h"
 
 GameObject::GameObject()
     : m_Label{Game::Label::D_DUMMY}
+      , m_pSpriteFactory{nullptr}
       , m_pSprite{nullptr}
       , m_pSoundManager{nullptr}
       , m_Shape{0.0f, 0.0f, 0.0f, 0.0f}
@@ -18,37 +20,39 @@ GameObject::GameObject()
       , m_Active{true}
       , m_Visible{true}
       , m_Flipped{false}
-      , m_Color{0.5f, 0.5f, 0.5f, 1.0f}
+      , m_CollisionBoxColor{0.5f, 0.5f, 0.5f, 1.0f}
 {
 }
 
-GameObject::GameObject(Game::Label label, bool collisionEnabled)
-    : m_Label{label}
-      , m_pSprite{nullptr}
-      , m_pSoundManager{nullptr}
-      , m_Shape{0.0f, 0.0f, 0.0f, 0.0f}
-      , m_CollisionBox{0.0f, 0.0f, 0.0f, 0.0f}
-      , m_OriginalCollisionBox{m_CollisionBox}
-      , m_CollisionEnabled{collisionEnabled}
-      , m_Active{true}
-      , m_Visible{true}
-      , m_Flipped{false}
-      , m_Color{0.5f, 0.5f, 0.5f, 1.0f}
-{
-}
+// GameObject::GameObject(Game::Label label, bool collisionEnabled)
+//     : m_Label{label}
+//       , m_pSpriteFactory{nullptr}
+//       , m_pSprite{nullptr}
+//       , m_pSoundManager{nullptr}
+//       , m_Shape{0.0f, 0.0f, 0.0f, 0.0f}
+//       , m_CollisionBox{0.0f, 0.0f, 0.0f, 0.0f}
+//       , m_OriginalCollisionBox{m_CollisionBox}
+//       , m_CollisionEnabled{collisionEnabled}
+//       , m_Active{true}
+//       , m_Visible{true}
+//       , m_Flipped{false}
+//       , m_CollisionBoxColor{0.5f, 0.5f, 0.5f, 1.0f}
+// {
+// }
 
-GameObject::GameObject(Game::Label label, Sprite* pSprite, bool collisionEnabled)
+GameObject::GameObject(Game::Label label, SpriteFactory* pSpriteFactory, SoundManager* pSoundManager)
     : m_Label{label}
-      , m_pSprite{pSprite}
-      , m_pSoundManager{nullptr}
+      , m_pSpriteFactory{pSpriteFactory}
+      , m_pSprite{m_pSpriteFactory ? m_pSpriteFactory->CreateSprite(label) : nullptr}
+      , m_pSoundManager{pSoundManager}
       , m_Shape{0.0f, 0.0f, 0.0f, 0.0f}
       , m_CollisionBox{0.0f, 0.0f, 0.0f, 0.0f}
       , m_OriginalCollisionBox{m_CollisionBox}
-      , m_CollisionEnabled{collisionEnabled}
+      , m_CollisionEnabled{false}
       , m_Active{true}
       , m_Visible{true}
       , m_Flipped{false}
-      , m_Color{0.5f, 0.5f, 0.5f, 1.0f}
+      , m_CollisionBoxColor{0.5f, 0.5f, 0.5f, 1.0f}
 {
     InitShape();
     if (m_CollisionEnabled)
@@ -57,10 +61,11 @@ GameObject::GameObject(Game::Label label, Sprite* pSprite, bool collisionEnabled
     }
 }
 
-GameObject::GameObject(Game::Label label, const Rectf& shape, bool collisionEnabled, const Color4f& color)
+GameObject::GameObject(Game::Label label, const Rectf& shape, bool collisionEnabled, const Color4f& color, SoundManager* pSoundManager)
     : m_Label{label}
-      , m_pSprite{}
-      , m_pSoundManager{nullptr}
+      , m_pSpriteFactory{nullptr}
+      , m_pSprite{nullptr}
+      , m_pSoundManager{pSoundManager}
       , m_Shape{shape}
       , m_CollisionBox{shape}
       , m_OriginalCollisionBox{m_CollisionBox}
@@ -68,14 +73,15 @@ GameObject::GameObject(Game::Label label, const Rectf& shape, bool collisionEnab
       , m_Active{true}
       , m_Visible{true}
       , m_Flipped{false}
-      , m_Color{color}
+      , m_CollisionBoxColor{color}
 {
 }
 
-GameObject::GameObject(Game::Label label, Sprite* pSprite, const Point2f& pos, bool collisionEnabled,
-                       SoundManager* pSoundManager)
+GameObject::GameObject(Game::Label label, const Point2f& pos, bool collisionEnabled,
+                       SpriteFactory* pSpriteFactory, SoundManager* pSoundManager)
     : m_Label{label}
-      , m_pSprite{pSprite}
+      , m_pSpriteFactory{pSpriteFactory}
+      , m_pSprite{m_pSpriteFactory ? m_pSpriteFactory->CreateSprite(label) : nullptr}
       , m_pSoundManager{pSoundManager}
       , m_Shape{0.0f, 0.0f, 0.0f, 0.0f}
       , m_CollisionBox{0.0f, 0.0f, 0.0f, 0.0f}
@@ -84,7 +90,7 @@ GameObject::GameObject(Game::Label label, Sprite* pSprite, const Point2f& pos, b
       , m_Active{true}
       , m_Visible{true}
       , m_Flipped{false}
-      , m_Color{0.5f, 0.5f, 0.5f, 1.0f}
+      , m_CollisionBoxColor{0.5f, 0.5f, 0.5f, 1.0f}
 {
     InitShape(pos);
     if (m_CollisionEnabled)
@@ -109,7 +115,7 @@ void GameObject::Draw() const
 #if DEBUG_COLLISION
     if (m_CollisionEnabled)
     {
-        utils::SetColor(m_Color);
+        utils::SetColor(m_CollisionBoxColor);
         utils::DrawRect(m_CollisionBox);
     }
 #endif

@@ -5,7 +5,7 @@
 class Spell : public GameObject, public IThrowable
 {
 public:
-    Spell(Sprite* pSprite, const Point2f& pos);
+    Spell(const Point2f& pos, SpriteFactory* pSpriteFactory);
     virtual ~Spell() override = default;
     Spell(const Spell& other) = delete;
     Spell(Spell&& other) noexcept = delete;

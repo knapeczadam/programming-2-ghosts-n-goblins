@@ -3,8 +3,8 @@
 #include "engine/SoundManager.h"
 #include "Player.h"
 
-RedArremer::RedArremer(Sprite* pSprite, const Point2f& pos, Player* pPlayer,Sprite* pFX, SoundManager* pSoundManager)
-    : IEnemy{Game::Label::C_RED_ARREMER, pSprite, pos, pPlayer, pFX, pSoundManager}
+RedArremer::RedArremer(const Point2f& pos, Player* pPlayer, SpriteFactory* pSpriteFactory, SoundManager* pSoundManager)
+    : IEnemy{Game::Label::C_RED_ARREMER, pos, pPlayer, pSpriteFactory, pSoundManager}
 {
     m_Score = 1000;
     m_Health = 3;

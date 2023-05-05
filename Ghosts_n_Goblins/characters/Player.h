@@ -22,7 +22,7 @@ public:
     };
 
 public:
-    Player(Sprite* pSprite, const Point2f& pos, Level* pLevel, SoundManager* pSoundManager);
+    Player(const Point2f& pos, Level* pLevel, SpriteFactory* pSpriteFactory, SoundManager* pSoundManager);
     virtual ~Player() override = default;
     Player(const Player& other) = delete;
     Player(Player&& other) noexcept = delete;

@@ -3,11 +3,10 @@
 #include "engine/SoundManager.h"
 #include "Player.h"
 
-IEnemy::IEnemy(Game::Label label, Sprite* pSprite, const Point2f& pos, Player* pPlayer, Sprite* pFX,
+IEnemy::IEnemy(Game::Label label, const Point2f& pos, Player* pPlayer, SpriteFactory* pSpriteFactory,
                SoundManager* pSoundManager)
-    : GameObject{label, pSprite, pos, true, pSoundManager}
+    : GameObject{label, pos, true,pSpriteFactory, pSoundManager}
       , m_pPlayer{pPlayer}
-      , m_pFX{pFX}
       , m_SpawnPos{pos}
       , m_Score{0}
       , m_Health{1}

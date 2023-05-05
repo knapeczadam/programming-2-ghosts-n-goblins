@@ -3,8 +3,8 @@
 #include "engine/SoundManager.h"
 #include "Player.h"
 
-WoodyPig::WoodyPig(Sprite* pSprite, const Point2f& pos, Player* pPlayer,Sprite* pFX, SoundManager* pSoundManager)
-    : IEnemy{Game::Label::C_WOODY_PIG, pSprite, pos, pPlayer, pFX, pSoundManager}
+WoodyPig::WoodyPig(const Point2f& pos, Player* pPlayer, SpriteFactory* pSpriteFactory, SoundManager* pSoundManager)
+    : IEnemy{Game::Label::C_WOODY_PIG, pos, pPlayer, pSpriteFactory, pSoundManager}
 {
     m_Score = 100;
 }

@@ -5,7 +5,7 @@
 class Fireball : public GameObject, public IThrowable
 {
 public:
-    Fireball(Game::Label label, Sprite* pSprite, const Point2f& pos);
+    Fireball(Game::Label label, const Point2f& pos, SpriteFactory* pSpriteFactory);
     virtual ~Fireball() override = default;
     Fireball(const Fireball& other) = delete;
     Fireball(Fireball&& other) noexcept = delete;

@@ -4,8 +4,8 @@
 #include "Player.h"
 #include "engine/SoundManager.h"
 
-Unicorn::Unicorn(Sprite* pSprite, const Point2f& pos, Player* pPlayer, Sprite* pFX,SoundManager* pSoundManager)
-    : IEnemy{Game::Label::C_UNICORN, pSprite, pos, pPlayer, pFX, pSoundManager}
+Unicorn::Unicorn(const Point2f& pos, Player* pPlayer, SpriteFactory* pSpriteFactory, SoundManager* pSoundManager)
+    : IEnemy{Game::Label::C_UNICORN, pos, pPlayer, pSpriteFactory, pSoundManager}
 {
     m_Score = 2000;
     m_Health = 10;

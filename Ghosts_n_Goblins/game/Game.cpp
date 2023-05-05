@@ -112,7 +112,7 @@ void Game::Initialize()
     // SOUND
     m_pSoundManager = new SoundManager{m_Data, m_Labels};
     //m_pSoundManager->PlayStream(Label::S_04_GROUND_BGM, true);
-    
+
     // LEVEL
     InitLevel();
 
@@ -120,7 +120,7 @@ void Game::Initialize()
     InitCollectibles();
 
     // PLAYER
-    m_pPlayer = new Player{m_pSpriteFactory->CreateSprite(Label::C_ARTHUR), Player::GetSpawnPos(), m_pLevel, m_pSoundManager};
+    m_pPlayer = new Player{Player::GetSpawnPos(), m_pLevel, m_pSpriteFactory, m_pSoundManager};
 
     // CAMERA - has to be after level and player initialization
     InitCamera();
@@ -130,9 +130,9 @@ void Game::Initialize()
 
     // ENEMIES
     InitEnemies();
-    
+
 #if TEST_OBJECT
-    m_pTestObject = new Crow{m_pSpriteFactory->CreateSprite(Label::C_CROW), Point2f{600.f, 65.f}, m_pPlayer,nullptr,  m_pSoundManager};
+    m_pTestObject = new Crow{Point2f{600.f, 65.f}, m_pPlayer, m_pSpriteFactory, m_pSoundManager};
 #endif
 }
 
@@ -279,7 +279,7 @@ void Game::LoadData()
     }
 }
 
-void Game::InitCamera() 
+void Game::InitCamera()
 {
     m_pCamera = new Camera{GetViewPort(), m_pLevel, m_pPlayer};
 }
@@ -292,7 +292,7 @@ void Game::InitBootIntervals()
     m_BootIntervals.push({Label::B_BLACK, 0.0961f});
     m_BootIntervals.push({Label::B_03, 0.08f});
     m_BootIntervals.push({Label::B_BLACK, 0.064f});
-    m_BootIntervals.push({Label::B_04, 0.0961f});   
+    m_BootIntervals.push({Label::B_04, 0.0961f});
     m_BootIntervals.push({Label::B_BLACK, 0.08f});
     m_BootIntervals.push({Label::B_05, 0.016f});
     m_BootIntervals.push({Label::B_06, 0.064f});
@@ -313,24 +313,23 @@ void Game::InitBootIntervals()
     m_BootIntervals.push({Label::B_16, 0.096f});
     m_BootIntervals.push({Label::B_17, 0.14401f});
     m_BootIntervals.push({Label::B_18, 1.016f});
-    m_BootIntervals.push({Label::B_19, 0.048f}); 
+    m_BootIntervals.push({Label::B_19, 0.048f});
     m_BootIntervals.push({Label::B_20, 0.032f}); // edit
     m_BootIntervals.push({Label::B_21, 3.0f}); // blue
     m_BootIntervals.push({Label::B_22, 0.016f}); // blue
     m_BootIntervals.push({Label::B_23, 4.016f}); // blue
     m_BootIntervals.push({Label::B_24, 5.0f}); // best ranking
-    m_BootIntervals.push({Label::B_25, 0.033f}); 
-    m_BootIntervals.push({Label::B_END, 0.0f}); 
-    
+    m_BootIntervals.push({Label::B_25, 0.033f});
+    m_BootIntervals.push({Label::B_END, 0.0f});
 }
 
 void Game::InitLevel()
 {
-    m_pPlatform = new Platform{m_pSpriteFactory->CreateSprite(Label::L_PLATFORM), Point2f{3295.0f, 28.0f}, m_pSoundManager};
-    m_pForeground = new GameObject{Label::L_FOREGROUND, m_pSpriteFactory->CreateSprite(Label::L_FOREGROUND), false};
+    m_pPlatform = new Platform{Point2f{3295.0f, 28.0f}, m_pSpriteFactory, m_pSoundManager};
+    m_pForeground = new GameObject{Label::L_FOREGROUND, m_pSpriteFactory};
     m_pKillZone = new KillZone{m_pTextureManager->GetTexture(Label::L_LEVEL)->GetWidth(), 20.0f};
-    m_pLevel = new Level{m_pSpriteFactory->CreateSprite(Label::L_LEVEL), m_pPlatform, m_Ladders, m_pSoundManager};
-    
+    m_pLevel = new Level{m_pPlatform, m_Ladders, m_pSpriteFactory, m_pSoundManager};
+
     InitLadders();
     InitTombstones();
     InitWaters();
@@ -372,11 +371,11 @@ void Game::InitTombstones()
 void Game::InitWaters()
 {
     m_Waters.insert(m_Waters.end(), {
-                        new Water{m_pSpriteFactory->CreateSprite(Label::L_WATER), Point2f{3295.0f, 0.0f}},
-                        new Water{m_pSpriteFactory->CreateSprite(Label::L_WATER), Point2f{3903.0f, 0.0f}, 64.0f},
-                        new Water{m_pSpriteFactory->CreateSprite(Label::L_WATER), Point2f{4031.0f, 0.0f}, 64.0f},
-                        new Water{m_pSpriteFactory->CreateSprite(Label::L_WATER), Point2f{4927.0f, 0.0f}, 64.0f},
-                        new Water{m_pSpriteFactory->CreateSprite(Label::L_WATER), Point2f{5566.0f, 0.0f}, 64.0f}
+                        new Water{Point2f{3295.0f, 0.0f}, m_pSpriteFactory},
+                        new Water{Point2f{3903.0f, 0.0f}, 64.0f, m_pSpriteFactory},
+                        new Water{Point2f{4031.0f, 0.0f}, 64.0f, m_pSpriteFactory},
+                        new Water{Point2f{4927.0f, 0.0f}, 64.0f, m_pSpriteFactory},
+                        new Water{Point2f{5566.0f, 0.0f}, 64.0f, m_pSpriteFactory},
                     });
 }
 
@@ -389,19 +388,19 @@ void Game::InitCollectibles()
 void Game::InitCoins()
 {
     m_Collectibles.insert(m_Collectibles.end(), {
-                              new Coin{m_pSpriteFactory->CreateSprite(Label::O_COIN), Point2f{720.0f, 62.0f}},
-                              new Coin{m_pSpriteFactory->CreateSprite(Label::O_COIN), Point2f{6190.0f, 72.0f}},
-                              new Coin{m_pSpriteFactory->CreateSprite(Label::O_COIN), Point2f{1232.0f, 223.0f}},
-                              new Coin{m_pSpriteFactory->CreateSprite(Label::O_COIN), Point2f{1616.0f, 223.0f}},
-                              new Coin{m_pSpriteFactory->CreateSprite(Label::O_COIN), Point2f{2158.0f, 223.0f}},
+                              new Coin{Point2f{720.0f, 62.0f}, m_pSpriteFactory},
+                              new Coin{Point2f{6190.0f, 72.0f}, m_pSpriteFactory},
+                              new Coin{Point2f{1232.0f, 223.0f}, m_pSpriteFactory},
+                              new Coin{Point2f{1616.0f, 223.0f}, m_pSpriteFactory},
+                              new Coin{Point2f{2158.0f, 223.0f}, m_pSpriteFactory}
                           });
 }
 
 void Game::InitMoneyBags()
 {
     m_Collectibles.insert(m_Collectibles.end(), {
-                              new MoneyBag{m_pSpriteFactory->CreateSprite(Label::O_MONEY_BAG), Point2f{2799.0f, 63.0f}},
-                              new MoneyBag{m_pSpriteFactory->CreateSprite(Label::O_MONEY_BAG), Point2f{4814.0f, 63.0f}},
+                              new MoneyBag{Point2f{2799.0f, 63.0f}, m_pSpriteFactory},
+                              new MoneyBag{Point2f{4814.0f, 63.0f}, m_pSpriteFactory}
                           });
 }
 
@@ -424,12 +423,12 @@ void Game::InitBigMan()
 void Game::InitCrows()
 {
     m_Enemies.insert(m_Enemies.end(), {
-        new Crow{m_pSpriteFactory->CreateSprite(Label::C_CROW), Point2f{1505.0f, 100.0f}, m_pPlayer, nullptr, m_pSoundManager},
-        new Crow{m_pSpriteFactory->CreateSprite(Label::C_CROW), Point2f{2210.0f, 100.0f}, m_pPlayer, nullptr, m_pSoundManager},
-        new Crow{m_pSpriteFactory->CreateSprite(Label::C_CROW), Point2f{2526.0f, 100.0f}, m_pPlayer, nullptr, m_pSoundManager},
-        new Crow{m_pSpriteFactory->CreateSprite(Label::C_CROW), Point2f{3035.0f, 102.0f}, m_pPlayer, nullptr, m_pSoundManager},
-        new Crow{m_pSpriteFactory->CreateSprite(Label::C_CROW), Point2f{1724.0f, 262.0f}, m_pPlayer, nullptr, m_pSoundManager},
-    });
+                         new Crow{Point2f{1505.0f, 100.0f}, m_pPlayer, m_pSpriteFactory, m_pSoundManager},
+                         new Crow{Point2f{2210.0f, 100.0f}, m_pPlayer, m_pSpriteFactory, m_pSoundManager},
+                         new Crow{Point2f{2526.0f, 100.0f}, m_pPlayer, m_pSpriteFactory, m_pSoundManager},
+                         new Crow{Point2f{3035.0f, 102.0f}, m_pPlayer, m_pSpriteFactory, m_pSoundManager},
+                         new Crow{Point2f{1724.0f, 262.0f}, m_pPlayer, m_pSpriteFactory, m_pSoundManager},
+                     });
 }
 
 void Game::InitFlyingKnights()
@@ -440,18 +439,10 @@ void Game::InitGreenMonsters()
 {
     // GREEN MONSTERS
     m_Enemies.insert(m_Enemies.end(), {
-                         new GreenMonster{
-                             m_pSpriteFactory->CreateSprite(Label::C_GREEN_MONSTER), Point2f{4622.0f, 54.0f},
-                             m_pPlayer,nullptr,m_Enemies, m_pSoundManager},
-                         new GreenMonster{
-                             m_pSpriteFactory->CreateSprite(Label::C_GREEN_MONSTER), Point2f{6190.0f, 54.0f},
-                             m_pPlayer,nullptr,m_Enemies, m_pSoundManager},
-                         new GreenMonster{
-                             m_pSpriteFactory->CreateSprite(Label::C_GREEN_MONSTER), Point2f{1615.0f, 213.0f},
-                             m_pPlayer,nullptr,m_Enemies, m_pSoundManager},
-                         new GreenMonster{
-                             m_pSpriteFactory->CreateSprite(Label::C_GREEN_MONSTER), Point2f{2191.0f, 213.0f},
-                             m_pPlayer,nullptr,m_Enemies, m_pSoundManager},
+                         new GreenMonster{Point2f{4622.0f, 54.0f}, m_pPlayer, m_pSpriteFactory, m_pSoundManager},
+                         new GreenMonster{Point2f{6190.0f, 54.0f}, m_pPlayer, m_pSpriteFactory, m_pSoundManager},
+                         new GreenMonster{Point2f{1615.0f, 213.0f}, m_pPlayer, m_pSpriteFactory, m_pSoundManager},
+                         new GreenMonster{Point2f{2191.0f, 213.0f}, m_pPlayer, m_pSpriteFactory, m_pSoundManager},
                      });
 }
 
@@ -596,11 +587,13 @@ void Game::DoCollisionTests()
     {
         if (pCollectible->IsActive()) m_pPlayer->HandleCollision(pCollectible);
     }
-    
-    const bool canClimb{ std::ranges::any_of(m_Ladders, [&](const GameObject* pLadder){return pLadder->IsOverlapping(m_pPlayer);})};
+
+    const bool canClimb{
+        std::ranges::any_of(m_Ladders, [&](const GameObject* pLadder) { return pLadder->IsOverlapping(m_pPlayer); })
+    };
     m_pPlayer->CanClimb(canClimb);
-    std::ranges::for_each(m_Ladders, [&](GameObject* pLadder){pLadder->HandleCollision(m_pPlayer);});
-    
+    std::ranges::for_each(m_Ladders, [&](GameObject* pLadder) { pLadder->HandleCollision(m_pPlayer); });
+
 #if TEST_OBJECT
     if (m_pTestObject->IsActive()) m_pPlayer->HandleCollision(m_pTestObject);
 #endif
@@ -620,9 +613,9 @@ void Game::LateUpdate(float elapsedSec)
 
     DeactivateEnemiesOutOfView();
     DeactivateThrowablesOutOfView();
-    
+
     UpdateRemainingTime();
-    
+
 #if TEST_OBJECT
     m_pTestObject->LateUpdate(elapsedSec);
 #endif
@@ -743,7 +736,6 @@ void Game::DeactivateThrowablesOutOfView()
 
 void Game::UpdateRemainingTime()
 {
-    
     StartTimer(120);
     const int seconds{GetSeconds()};
     const int minutes{GetMinutes()};
@@ -760,14 +752,14 @@ void Game::UpdateRemainingTime()
         secondDigit = 0;
         thirdDigit = seconds;
     }
-    if (GetRemainingTime() <= 15.0f) 
+    if (GetRemainingTime() <= 15.0f)
     {
         m_pSoundManager->PlayStream(Game::Label::S_05_HURRY_UP, false);
     }
     m_pHUD->SetFirstDigit(firstDigit);
     m_pHUD->SetSecondDigit(secondDigit);
     m_pHUD->SetThirdDigit(thirdDigit);
-    
+
     if (IsTimerFinished())
     {
         std::cout << "Time is up!\n";

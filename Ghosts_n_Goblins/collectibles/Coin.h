@@ -5,7 +5,7 @@
 class Coin : public GameObject, public ICollectible
 {
 public:
-    Coin(Sprite* pSprite, const Point2f& pos);
+    Coin(const Point2f& pos, SpriteFactory* pSpriteFactory);
     virtual ~Coin() override = default;
     Coin(const Coin& other) = delete;
     Coin(Coin&& other) noexcept = delete;

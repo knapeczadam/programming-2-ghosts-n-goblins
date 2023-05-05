@@ -15,5 +15,4 @@ public:
 private:
     int m_HitCount;
     const int m_MaxHitCount;
-    SoundManager* m_pSoundManager;
 };

@@ -10,10 +10,10 @@ class GameObject : public ITimer
 public:
     // CONSTRUCTORS & DESTRUCTOR
     explicit GameObject();
-    explicit GameObject(Game::Label label, bool collisionEnabled = true);
-    explicit GameObject(Game::Label label, Sprite* pSprite, bool collisionEnabled = true);
-    explicit GameObject(Game::Label label, const Rectf& shape, bool collisionEnabled = true, const Color4f& color = Color4f{0.f, 1.f, 1.f, 1.f});
-    explicit GameObject(Game::Label label, Sprite* pSprite, const Point2f& pos, bool collisionEnabled = true, SoundManager* pSoundManager = nullptr);
+    // explicit GameObject(Game::Label label, bool collisionEnabled = true);
+    explicit GameObject(Game::Label label, SpriteFactory* pSpriteFactory, SoundManager* pSoundManager = nullptr);
+    explicit GameObject(Game::Label label, const Rectf& shape, bool collisionEnabled = true, const Color4f& color = Color4f{0.f, 1.f, 1.f, 1.f}, SoundManager* pSoundManager = nullptr);
+    explicit GameObject(Game::Label label, const Point2f& pos,  bool collisionEnabled = true, SpriteFactory* pSpriteFactor = nullptr, SoundManager* pSoundManager = nullptr);
     virtual ~GameObject() override = default;
     GameObject(const GameObject& other) = delete;
     GameObject(GameObject&& other) noexcept = delete;
@@ -69,6 +69,7 @@ private:
 
 protected:
     Game::Label m_Label;
+    SpriteFactory* m_pSpriteFactory;
     Sprite* m_pSprite;
     SoundManager* m_pSoundManager;
     Rectf m_Shape;
@@ -78,5 +79,5 @@ protected:
     bool m_Active;
     bool m_Visible;
     bool m_Flipped;
-    Color4f m_Color;
+    Color4f m_CollisionBoxColor;
 };

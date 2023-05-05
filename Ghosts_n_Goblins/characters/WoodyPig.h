@@ -12,7 +12,7 @@
 class WoodyPig : IEnemy
 {
 public:
-   WoodyPig(Sprite* pSprite, const Point2f& pos, Player* pPlayer,Sprite* pFX, SoundManager* pSoundManager);
+    WoodyPig(const Point2f& pos, Player* pPlayer, SpriteFactory* pSpriteFactory, SoundManager* pSoundManager);
    virtual ~WoodyPig() override = default;
    WoodyPig(const WoodyPig& other) = delete;
    WoodyPig(WoodyPig&& other) noexcept = delete;

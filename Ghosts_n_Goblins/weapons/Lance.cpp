@@ -2,9 +2,10 @@
 #include "Lance.h"
 
 #include "engine/Sprite.h"
+#include "engine/SpriteFactory.h"
 
-Lance::Lance(Sprite* pSprite, const Point2f& pos, bool isFlipped, bool collectible)
-    : GameObject{Game::Label::W_LANCE, pSprite, pos, true, nullptr}
+Lance::Lance(const Point2f& pos, bool isFlipped, bool collectible, SpriteFactory* pSpriteFactory)
+    : GameObject{Game::Label::W_LANCE, pos, true, pSpriteFactory}
       , m_Speed{300.0f}
       , m_Collectible{collectible}
 {

@@ -10,7 +10,7 @@ class Texture;
 class Platform : public GameObject
 {
 public:
-    Platform(Sprite* pSprite, const Point2f& pos, SoundManager* pSoundManager);
+    Platform(const Point2f& pos,SpriteFactory* pSpriteFactory, SoundManager* pSoundManager);
     virtual ~Platform() override = default;
     Platform(const Platform& other) = delete;
     Platform(Platform&& other) noexcept = delete;

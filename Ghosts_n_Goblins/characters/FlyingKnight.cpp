@@ -3,8 +3,8 @@
 #include "engine/SoundManager.h"
 #include "Player.h"
 
-FlyingKnight::FlyingKnight(Sprite* pSprite, const Point2f& pos, Player* pPlayer, Sprite* pFX, SoundManager* pSoundManager)
-    : IEnemy{Game::Label::C_FLYING_KNIGHT, pSprite, pos, pPlayer, pFX, pSoundManager}
+FlyingKnight::FlyingKnight(const Point2f& pos, Player* pPlayer, SpriteFactory* pSpriteFactory, SoundManager* pSoundManager)
+    : IEnemy{Game::Label::C_FLYING_KNIGHT, pos, pPlayer, pSpriteFactory, pSoundManager}
 {
     m_Score = 100;
 }

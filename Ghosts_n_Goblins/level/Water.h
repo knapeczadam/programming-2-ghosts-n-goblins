@@ -4,8 +4,8 @@
 class Water : public GameObject
 {
 public:
-    Water(Sprite* pSprite, const Point2f& pos);
-    Water(Sprite* pSprite, const Point2f& pos, float clipWidth);
+    Water(const Point2f& pos, SpriteFactory* pSpriteFactory);
+    Water(const Point2f& pos, float clipWidth, SpriteFactory* pSpriteFactory);
     virtual ~Water() override = default;
     Water(const Water& other) = delete;
     Water(Water&& other) noexcept = delete;

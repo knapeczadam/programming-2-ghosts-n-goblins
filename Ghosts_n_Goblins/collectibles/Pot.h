@@ -5,7 +5,7 @@
 class Pot : public GameObject, public ICollectible
 {
 public:
-    Pot(Sprite* pSprite, const Point2f& pos);
+    Pot(const Point2f& pos, SpriteFactory* pSpriteFactory);
     virtual ~Pot() override = default;
     Pot(const Pot& other) = delete;
     Pot(Pot&& other) noexcept = delete;

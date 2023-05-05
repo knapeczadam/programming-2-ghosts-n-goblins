@@ -1,7 +1,7 @@
 ﻿#include "pch.h"
 #include "Spell.h"
 
-Spell::Spell(Sprite* pSprite, const Point2f& pos)
-    : GameObject(Game::Label::W_SPELL, pSprite, pos)
+Spell::Spell(const Point2f& pos, SpriteFactory* pSpriteFactory)
+    : GameObject(Game::Label::W_SPELL, pos, true, pSpriteFactory)
 {
 }

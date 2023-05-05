@@ -9,8 +9,8 @@
 
 #include <iostream>
 
-Platform::Platform(Sprite* pSprite, const Point2f& pos, SoundManager* pSoundManager)
-    : GameObject{Game::Label::L_PLATFORM, pSprite, pos}
+Platform::Platform(const Point2f& pos,SpriteFactory* pSpriteFactory, SoundManager* pSoundManager)
+    : GameObject{Game::Label::L_PLATFORM, pos, true, pSpriteFactory, pSoundManager}
       , m_AccuSec{0.0f}
       , m_OriginalPos{pos}
       , m_Speed{2.0f}

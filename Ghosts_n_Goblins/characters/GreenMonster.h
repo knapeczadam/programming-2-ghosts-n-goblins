@@ -10,7 +10,7 @@
 class GreenMonster : public IEnemy
 {
 public:
-    GreenMonster(Sprite* pSprite, const Point2f& pos, Player* pPlayer,Sprite* pFX, std::vector<GameObject*> enemies, SoundManager* pSoundManager);
+    GreenMonster(const Point2f& pos, Player* pPlayer, SpriteFactory* pSpriteFactory, SoundManager* pSoundManager);
     virtual ~GreenMonster() override = default;
     GreenMonster(const GreenMonster& other) = delete;
     GreenMonster(GreenMonster&& other) noexcept = delete;

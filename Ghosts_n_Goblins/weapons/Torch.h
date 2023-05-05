@@ -6,7 +6,7 @@
 class Torch : public GameObject, public IThrowable, public ICollectible
 {
 public:
-	Torch(Sprite* pSprite, const Point2f& pos, bool isFlipped, bool collectible = false);
+	Torch(const Point2f& pos, bool isFlipped, bool collectible, SpriteFactory* pSpriteFactory);
 	virtual ~Torch() override = default;
 	Torch(const Torch& other) = delete;
 	Torch(Torch&& other) noexcept = delete;

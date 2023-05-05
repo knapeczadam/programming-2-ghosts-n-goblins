@@ -12,7 +12,7 @@
 class Crow : public IEnemy
 {
 public:
-    Crow(Sprite* pSprite, const Point2f& pos, Player* pPlayer, Sprite* pFX, SoundManager* pSoundManager);
+    Crow(const Point2f& pos, Player* pPlayer, SpriteFactory* pSpriteFactory, SoundManager* pSoundManager);
     virtual ~Crow() override = default;
     Crow(const Crow& other) = delete;
     Crow(Crow&& other) noexcept = delete;

@@ -5,7 +5,7 @@
 class Eyeball : public GameObject, public IThrowable
 {
 public:
-    Eyeball(Sprite* pSprite, const Point2f& pos);
+    Eyeball(const Point2f& pos, SpriteFactory* pSpriteFactory);
     virtual ~Eyeball() override = default;
     Eyeball(const Eyeball& other) = delete;
     Eyeball(Eyeball&& other) noexcept = delete;

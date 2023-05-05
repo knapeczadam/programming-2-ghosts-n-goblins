@@ -14,13 +14,12 @@
 #include "engine/SoundManager.h"
 #include "engine/Sprite.h"
 
-Level::Level(Sprite* pSprite, Platform* pPlatform, std::vector<GameObject*> pLadders, SoundManager* pSoundManager)
-    : GameObject{Game::Label::L_LEVEL, pSprite}
+Level::Level(Platform* pPlatform, std::vector<GameObject*> pLadders, SpriteFactory* pSpriteFactory, SoundManager* pSoundManager)
+    : GameObject{Game::Label::L_LEVEL, pSpriteFactory, pSoundManager}
       , m_pPlatform{pPlatform}
       , m_pLadders{std::move(pLadders)}
       , m_Vertices{}
       , m_Boundaries{0, 0, m_pSprite->GetWidth(), m_pSprite->GetHeight()}
-      , m_pSoundManager{pSoundManager}
 {
     SetVertices();
 }

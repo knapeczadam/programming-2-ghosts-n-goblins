@@ -24,8 +24,8 @@
 
 const Point2f Player::m_SpawnPos{50.0f, 64.0f};
 
-Player::Player(Sprite* pSprite, const Point2f& pos, Level* pLevel, SoundManager* pSoundManager)
-    : GameObject{Game::Label::C_ARTHUR, pSprite, pos, true, pSoundManager}
+Player::Player(const Point2f& pos, Level* pLevel, SpriteFactory* pSpriteFactory, SoundManager* pSoundManager)
+    : GameObject{Game::Label::C_ARTHUR, pos, true, pSpriteFactory, pSoundManager}
       , m_HorVelocity{150.0f}
       , m_VerVelocity{100.0f}
       , m_JumpVelocity{500.0f}
@@ -204,13 +204,13 @@ void Player::Attack(std::vector<GameObject*>& throwables, SpriteFactory* spriteF
         switch (m_Weapon)
         {
         case Game::Label::W_DAGGER:
-            throwables.push_back(new Dagger{spriteFactory->CreateSprite(m_Weapon), GetShapeCenter(), m_Flipped});
+            throwables.push_back(new Dagger{GetShapeCenter(), m_Flipped, false, m_pSpriteFactory});
             break;
         case Game::Label::W_LANCE:
-            throwables.push_back(new Lance{spriteFactory->CreateSprite(m_Weapon), GetShapeCenter(), m_Flipped});
+            throwables.push_back(new Lance{GetShapeCenter(), m_Flipped, false, m_pSpriteFactory});
             break;
         case Game::Label::W_TORCH:
-            throwables.push_back(new Torch{spriteFactory->CreateSprite(m_Weapon), GetShapeCenter(), m_Flipped});
+            throwables.push_back(new Torch{GetShapeCenter(), m_Flipped, false, m_pSpriteFactory});
             break;
         }
     }

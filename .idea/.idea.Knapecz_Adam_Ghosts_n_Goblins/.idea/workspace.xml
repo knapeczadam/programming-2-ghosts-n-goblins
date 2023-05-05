@@ -8,21 +8,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0c813320-22e2-4144-ad4a-570649cc50d7" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/weapons/Eyeball.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/weapons/Eyeball.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/weapons/Fireball.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/weapons/Fireball.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/weapons/Spear.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/weapons/Spear.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/weapons/Spell.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/weapons/Spell.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Resources/images/collectibles/statue.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Resources/images/collectibles/statue.psd" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Resources/images/weapons/fireball_red_arremer.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Resources/images/weapons/fireball_red_arremer.psd" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Resources/images/weapons/fireball_unicorn.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Resources/images/weapons/fireball_unicorn.psd" afterDir="false" />
+    <list default="true" id="0c813320-22e2-4144-ad4a-570649cc50d7" name="Changes" comment="Small descriptions about enemies, additional throwables,">
       <change afterPath="$PROJECT_DIR$/Resources/videos/boot.mp4" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/Resources/videos/death/03_losing_armor_from_the_right.mp4" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/Resources/videos/death/04_losing_armor_from_the_left.mp4" afterDir="false" />
@@ -31,35 +17,67 @@
       <change afterPath="$PROJECT_DIR$/Resources/videos/level/platform.mp4" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/Resources/videos/ui/abc.mp4" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Knapecz_Adam_Ghosts_n_Goblins/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Knapecz_Adam_Ghosts_n_Goblins/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/Ghosts_n_Goblins.vcxproj" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/Ghosts_n_Goblins.vcxproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/characters/Crow.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/characters/Crow.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/characters/Crow.h" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/characters/Crow.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/characters/FlyingKnight.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/characters/FlyingKnight.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/characters/FlyingKnight.h" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/characters/FlyingKnight.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/characters/GreenMonster.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/characters/GreenMonster.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/characters/GreenMonster.h" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/characters/GreenMonster.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/characters/IEnemy.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/characters/IEnemy.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/characters/IEnemy.h" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/characters/IEnemy.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/characters/Magician.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/characters/Magician.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/characters/Magician.h" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/characters/Magician.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/characters/Player.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/characters/Player.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/characters/Player.h" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/characters/Player.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/characters/RedArremer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/characters/RedArremer.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/characters/RedArremer.h" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/characters/RedArremer.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/characters/Unicorn.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/characters/Unicorn.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/characters/Unicorn.h" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/characters/Unicorn.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/characters/WoodyPig.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/characters/WoodyPig.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/characters/WoodyPig.h" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/characters/WoodyPig.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/characters/Zombie.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/characters/Zombie.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/characters/Zombie.h" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/characters/Zombie.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/collectibles/Bust.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/collectibles/Statue.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/collectibles/Bust.h" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/collectibles/Statue.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/collectibles/Coin.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/collectibles/Coin.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/collectibles/Coin.h" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/collectibles/Coin.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/collectibles/Key.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/collectibles/Key.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/collectibles/Key.h" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/collectibles/Key.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/collectibles/MoneyBag.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/collectibles/MoneyBag.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/collectibles/MoneyBag.h" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/collectibles/MoneyBag.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/collectibles/Necklace.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/collectibles/Necklace.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/collectibles/Necklace.h" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/collectibles/Necklace.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/collectibles/Pot.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/collectibles/Pot.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/collectibles/Pot.h" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/collectibles/Pot.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/collectibles/Shield.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/collectibles/Shield.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/collectibles/Shield.h" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/collectibles/Shield.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/collectibles/Statue.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/collectibles/Statue.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/collectibles/Statue.h" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/collectibles/Statue.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/collectibles/Yashichi.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/collectibles/Yashichi.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/game/Camera.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/game/Camera.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/collectibles/Yashichi.h" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/collectibles/Yashichi.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/game/Game.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/game/Game.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/game/Game.h" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/game/Game.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Resources/data.json" beforeDir="false" afterPath="$PROJECT_DIR$/Resources/data.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Resources/images/collectibles/bust.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Resources/images/collectibles/bust.psd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Resources/images/weapons/arma_foc.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Resources/images/weapons/eyeball.png" beforeDir="false" afterPath="$PROJECT_DIR$/Resources/images/weapons/eyeball.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Resources/images/weapons/eyeball.psd" beforeDir="false" afterPath="$PROJECT_DIR$/Resources/images/weapons/eyeball.psd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Resources/images/weapons/spell.png" beforeDir="false" afterPath="$PROJECT_DIR$/Resources/images/weapons/spell.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Resources/images/weapons/spell.psd" beforeDir="false" afterPath="$PROJECT_DIR$/Resources/images/weapons/spell.psd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Resources/images/weapons/torch.png" beforeDir="false" afterPath="$PROJECT_DIR$/Resources/images/weapons/torch.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Resources/images/weapons/torch.psd" beforeDir="false" afterPath="$PROJECT_DIR$/Resources/images/weapons/torch.psd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/game/GameObject.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/game/GameObject.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/game/GameObject.h" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/game/GameObject.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/level/KillZone.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/level/KillZone.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/level/Ladder.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/level/Ladder.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/level/Level.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/level/Level.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/level/Level.h" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/level/Level.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/level/Platform.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/level/Platform.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/level/Platform.h" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/level/Platform.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/level/Tombstone.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/level/Tombstone.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/level/Tombstone.h" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/level/Tombstone.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/level/Water.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/level/Water.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/level/Water.h" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/level/Water.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/weapons/Dagger.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/weapons/Dagger.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/weapons/Dagger.h" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/weapons/Dagger.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/weapons/Eyeball.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/weapons/Eyeball.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/weapons/Eyeball.h" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/weapons/Eyeball.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/weapons/Fireball.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/weapons/Fireball.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/weapons/Fireball.h" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/weapons/Fireball.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/weapons/Lance.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/weapons/Lance.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/weapons/Lance.h" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/weapons/Lance.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/weapons/Spell.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/weapons/Spell.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/weapons/Spell.h" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/weapons/Spell.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/weapons/Torch.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/weapons/Torch.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ghosts_n_Goblins/weapons/Torch.h" beforeDir="false" afterPath="$PROJECT_DIR$/Ghosts_n_Goblins/weapons/Torch.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Resources/videos/03_losing_armor_from_the_right.mp4" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Resources/videos/04_losing_armor_from_the_left.mp4" beforeDir="false" />
     </list>
@@ -77,50 +95,14 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../../../../../../../../Program Files (x86)/Windows Kits/10/Include/10.0.19041.0/ucrt/float.h" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../../../../../../../../Program Files (x86)/Windows Kits/10/Include/10.0.19041.0/um/winnt.h" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../../../../../../../../Program Files/Microsoft Visual Studio/2022/Enterprise/VC/Tools/MSVC/14.35.32215/include/limits" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../../../../../../../../Program Files/Microsoft Visual Studio/2022/Enterprise/VC/Tools/MSVC/14.35.32215/include/map" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/adam/OneDrive - Hogeschool West-Vlaanderen/DAE/2022 - 2023/Semester 2/Programming 2/00 - Game Project/Knapecz_Adam_Ghosts_n_Goblins/Ghosts_n_Goblins/characters/BigMan.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/adam/OneDrive - Hogeschool West-Vlaanderen/DAE/2022 - 2023/Semester 2/Programming 2/00 - Game Project/Knapecz_Adam_Ghosts_n_Goblins/Ghosts_n_Goblins/characters/BigMan.h" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/adam/OneDrive - Hogeschool West-Vlaanderen/DAE/2022 - 2023/Semester 2/Programming 2/00 - Game Project/Knapecz_Adam_Ghosts_n_Goblins/Ghosts_n_Goblins/characters/Crow.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/adam/OneDrive - Hogeschool West-Vlaanderen/DAE/2022 - 2023/Semester 2/Programming 2/00 - Game Project/Knapecz_Adam_Ghosts_n_Goblins/Ghosts_n_Goblins/characters/Crow.cpp" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://C:/Users/adam/OneDrive - Hogeschool West-Vlaanderen/DAE/2022 - 2023/Semester 2/Programming 2/00 - Game Project/Knapecz_Adam_Ghosts_n_Goblins/Ghosts_n_Goblins/characters/Crow.h" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/adam/OneDrive - Hogeschool West-Vlaanderen/DAE/2022 - 2023/Semester 2/Programming 2/00 - Game Project/Knapecz_Adam_Ghosts_n_Goblins/Ghosts_n_Goblins/characters/GreenMonster.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/adam/OneDrive - Hogeschool West-Vlaanderen/DAE/2022 - 2023/Semester 2/Programming 2/00 - Game Project/Knapecz_Adam_Ghosts_n_Goblins/Ghosts_n_Goblins/characters/IEnemy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/adam/OneDrive - Hogeschool West-Vlaanderen/DAE/2022 - 2023/Semester 2/Programming 2/00 - Game Project/Knapecz_Adam_Ghosts_n_Goblins/Ghosts_n_Goblins/characters/Player.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/adam/OneDrive - Hogeschool West-Vlaanderen/DAE/2022 - 2023/Semester 2/Programming 2/00 - Game Project/Knapecz_Adam_Ghosts_n_Goblins/Ghosts_n_Goblins/engine/Clock.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/adam/OneDrive - Hogeschool West-Vlaanderen/DAE/2022 - 2023/Semester 2/Programming 2/00 - Game Project/Knapecz_Adam_Ghosts_n_Goblins/Ghosts_n_Goblins/engine/Clock.h" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/adam/OneDrive - Hogeschool West-Vlaanderen/DAE/2022 - 2023/Semester 2/Programming 2/00 - Game Project/Knapecz_Adam_Ghosts_n_Goblins/Ghosts_n_Goblins/characters/RedArremer.h" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/adam/OneDrive - Hogeschool West-Vlaanderen/DAE/2022 - 2023/Semester 2/Programming 2/00 - Game Project/Knapecz_Adam_Ghosts_n_Goblins/Ghosts_n_Goblins/characters/Unicorn.cpp" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Ghosts_n_Goblins/engine/json.hpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/adam/OneDrive - Hogeschool West-Vlaanderen/DAE/2022 - 2023/Semester 2/Programming 2/00 - Game Project/Knapecz_Adam_Ghosts_n_Goblins/Ghosts_n_Goblins/ui/HUD.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/adam/OneDrive - Hogeschool West-Vlaanderen/DAE/2022 - 2023/Semester 2/Programming 2/00 - Game Project/Knapecz_Adam_Ghosts_n_Goblins/Ghosts_n_Goblins/ui/HUD.h" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Libraries/SDLMixer/SDL2_mixer-2.6.3/include/SDL_mixer.h" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
@@ -288,7 +270,7 @@
       <workItem from="1683111356858" duration="5020000" />
       <workItem from="1683116806673" duration="44192000" />
       <workItem from="1683190024463" duration="27741000" />
-      <workItem from="1683241324074" duration="6401000" />
+      <workItem from="1683241324074" duration="10968000" />
     </task>
     <task id="LOCAL-00001" summary="#1">
       <created>1682809240069</created>
@@ -444,7 +426,14 @@
       <option name="project" value="LOCAL" />
       <updated>1683237152023</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="Small descriptions about enemies, additional throwables,">
+      <created>1683249428824</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1683249428824</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -499,7 +488,8 @@
     <MESSAGE value="Crow basic behaviour, refactoring" />
     <MESSAGE value="Deactivate enemies outside of camera" />
     <MESSAGE value="Renaming, refactoring, image editing" />
-    <option name="LAST_COMMIT_MESSAGE" value="Renaming, refactoring, image editing" />
+    <MESSAGE value="Small descriptions about enemies, additional throwables," />
+    <option name="LAST_COMMIT_MESSAGE" value="Small descriptions about enemies, additional throwables," />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -518,6 +508,11 @@
           <url>file://$PROJECT_DIR$/Ghosts_n_Goblins/engine/SpriteFactory.cpp</url>
           <line>95</line>
           <option name="timeStamp" value="18" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/Ghosts_n_Goblins/game/GameObject.cpp</url>
+          <line>284</line>
+          <option name="timeStamp" value="19" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

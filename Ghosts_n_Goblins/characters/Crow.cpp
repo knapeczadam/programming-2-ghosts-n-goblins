@@ -7,8 +7,8 @@
 
 #include "engine/Clock.h"
 
-Crow::Crow(Sprite* pSprite, const Point2f& pos, Player* pPlayer, Sprite* pFX, SoundManager* pSoundManager)
-    : IEnemy{Game::Label::C_CROW, pSprite, pos, pPlayer, pFX, pSoundManager}
+Crow::Crow(const Point2f& pos, Player* pPlayer, SpriteFactory* pSpriteFactory, SoundManager* pSoundManager)
+    : IEnemy{Game::Label::C_CROW, pos, pPlayer, pSpriteFactory, pSoundManager}
     , m_Amplitude{10.0f}
 {
     m_Score = 100;

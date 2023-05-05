@@ -3,8 +3,8 @@
 #include "engine/SoundManager.h"
 #include "Player.h"
 
-Magician::Magician(Sprite* pSprite, const Point2f& pos, Player* pPlayer, Sprite* pFX, SoundManager* pSoundManager)
-    : IEnemy{Game::Label::E_MAGICIAN, pSprite, pos, pPlayer, pFX, pSoundManager}
+Magician::Magician(const Point2f& pos, Player* pPlayer, SpriteFactory* pSpriteFactory, SoundManager* pSoundManager)
+    : IEnemy{Game::Label::E_MAGICIAN, pos, pPlayer, pSpriteFactory, pSoundManager}
 {
     m_Score = 2000;
 }

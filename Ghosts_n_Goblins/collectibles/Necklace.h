@@ -5,7 +5,7 @@
 class Necklace : public GameObject, public ICollectible
 {
 public:
-    Necklace(Sprite* pSprite, const Point2f& pos);
+    Necklace(const Point2f& pos, SpriteFactory* pSpriteFactory);
     virtual ~Necklace() override = default;
     Necklace(const Necklace& other) = delete;
     Necklace(Necklace&& other) noexcept = delete;
