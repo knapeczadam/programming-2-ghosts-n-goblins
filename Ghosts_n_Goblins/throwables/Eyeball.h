@@ -12,6 +12,7 @@ public:
     Eyeball& operator=(const Eyeball& other) = delete;
 
     virtual void Update(float elapsedSec) override;
+    void SetDirection(const Vector2f& direction);
 
 private:
     Vector2f m_Direction;

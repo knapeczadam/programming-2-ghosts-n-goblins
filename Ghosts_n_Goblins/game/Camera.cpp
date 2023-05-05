@@ -49,7 +49,6 @@ bool Camera::IsOutOfWindow(const GameObject* pGameObject) const
     const bool horizontal{right + m_OutOfWindowOffset < m_Pos.x or left - m_OutOfWindowOffset > m_Pos.x + m_Width};
     const bool vertical{bottom > m_Height or top < 0.0f};
     return horizontal or vertical;
-    return horizontal;
 }
 
 /*

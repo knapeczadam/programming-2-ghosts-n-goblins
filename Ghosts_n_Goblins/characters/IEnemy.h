@@ -14,6 +14,7 @@ public:
     virtual void Update(float elapsedSec) override;
 
     virtual bool IsAwake() const final;
+    virtual void SetAwake(bool awake) final;
 
 protected:
     virtual void Awake();

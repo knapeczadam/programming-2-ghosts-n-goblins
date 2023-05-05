@@ -24,5 +24,5 @@ protected:
     virtual void Wait(float elapsedSec) override;
     virtual void Shoot(float elapsedSec) override;
 private:
-    std::vector<GameObject*>& m_Enemies;
+    std::vector<GameObject*>& m_EnemyThrowables;
 };

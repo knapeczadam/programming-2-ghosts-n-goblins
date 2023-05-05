@@ -1,18 +1,19 @@
 ﻿#include "pch.h"
-#include "Torch.h"
+#include "Lance.h"
+
 #include "engine/Sprite.h"
+#include "engine/SpriteFactory.h"
 
-
-Torch::Torch(const Point2f& pos, bool isFlipped, bool collectible, SpriteFactory* pSpriteFactory)
-    : GameObject{Game::Label::W_TORCH, pos, true, pSpriteFactory}
-    , m_Speed{300.0f}
-    , m_Collectible{collectible}
+Lance::Lance(const Point2f& pos, bool isFlipped, bool collectible, SpriteFactory* pSpriteFactory)
+    : GameObject{Game::Label::T_LANCE, pos, true, pSpriteFactory}
+      , m_Speed{300.0f}
+      , m_Collectible{collectible}
 {
     m_Flipped = isFlipped;
     SetSprite();
 }
 
-void Torch::Update(float elapsedSec)
+void Lance::Update(float elapsedSec)
 {
     if (m_Collectible)
     {
@@ -29,7 +30,7 @@ void Torch::Update(float elapsedSec)
     UpdateCollisionBox();
 }
 
-void Torch::SetSprite() const
+void Lance::SetSprite() const
 {
     if (m_Collectible)
     {

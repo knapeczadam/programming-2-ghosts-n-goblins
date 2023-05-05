@@ -42,7 +42,7 @@ void Crow::HandleCollision(GameObject* other)
     if (not IsOverlapping(other)) return;
     --m_Health;
     other->SetActive(false);
-    other->SetVisible(false);
+    // other->SetVisible(false);
     if (m_Health == 0)
     {
         m_pPlayer->AddScore(m_Score);

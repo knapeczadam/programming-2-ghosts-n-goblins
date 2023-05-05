@@ -1,6 +1,6 @@
 ﻿#include "pch.h"
 #include "Tombstone.h"
-#include "weapons/IThrowable.h"
+#include "throwables/IThrowable.h"
 #include "utils.h"
 #include "engine/SoundManager.h"
 #include <iostream>
@@ -19,5 +19,5 @@ void Tombstone::HandleCollision(GameObject* other)
     m_HitCount++;
     std::cout << "Tombstone::HandleCollision() - HitCount: " << m_HitCount << std::endl;
     other->SetActive(false);
-    other->SetVisible(false);
+    // other->SetVisible(false);
 }

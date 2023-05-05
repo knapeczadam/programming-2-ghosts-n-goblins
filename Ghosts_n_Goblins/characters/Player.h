@@ -31,6 +31,7 @@ public:
 
     virtual void Draw() const override;
     void UpdateCooldown(float elapsedSec);
+    void Throw();
     virtual void Update(float elapsedSec) override;
     virtual void LateUpdate(float elapsedSec) override;
     void SyncWithPlatform(float elapsedSec);
@@ -84,7 +85,7 @@ private:
     float m_ShortCooldownTime;
     float m_LongCooldownTime;
     bool m_Attacking;
-    Game::Label m_Weapon;
+    Game::Label m_CurrWeapon;
     bool m_Overheated;
     bool m_OnPlatform;
     Vector2f m_OffsetSnapshot;
@@ -96,5 +97,5 @@ private:
     bool m_Climbing;
     bool m_OnLadder;
     bool m_OnGround;
-    std::vector<GameObject*>& m_Throwables;
+    std::vector<GameObject*>& m_PlayerThrowables;
 };

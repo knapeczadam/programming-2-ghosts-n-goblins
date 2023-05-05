@@ -1,19 +1,18 @@
 ﻿#include "pch.h"
-#include "Dagger.h"
-
+#include "Torch.h"
 #include "engine/Sprite.h"
 
 
-Dagger::Dagger(const Point2f& pos, bool isFlipped, bool collectible, SpriteFactory* pSpriteFactory)
-    : GameObject{Game::Label::W_DAGGER, pos, true, pSpriteFactory}
-      , m_Speed{300.0f}
-      , m_Collectible{collectible}
+Torch::Torch(const Point2f& pos, bool isFlipped, bool collectible, SpriteFactory* pSpriteFactory)
+    : GameObject{Game::Label::T_TORCH, pos, true, pSpriteFactory}
+    , m_Speed{300.0f}
+    , m_Collectible{collectible}
 {
     m_Flipped = isFlipped;
     SetSprite();
 }
 
-void Dagger::Update(float elapsedSec)
+void Torch::Update(float elapsedSec)
 {
     if (m_Collectible)
     {
@@ -30,7 +29,7 @@ void Dagger::Update(float elapsedSec)
     UpdateCollisionBox();
 }
 
-void Dagger::SetSprite() const
+void Torch::SetSprite() const
 {
     if (m_Collectible)
     {

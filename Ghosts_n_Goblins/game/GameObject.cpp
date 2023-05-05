@@ -177,6 +177,11 @@ bool GameObject::IsOverlapping(GameObject* other) const
     return utils::IsOverlapping(m_CollisionBox, other->GetCollisionBox());
 }
 
+void GameObject::SetFlipped(bool flipped)
+{
+    m_Flipped = flipped;
+}
+
 Rectf GameObject::GetCollisionBox() const
 {
     return m_CollisionBox;

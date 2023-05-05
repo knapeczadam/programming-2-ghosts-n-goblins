@@ -23,8 +23,8 @@
 #include "level/Tombstone.h"
 #include "level/Water.h"
 #include "ui/HUD.h"
-#include "weapons/IThrowable.h"
-#include "weapons/Lance.h"
+#include "throwables/IThrowable.h"
+#include "throwables/Lance.h"
 
 #include <fstream>
 #include <iostream>
@@ -36,7 +36,8 @@
 Game::Game(const Window& window)
     : BaseGame{window}
       , m_Enemies{}
-      , m_Throwables{}
+      , m_PlayerThrowables{}
+      , m_EnemyThrowables{}
       , m_Waters{}
       , m_Tombstones{}
       , m_Collectibles{}
@@ -89,7 +90,8 @@ void Game::Cleanup()
 #endif
 
     std::ranges::for_each(m_Waters, deleteGameObject);
-    std::ranges::for_each(m_Throwables, deleteGameObject);
+    std::ranges::for_each(m_PlayerThrowables, deleteGameObject);
+    std::ranges::for_each(m_EnemyThrowables, deleteGameObject);
     std::ranges::for_each(m_Enemies, deleteGameObject);
     std::ranges::for_each(m_Tombstones, deleteGameObject);
     std::ranges::for_each(m_Collectibles, deleteGameObject);
@@ -120,7 +122,7 @@ void Game::Initialize()
     InitCollectibles();
 
     // PLAYER
-    m_pPlayer = new Player{Player::GetSpawnPos(), m_Throwables, m_pLevel, m_pSpriteFactory, m_pSoundManager};
+    m_pPlayer = new Player{Player::GetSpawnPos(), m_PlayerThrowables, m_pLevel, m_pSpriteFactory, m_pSoundManager};
 
     // CAMERA - has to be after level and player initialization
     InitCamera();
@@ -130,8 +132,6 @@ void Game::Initialize()
 
     // ENEMIES
     InitEnemies();
-
-    m_Throwables.push_back(new GameObject{});
 
 #if TEST_OBJECT
     m_pTestObject = new Crow{Point2f{600.f, 65.f}, m_pPlayer, m_pSpriteFactory, m_pSoundManager};
@@ -180,15 +180,15 @@ void Game::InitLabels()
     m_Labels["u_map"] = Label::U_MAP;
     m_Labels["u_pin"] = Label::U_PIN;
 
-    // WEAPONS
-    m_Labels["w_dagger"] = Label::W_DAGGER;
-    m_Labels["w_eyeball"] = Label::W_EYEBALL;
-    m_Labels["w_fireball_red_arremer"] = Label::W_FIREBALL_RED_ARREMER;
-    m_Labels["w_fireball_unicorn"] = Label::W_FIREBALL_UNICORN;
-    m_Labels["w_lance"] = Label::W_LANCE;
-    m_Labels["w_spear"] = Label::W_SPEAR;
-    m_Labels["w_spell"] = Label::W_SPELL;
-    m_Labels["w_torch"] = Label::W_TORCH;
+    // THROWABLES
+    m_Labels["t_dagger"] = Label::T_DAGGER;
+    m_Labels["t_eyeball"] = Label::T_EYEBALL;
+    m_Labels["t_fireball_red_arremer"] = Label::T_FIREBALL_RED_ARREMER;
+    m_Labels["t_fireball_unicorn"] = Label::T_FIREBALL_UNICORN;
+    m_Labels["t_lance"] = Label::T_LANCE;
+    m_Labels["t_spear"] = Label::T_SPEAR;
+    m_Labels["t_spell"] = Label::T_SPELL;
+    m_Labels["t_torch"] = Label::T_TORCH;
 
     // DEBUG
     m_Labels["d_level_debug"] = Label::D_LEVEL_DEBUG;
@@ -329,7 +329,7 @@ void Game::InitLevel()
 {
     m_pPlatform = new Platform{Point2f{3295.0f, 28.0f}, m_pSpriteFactory, m_pSoundManager};
     m_pForeground = new GameObject{Label::L_FOREGROUND, m_pSpriteFactory};
-    m_pKillZone = new KillZone{m_pTextureManager->GetTexture(Label::L_LEVEL)->GetWidth(), 20.0f};
+    m_pKillZone = new KillZone{m_pTextureManager->GetTexture(Label::L_LEVEL)->GetWidth(), 10.0f};
     m_pLevel = new Level{m_pPlatform, m_Ladders, m_pSpriteFactory, m_pSoundManager};
 
     InitLadders();
@@ -442,10 +442,18 @@ void Game::InitGreenMonsters()
     // GREEN MONSTERS
     // TODO: enemy throwables vector
     m_Enemies.insert(m_Enemies.end(), {
-                         new GreenMonster{Point2f{4622.0f, 54.0f}, m_pPlayer, m_Throwables, m_pSpriteFactory, m_pSoundManager},
-                         new GreenMonster{Point2f{6190.0f, 54.0f}, m_pPlayer, m_Throwables,m_pSpriteFactory,  m_pSoundManager},
-                         new GreenMonster{Point2f{1615.0f, 213.0f}, m_pPlayer,m_Throwables, m_pSpriteFactory, m_pSoundManager},
-                         new GreenMonster{Point2f{2191.0f, 213.0f}, m_pPlayer, m_Throwables, m_pSpriteFactory, m_pSoundManager},
+                         new GreenMonster{
+                             Point2f{4622.0f, 54.0f}, m_pPlayer, m_EnemyThrowables, m_pSpriteFactory, m_pSoundManager
+                         },
+                         new GreenMonster{
+                             Point2f{6190.0f, 54.0f}, m_pPlayer, m_EnemyThrowables, m_pSpriteFactory, m_pSoundManager
+                         },
+                         new GreenMonster{
+                             Point2f{1615.0f, 213.0f}, m_pPlayer, m_EnemyThrowables, m_pSpriteFactory, m_pSoundManager
+                         },
+                         new GreenMonster{
+                             Point2f{2191.0f, 213.0f}, m_pPlayer, m_EnemyThrowables, m_pSpriteFactory, m_pSoundManager
+                         },
                      });
 }
 
@@ -491,11 +499,12 @@ void Game::Draw() const
     m_pCamera->Transform();
     m_pLevel->Draw();
     std::ranges::for_each(m_Enemies | std::views::filter(isVisible), draw);
-    std::ranges::for_each(m_Throwables | std::views::filter(isVisible), draw);
+    std::ranges::for_each(m_PlayerThrowables | std::views::filter(isVisible), draw);
     std::ranges::for_each(m_Collectibles | std::views::filter(isVisible), draw);
     m_pPlayer->Draw();
     std::ranges::for_each(m_Waters, draw);
     m_pForeground->Draw();
+    std::ranges::for_each(m_EnemyThrowables | std::views::filter(isVisible), draw);
 #if TEST_OBJECT
     if (m_pTestObject->IsVisible()) m_pTestObject->Draw();
 #endif
@@ -513,8 +522,8 @@ void Game::Draw() const
 void Game::Update(float elapsedSec)
 {
     // static lambda functions
-    static auto isActive{[](const GameObject* pGameObject) { return pGameObject->IsActive(); }};
-    static auto update{[&](GameObject* pGameObject) { pGameObject->Update(elapsedSec); }};
+    static const auto isActive{[](const GameObject* pGameObject) { return pGameObject->IsActive(); }};
+    static const auto update{[&](GameObject* pGameObject) { pGameObject->Update(elapsedSec); }};
 
     Clock::Update(elapsedSec);
 
@@ -537,7 +546,10 @@ void Game::Update(float elapsedSec)
     std::ranges::for_each(m_Enemies | std::views::filter(isActive), update);
 
     // THROWABLES
-    std::ranges::for_each(m_Throwables | std::views::filter(isActive), update);
+    std::ranges::for_each(m_PlayerThrowables | std::views::filter(isActive), update);
+
+    // ENEMY THROWABLES
+    std::ranges::for_each(m_EnemyThrowables | std::views::filter(isActive), update);
 
     // COLLECTIBLES
     std::ranges::for_each(m_Collectibles | std::views::filter(isActive), update);
@@ -568,8 +580,16 @@ void Game::DoCollisionTests()
         }
     }
 
+    for (GameObject* enemyThrowable : m_EnemyThrowables)
+    {
+        if (enemyThrowable->IsActive())
+        {
+            m_pPlayer->HandleCollision(enemyThrowable);
+        }
+    }
+
     // Weapons on game enemies and tombstones
-    for (GameObject* weapon : m_Throwables)
+    for (GameObject* weapon : m_PlayerThrowables)
     {
         if (weapon->IsActive())
         {
@@ -605,17 +625,17 @@ void Game::DoCollisionTests()
 void Game::LateUpdate(float elapsedSec)
 {
     // static lambda functions
-    static auto lateUpdate{[&](GameObject* pGameObject) { pGameObject->LateUpdate(elapsedSec); }};
+    static const auto lateUpdate{[&](GameObject* pGameObject) { pGameObject->LateUpdate(elapsedSec); }};
 
     m_pPlayer->LateUpdate(elapsedSec);
 
     std::ranges::for_each(m_Waters, lateUpdate);
     std::ranges::for_each(m_Enemies, lateUpdate);
-    std::ranges::for_each(m_Throwables, lateUpdate);
+    std::ranges::for_each(m_PlayerThrowables, lateUpdate);
+    std::ranges::for_each(m_EnemyThrowables, lateUpdate);
     std::ranges::for_each(m_Collectibles, lateUpdate);
 
-    // DeactivateEnemiesOutOfView();
-    // DeactivateThrowablesOutOfView();
+    DoFrustumCulling();
 
     UpdateRemainingTime();
 
@@ -713,28 +733,39 @@ void Game::Debug() const
         .y << std::endl;
 }
 
-void Game::DeactivateEnemiesOutOfView()
+void Game::DoFrustumCulling()
 {
-    for (GameObject* pEnemy : m_Enemies)
-    {
-        IEnemy* pIEnemy{dynamic_cast<IEnemy*>(pEnemy)};
-        if (pIEnemy->IsAwake() and m_pCamera->IsOutOfWindow(pEnemy))
+    static const auto isOutOfWindow{
+        [&](const GameObject* pGameObject) { return m_pCamera->IsOutOfWindow(pGameObject); }
+    };
+    static const auto isAwake{[&](const IEnemy* pEnemy) { return pEnemy->IsAwake(); }};
+    static const auto deactivate{
+        [&](GameObject* pGameObject)
         {
-            pEnemy->SetActive(false);
+            //pGameObject->SetVisible(true);
+            pGameObject->SetActive(false);
         }
-    }
-}
+    };
 
-void Game::DeactivateThrowablesOutOfView()
-{
-    for (GameObject* weapon : m_Throwables)
+    std::ranges::for_each(m_PlayerThrowables | std::views::filter(isOutOfWindow), deactivate);
+    std::ranges::for_each(m_EnemyThrowables | std::views::filter(isOutOfWindow), deactivate);
+
+    for (GameObject* pGameObject : m_Enemies)
     {
-        if (weapon->IsActive() and not m_pCamera->IsOutOfWindow(weapon))
+        IEnemy* pEnemy{dynamic_cast<IEnemy*>(pGameObject)};
+        if (pEnemy)
         {
-            weapon->SetActive(false);
-            weapon->SetVisible(false);
+            switch (pEnemy->GetLabel())
+            {
+            case Label::C_GREEN_MONSTER:
+                pEnemy->SetAwake(false);
+                break;
+            }
         }
     }
+#if TEST_OBJECT
+    if (isOutOfWindow(m_pTestObject)) deactivate(m_pTestObject);
+#endif
 }
 
 void Game::UpdateRemainingTime()

@@ -14,9 +14,9 @@
 #include "level/IClimable.h"
 #include "level/Level.h"
 #include "level/Platform.h"
-#include "weapons/Dagger.h"
-#include "weapons/Lance.h"
-#include "weapons/Torch.h"
+#include "throwables/Dagger.h"
+#include "throwables/Lance.h"
+#include "throwables/Torch.h"
 
 #include <iostream>
 #include <numeric>
@@ -40,7 +40,7 @@ Player::Player(const Point2f& pos, std::vector<GameObject*>& throwables, Level* 
       , m_ShortCooldownTime{0.25f}
       , m_LongCooldownTime{0.30f}
       , m_Attacking{false}
-      , m_Weapon{Game::Label::W_LANCE}
+      , m_CurrWeapon{Game::Label::T_LANCE}
       , m_Overheated{false}
       , m_OnPlatform{false}
       , m_OffsetSnapshot{0.0f, 0.0f}
@@ -52,7 +52,7 @@ Player::Player(const Point2f& pos, std::vector<GameObject*>& throwables, Level* 
       , m_Climbing{false}
       , m_OnLadder{false}
       , m_OnGround{false}
-      , m_Throwables{throwables}
+      , m_PlayerThrowables{throwables}
 {
 }
 
@@ -194,6 +194,33 @@ void Player::UpdateCooldown(float elapsedSec)
     }
 }
 
+void Player::Throw()
+{
+    for (GameObject* pWeapon : m_PlayerThrowables)
+    {
+        if (pWeapon->GetLabel() == m_CurrWeapon and not pWeapon->IsActive())
+        {
+            pWeapon->SetPosition(GetShapeCenter());
+            pWeapon->SetFlipped(m_Flipped);
+            pWeapon->SetActive(true);
+            pWeapon->SetVisible(true);
+            return;
+        }
+    }
+    switch (m_CurrWeapon)
+    {
+    case Game::Label::T_DAGGER:
+        m_PlayerThrowables.push_back(new Dagger{GetShapeCenter(), m_Flipped, false, m_pSpriteFactory});
+        break;
+    case Game::Label::T_LANCE:
+        m_PlayerThrowables.push_back(new Lance{GetShapeCenter(), m_Flipped, false, m_pSpriteFactory});
+        break;
+    case Game::Label::T_TORCH:
+        m_PlayerThrowables.push_back(new Torch{GetShapeCenter(), m_Flipped, false, m_pSpriteFactory});
+        break;
+    }
+}
+
 void Player::Attack()
 {
     if (not m_Attacking)
@@ -203,18 +230,7 @@ void Player::Attack()
         m_LongAccuCooldown += m_LongCooldownTime;
         m_Attacking = true;
 
-        switch (m_Weapon)
-        {
-        case Game::Label::W_DAGGER:
-            m_Throwables.push_back(new Dagger{GetShapeCenter(), m_Flipped, false, m_pSpriteFactory});
-            break;
-        case Game::Label::W_LANCE:
-            m_Throwables.push_back(new Lance{GetShapeCenter(), m_Flipped, false, m_pSpriteFactory});
-            break;
-        case Game::Label::W_TORCH:
-            m_Throwables.push_back(new Torch{GetShapeCenter(), m_Flipped, false, m_pSpriteFactory});
-            break;
-        }
+        Throw();
     }
 }
 
@@ -458,7 +474,7 @@ int Player::GetLives() const
 
 Game::Label Player::GetWeapon() const
 {
-    return m_Weapon;
+    return m_CurrWeapon;
 }
 
 int Player::GetScore() const
@@ -487,18 +503,18 @@ void Player::HandleCollision(GameObject* other)
         m_pSoundManager->PlayEffect(Game::Label::E_WEAPON_PICKUP);
         switch (other->GetLabel())
         {
-        case Game::Label::W_DAGGER:
-            m_Weapon = Game::Label::W_DAGGER;
+        case Game::Label::T_DAGGER:
+            m_CurrWeapon = Game::Label::T_DAGGER;
             other->SetVisible(false);
             other->SetActive(false);
             break;
-        case Game::Label::W_LANCE:
-            m_Weapon = Game::Label::W_LANCE;
+        case Game::Label::T_LANCE:
+            m_CurrWeapon = Game::Label::T_LANCE;
             other->SetVisible(false);
             other->SetActive(false);
             break;
-        case Game::Label::W_TORCH:
-            m_Weapon = Game::Label::W_TORCH;
+        case Game::Label::T_TORCH:
+            m_CurrWeapon = Game::Label::T_TORCH;
             other->SetVisible(false);
             other->SetActive(false);
             break;

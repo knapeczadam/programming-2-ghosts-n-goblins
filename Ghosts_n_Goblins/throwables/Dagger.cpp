@@ -1,11 +1,11 @@
 ﻿#include "pch.h"
-#include "Lance.h"
+#include "Dagger.h"
 
 #include "engine/Sprite.h"
-#include "engine/SpriteFactory.h"
 
-Lance::Lance(const Point2f& pos, bool isFlipped, bool collectible, SpriteFactory* pSpriteFactory)
-    : GameObject{Game::Label::W_LANCE, pos, true, pSpriteFactory}
+
+Dagger::Dagger(const Point2f& pos, bool isFlipped, bool collectible, SpriteFactory* pSpriteFactory)
+    : GameObject{Game::Label::T_DAGGER, pos, true, pSpriteFactory}
       , m_Speed{300.0f}
       , m_Collectible{collectible}
 {
@@ -13,7 +13,7 @@ Lance::Lance(const Point2f& pos, bool isFlipped, bool collectible, SpriteFactory
     SetSprite();
 }
 
-void Lance::Update(float elapsedSec)
+void Dagger::Update(float elapsedSec)
 {
     if (m_Collectible)
     {
@@ -30,7 +30,7 @@ void Lance::Update(float elapsedSec)
     UpdateCollisionBox();
 }
 
-void Lance::SetSprite() const
+void Dagger::SetSprite() const
 {
     if (m_Collectible)
     {

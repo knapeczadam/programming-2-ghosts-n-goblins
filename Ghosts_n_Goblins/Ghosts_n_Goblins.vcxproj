@@ -1423,7 +1423,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">pch.h</PrecompiledHeaderFile>
     </ClCompile>
-    <ClCompile Include="weapons\Dagger.cpp">
+    <ClCompile Include="throwables\Dagger.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">pch.h</PrecompiledHeaderFile>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
@@ -1432,9 +1432,9 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">pch.h</PrecompiledHeaderFile>
     </ClCompile>
-    <ClCompile Include="weapons\Eyeball.cpp" />
-    <ClCompile Include="weapons\Fireball.cpp" />
-    <ClCompile Include="weapons\Lance.cpp">
+    <ClCompile Include="throwables\Eyeball.cpp" />
+    <ClCompile Include="throwables\Fireball.cpp" />
+    <ClCompile Include="throwables\Lance.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">pch.h</PrecompiledHeaderFile>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
@@ -1443,9 +1443,9 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">pch.h</PrecompiledHeaderFile>
     </ClCompile>
-    <ClCompile Include="weapons\Spear.cpp" />
-    <ClCompile Include="weapons\Spell.cpp" />
-    <ClCompile Include="weapons\Torch.cpp">
+    <ClCompile Include="throwables\Spear.cpp" />
+    <ClCompile Include="throwables\Spell.cpp" />
+    <ClCompile Include="throwables\Torch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">pch.h</PrecompiledHeaderFile>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
@@ -1499,14 +1499,14 @@
     <ClInclude Include="ui\HUD.h" />
     <ClInclude Include="ui\Menu.h" />
     <ClInclude Include="ui\UI.h" />
-    <ClInclude Include="weapons\Dagger.h" />
-    <ClInclude Include="weapons\Eyeball.h" />
-    <ClInclude Include="weapons\Fireball.h" />
-    <ClInclude Include="weapons\IThrowable.h" />
-    <ClInclude Include="weapons\Lance.h" />
-    <ClInclude Include="weapons\Spear.h" />
-    <ClInclude Include="weapons\Spell.h" />
-    <ClInclude Include="weapons\Torch.h" />
+    <ClInclude Include="throwables\Dagger.h" />
+    <ClInclude Include="throwables\Eyeball.h" />
+    <ClInclude Include="throwables\Fireball.h" />
+    <ClInclude Include="throwables\IThrowable.h" />
+    <ClInclude Include="throwables\Lance.h" />
+    <ClInclude Include="throwables\Spear.h" />
+    <ClInclude Include="throwables\Spell.h" />
+    <ClInclude Include="throwables\Torch.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

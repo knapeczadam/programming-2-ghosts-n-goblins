@@ -80,15 +80,15 @@ public:
         U_MENU,
         U_PIN,
 
-        // WEAPONS
-        W_DAGGER,
-        W_EYEBALL,
-        W_FIREBALL_RED_ARREMER,
-        W_FIREBALL_UNICORN,
-        W_LANCE,
-        W_SPEAR,
-        W_SPELL,
-        W_TORCH,
+        // THROWABLES
+        T_DAGGER,
+        T_EYEBALL,
+        T_FIREBALL_RED_ARREMER,
+        T_FIREBALL_UNICORN,
+        T_LANCE,
+        T_SPEAR,
+        T_SPELL,
+        T_TORCH,
 
         // DEBUG
         D_LEVEL_DEBUG,
@@ -195,7 +195,7 @@ private:
     void PrintInfo() const;
     void DoCollisionTests();
     void Debug() const;
-    void DeactivateEnemiesOutOfView();
+    void DoFrustumCulling();
     void DeactivateThrowablesOutOfView();
     void UpdateRemainingTime();
 
@@ -232,7 +232,8 @@ private:
     // DATA MEMBERS
     
     std::vector<GameObject*> m_Enemies;
-    std::vector<GameObject*> m_Throwables;
+    std::vector<GameObject*> m_PlayerThrowables;
+    std::vector<GameObject*> m_EnemyThrowables;
     std::vector<GameObject*> m_Waters;
     std::vector<GameObject*> m_Tombstones;
     std::vector<GameObject*> m_Collectibles;

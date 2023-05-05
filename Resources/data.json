@@ -90,7 +90,7 @@
     },
     {
       "label": "l_door",
-      "path": "level/door.bmp"
+      "path": "level/door.png"
     },
     {
       "label": "l_level",
@@ -125,36 +125,36 @@
       "path": "ui/pin.png"
     },
     {
-      "label": "w_dagger",
-      "path": "weapons/dagger.png"
+      "label": "t_dagger",
+      "path": "throwables/dagger.png"
     },
     {
-      "label": "w_eyeball",
-      "path": "weapons/eyeball.png"
+      "label": "t_eyeball",
+      "path": "throwables/eyeball.png"
     },
     {
-      "label": "w_fireball_red_arremer",
-      "path": "weapons/fireball_red_arremer.png"
+      "label": "t_fireball_red_arremer",
+      "path": "throwables/fireball_red_arremer.png"
     },
     {
-      "label": "w_fireball_unicorn",
-      "path": "weapons/fireball_unicorn.png"
+      "label": "t_fireball_unicorn",
+      "path": "throwables/fireball_unicorn.png"
     },
     {
-      "label": "w_lance",
-      "path": "weapons/lance.png"
+      "label": "t_lance",
+      "path": "throwables/lance.png"
     },
     {
-      "label": "w_spear",
-      "path": "weapons/spear.png"
+      "label": "t_spear",
+      "path": "throwables/spear.png"
     },
     {
-      "label": "w_spell",
-      "path": "weapons/spell.png"
+      "label": "t_spell",
+      "path": "throwables/spell.png"
     },
     {
-      "label": "w_torch",
-      "path": "weapons/torch.png"
+      "label": "t_torch",
+      "path": "throwables/torch.png"
     },
     {
       "label": "d_fallback",
@@ -457,53 +457,52 @@
       "scale": 2
     },
     {
-      "label": "w_dagger",
+      "label": "t_dagger",
       "rows": 1,
       "columns": 3,
       "frames_per_second": 10,
       "scale": 2
     },
     {
-      "label": "w_eyeball",
+      "label": "t_eyeball",
       "rows": 1,
       "columns": 4,
-      "frames_per_second": 10,
-      "scale": 2
+      "frames_per_second": 10
     },
     {
-      "label": "w_fireball_red_arremer",
+      "label": "t_fireball_red_arremer",
       "rows": 1,
       "columns": 2,
       "frames_per_second": 10,
       "scale": 2
     },
     {
-      "label": "w_fireball_unicorn",
+      "label": "t_fireball_unicorn",
       "rows": 1,
       "columns": 2,
       "frames_per_second": 10,
       "scale": 2
     },
     {
-      "label": "w_lance",
+      "label": "t_lance",
       "rows": 1,
       "columns": 3,
       "frames_per_second": 10,
       "scale": 2
     },
     {
-      "label": "w_spear",
+      "label": "t_spear",
       "scale": 2
     },
     {
-      "label": "w_spell",
+      "label": "t_spell",
       "rows": 1,
       "columns": 2,
       "frames_per_second": 10,
       "scale": 2
     },
     {
-      "label": "w_torch",
+      "label": "t_torch",
       "rows": 1,
       "columns": 3,
       "frames_per_second": 10,

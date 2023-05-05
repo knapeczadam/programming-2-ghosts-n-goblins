@@ -16,6 +16,7 @@ void KillZone::HandleCollision(GameObject* other)
     StartTimer(5.0f);
     if (IsTimerFinished())
     {
+        // TODO: valami érdekes történik, amikor a platform utáni vizbe esik, nem teleportál vissza a kezdőpontra
         other->SetActive(true);
         other->SetPosition(Player::GetSpawnPos());
     }

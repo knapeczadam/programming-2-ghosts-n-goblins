@@ -54,6 +54,7 @@ public:
     virtual void SetBottom(float bottom) final;
     virtual void SetLeft(float left) final;
     virtual bool IsOverlapping(GameObject* other) const final;
+    virtual void SetFlipped(bool flipped) final;
 protected:
     virtual void InitCollisionBox() final;
     virtual std::vector<Point2f> GetCollisionBoxVertices() const final;

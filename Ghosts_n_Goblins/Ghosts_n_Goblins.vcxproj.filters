@@ -18,9 +18,6 @@
     <ClCompile Include="collectibles\ICollectible.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="collectibles\PickUpManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="engine\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -60,9 +57,6 @@
     <ClCompile Include="engine\SpriteFactory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="characters\BigMan.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="characters\Crow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -84,22 +78,19 @@
     <ClCompile Include="collectibles\Necklace.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="weapons\Lance.cpp">
+    <ClCompile Include="throwables\Lance.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="weapons\Torch.cpp">
+    <ClCompile Include="throwables\Torch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="level\Water.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="weapons\Dagger.cpp">
+    <ClCompile Include="throwables\Dagger.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="engine\Clock.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="engine\Timer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="level\KillZone.cpp">
@@ -111,12 +102,66 @@
     <ClCompile Include="ui\UI.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="characters\Unicorn.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="characters\IEnemy.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="characters\Magician.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="characters\Zombie.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="collectibles\Pot.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="collectibles\Statue.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="collectibles\Coin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="collectibles\Key.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="collectibles\MoneyBag.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="collectibles\Shield.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="collectibles\Yashichi.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\ITimer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="game\CollisionBox.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="level\Door.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="level\Ladder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="throwables\Eyeball.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="throwables\Fireball.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="throwables\Spear.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="throwables\Spell.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="collectibles\ICollectible.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="collectibles\PickUpManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="engine\json.hpp">
@@ -158,9 +203,6 @@
     <ClInclude Include="engine\SpriteFactory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="characters\BigMan.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="characters\Crow.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -182,13 +224,13 @@
     <ClInclude Include="collectibles\Necklace.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="weapons\Lance.h">
+    <ClInclude Include="throwables\Lance.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="weapons\IThrowable.h">
+    <ClInclude Include="throwables\IThrowable.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="weapons\Torch.h">
+    <ClInclude Include="throwables\Torch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="characters\IEnemy.h">
@@ -200,13 +242,10 @@
     <ClInclude Include="level\Water.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="weapons\Dagger.h">
+    <ClInclude Include="throwables\Dagger.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="engine\Clock.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="engine\Timer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="level\KillZone.h">
@@ -216,6 +255,63 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ui\UI.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="characters\Unicorn.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="characters\Magician.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="characters\Zombie.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="collectibles\Pot.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="collectibles\Statue.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="collectibles\Coin.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="collectibles\Key.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="collectibles\MoneyBag.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="collectibles\Shield.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="collectibles\Yashichi.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\ITimer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\CollisionBox.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="level\Door.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="level\IClimable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="level\Ladder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="throwables\Eyeball.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="throwables\Fireball.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="throwables\Spear.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="throwables\Spell.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

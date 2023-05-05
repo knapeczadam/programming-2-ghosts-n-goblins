@@ -198,12 +198,12 @@ void HUD::DrawWeapon() const
     m_pSprite->SetTopOffsetRows(2);
     switch (m_pPlayer->GetWeapon())
     {
-    case Game::Label::W_DAGGER:
+    case Game::Label::T_DAGGER:
         m_pSprite->SetLeftOffsetCols(2);
         break;
-    case Game::Label::W_LANCE:
+    case Game::Label::T_LANCE:
         break;
-    case Game::Label::W_TORCH:
+    case Game::Label::T_TORCH:
         m_pSprite->SetLeftOffsetCols(1);
         break;
     }

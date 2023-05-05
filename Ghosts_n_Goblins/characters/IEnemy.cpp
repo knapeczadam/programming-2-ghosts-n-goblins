@@ -43,6 +43,15 @@ bool IEnemy::IsAwake() const
     return m_Awake;
 }
 
+void IEnemy::SetAwake(bool awake)
+{
+    m_Awake = awake;
+    if (not m_Awake)
+    {
+        m_AwakeFired = false;
+    }
+}
+
 void IEnemy::Awake()
 {
 }
