@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include "IEnemy.h"
 
-/*
+/* https://strategywiki.org/wiki/Ghosts_%27n_Goblins/Enemies#Crows
  * There are two types of crows in Arthur's land. 
  * They are found in stages 1 and 2, are destroyed in one hit, and are worth 100 points.
  * Blue crows launch themselves straight forward whenever Arthur gets close to one of them.

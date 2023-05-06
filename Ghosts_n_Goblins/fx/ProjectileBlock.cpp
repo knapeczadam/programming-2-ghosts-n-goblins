@@ -13,7 +13,7 @@ ProjectileBlock::ProjectileBlock(const Point2f& pos, bool flipped, GameControlle
 
 void ProjectileBlock::Update(float elapsedSec)
 {
-    float time{0.3f};
+    float time{0.2f}; // 1 / (200/3) * 1000
     StartTimer(time);
     if (IsTimerFinished())
     {

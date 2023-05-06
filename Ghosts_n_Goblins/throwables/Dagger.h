@@ -3,6 +3,11 @@
 #include "collectibles/ICollectible.h"
 #include "game/GameObject.h"
 
+/*
+ * Dagger (aka Knife, Sword):
+ * The Dagger is very much like the Lance, in that it travels straight across and can only be interrupted by hitting an enemy.
+ * However, the Dagger is much faster, allowing Arthur to throw many more of them over a period of time.
+ */
 class Dagger : public GameObject, public IThrowable, public ICollectible
 {
 public:

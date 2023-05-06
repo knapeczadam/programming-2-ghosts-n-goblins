@@ -190,12 +190,12 @@ void Game::InitLabels()
 
     // COLLECTIBLES
     m_Labels["o_coin"] = Label::O_COIN;
+    m_Labels["o_doll"] = Label::O_DOLL;
     m_Labels["o_key"] = Label::O_KEY;
     m_Labels["o_money_bag"] = Label::O_MONEY_BAG;
     m_Labels["o_necklace"] = Label::O_NECKLACE;
     m_Labels["o_pot"] = Label::O_POT;
     m_Labels["o_shield"] = Label::O_SHIELD;
-    m_Labels["o_statue"] = Label::O_STATUE;
     m_Labels["o_yashichi"] = Label::O_YASHICHI;
 
     // FX
@@ -541,10 +541,10 @@ void Game::Draw() const
     std::ranges::for_each(m_Enemies | std::views::filter(isVisible), draw);
     std::ranges::for_each(m_PlayerThrowables | std::views::filter(isVisible), draw);
     std::ranges::for_each(m_Collectibles | std::views::filter(isVisible), draw);
-    std::ranges::for_each(m_Effects | std::views::filter(isVisible), draw);
     m_pPlayer->Draw();
     std::ranges::for_each(m_Waters, draw);
     m_pForeground->Draw();
+    std::ranges::for_each(m_Effects | std::views::filter(isVisible), draw);
     std::ranges::for_each(m_EnemyThrowables | std::views::filter(isVisible), draw);
 #if TEST_OBJECT
     if (m_pTestObject->IsVisible()) m_pTestObject->Draw();

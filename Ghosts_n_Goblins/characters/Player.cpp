@@ -225,6 +225,12 @@ void Player::Throw()
     }
 }
 
+/*
+ * https://strategywiki.org/wiki/Ghosts_%27n_Goblins/How_to_play#Controls
+ * You can place up to either two or three instances of your weapon on-screen at once, depending on which you have equipped.
+ * Press fire while crouching to throw a weapon low to the ground.
+ * Rapidly tap the direction you are facing, while standing, in tandem with the fire button to increase your rate of fire.
+ */
 void Player::Attack()
 {
     if (not m_Attacking)
@@ -310,7 +316,11 @@ void Player::MoveHorizontal(const Uint8* pState)
     }
 }
 
-
+/*
+ * https://strategywiki.org/wiki/Ghosts_%27n_Goblins/How_to_play#Controls
+ * Use in conjunction with left or right to make Arthur jump in a particular direction.
+ * Note that a Jump in this game is a 100% commitment; there is no reversing or manipulating a mid-air jump.
+ */
 void Player::Jump(const Uint8* pState)
 {
     if (m_CanJump)

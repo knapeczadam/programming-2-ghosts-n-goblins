@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include "IEnemy.h"
 
-/*
+/* https://strategywiki.org/wiki/Ghosts_%27n_Goblins/Enemies#Unicorn
  * One Unicorn guards the gate at the end of Stage 1, while two of them double as the final boss of Stage 2.
  * Also known as Cyclops, these brutes don't mess around.
  * They like to intimidate their opponents by jumping high into the air and crashing down on the ground.

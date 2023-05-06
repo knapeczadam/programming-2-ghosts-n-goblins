@@ -34,6 +34,12 @@ class IClimable;
 class GameController;
 
 
+/*
+ * https://strategywiki.org/wiki/Ghosts_%27n_Goblins#Story
+ * One storm filled evening, Arthur and his love, Princess Prin Prin were enjoying a quiet night in the cemetery together, when they were beset upon by a winged Satan.
+ * The Satan dove and captured the princess, and disappeared with her before Arthur's eyes.
+ * Without a moment's hesitation, Arthur donned his knight armor and picked up his lance, and set forth to Astaroth's castle where he knew he would find his abducted love.
+ */
 class Game : public BaseGame, public ITimer
 {
 public:
@@ -54,12 +60,12 @@ public:
 
         // COLLECTIBLES
         O_COIN,
+        O_DOLL,
         O_KEY,
         O_MONEY_BAG,
         O_NECKLACE,
         O_POT,
         O_SHIELD,
-        O_STATUE,
         O_YASHICHI,
 
         // FX

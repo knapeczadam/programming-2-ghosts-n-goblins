@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include "IEnemy.h"
 
-/*
+/* https://strategywiki.org/wiki/Ghosts_%27n_Goblins/Enemies#Magician
  * Tombstones line the ground of stage 1, and rocks occupy the floor of stage 3.
  * If Arthur fires 15 weapons upon either of these objects, a Magician will suddenly appear.
  * When he is solid, he unfurls his wings and sends a spell Arthur's way.

@@ -3,6 +3,14 @@
 #include "collectibles/ICollectible.h"
 #include "game/GameObject.h"
 
+/*
+ * https://strategywiki.org/wiki/Ghosts_%27n_Goblins/How_to_play#Weapons
+ * Lance (aka Spear):
+ * The Lance is Arthur's default weapon at the beginning of the game.
+ * Lances travel straight across at a moderate speed, and are only interrupted by enemies.
+ * In the Famicom/NES-based versions of the game, the Dragon is invulnerable to the Lance.
+ * In addition, only two may be in the air at once.
+ */
 class Lance: public GameObject, public IThrowable, public ICollectible
 {
 public:

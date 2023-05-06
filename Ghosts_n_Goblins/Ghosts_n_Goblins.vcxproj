@@ -292,8 +292,9 @@
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">pch.h</PrecompiledHeaderFile>
     </ClCompile>
     <ClCompile Include="characters\Zombie.cpp" />
+    <ClCompile Include="collectibles\Armor.cpp" />
     <ClCompile Include="collectibles\Pot.cpp" />
-    <ClCompile Include="collectibles\Statue.cpp" />
+    <ClCompile Include="collectibles\Doll.cpp" />
     <ClCompile Include="collectibles\Coin.cpp" />
     <ClCompile Include="collectibles\ICollectible.cpp">
       <RuntimeLibrary>MultiThreadedDebugDll</RuntimeLibrary>
@@ -1543,8 +1544,9 @@
     <ClInclude Include="characters\RedArremer.h" />
     <ClInclude Include="characters\WoodyPig.h" />
     <ClInclude Include="characters\Zombie.h" />
+    <ClInclude Include="collectibles\Armor.h" />
     <ClInclude Include="collectibles\Pot.h" />
-    <ClInclude Include="collectibles\Statue.h" />
+    <ClInclude Include="collectibles\Doll.h" />
     <ClInclude Include="collectibles\Coin.h" />
     <ClInclude Include="collectibles\ICollectible.h" />
     <ClInclude Include="collectibles\Key.h" />

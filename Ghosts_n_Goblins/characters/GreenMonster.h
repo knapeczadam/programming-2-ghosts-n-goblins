@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include "IEnemy.h"
 
-/*
+/* https://strategywiki.org/wiki/Ghosts_%27n_Goblins/Enemies#Green_Monsters
  * The Green Monsters, also known as Eyeball Plants, are carnivorous plants whose favorite snack is knights in crunchy armor.
  * They are stationary and their tops are covered with eyeballs.
  * They have so many eyeballs to spare, that occasionally, they open their mouths and spit one at you.

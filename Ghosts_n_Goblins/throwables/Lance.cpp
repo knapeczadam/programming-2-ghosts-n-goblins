@@ -10,8 +10,11 @@ Lance::Lance(const Point2f& pos, bool isFlipped, bool collectible, GameControlle
       , m_Collectible{collectible}
 {
     m_Flipped = isFlipped;
-    m_Shape.left = pos.x - m_pSprite->GetScaledClipWidth() / 2;
-    m_Shape.bottom = pos.y - m_pSprite->GetScaledClipHeight() / 2;
+    if (not collectible)
+    {
+        m_Shape.left = pos.x - m_pSprite->GetScaledClipWidth() / 2;
+        m_Shape.bottom = pos.y - m_pSprite->GetScaledClipHeight() / 2;
+    }
     SetSprite();
 }
 

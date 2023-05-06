@@ -3,6 +3,7 @@
 #include "game/GameObject.h"
 
 /*
+ * https://strategywiki.org/wiki/Ghosts_%27n_Goblins/Enemies#Zombies
  * Zombies are the first enemies that you will ever encounter.
  * They climb out of the graveyard soil, and march unerringly in your direction.
  * They only take one shot to destroy, and they are worth 200 points.

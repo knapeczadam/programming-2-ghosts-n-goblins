@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include "IEnemy.h"
 
-/*
+/* https://strategywiki.org/wiki/Ghosts_%27n_Goblins/Enemies#Red_Arremer
  * The Red Arremer is possibly one of the most frustating enemies in Ghosts 'n Goblins, second only to the Satans.
  * They are found in every stage but the second stage and the final stage. They are intense guardians that rarely allow intruders past their posted position.
  * They begin on the ground, and leap into the air when fired upon.

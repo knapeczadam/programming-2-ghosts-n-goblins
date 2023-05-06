@@ -13,11 +13,11 @@ ProjectileDeath::ProjectileDeath(const Point2f& pos, bool flipped, GameControlle
 
 void ProjectileDeath::Update(float elapsedSec)
 {
-    const float time{0.3f};
+    const float time{0.2f};
     StartTimer(time);
     if (IsTimerFinished())
     {
         m_Active = false;
-        m_Visible = true;
+        m_Visible = false;
     }
 }

@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include "IEnemy.h"
 
-/*
+/* https://strategywiki.org/wiki/Ghosts_%27n_Goblins/Enemies#Woody_Pigs
  * Also known as Forest Ghosts, these ethereal beings float about at various points along stages 1, 3, 5, and 6.
  * They fly about, making an eerie sound as they do.
  * They carry with them a spear made of green onion.
