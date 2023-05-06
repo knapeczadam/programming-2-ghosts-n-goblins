@@ -741,6 +741,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">pch.h</PrecompiledHeaderFile>
     </ClCompile>
+    <ClCompile Include="fx\Fire.cpp" />
     <ClCompile Include="fx\FXManager.cpp">
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -1561,6 +1562,7 @@
     <ClInclude Include="engine\SpriteFactory.h" />
     <ClInclude Include="engine\TextureManager.h" />
     <ClInclude Include="engine\ITimer.h" />
+    <ClInclude Include="fx\Fire.h" />
     <ClInclude Include="fx\FXManager.h" />
     <ClInclude Include="fx\ProjectileDeath.h" />
     <ClInclude Include="game\Camera.h" />

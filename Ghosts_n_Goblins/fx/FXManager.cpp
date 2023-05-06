@@ -1,11 +1,13 @@
 ﻿#include "pch.h"
 #include "FXManager.h"
 
+#include "Fire.h"
 #include "ProjectileBlock.h"
 #include "ProjectileDeath.h"
 #include "engine/Sprite.h"
 #include "game/GameController.h"
 #include "engine/SpriteFactory.h"
+#include "fx/Fire.h"
 
 FXManager::FXManager(GameController* pGameController)
     : m_pGameController{pGameController}
@@ -30,11 +32,15 @@ void FXManager::PlayEffect(Game::Label label, const Point2f& contactPoint, bool 
     }
     switch (label)
     {
-        case Game::Label::F_PROJECTILE_BLOCK:
-            m_pGameController->m_Effects.push_back(new ProjectileBlock{contactPoint,flipped, m_pGameController});
-            break;
-        case Game::Label::F_PROJECTILE_DEATH:
-            m_pGameController->m_Effects.push_back(new ProjectileDeath{contactPoint, flipped, m_pGameController});
-            break;
+    case Game::Label::F_FIRE_ENEMY:
+    case Game::Label::F_FIRE_TORCH:
+        m_pGameController->m_Effects.push_back(new Fire{label, contactPoint, m_pGameController});
+        break;
+    case Game::Label::F_PROJECTILE_BLOCK:
+        m_pGameController->m_Effects.push_back(new ProjectileBlock{contactPoint, flipped, m_pGameController});
+        break;
+    case Game::Label::F_PROJECTILE_DEATH:
+        m_pGameController->m_Effects.push_back(new ProjectileDeath{contactPoint, flipped, m_pGameController});
+        break;
     }
 }

@@ -199,7 +199,8 @@ void Game::InitLabels()
     m_Labels["o_yashichi"] = Label::O_YASHICHI;
 
     // FX
-    m_Labels["f_fire"] = Label::F_FIRE;
+    m_Labels["f_fire_enemy"] = Label::F_FIRE_ENEMY;
+    m_Labels["f_fire_torch"] = Label::F_FIRE_TORCH;
     m_Labels["f_fx"] = Label::F_FX;
     m_Labels["f_projectile_block"] = Label::F_PROJECTILE_BLOCK;
     m_Labels["f_projectile_death"] = Label::F_PROJECTILE_DEATH;
@@ -447,7 +448,7 @@ void Game::InitEnemies()
 {
     InitCrows();
     // InitFlyingKnights();
-    // InitGreenMonsters();
+    InitGreenMonsters();
     // InitMagicians();
     // InitRedArremer();
     // InitUnicorn();
@@ -489,9 +490,11 @@ void Game::InitGreenMonsters()
                      });
 }
 
-void Game::InitMagicians()
+void Game::InitMagician()
 {
-    m_Enemies.push_back(new Magician{Point2f{600.0f, 62.0f}, m_pGameController});
+    Magician* pMagician{new Magician{Point2f{600.0f, 62.0f}, m_pGameController}};
+    m_Enemies.push_back(pMagician);
+    m_pGameController->m_pMagician = pMagician;
 }
 
 void Game::InitRedArremer()

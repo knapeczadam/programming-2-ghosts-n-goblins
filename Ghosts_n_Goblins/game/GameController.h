@@ -12,6 +12,7 @@ class Player;
 class GameObject;
 class TextureManager;
 class FXManager;
+class Magician;
 
 class GameController final
 {
@@ -45,4 +46,5 @@ public:
     Level* m_pLevel;
     Platform* m_pPlatform;
     FXManager* m_pFXManager;
+    Magician* m_pMagician;
 };

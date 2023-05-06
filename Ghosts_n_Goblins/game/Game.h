@@ -69,7 +69,8 @@ public:
         O_YASHICHI,
 
         // FX
-        F_FIRE,
+        F_FIRE_ENEMY,
+        F_FIRE_TORCH,
         F_FX,
         F_PROJECTILE_BLOCK,
         F_PROJECTILE_DEATH,
@@ -235,7 +236,7 @@ private:
     void InitCrows();
     void InitFlyingKnights();
     void InitGreenMonsters();
-    void InitMagicians();
+    void InitMagician();
     void InitRedArremer();
     void InitWoodyPigs();
     void InitZombies();

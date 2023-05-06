@@ -2,6 +2,7 @@
 #include "Magician.h"
 #include "engine/SoundManager.h"
 #include "Player.h"
+#include "fx/FXManager.h"
 #include "game/GameController.h"
 
 Magician::Magician(const Point2f& pos, GameController* pGameController)
@@ -23,9 +24,15 @@ void Magician::HandleCollision(GameObject* other)
 {
     if (not IsOverlapping(other)) return;
     --m_Health;
+    other->SetActive(false);
+    other->SetVisible(false);
     if (m_Health == 0)
     {
-       m_pGameController->m_pPlayer->AddScore(m_Score); 
+        m_Active = false;
+        m_Visible = false;
+        m_pGameController->m_pPlayer->AddScore(m_Score);
+        m_pGameController->m_pFXManager->PlayEffect(Game::Label::F_PROJECTILE_DEATH, GetContactPoint(other), other->IsFlipped());
+        m_pGameController->m_pSoundManager->PlayEffect(Game::Label::E_ENEMY_DEATH);
     }
 }
 

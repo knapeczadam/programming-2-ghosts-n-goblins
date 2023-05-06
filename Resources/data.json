@@ -49,8 +49,8 @@
       "path": "collectibles/pot.png"
     },
     {
-      "label": "o_statue",
-      "path": "collectibles/statue.png"
+      "label": "o_doll",
+      "path": "collectibles/doll.png"
     },
     {
       "label": "o_coin",
@@ -77,8 +77,12 @@
       "path": "collectibles/yashichi.png"
     },
     {
-      "label": "f_fire",
-      "path": "fx/fire.png"
+      "label": "f_fire_enemy",
+      "path": "fx/fire_enemy.png"
+    },
+    {
+      "label": "f_fire_torch",
+      "path": "fx/fire_torch.png"
     },
     {
       "label": "f_fx",
@@ -376,7 +380,7 @@
       "scale": 2
     },
     {
-      "label": "o_statue",
+      "label": "o_doll",
       "rows": 1,
       "columns": 3,
       "frames_per_second": 10,
@@ -418,11 +422,16 @@
       "scale": 2
     },
     {
-      "label": "f_fire",
+      "label": "f_fire_enemy",
+      "rows": 1,
+      "columns": 9,
+      "frames_per_second": 10,
+      "scale": 2
+    },
+    {
+      "label": "f_fire_torch",
       "rows": 1,
       "columns": 4,
-      "sub_rows": 0,
-      "sub_columns": 0,
       "frames_per_second": 10,
       "scale": 2
     },
@@ -439,14 +448,14 @@
       "label": "f_projectile_block",
       "rows": 1,
       "columns": 3,
-      "frames_per_second": 6,
+      "frames_per_second": 15,
       "scale": 2
     },
     {
       "label": "f_projectile_death",
       "rows": 1,
       "columns": 5,
-      "frames_per_second": 10,
+      "frames_per_second": 25,
       "scale": 2
     },
     {

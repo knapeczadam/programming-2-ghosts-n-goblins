@@ -24,7 +24,7 @@
 #include "game/GameController.h"
 
 
-const Point2f Player::m_SpawnPos{50.0f, 64.0f};
+const Point2f Player::m_SpawnPos{4000.0f, 64.0f};
 
 Player::Player(const Point2f& pos, GameController* pGameController)
     : GameObject{Game::Label::C_ARTHUR, pos, true, pGameController}

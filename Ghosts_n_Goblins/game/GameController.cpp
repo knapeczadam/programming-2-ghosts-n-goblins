@@ -21,5 +21,6 @@ GameController::GameController(
       , m_pLevel{nullptr}
       , m_pPlatform{nullptr}
       , m_pFXManager{nullptr}
+      , m_pMagician{nullptr}
 {
 }

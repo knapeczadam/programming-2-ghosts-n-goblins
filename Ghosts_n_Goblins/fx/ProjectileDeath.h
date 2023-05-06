@@ -9,6 +9,7 @@ public:
     ProjectileDeath(const ProjectileDeath& other) = delete;
     ProjectileDeath(ProjectileDeath&& other) noexcept = delete;
     ProjectileDeath& operator=(const ProjectileDeath& other) = delete;
+    ProjectileDeath& operator=(ProjectileDeath&& other) noexcept = delete;
 
     virtual void Update(float elapsedSec) override;
 };

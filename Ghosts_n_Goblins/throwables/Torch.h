@@ -3,7 +3,7 @@
 #include "collectibles/ICollectible.h"
 #include "game/GameObject.h"
 
-/*
+/* https://strategywiki.org/wiki/Ghosts_%27n_Goblins/How_to_play#Weapons
  * Torch (aka Flame):
  * The Torch can be very useful in some situations, and quite the opposite in others.
  * When thrown, it travels in an arc.
