@@ -199,7 +199,12 @@ void Player::Throw()
     {
         if (pWeapon->GetLabel() == m_CurrWeapon and not pWeapon->IsActive())
         {
-            pWeapon->SetPosition(GetShapeCenter());
+            Point2f pos{GetCollisionBoxCenter()};
+            if (m_Flipped)
+            {
+                pos.x -= pWeapon->GetCollisionBox().width;
+            }
+            pWeapon->SetPosition(pos);
             pWeapon->SetFlipped(m_Flipped);
             pWeapon->SetActive(true);
             pWeapon->SetVisible(true);
