@@ -5,20 +5,11 @@
 #include <engine/Sprite.h>
 
 #include "TextureManager.h"
+#include "game/GameController.h"
 
-SpriteFactory::SpriteFactory(json data, TextureManager* pTextureManager)
-    : m_pSprites{}
-      , m_Data(std::move(data))
-      , m_pTextureManager{pTextureManager}
-{
-}
-
-SpriteFactory::SpriteFactory(json data, TextureManager* pTextureManager,
-                             std::map<std::string, Game::Label> labels)
-    : m_pSprites{}
-      , m_Data(std::move(data))
-      , m_pTextureManager{pTextureManager}
-      , m_Labels{std::move(labels)}
+SpriteFactory::SpriteFactory(GameController* pGameController)
+    : m_pGameController{pGameController}
+      , m_pSprites{}
 {
 }
 
@@ -33,17 +24,18 @@ SpriteFactory::~SpriteFactory()
 Sprite* SpriteFactory::CreateSprite(Game::Label label)
 {
     Sprite* pSprite{};
-    for (const auto& sprite : m_Data["sprites"])
+    for (const auto& sprite : m_pGameController->m_Data["sprites"])
     {
         const std::string jsonLabel{sprite["label"]};
-        if (not m_Labels.contains(jsonLabel))
+        if (not m_pGameController->m_Labels.contains(jsonLabel))
         {
-            std::cerr << "SpriteFactory::CreateSprite() - ERROR: label (" << jsonLabel << ") found in data.json/sprites is not in the label map!" << std::endl;
+            std::cerr << "SpriteFactory::CreateSprite() - ERROR: label (" << jsonLabel <<
+                ") found in data.json/sprites is not in the label map!" << std::endl;
             std::abort();
         }
-        if (m_Labels[jsonLabel] == label)
+        if (m_pGameController->m_Labels[jsonLabel] == label)
         {
-            pSprite = new Sprite{m_pTextureManager->GetTexture(label)};
+            pSprite = new Sprite{m_pGameController->m_pTextureManager->GetTexture(label)};
 
             const int rows{sprite.contains("rows") ? static_cast<int>(sprite["rows"]) : 1};
             pSprite->SetRows(rows);
@@ -79,9 +71,13 @@ Sprite* SpriteFactory::CreateSprite(Game::Label label)
             pSprite->SetClipWidth(clipWidth);
             const float clipHeight{sprite.contains("clip_height") ? static_cast<float>(sprite["clip_height"]) : 0.0f};
             pSprite->SetClipHeight(clipHeight);
-            const float collisionWidth{sprite.contains("collision_width") ? static_cast<float>(sprite["collision_width"]) : 0.0f};
+            const float collisionWidth{
+                sprite.contains("collision_width") ? static_cast<float>(sprite["collision_width"]) : 0.0f
+            };
             pSprite->SetCollisionWidth(collisionWidth);
-            const float collisionHeight{sprite.contains("collision_height") ? static_cast<float>(sprite["collision_height"]) : 0.0f};
+            const float collisionHeight{
+                sprite.contains("collision_height") ? static_cast<float>(sprite["collision_height"]) : 0.0f
+            };
             pSprite->SetCollisionHeight(collisionHeight);
 
             pSprite->Init();
@@ -93,13 +89,9 @@ Sprite* SpriteFactory::CreateSprite(Game::Label label)
     }
     if (pSprite == nullptr)
     {
-        std::cerr << "SpriteFactory::CreateSprite() - ERROR: label (" << static_cast<int>(label) << ") not found in data.json/sprites!" << std::endl;
+        std::cerr << "SpriteFactory::CreateSprite() - ERROR: label (" << static_cast<int>(label) <<
+            ") not found in data.json/sprites!" << std::endl;
         std::abort();
     }
     return pSprite;
-}
-
-void SpriteFactory::SetLabels(const std::map<std::string, Game::Label>& labels)
-{
-    m_Labels = labels;
 }

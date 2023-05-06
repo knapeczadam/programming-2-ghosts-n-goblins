@@ -4,27 +4,13 @@
 
 #include <fstream>
 #include <iostream>
-#include <ranges>
 
-TextureManager::TextureManager()
-    : m_Data{}
-      , m_Textures{}
-      , m_Path{"images/"}
-{
-}
+#include "game/GameController.h"
 
-TextureManager::TextureManager(json data)
-    : m_Data(std::move(data)) // doesn't work with brace initialization
+TextureManager::TextureManager(GameController* pGameController)
+    : m_pGameController{pGameController}
       , m_Textures{}
-      , m_Path{"images/"}
-{
-    LoadTextures();
-}
-
-TextureManager::TextureManager(json data, std::map<std::string, Game::Label> labels)
-    : m_Data(std::move(data)) // doesn't work with brace initialization
-      , m_Textures{}
-      , m_Labels{std::move(labels)}
+      , m_pTextures{}
       , m_Path{"images/"}
 {
     LoadTextures();
@@ -37,12 +23,12 @@ TextureManager::~TextureManager()
 
 void TextureManager::LoadTextures()
 {
-    for (const auto& texture : m_Data["images"])
+    for (const auto& texture : m_pGameController->m_Data["images"])
     {
         const std::string label{texture["label"]};
         const std::string path{texture["path"]};
-        auto it = m_Labels.find(label);
-        if (it == m_Labels.end())
+        auto it = m_pGameController->m_Labels.find(label);
+        if (it == m_pGameController->m_Labels.end())
         {
             std::cerr << "TextureManager::LoadTextures() - ERROR: label not found: " << label << std::endl;
             std::abort();
@@ -50,7 +36,7 @@ void TextureManager::LoadTextures()
         //m_Textures.emplace(std::make_pair(m_Labels[label], new Texture{m_Path + path}));
         //m_Textures.emplace(m_Labels[label], new Texture{m_Path + path});
         Texture* pTexture = new Texture{m_Path + path};
-        m_Textures[m_Labels[label]] = pTexture;
+        m_Textures[m_pGameController->m_Labels[label]] = pTexture;
         m_pTextures.push_back(pTexture);
     }
 }
@@ -75,11 +61,6 @@ void TextureManager::DeleteTextures()
     //m_Textures.clear();
 }
 
-void TextureManager::SetData(const json& data)
-{
-    m_Data = data;
-}
-
 Texture* TextureManager::GetTexture(Game::Label label)
 {
     const auto it = m_Textures.find(label);
@@ -89,14 +70,4 @@ Texture* TextureManager::GetTexture(Game::Label label)
     }
     // FALLBACK
     return m_Textures[Game::Label::D_FALLBACK];
-}
-
-void TextureManager::SetTexture(Game::Label label, Texture* pTexture)
-{
-    m_Textures[label] = pTexture;
-}
-
-void TextureManager::SetLabels(const std::map<std::string, Game::Label>& labels)
-{
-    m_Labels = labels;
 }

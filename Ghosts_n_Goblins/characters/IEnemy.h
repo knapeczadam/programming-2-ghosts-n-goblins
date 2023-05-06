@@ -25,7 +25,7 @@ protected:
     virtual void Fly(float elapsedSec);
     virtual void Spawn();
     virtual float GetAngle() const final;
-    virtual bool IsFlipped() const final;
+    virtual bool IsFlipped() const override;
     virtual void Switch(float interval);
     virtual void Ping();
     virtual void Pong();

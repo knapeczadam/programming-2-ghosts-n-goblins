@@ -39,6 +39,7 @@ public:
     void SetPosition(const Point2f& position);
     Sprite* GetSprite() const;
     void SetSprite(Sprite* pSprite);
+    virtual bool IsFlipped() const;
 
 
     // FINAL METHODS
@@ -60,6 +61,7 @@ protected:
     virtual std::vector<Point2f> GetCollisionBoxVertices() const final;
     virtual void SetCollisionBoxHeight(float height) final;
     virtual void ResetCollisionBox() final;
+    virtual Point2f GetContactPoint(const GameObject* other) const final;
 
 protected:
     virtual void UpdateCollisionBox();

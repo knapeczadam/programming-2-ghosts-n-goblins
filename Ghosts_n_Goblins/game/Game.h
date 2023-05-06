@@ -24,6 +24,7 @@ class SpriteFactory;
 class GameObject;
 class SoundManager;
 class Ladder;
+class FXManager;
 
 class IThrowable;
 class IEnemy;
@@ -64,6 +65,8 @@ public:
         // FX
         F_FIRE,
         F_FX,
+        F_PROJECTILE_BLOCK,
+        F_PROJECTILE_DEATH,
         F_VANISH,
 
         // LEVEL
@@ -240,6 +243,7 @@ private:
     std::vector<GameObject*> m_Tombstones;
     std::vector<GameObject*> m_Collectibles;
     std::vector<GameObject*> m_Ladders;
+    std::vector<GameObject*> m_Effects;
     
     SpriteFactory* m_pSpriteFactory;
     TextureManager* m_pTextureManager;
@@ -252,6 +256,7 @@ private:
     Camera* m_pCamera;
     HUD* m_pHUD;
     GameController* m_pGameController;
+    FXManager* m_pFXManager;
 #if TEST_OBJECT
     GameObject* m_pTestObject;
 #endif

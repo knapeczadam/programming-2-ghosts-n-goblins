@@ -85,6 +85,14 @@
       "path": "fx/fx.bmp"
     },
     {
+      "label": "f_projectile_block",
+      "path": "fx/projectile_block.png"
+    },
+    {
+      "label": "f_projectile_death",
+      "path": "fx/projectile_death.png"
+    },
+    {
       "label": "f_vanish",
       "path": "fx/vanish.png"
     },
@@ -424,6 +432,20 @@
       "columns": 4,
       "sub_rows": 0,
       "sub_columns": 0,
+      "frames_per_second": 10,
+      "scale": 2
+    },
+    {
+      "label": "f_projectile_block",
+      "rows": 1,
+      "columns": 3,
+      "frames_per_second": 6,
+      "scale": 2
+    },
+    {
+      "label": "f_projectile_death",
+      "rows": 1,
+      "columns": 5,
       "frames_per_second": 10,
       "scale": 2
     },

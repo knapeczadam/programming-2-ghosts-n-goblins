@@ -159,6 +159,15 @@
     <ClCompile Include="throwables\Spell.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="game\FXManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="game\GameController.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="fx\ProjectileBlock.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="collectibles\ICollectible.h">
@@ -312,6 +321,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="throwables\Spell.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\FXManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\GameController.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="fx\ProjectileBlock.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

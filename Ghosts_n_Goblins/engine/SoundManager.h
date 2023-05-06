@@ -6,7 +6,7 @@
 class SoundManager final
 {
 public:
-    explicit SoundManager(json data, std::map<std::string, Game::Label> labels);
+    explicit SoundManager(GameController* pGameController);
     ~SoundManager();
     SoundManager(const SoundManager& other) = delete;
     SoundManager(SoundManager&& other) noexcept = delete;
@@ -34,8 +34,7 @@ private:
     void LoadSounds();
     void DeleteSounds();
 private:
-    json m_Data;
-    std::map<std::string, Game::Label> m_Labels;
+    GameController* m_pGameController;
     const std::string m_EffectPath;
     const std::string m_StreamPath;
     std::map<Game::Label, SoundEffect*> m_Effects;

@@ -2,11 +2,16 @@
 #include "SoundManager.h"
 #include <iostream>
 
-SoundManager::SoundManager(json data, std::map<std::string, Game::Label> labels)
-    : m_Data(std::move(data))
-      , m_Labels(std::move(labels))
+#include "game/GameController.h"
+
+SoundManager::SoundManager(GameController* pGameController)
+    : m_pGameController{pGameController}
       , m_EffectPath{"sounds/effects/"}
       , m_StreamPath{"sounds/streams/"}
+      , m_Effects{}
+      , m_Streams{}
+      , m_pEffects{}
+      , m_pStreams{}
 {
     LoadSounds();
 }
@@ -26,7 +31,7 @@ void SoundManager::PlayEffect(Game::Label label) const
 
 void SoundManager::PlayStream(Game::Label label, bool repeat) const
 {
-    if(GetStream(label)->IsLoaded())
+    if (GetStream(label)->IsLoaded())
     {
         if (SoundStream::IsPlaying()) return;
         GetStream(label)->Play(repeat);
@@ -95,32 +100,34 @@ void SoundManager::DecreaseMasterVolume()
 
 void SoundManager::LoadSounds()
 {
-    for (const auto& sound : m_Data["effects"])
+    for (const auto& sound : m_pGameController->m_Data["effects"])
     {
         const std::string label{sound["label"]};
         const std::string path{sound["path"]};
-        auto it = m_Labels.find(label);
-        if (it == m_Labels.end())
+        auto it = m_pGameController->m_Labels.find(label);
+        if (it == m_pGameController->m_Labels.end())
         {
-            std::cerr << "SoundManager::LoadSounds() - ERROR: label (" << label <<") found in data.json/effects is not in the label map!" << std::endl;
+            std::cerr << "SoundManager::LoadSounds() - ERROR: label (" << label <<
+                ") found in data.json/effects is not in the label map!" << std::endl;
             std::abort();
         }
         SoundEffect* pEffect = new SoundEffect{m_EffectPath + path};
-        m_Effects[m_Labels[label]] = pEffect;
+        m_Effects[m_pGameController->m_Labels[label]] = pEffect;
         m_pEffects.push_back(pEffect);
     }
-    for (const auto& sound : m_Data["streams"])
+    for (const auto& sound : m_pGameController->m_Data["streams"])
     {
         const std::string label{sound["label"]};
         const std::string path{sound["path"]};
-        auto it = m_Labels.find(label);
-        if (it == m_Labels.end())
+        auto it = m_pGameController->m_Labels.find(label);
+        if (it == m_pGameController->m_Labels.end())
         {
-            std::cerr << "SoundManager::LoadSounds() - ERROR: label (" << label <<") found in data.json/streams is not in the label map!" << std::endl;
+            std::cerr << "SoundManager::LoadSounds() - ERROR: label (" << label <<
+                ") found in data.json/streams is not in the label map!" << std::endl;
             std::abort();
         }
         SoundStream* pStream = new SoundStream{m_StreamPath + path};
-        m_Streams[m_Labels[label]] = pStream;
+        m_Streams[m_pGameController->m_Labels[label]] = pStream;
         m_pStreams.push_back(pStream);
     }
 }

@@ -150,6 +150,11 @@ void GameObject::SetSprite(Sprite* pSprite)
     m_pSprite = pSprite;
 }
 
+bool GameObject::IsFlipped() const
+{
+    return m_Flipped;
+}
+
 Rectf GameObject::GetShape() const
 {
     return m_Shape;
@@ -243,6 +248,21 @@ void GameObject::SetCollisionBoxHeight(float height)
 void GameObject::ResetCollisionBox()
 {
     m_CollisionBox = m_OriginalCollisionBox;
+}
+
+Point2f GameObject::GetContactPoint(const GameObject* other) const
+{
+    Point2f contactPoint;
+    contactPoint.y = other->GetCollisionBoxCenter().y;
+    if (other->IsFlipped())
+    {
+        contactPoint.x = other->GetCollisionBox().left;    
+    }
+    else
+    {
+        contactPoint.x = other->GetCollisionBox().left + other->GetCollisionBox().width;
+    }
+    return contactPoint;
 }
 
 Point2f GameObject::GetShapeCenter() const

@@ -38,6 +38,7 @@
 #include "characters/Unicorn.h"
 #include "characters/WoodyPig.h"
 #include "characters/Zombie.h"
+#include "fx/FXManager.h"
 
 
 Game::Game(const Window& window)
@@ -49,6 +50,7 @@ Game::Game(const Window& window)
       , m_Tombstones{}
       , m_Collectibles{}
       , m_Ladders{}
+      , m_Effects{}
       , m_pSpriteFactory{nullptr}
       , m_pTextureManager{nullptr}
       , m_pSoundManager{nullptr}
@@ -60,6 +62,7 @@ Game::Game(const Window& window)
       , m_pCamera{nullptr}
       , m_pHUD{nullptr}
       , m_pGameController{nullptr}
+      , m_pFXManager{nullptr}
 #if TEST_OBJECT
       , m_pTestObject{nullptr}
 #endif
@@ -94,6 +97,7 @@ void Game::Cleanup()
     delete m_pPlayer;
     delete m_pSoundManager;
     delete m_pGameController;
+    delete m_pFXManager;
 #if TEST_OBJECT
     delete m_pTestObject;
 #endif
@@ -105,6 +109,7 @@ void Game::Cleanup()
     std::ranges::for_each(m_Tombstones, deleteGameObject);
     std::ranges::for_each(m_Collectibles, deleteGameObject);
     std::ranges::for_each(m_Ladders, deleteGameObject);
+    std::ranges::for_each(m_Effects, deleteGameObject);
 }
 
 void Game::Initialize()
@@ -114,24 +119,33 @@ void Game::Initialize()
     LoadData();
     InitBootIntervals();
 
+    // GAME CONTROLLER
+    m_pGameController = new GameController{
+        m_Labels,
+        m_Data,
+        GetViewPort(),
+        m_PlayerThrowables,
+        m_EnemyThrowables,
+        m_Effects
+    };
+
     // Order of initialization is important
     // 1. TEXTURE MANAGER
     // 2. SPRITE FACTORY
-    m_pTextureManager = new TextureManager{m_Data, m_Labels};
-    m_pSpriteFactory = new SpriteFactory{m_Data, m_pTextureManager, m_Labels};
+    m_pTextureManager = new TextureManager{m_pGameController};
+    m_pGameController->m_pTextureManager = m_pTextureManager;
+
+    m_pSpriteFactory = new SpriteFactory{m_pGameController};
+    m_pGameController->m_pSpriteFactory = m_pSpriteFactory;
 
     // SOUND
-    m_pSoundManager = new SoundManager{m_Data, m_Labels};
+    m_pSoundManager = new SoundManager{m_pGameController};
+    m_pGameController->m_pSoundManager = m_pSoundManager;
 
-    // GAME CONTROLLER
-    m_pGameController = new GameController{
-        GetViewPort(),
-        m_pSpriteFactory,
-        m_pSoundManager,
-        m_PlayerThrowables,
-        m_EnemyThrowables
-    };
-    
+    // FX
+    m_pFXManager = new FXManager{m_pGameController};
+    m_pGameController->m_pFXManager = m_pFXManager;
+
     // LEVEL
     InitLevel();
     m_pGameController->m_pLevel = m_pLevel;
@@ -155,7 +169,7 @@ void Game::Initialize()
 
 
 #if TEST_OBJECT
-    m_pTestObject = new Crow{Point2f{600.f, 65.f}, m_pGameController};
+    m_pTestObject = new Crow{Point2f{600.f, 100.f}, m_pGameController};
 #endif
 }
 
@@ -187,6 +201,8 @@ void Game::InitLabels()
     // FX
     m_Labels["f_fire"] = Label::F_FIRE;
     m_Labels["f_fx"] = Label::F_FX;
+    m_Labels["f_projectile_block"] = Label::F_PROJECTILE_BLOCK;
+    m_Labels["f_projectile_death"] = Label::F_PROJECTILE_DEATH;
     m_Labels["f_vanish"] = Label::F_VANISH;
 
     // LEVEL
@@ -429,14 +445,14 @@ void Game::InitMoneyBags()
 
 void Game::InitEnemies()
 {
-    InitUnicorn();
     InitCrows();
-    InitFlyingKnights();
-    InitGreenMonsters();
-    InitMagicians();
-    InitRedArremer();
-    InitWoodyPigs();
-    InitZombies();
+    // InitFlyingKnights();
+    // InitGreenMonsters();
+    // InitMagicians();
+    // InitRedArremer();
+    // InitUnicorn();
+    // InitWoodyPigs();
+    // InitZombies();
 }
 
 void Game::InitUnicorn()
@@ -465,10 +481,9 @@ void Game::InitFlyingKnights()
 void Game::InitGreenMonsters()
 {
     // GREEN MONSTERS
-    // TODO: enemy throwables vector
     m_Enemies.insert(m_Enemies.end(), {
                          new GreenMonster{Point2f{4622.0f, 54.0f}, m_pGameController},
-                         new GreenMonster{Point2f{6190.0f, 54.0f},m_pGameController},
+                         new GreenMonster{Point2f{6190.0f, 54.0f}, m_pGameController},
                          new GreenMonster{Point2f{1615.0f, 213.0f}, m_pGameController},
                          new GreenMonster{Point2f{2191.0f, 213.0f}, m_pGameController},
                      });
@@ -526,6 +541,7 @@ void Game::Draw() const
     std::ranges::for_each(m_Enemies | std::views::filter(isVisible), draw);
     std::ranges::for_each(m_PlayerThrowables | std::views::filter(isVisible), draw);
     std::ranges::for_each(m_Collectibles | std::views::filter(isVisible), draw);
+    std::ranges::for_each(m_Effects | std::views::filter(isVisible), draw);
     m_pPlayer->Draw();
     std::ranges::for_each(m_Waters, draw);
     m_pForeground->Draw();
@@ -579,6 +595,9 @@ void Game::Update(float elapsedSec)
     // COLLECTIBLES
     std::ranges::for_each(m_Collectibles | std::views::filter(isActive), update);
 
+    // EFFECTS
+    std::ranges::for_each(m_Effects | std::views::filter(isActive), update);
+
     m_pHUD->Update(elapsedSec);
 
 #if TEST_OBJECT
@@ -628,6 +647,10 @@ void Game::DoCollisionTests()
             {
                 if (weapon->IsActive()) pTombstone->HandleCollision(weapon);
             }
+#if TEST_OBJECT
+            IEnemy *pTestObject{dynamic_cast<IEnemy *>(m_pTestObject)};
+            if (pTestObject) pTestObject->HandleCollision(weapon);
+#endif
         }
     }
 
@@ -659,6 +682,7 @@ void Game::LateUpdate(float elapsedSec)
     std::ranges::for_each(m_PlayerThrowables, lateUpdate);
     std::ranges::for_each(m_EnemyThrowables, lateUpdate);
     std::ranges::for_each(m_Collectibles, lateUpdate);
+    std::ranges::for_each(m_Effects, lateUpdate);
 
     DoFrustumCulling();
 
@@ -789,7 +813,7 @@ void Game::DoFrustumCulling()
         }
     }
 #if TEST_OBJECT
-    if (isOutOfWindow(m_pTestObject)) deactivate(m_pTestObject);
+    // if (isOutOfWindow(m_pTestObject)) deactivate(m_pTestObject);
 #endif
 }
 
