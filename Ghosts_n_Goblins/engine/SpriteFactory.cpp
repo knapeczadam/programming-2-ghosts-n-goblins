@@ -79,6 +79,14 @@ Sprite* SpriteFactory::CreateSprite(Game::Label label)
                 sprite.contains("collision_height") ? static_cast<float>(sprite["collision_height"]) : 0.0f
             };
             pSprite->SetCollisionHeight(collisionHeight);
+            const float collisionHorizontalOffset{
+                sprite.contains("collision_horizontal_offset") ? static_cast<float>(sprite["collision_horizontal_offset"]) : 0.0f
+            };
+            pSprite->SetCollisionHorizontalOffset(collisionHorizontalOffset);
+            const float collisionVerticalOffset{
+                sprite.contains("collision_vertical_offset") ? static_cast<float>(sprite["collision_vertical_offset"]) : 0.0f
+            };
+            pSprite->SetCollisionVerticalOffset(collisionVerticalOffset);
 
             pSprite->Init();
 

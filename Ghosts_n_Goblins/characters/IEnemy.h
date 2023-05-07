@@ -15,6 +15,7 @@ public:
 
     virtual bool IsAwake() const final;
     virtual void SetAwake(bool awake) final;
+    virtual int GetScore() const final;
 
 protected:
     virtual void Awake();

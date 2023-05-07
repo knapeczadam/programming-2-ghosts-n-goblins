@@ -26,16 +26,18 @@ void Unicorn::Update(float elapsedSec)
 void Unicorn::HandleCollision(GameObject* other)
 {
     if (not IsOverlapping(other)) return;
-    m_pGameController->m_pSoundManager->PlayEffect(Game::Label::E_BOSS_HIT);
     --m_Health;
     other->SetActive(false);
     other->SetVisible(false);
+    m_pGameController->m_pFXManager->PlayEffect(Game::Label::F_PROJECTILE_BLOCK_BOSS, GetContactPoint(other), false);
+    m_pGameController->m_pSoundManager->PlayEffect(Game::Label::E_BOSS_HIT);
     if (m_Health == 0)
     {
         m_Active = false;
         m_Visible = false;
         m_pGameController->m_pPlayer->AddScore(m_Score);
-        m_pGameController->m_pFXManager->PlayEffect(Game::Label::F_FIRE_ENEMY, GetContactPoint(other), other->IsFlipped());
+        m_pGameController->m_pFXManager->PlayEffect(Game::Label::F_FIRE_BOSS, GetCollisionBoxCenter(), other->IsFlipped());
+        m_pGameController->m_pFXManager->PlayEffect(Game::Label::F_SCORE, GetCollisionBoxCenter(), other->IsFlipped(), this);
         m_pGameController->m_pSoundManager->PlayEffect(Game::Label::E_BOSS_DEATH);
     }
 }

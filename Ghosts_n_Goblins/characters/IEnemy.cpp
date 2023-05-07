@@ -52,6 +52,11 @@ void IEnemy::SetAwake(bool awake)
     }
 }
 
+int IEnemy::GetScore() const
+{
+    return m_Score;
+}
+
 void IEnemy::Awake()
 {
 }

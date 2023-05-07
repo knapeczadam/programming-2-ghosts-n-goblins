@@ -23,7 +23,7 @@ void Tombstone::HandleCollision(GameObject* other)
     other->SetActive(false);
     other->SetVisible(false);
     m_pGameController->m_pSoundManager->PlayEffect(Game::Label::E_PROJECTILE_BLOCK);
-    m_pGameController->m_pFXManager->PlayEffect(Game::Label::F_PROJECTILE_BLOCK, GetContactPoint(other), other->IsFlipped());
+    m_pGameController->m_pFXManager->PlayEffect(Game::Label::F_PROJECTILE_BLOCK_ENEMY, GetContactPoint(other), other->IsFlipped());
     if (m_HitCount == m_MaxHitCount)
     {
        // transform

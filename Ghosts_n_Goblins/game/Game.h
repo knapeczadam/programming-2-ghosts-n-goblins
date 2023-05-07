@@ -62,6 +62,7 @@ public:
         O_COIN,
         O_DOLL,
         O_KEY,
+        O_KING,
         O_MONEY_BAG,
         O_NECKLACE,
         O_POT,
@@ -69,11 +70,13 @@ public:
         O_YASHICHI,
 
         // FX
+        F_FIRE_BOSS,
         F_FIRE_ENEMY,
         F_FIRE_TORCH,
-        F_FX,
-        F_PROJECTILE_BLOCK,
+        F_PROJECTILE_BLOCK_BOSS,
+        F_PROJECTILE_BLOCK_ENEMY,
         F_PROJECTILE_DEATH,
+        F_SCORE,
         F_VANISH,
 
         // LEVEL

@@ -1,6 +1,7 @@
 ﻿#include "pch.h"
 #include "GameObject.h"
 #include <cassert>
+#include <iostream>
 
 #include "GameController.h"
 #include "game/Macros.h"
@@ -209,8 +210,8 @@ void GameObject::InitCollisionBox()
     m_CollisionBox.height = m_pSprite->GetCollisionHeight();
     const float horizontalOffset{(m_Shape.width - m_pSprite->GetCollisionWidth()) / 2};
     const float verticalOffset{(m_Shape.height - m_pSprite->GetCollisionHeight()) / 2};
-    m_CollisionBox.left = m_Shape.left + verticalOffset;
-    m_CollisionBox.bottom = m_Shape.bottom + horizontalOffset;
+    m_CollisionBox.left = m_Shape.left + horizontalOffset + m_pSprite->GetCollisionHorizontalOffset();
+    m_CollisionBox.bottom = m_Shape.bottom + verticalOffset + m_pSprite->GetCollisionVerticalOffset();
     m_OriginalCollisionBox = m_CollisionBox;
 }
 
@@ -220,8 +221,8 @@ void GameObject::UpdateCollisionBox()
     {
         const float horizontalOffset{(m_Shape.width - m_pSprite->GetCollisionWidth()) / 2};
         const float verticalOffset{(m_Shape.height - m_pSprite->GetCollisionHeight()) / 2};
-        m_CollisionBox.left = m_Shape.left + horizontalOffset;
-        m_CollisionBox.bottom = m_Shape.bottom + verticalOffset;
+        m_CollisionBox.left = m_Shape.left + horizontalOffset + m_pSprite->GetCollisionHorizontalOffset();
+        m_CollisionBox.bottom = m_Shape.bottom + verticalOffset + m_pSprite->GetCollisionVerticalOffset();
     }
     else
     {
@@ -252,7 +253,7 @@ void GameObject::ResetCollisionBox()
 
 Point2f GameObject::GetContactPoint(const GameObject* other) const
 {
-    Point2f contactPoint;
+   Point2f contactPoint;
     contactPoint.y = other->GetCollisionBoxCenter().y;
     if (other->IsFlipped())
     {
@@ -287,14 +288,22 @@ void GameObject::SetLeft(float left)
 
 void GameObject::InitShape()
 {
-    assert(m_pSprite != nullptr && "GameObject::InitShape() - m_pSprite is null!");
+    if (not m_pSprite)
+    {
+        std::cerr << "GameObject::InitShape() > No sprite attached - label: " << static_cast<int>(m_Label) << '\n';
+        std::abort();
+    }
     m_Shape.width = m_pSprite->GetScaledClipWidth();
     m_Shape.height = m_pSprite->GetScaledClipHeight();
 }
 
 void GameObject::InitShape(const Point2f& pos)
 {
-    assert(m_pSprite != nullptr && "GameObject::InitShape() - m_pSprite is null!");
+    if (not m_pSprite)
+    {
+        std::cerr << "GameObject::InitShape(const Point2f&) > No sprite attached - label: " << static_cast<int>(m_Label) << '\n';
+        std::abort();
+    }
     m_Shape.left = pos.x;
     m_Shape.bottom = pos.y;
     m_Shape.width = m_pSprite->GetScaledClipWidth();

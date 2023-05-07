@@ -28,12 +28,14 @@ void RedArremer::HandleCollision(GameObject* other)
     --m_Health;
     other->SetActive(false);
     other->SetVisible(false);
+    m_pGameController->m_pFXManager->PlayEffect(Game::Label::F_PROJECTILE_BLOCK_ENEMY, GetContactPoint(other), other->IsFlipped());
     if (m_Health == 0)
     {
         m_Active = false;
         m_Visible = false;
         m_pGameController->m_pPlayer->AddScore(m_Score);
-        m_pGameController->m_pFXManager->PlayEffect(Game::Label::F_FIRE_ENEMY, GetContactPoint(other), other->IsFlipped());
+        m_pGameController->m_pFXManager->PlayEffect(Game::Label::F_FIRE_ENEMY, GetCollisionBoxCenter(), other->IsFlipped());
+        m_pGameController->m_pFXManager->PlayEffect(Game::Label::F_SCORE, GetCollisionBoxCenter(), false, this);
         m_pGameController->m_pSoundManager->PlayEffect(Game::Label::E_ENEMY_DEATH);
     }
 }

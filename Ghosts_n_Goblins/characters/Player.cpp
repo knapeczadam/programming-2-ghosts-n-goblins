@@ -21,10 +21,11 @@
 #include <iostream>
 #include <numeric>
 
+#include "fx/FXManager.h"
 #include "game/GameController.h"
 
 
-const Point2f Player::m_SpawnPos{4000.0f, 64.0f};
+const Point2f Player::m_SpawnPos{100.0f, 64.0f};
 
 Player::Player(const Point2f& pos, GameController* pGameController)
     : GameObject{Game::Label::C_ARTHUR, pos, true, pGameController}
@@ -214,13 +215,17 @@ void Player::Throw()
     switch (m_CurrWeapon)
     {
     case Game::Label::T_DAGGER:
-        m_pGameController->m_PlayerThrowables.push_back(new Dagger{GetShapeCenter(), m_Flipped, false, m_pGameController});
+        m_pGameController->m_PlayerThrowables.push_back(new Dagger{
+            GetShapeCenter(), m_Flipped, false, m_pGameController
+        });
         break;
     case Game::Label::T_LANCE:
-        m_pGameController->m_PlayerThrowables.push_back(new Lance{GetShapeCenter(), m_Flipped, false, m_pGameController});
+        m_pGameController->m_PlayerThrowables.push_back(
+            new Lance{GetShapeCenter(), m_Flipped, false, m_pGameController});
         break;
     case Game::Label::T_TORCH:
-        m_pGameController->m_PlayerThrowables.push_back(new Torch{GetShapeCenter(), m_Flipped, false, m_pGameController});
+        m_pGameController->m_PlayerThrowables.push_back(
+            new Torch{GetShapeCenter(), m_Flipped, false, m_pGameController});
         break;
     }
 }
@@ -376,13 +381,16 @@ void Player::SyncWithPlatform(float elapsedSec)
 {
     if (m_OffsetSnapshot == Vector2f{0, 0})
     {
-        m_OffsetSnapshot.x = GetPosition<Point2f>().x - m_pGameController->m_pLevel->GetPlatform()->GetPosition<Point2f>().x;
+        m_OffsetSnapshot.x = GetPosition<Point2f>().x - m_pGameController->m_pLevel->GetPlatform()->GetPosition<
+            Point2f>().x;
         m_OffsetSnapshot.y = m_Shape.bottom - m_pGameController->m_pLevel->GetPlatform()->GetPosition<Point2f>().y;
     }
     m_OffsetSnapshot.x += m_Velocity.x * elapsedSec;
     Matrix2x3 pos{};
     Matrix2x3 T2{Matrix2x3::CreateTranslationMatrix(m_OffsetSnapshot)};
-    Matrix2x3 T1{Matrix2x3::CreateTranslationMatrix(m_pGameController->m_pLevel->GetPlatform()->GetPosition<Vector2f>())};
+    Matrix2x3 T1{
+        Matrix2x3::CreateTranslationMatrix(m_pGameController->m_pLevel->GetPlatform()->GetPosition<Vector2f>())
+    };
     pos = T1 * T2 * pos;
     m_Shape.left = pos.orig.x;
 }
@@ -501,45 +509,52 @@ void Player::AddScore(int score)
     m_Score += score;
 }
 
-void Player::HandleCollision(GameObject* other)
+bool Player::HandleEnemy(GameObject* other)
 {
-    if (not IsOverlapping(other)) return;
-
     IEnemy* pEnemy{dynamic_cast<IEnemy*>(other)};
     if (pEnemy)
     {
         // m_pSoundManager->PlayEffect(Game::Label::E_ARTHUR_HIT);
-        return;
+        --m_Lives;
+        return true;
     }
+    return false;
+}
+
+bool Player::HandleWeapon(GameObject* other)
+{
     IThrowable* pWeapon{dynamic_cast<IThrowable*>(other)};
     if (pWeapon)
     {
+        other->SetActive(false);
+        other->SetVisible(false);
         // m_pSoundManager->PlayEffect(Game::Label::E_WEAPON_PICKUP);
         switch (other->GetLabel())
         {
         case Game::Label::T_DAGGER:
             m_CurrWeapon = Game::Label::T_DAGGER;
-            other->SetVisible(false);
-            other->SetActive(false);
             break;
         case Game::Label::T_LANCE:
             m_CurrWeapon = Game::Label::T_LANCE;
-            other->SetVisible(false);
-            other->SetActive(false);
             break;
         case Game::Label::T_TORCH:
             m_CurrWeapon = Game::Label::T_TORCH;
-            other->SetVisible(false);
-            other->SetActive(false);
             break;
         case Game::Label::O_SHIELD:
             break;
         }
-        return;
+        return true;
     }
+    return false;
+}
+
+bool Player::HandleCollectible(GameObject* other)
+{
     ICollectible* pCollectable{dynamic_cast<ICollectible*>(other)};
     if (pCollectable)
     {
+        other->SetVisible(false);
+        other->SetActive(false);
         switch (other->GetLabel())
         {
         case Game::Label::O_KEY:
@@ -548,25 +563,46 @@ void Player::HandleCollision(GameObject* other)
             m_pGameController->m_pSoundManager->PlayEffect(Game::Label::E_ARMOR_PICKUP);
             break;
         default:
+            m_pGameController->m_pFXManager->PlayEffect(Game::Label::F_SCORE, other->GetCollisionBoxCenter(), false, other);
             m_pGameController->m_pSoundManager->PlayEffect(Game::Label::E_TREASURE_PICKUP);
             m_Score += pCollectable->GetScore();
-            other->SetVisible(false);
-            other->SetActive(false);
             break;
         }
-        return;
+        return true;
     }
+    return false;
+}
+
+bool Player::HandleLadder(GameObject* other)
+{
     IClimable* pClimable{dynamic_cast<IClimable*>(other)};
     if (pClimable)
     {
         m_OnLadder = true;
-        return;
+        return true;
     }
+    return false;
+}
+
+bool Player::HandleCollisionBox(GameObject* other)
+{
     CollisionBox* pBox{dynamic_cast<CollisionBox*>(other)};
     if (pBox)
     {
-        return;
+        return true;
     }
+    return false;
+}
+
+void Player::HandleCollision(GameObject* other)
+{
+    if (not IsOverlapping(other)) return;
+
+    if (HandleEnemy(other)) return;
+    if (HandleWeapon(other)) return;
+    if (HandleCollectible(other)) return;
+    if (HandleLadder(other)) return;
+    if (HandleCollisionBox(other)) return;
 }
 
 void Player::CheckForBoundaries(const Rectf& boundaries)

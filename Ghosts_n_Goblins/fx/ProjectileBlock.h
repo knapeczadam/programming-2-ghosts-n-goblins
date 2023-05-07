@@ -4,7 +4,7 @@
 class ProjectileBlock : public GameObject
 {
 public:
-    explicit ProjectileBlock(const Point2f& pos, bool flipped, GameController* pGameController);
+    explicit ProjectileBlock(Game::Label label, const Point2f& pos, bool flipped, GameController* pGameController);
     virtual ~ProjectileBlock() override = default;
     ProjectileBlock(const ProjectileBlock& other) = delete;
     ProjectileBlock(ProjectileBlock&& other) noexcept = delete;

@@ -148,8 +148,6 @@ void Game::Initialize()
 
     // LEVEL
     InitLevel();
-    m_pGameController->m_pLevel = m_pLevel;
-    m_pGameController->m_pPlatform = m_pPlatform;
 
     // COLLECTIBLES
     InitCollectibles();
@@ -192,6 +190,7 @@ void Game::InitLabels()
     m_Labels["o_coin"] = Label::O_COIN;
     m_Labels["o_doll"] = Label::O_DOLL;
     m_Labels["o_key"] = Label::O_KEY;
+    m_Labels["o_king"] = Label::O_KING;
     m_Labels["o_money_bag"] = Label::O_MONEY_BAG;
     m_Labels["o_necklace"] = Label::O_NECKLACE;
     m_Labels["o_pot"] = Label::O_POT;
@@ -199,11 +198,13 @@ void Game::InitLabels()
     m_Labels["o_yashichi"] = Label::O_YASHICHI;
 
     // FX
+    m_Labels["f_fire_boss"] = Label::F_FIRE_BOSS;
     m_Labels["f_fire_enemy"] = Label::F_FIRE_ENEMY;
     m_Labels["f_fire_torch"] = Label::F_FIRE_TORCH;
-    m_Labels["f_fx"] = Label::F_FX;
-    m_Labels["f_projectile_block"] = Label::F_PROJECTILE_BLOCK;
+    m_Labels["f_projectile_block_boss"] = Label::F_PROJECTILE_BLOCK_BOSS;
+    m_Labels["f_projectile_block_enemy"] = Label::F_PROJECTILE_BLOCK_ENEMY;
     m_Labels["f_projectile_death"] = Label::F_PROJECTILE_DEATH;
+    m_Labels["f_score"] = Label::F_SCORE;
     m_Labels["f_vanish"] = Label::F_VANISH;
 
     // LEVEL
@@ -366,9 +367,11 @@ void Game::InitBootIntervals()
 void Game::InitLevel()
 {
     m_pPlatform = new Platform{Point2f{3295.0f, 28.0f}, m_pGameController};
+    m_pGameController->m_pPlatform = m_pPlatform;
     m_pForeground = new GameObject{Label::L_FOREGROUND, m_pGameController};
     m_pKillZone = new KillZone{m_pTextureManager->GetTexture(Label::L_LEVEL)->GetWidth(), 10.0f};
     m_pLevel = new Level{m_pGameController};
+    m_pGameController->m_pLevel = m_pLevel;
 
     InitLadders();
     InitTombstones();
@@ -447,18 +450,18 @@ void Game::InitMoneyBags()
 void Game::InitEnemies()
 {
     InitCrows();
-    // InitFlyingKnights();
+    InitFlyingKnights();
     InitGreenMonsters();
-    // InitMagicians();
-    // InitRedArremer();
-    // InitUnicorn();
-    // InitWoodyPigs();
-    // InitZombies();
+    InitMagician();
+    InitRedArremer();
+    InitUnicorn();
+    InitWoodyPigs();
+    InitZombies();
 }
 
 void Game::InitUnicorn()
 {
-    m_Enemies.push_back(new Unicorn{Point2f{400.0f, 62.0f}, m_pGameController});
+    m_Enemies.push_back(new Unicorn{Point2f{6903.0f, 62.0f}, m_pGameController});
 }
 
 void Game::InitCrows()
@@ -475,7 +478,7 @@ void Game::InitCrows()
 void Game::InitFlyingKnights()
 {
     m_Enemies.insert(m_Enemies.end(), {
-                         new FlyingKnight{Point2f{500.0f, 200.0f}, m_pGameController},
+                         new FlyingKnight{Point2f{500.0f, 100.0f}, m_pGameController},
                      });
 }
 
@@ -499,7 +502,7 @@ void Game::InitMagician()
 
 void Game::InitRedArremer()
 {
-    m_Enemies.push_back(new RedArremer{Point2f{1200.0f, 62.0f}, m_pGameController});
+    m_Enemies.push_back(new RedArremer{Point2f{2929.0f, 65.0f}, m_pGameController});
 }
 
 void Game::InitWoodyPigs()
@@ -604,7 +607,7 @@ void Game::Update(float elapsedSec)
     m_pHUD->Update(elapsedSec);
 
 #if TEST_OBJECT
-    if (m_pTestObject->IsActive())m_pTestObject->Update(elapsedSec);
+   if (m_pTestObject->IsActive())m_pTestObject->Update(elapsedSec);
 #endif
 
     // Do collision
@@ -794,7 +797,7 @@ void Game::DoFrustumCulling()
     static const auto deactivate{
         [&](GameObject* pGameObject)
         {
-            //pGameObject->SetVisible(true);
+            pGameObject->SetVisible(false);
             pGameObject->SetActive(false);
         }
     };

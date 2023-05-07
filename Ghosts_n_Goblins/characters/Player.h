@@ -60,6 +60,11 @@ public:
     Game::Label GetWeapon() const;
     int GetScore() const;
     void AddScore(int score);
+    bool HandleEnemy(GameObject* other);
+    bool HandleWeapon(GameObject* other);
+    bool HandleCollectible(GameObject* other);
+    bool HandleLadder(GameObject* other);
+    bool HandleCollisionBox(GameObject* other);
 
     void UpdateState();
 protected:

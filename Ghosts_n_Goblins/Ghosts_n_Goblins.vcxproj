@@ -293,6 +293,7 @@
     </ClCompile>
     <ClCompile Include="characters\Zombie.cpp" />
     <ClCompile Include="collectibles\Armor.cpp" />
+    <ClCompile Include="collectibles\King.cpp" />
     <ClCompile Include="collectibles\Pot.cpp" />
     <ClCompile Include="collectibles\Doll.cpp" />
     <ClCompile Include="collectibles\Coin.cpp" />
@@ -817,6 +818,7 @@
       <AdditionalIncludeDirectories>;C:\dev\vcpkg\installed\x64-windows\include</AdditionalIncludeDirectories>
     </ClCompile>
     <ClCompile Include="fx\ProjectileDeath.cpp" />
+    <ClCompile Include="fx\Score.cpp" />
     <ClCompile Include="game\Camera.cpp">
       <RuntimeLibrary>MultiThreadedDebugDll</RuntimeLibrary>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -1546,6 +1548,7 @@
     <ClInclude Include="characters\WoodyPig.h" />
     <ClInclude Include="characters\Zombie.h" />
     <ClInclude Include="collectibles\Armor.h" />
+    <ClInclude Include="collectibles\King.h" />
     <ClInclude Include="collectibles\Pot.h" />
     <ClInclude Include="collectibles\Doll.h" />
     <ClInclude Include="collectibles\Coin.h" />
@@ -1565,6 +1568,7 @@
     <ClInclude Include="fx\Fire.h" />
     <ClInclude Include="fx\FXManager.h" />
     <ClInclude Include="fx\ProjectileDeath.h" />
+    <ClInclude Include="fx\Score.h" />
     <ClInclude Include="game\Camera.h" />
     <ClInclude Include="game\GameController.h" />
     <ClInclude Include="game\CollisionBox.h" />

@@ -35,6 +35,8 @@ Sprite::Sprite(Texture* pTexture)
       , m_CurrClipHeight{0.0f}
       , m_CollisionWidth{0.0f}
       , m_CollisionHeight{0.0f}
+      , m_CollisionHorizontalOffset{0.0f}
+      , m_CollisionVerticalOffset{0.0f}
 {
 }
 
@@ -358,4 +360,24 @@ float Sprite::GetCollisionHeight() const
 void Sprite::SetCollisionHeight(float collisionHeight)
 {
     m_CollisionHeight = collisionHeight;
+}
+
+float Sprite::GetCollisionHorizontalOffset() const
+{
+    return m_CollisionHorizontalOffset * m_Scale;
+}
+
+void Sprite::SetCollisionHorizontalOffset(float collisionHorizontalOffset)
+{
+    m_CollisionHorizontalOffset = collisionHorizontalOffset;;
+}
+
+float Sprite::GetCollisionVerticalOffset() const
+{
+    return m_CollisionVerticalOffset * m_Scale;
+}
+
+void Sprite::SetCollisionVerticalOffset(float collisionVerticalOffset)
+{
+    m_CollisionVerticalOffset = collisionVerticalOffset;
 }

@@ -3,8 +3,8 @@
 
 #include "engine/Sprite.h"
 
-ProjectileBlock::ProjectileBlock(const Point2f& pos, bool flipped, GameController* pGameController)
-    : GameObject{Game::Label::F_PROJECTILE_BLOCK, pos, false, pGameController}
+ProjectileBlock::ProjectileBlock(Game::Label label, const Point2f& pos, bool flipped, GameController* pGameController)
+    : GameObject{label, pos, false, pGameController}
 {
     m_Flipped = flipped;
     m_Shape.left = pos.x - m_pSprite->GetScaledClipWidth() / 2;

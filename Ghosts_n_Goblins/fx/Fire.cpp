@@ -3,8 +3,8 @@
 
 #include "engine/Sprite.h"
 
-Fire::Fire(Game::Label labe, const Point2f& pos, GameController* pGameController)
-    : GameObject{labe, pos, true, pGameController}
+Fire::Fire(Game::Label label, const Point2f& pos, GameController* pGameController)
+    : GameObject{label, pos, true, pGameController}
 {
     m_Shape.left = pos.x - m_pSprite->GetScaledClipWidth() / 2;
     m_Shape.bottom = pos.y - m_pSprite->GetScaledClipHeight() / 2;
@@ -13,7 +13,7 @@ Fire::Fire(Game::Label labe, const Point2f& pos, GameController* pGameController
 void Fire::Update(float elapsedSec)
 {
     float time{};
-    if (m_Label == Game::Label::F_FIRE_ENEMY)
+    if (m_Label == Game::Label::F_FIRE_ENEMY or m_Label == Game::Label::F_FIRE_BOSS)
     {
         time = 0.8f;
     }

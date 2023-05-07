@@ -63,6 +63,10 @@ public:
     void SetCollisionWidth(float collisionWidth);
     float GetCollisionHeight() const;
     void SetCollisionHeight(float collisionHeight);
+    float GetCollisionHorizontalOffset() const;
+    void SetCollisionHorizontalOffset(float collisionHorizontalOffset);
+    float GetCollisionVerticalOffset() const;
+    void SetCollisionVerticalOffset(float collisionVerticalOffset);
     
 
 private:
@@ -95,4 +99,6 @@ private:
     float m_CurrClipHeight;
     float m_CollisionWidth;
     float m_CollisionHeight;
+    float m_CollisionHorizontalOffset;
+    float m_CollisionVerticalOffset;
 };

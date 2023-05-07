@@ -16,7 +16,7 @@ public:
     FXManager& operator=(const FXManager& other) = delete;
     FXManager& operator=(FXManager&& other) noexcept = delete;
 
-    void PlayEffect(Game::Label label, const Point2f& contactPoint, bool flipped);
+    void PlayEffect(Game::Label label, const Point2f& pos, bool flipped, GameObject* other = nullptr);
 private:
     GameController* m_pGameController;
 };

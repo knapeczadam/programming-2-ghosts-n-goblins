@@ -61,6 +61,10 @@
       "path": "collectibles/key.png"
     },
     {
+      "label": "o_king",
+      "path": "collectibles/king.png"
+    },
+    {
       "label": "o_money_bag",
       "path": "collectibles/money_bag.png"
     },
@@ -77,6 +81,10 @@
       "path": "collectibles/yashichi.png"
     },
     {
+      "label": "f_fire_boss",
+      "path": "fx/fire_boss.png"
+    },
+    {
       "label": "f_fire_enemy",
       "path": "fx/fire_enemy.png"
     },
@@ -85,16 +93,20 @@
       "path": "fx/fire_torch.png"
     },
     {
-      "label": "f_fx",
-      "path": "fx/fx.bmp"
+      "label": "f_projectile_block_boss",
+      "path": "fx/projectile_block_boss.png"
     },
     {
-      "label": "f_projectile_block",
-      "path": "fx/projectile_block.png"
+      "label": "f_projectile_block_enemy",
+      "path": "fx/projectile_block_enemy.png"
     },
     {
       "label": "f_projectile_death",
       "path": "fx/projectile_death.png"
+    },
+    {
+      "label": "f_score",
+      "path": "fx/score.png"
     },
     {
       "label": "f_vanish",
@@ -291,15 +303,6 @@
       "collision_width": 20
     },
     {
-      "label": "c_unicorn",
-      "rows": 5,
-      "columns": 3,
-      "sub_rows": 0,
-      "sub_columns": 0,
-      "frames_per_second": 5,
-      "scale": 2
-    },
-    {
       "label": "c_crow",
       "rows": 2,
       "columns": 4,
@@ -315,7 +318,9 @@
       "sub_rows": 1,
       "sub_columns": 4,
       "frames_per_second": 10,
-      "scale": 2
+      "scale": 2,
+      "collision_width": 14,
+      "collision_height": 27
     },
     {
       "label": "c_green_monster",
@@ -328,7 +333,13 @@
     },
     {
       "label": "c_magician",
-      "scale": 2
+      "rows": 1,
+      "columns": 2,
+      "scale": 2,
+      "collision_width": 15,
+      "collision_height": 28,
+      "collision_horizontal_offset": -5,
+      "collision_vertical_offset": -1
     },
     {
       "label": "c_princess",
@@ -346,7 +357,9 @@
       "sub_rows": 3,
       "sub_columns": 5,
       "frames_per_second": 10,
-      "scale": 2
+      "scale": 2,
+      "collision_width": 23,
+      "collision_height": 27
     },
     {
       "label": "c_satan",
@@ -356,6 +369,19 @@
       "sub_columns": 5,
       "frames_per_second": 10,
       "scale": 2
+    },
+    {
+      "label": "c_unicorn",
+      "rows": 5,
+      "columns": 3,
+      "sub_rows": 0,
+      "sub_columns": 0,
+      "frames_per_second": 5,
+      "scale": 2,
+      "collision_width": 29,
+      "collision_height": 48,
+      "collision_horizontal_offset": 3,
+      "collision_vertical_offset": -4
     },
     {
       "label": "c_woody_pig",
@@ -373,7 +399,10 @@
       "sub_rows": 1,
       "sub_columns": 6,
       "frames_per_second": 5,
-      "scale": 2
+      "scale": 2,
+      "collision_width": 12,
+      "collision_height": 31,
+      "collision_horizontal_offset": -3
     },
     {
       "label": "o_pot",
@@ -397,6 +426,14 @@
       "label": "o_key",
       "rows": 1,
       "columns": 3,
+      "frames_per_second": 10,
+      "scale": 2
+    },
+    {
+      "label": "o_king",
+      "rows": 1,
+      "columns": 3,
+      "frames_per_second": 10,
       "scale": 2
     },
     {
@@ -422,6 +459,13 @@
       "scale": 2
     },
     {
+      "label": "f_fire_boss",
+      "rows": 1,
+      "columns": 6,
+      "frames_per_second": 10,
+      "scale": 2
+    },
+    {
       "label": "f_fire_enemy",
       "rows": 1,
       "columns": 9,
@@ -436,16 +480,14 @@
       "scale": 2
     },
     {
-      "label": "f_fx",
+      "label": "f_projectile_block_boss",
       "rows": 1,
-      "columns": 4,
-      "sub_rows": 0,
-      "sub_columns": 0,
-      "frames_per_second": 10,
+      "columns": 3,
+      "frames_per_second": 15,
       "scale": 2
     },
     {
-      "label": "f_projectile_block",
+      "label": "f_projectile_block_enemy",
       "rows": 1,
       "columns": 3,
       "frames_per_second": 15,
@@ -456,6 +498,14 @@
       "rows": 1,
       "columns": 5,
       "frames_per_second": 25,
+      "scale": 2
+    },
+    {
+      "label": "f_score",
+      "rows": 5,
+      "columns": 1,
+      "sub_rows": 1,
+      "sub_columns": 1,
       "scale": 2
     },
     {
