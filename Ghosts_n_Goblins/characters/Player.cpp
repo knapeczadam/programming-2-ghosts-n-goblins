@@ -46,8 +46,10 @@ Player::Player(const Point2f& pos, GameController* pGameController)
       , m_OnPlatform{false}
       , m_OffsetSnapshot{0.0f, 0.0f}
       , m_CanJump{true}
-      , m_Lives{7}
+      , m_MaxHP{2}
+      , m_HP{m_MaxHP}
       , m_MaxLives{7}
+      , m_Lives{m_MaxLives}
       , m_Score{0}
       , m_CanClimb{false}
       , m_Climbing{false}
@@ -489,6 +491,11 @@ void Player::SetIsOnPlatform(bool isOnPlatform)
     m_OnPlatform = isOnPlatform;
 }
 
+int Player::GetHP() const
+{
+    return m_HP;
+}
+
 int Player::GetLives() const
 {
     return m_Lives;
@@ -515,7 +522,7 @@ bool Player::HandleEnemy(GameObject* other)
     if (pEnemy)
     {
         // m_pSoundManager->PlayEffect(Game::Label::E_ARTHUR_HIT);
-        --m_Lives;
+        --m_HP;
         return true;
     }
     return false;
@@ -558,14 +565,17 @@ bool Player::HandleCollectible(GameObject* other)
         switch (other->GetLabel())
         {
         case Game::Label::O_KEY:
+            m_Score += pCollectable->GetScore();
             break;
         case Game::Label::O_SHIELD:
+            ++m_HP;
             m_pGameController->m_pSoundManager->PlayEffect(Game::Label::E_ARMOR_PICKUP);
             break;
         default:
-            m_pGameController->m_pFXManager->PlayEffect(Game::Label::F_SCORE, other->GetCollisionBoxCenter(), false, other);
-            m_pGameController->m_pSoundManager->PlayEffect(Game::Label::E_TREASURE_PICKUP);
             m_Score += pCollectable->GetScore();
+            m_pGameController->m_pFXManager->PlayEffect(Game::Label::F_SCORE, other->GetCollisionBoxCenter(), false,
+                                                        other);
+            m_pGameController->m_pSoundManager->PlayEffect(Game::Label::E_TREASURE_PICKUP);
             break;
         }
         return true;

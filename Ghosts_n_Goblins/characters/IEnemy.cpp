@@ -8,13 +8,15 @@ IEnemy::IEnemy(Game::Label label, const Point2f& pos, GameController* pGameContr
     : GameObject{label, pos, true, pGameController}
       , m_SpawnPos{pos}
       , m_Score{0}
-      , m_Health{1}
+      , m_HP{1}
+      , m_OriginalHP{m_HP}
       , m_Awake{false}
       , m_AwakeFired{false}
       , m_AwakeDistance{200.0f}
       , m_HorVelocity{0.0f}
       , m_VerVelocity{0.0f}
       , m_Ping{true}
+      , m_FixedDirection{false}
 {
 }
 
@@ -32,7 +34,7 @@ void IEnemy::Update(float elapsedSec)
     {
         if (not m_AwakeFired)
         {
-            Awake();
+            Awake(elapsedSec);
             m_AwakeFired = true;
         }
     }
@@ -57,7 +59,7 @@ int IEnemy::GetScore() const
     return m_Score;
 }
 
-void IEnemy::Awake()
+void IEnemy::Awake(float elapsedSec)
 {
 }
 
@@ -81,7 +83,7 @@ void IEnemy::Fly(float elapsedSec)
 {
 }
 
-void IEnemy::Spawn()
+void IEnemy::Spawn(float elapsedSec)
 {
 }
 
@@ -118,6 +120,16 @@ void IEnemy::Ping()
 
 void IEnemy::Pong()
 {
+}
+
+void IEnemy::ResetHP()
+{
+    m_HP = m_OriginalHP;
+}
+
+bool IEnemy::IsFixedDirection() const
+{
+    return m_FixedDirection;
 }
 
 float IEnemy::GetAngle() const

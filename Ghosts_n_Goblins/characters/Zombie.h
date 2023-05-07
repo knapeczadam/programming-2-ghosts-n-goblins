@@ -25,5 +25,16 @@ public:
     virtual void HandleCollision(GameObject* other) override;
 protected:
     virtual void Walk(float elapsedSec) override;
-    virtual void Spawn() override;
+    virtual void Spawn(float elapsedSec) override;
+    virtual void Awake(float elapsedSec) override;
+private:
+    void Sleep(float elapsedSec);
+
+private:
+    const float m_MinWalingTime;
+    const float m_MaxWalingTime;
+    float m_WalkingTime;
+    const float m_SpawnTime;
+    bool m_CanWalk;
+    int m_Dir;
 };

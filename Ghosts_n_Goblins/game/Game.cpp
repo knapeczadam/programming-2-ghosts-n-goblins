@@ -31,6 +31,9 @@
 #include <iostream>
 #include <ranges>
 
+#include "FlyingKnightSpawner.h"
+#include "WoodyPigSpawner.h"
+#include "ZombieSpawner.h"
 #include "characters/Crow.h"
 #include "characters/FlyingKnight.h"
 #include "characters/Magician.h"
@@ -51,6 +54,9 @@ Game::Game(const Window& window)
       , m_Collectibles{}
       , m_Ladders{}
       , m_Effects{}
+      , m_Zombies{}
+      , m_FlyingKnights{}
+      , m_WoodyPigs{}
       , m_pSpriteFactory{nullptr}
       , m_pTextureManager{nullptr}
       , m_pSoundManager{nullptr}
@@ -63,6 +69,9 @@ Game::Game(const Window& window)
       , m_pHUD{nullptr}
       , m_pGameController{nullptr}
       , m_pFXManager{nullptr}
+      , m_pFlyingKnightSpawner{}
+      , m_pWoodyPigSpawner{nullptr}
+      , m_pZombieSpawner{nullptr}
 #if TEST_OBJECT
       , m_pTestObject{nullptr}
 #endif
@@ -98,6 +107,9 @@ void Game::Cleanup()
     delete m_pSoundManager;
     delete m_pGameController;
     delete m_pFXManager;
+    delete m_pFlyingKnightSpawner;
+    delete m_pWoodyPigSpawner;
+    delete m_pZombieSpawner;
 #if TEST_OBJECT
     delete m_pTestObject;
 #endif
@@ -126,7 +138,10 @@ void Game::Initialize()
         GetViewPort(),
         m_PlayerThrowables,
         m_EnemyThrowables,
-        m_Effects
+        m_Effects,
+        m_Zombies,
+        m_FlyingKnights,
+        m_WoodyPigs,
     };
 
     // Order of initialization is important
@@ -165,9 +180,12 @@ void Game::Initialize()
     // ENEMIES
     InitEnemies();
 
+    // SPAWNERS
+    InitSpawners();
+
 
 #if TEST_OBJECT
-    m_pTestObject = new Crow{Point2f{600.f, 100.f}, m_pGameController};
+    m_pTestObject = new Zombie{Point2f{200.f, 62.f}, m_pGameController};
 #endif
 }
 
@@ -477,9 +495,21 @@ void Game::InitCrows()
 
 void Game::InitFlyingKnights()
 {
-    m_Enemies.insert(m_Enemies.end(), {
-                         new FlyingKnight{Point2f{500.0f, 100.0f}, m_pGameController},
-                     });
+    FlyingKnight* pFlyingKnight1{new FlyingKnight{Point2f{500.0f, 100.0f}, m_pGameController}};
+    FlyingKnight* pFlyingKnight2{new FlyingKnight{Point2f{500.0f, 100.0f}, m_pGameController}};
+    FlyingKnight* pFlyingKnight3{new FlyingKnight{Point2f{500.0f, 100.0f}, m_pGameController}};
+
+    pFlyingKnight1->SetActive(false);
+    pFlyingKnight2->SetActive(false);
+    pFlyingKnight3->SetActive(false);
+
+    pFlyingKnight1->SetVisible(false);
+    pFlyingKnight2->SetVisible(false);
+    pFlyingKnight3->SetVisible(false);
+
+    m_Enemies.insert(m_Enemies.end(), {pFlyingKnight1, pFlyingKnight2, pFlyingKnight3,});
+    m_FlyingKnights.insert(m_FlyingKnights.end(), {pFlyingKnight1, pFlyingKnight2, pFlyingKnight3});
+    m_pGameController->m_FlyingKnights = m_FlyingKnights;
 }
 
 void Game::InitGreenMonsters()
@@ -507,16 +537,54 @@ void Game::InitRedArremer()
 
 void Game::InitWoodyPigs()
 {
-    m_Enemies.insert(m_Enemies.end(), {
-                         new WoodyPig{Point2f{1000.0f, 200.0f}, m_pGameController}
-                     });
+    WoodyPig* pWoodyPig1{new WoodyPig{Point2f{1000.0f, 200.0f}, m_pGameController}};
+    WoodyPig* pWoodyPig2{new WoodyPig{Point2f{1000.0f, 200.0f}, m_pGameController}};
+    WoodyPig* pWoodyPig3{new WoodyPig{Point2f{1000.0f, 200.0f}, m_pGameController}};
+
+    pWoodyPig1->SetActive(false);
+    pWoodyPig2->SetActive(false);
+    pWoodyPig3->SetActive(false);
+
+    pWoodyPig1->SetVisible(false);
+    pWoodyPig2->SetVisible(false);
+    pWoodyPig3->SetVisible(false);
+
+    m_Enemies.insert(m_Enemies.end(), {pWoodyPig1, pWoodyPig2, pWoodyPig3});
+    m_WoodyPigs.insert(m_WoodyPigs.end(), {pWoodyPig1, pWoodyPig2, pWoodyPig3});
+    m_pGameController->m_WoodyPigs = m_WoodyPigs;
 }
 
 void Game::InitZombies()
 {
-    m_Enemies.insert(m_Enemies.end(), {
-                         new Zombie{Point2f{1000.0f, 62.0f}, m_pGameController}
-                     });
+    Zombie* pZombie1{new Zombie{Point2f{1000.0f, 62.0f}, m_pGameController}};
+    Zombie* pZombie2{new Zombie{Point2f{1000.0f, 62.0f}, m_pGameController}};
+    Zombie* pZombie3{new Zombie{Point2f{1000.0f, 62.0f}, m_pGameController}};
+
+    pZombie1->SetActive(false);
+    pZombie2->SetActive(false);
+    pZombie3->SetActive(false);
+
+    pZombie1->SetVisible(false);
+    pZombie2->SetVisible(false);
+    pZombie3->SetVisible(false);
+
+    m_Enemies.insert(m_Enemies.end(), {pZombie1, pZombie2, pZombie3});
+    m_Zombies.insert(m_Zombies.end(), {pZombie1, pZombie2, pZombie3});
+    m_pGameController->m_Zombies = m_Zombies;
+}
+
+void Game::InitSpawners()
+{
+    m_pFlyingKnightSpawner = new FlyingKnightSpawner{Rectf{0.0f, 0.0f, 0.0f, GetViewPort().height}, m_pGameController};
+    m_pWoodyPigSpawner = new WoodyPigSpawner{Rectf{0.0f, 0.0f, 0.0f, GetViewPort().height}, m_pGameController};
+    m_pZombieSpawner = new ZombieSpawner{Rectf{0.0f, 0.0f, 2485.0f, GetViewPort().height}, m_pGameController};
+}
+
+void Game::SpawnEnemies()
+{
+    m_pFlyingKnightSpawner->Spawn();
+    m_pWoodyPigSpawner->Spawn();
+    m_pZombieSpawner->Spawn();
 }
 
 void Game::ClearBackground() const
@@ -589,7 +657,8 @@ void Game::Update(float elapsedSec)
     if (m_pPlayer->IsActive()) m_pPlayer->Update(elapsedSec);
 
     // EMENIES
-    // TODO set target
+    SpawnEnemies();
+
     std::ranges::for_each(m_Enemies | std::views::filter(isActive), update);
 
     // THROWABLES
@@ -607,7 +676,7 @@ void Game::Update(float elapsedSec)
     m_pHUD->Update(elapsedSec);
 
 #if TEST_OBJECT
-   if (m_pTestObject->IsActive())m_pTestObject->Update(elapsedSec);
+    if (m_pTestObject->IsActive())m_pTestObject->Update(elapsedSec);
 #endif
 
     // Do collision
@@ -654,8 +723,8 @@ void Game::DoCollisionTests()
                 if (weapon->IsActive()) pTombstone->HandleCollision(weapon);
             }
 #if TEST_OBJECT
-            IEnemy *pTestObject{dynamic_cast<IEnemy *>(m_pTestObject)};
-            if (pTestObject) pTestObject->HandleCollision(weapon);
+            IEnemy* pTestEnemy{dynamic_cast<IEnemy*>(m_pTestObject)};
+            if (pTestEnemy) pTestEnemy->HandleCollision(weapon);
 #endif
         }
     }

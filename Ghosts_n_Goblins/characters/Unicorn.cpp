@@ -10,7 +10,7 @@ Unicorn::Unicorn(const Point2f& pos, GameController* pGameController)
     : IEnemy{Game::Label::C_UNICORN, pos, pGameController}
 {
     m_Score = 2000;
-    m_Health = 10;
+    m_HP = 10;
 }
 
 void Unicorn::Draw() const
@@ -20,18 +20,19 @@ void Unicorn::Draw() const
 
 void Unicorn::Update(float elapsedSec)
 {
-    GameObject::Update(elapsedSec);
+    IEnemy::Update(elapsedSec);
+    UpdateCollisionBox();
 }
 
 void Unicorn::HandleCollision(GameObject* other)
 {
     if (not IsOverlapping(other)) return;
-    --m_Health;
+    --m_HP;
     other->SetActive(false);
     other->SetVisible(false);
     m_pGameController->m_pFXManager->PlayEffect(Game::Label::F_PROJECTILE_BLOCK_BOSS, GetContactPoint(other), false);
     m_pGameController->m_pSoundManager->PlayEffect(Game::Label::E_BOSS_HIT);
-    if (m_Health == 0)
+    if (m_HP == 0)
     {
         m_Active = false;
         m_Visible = false;

@@ -56,6 +56,7 @@ public:
     Vector2f GetVelocity() const;
     void SetVelocity(const Vector2f& velocity);
     void SetIsOnPlatform(bool isOnPlatform);
+    int GetHP() const;
     int GetLives() const;
     Game::Label GetWeapon() const;
     int GetScore() const;
@@ -104,8 +105,10 @@ private:
     bool m_OnPlatform;
     Vector2f m_OffsetSnapshot;
     bool m_CanJump;
-    int m_Lives;
+    const int m_MaxHP;
+    int m_HP;
     const int m_MaxLives;
+    int m_Lives;
     int m_Score;
     bool m_CanClimb;
     bool m_Climbing;

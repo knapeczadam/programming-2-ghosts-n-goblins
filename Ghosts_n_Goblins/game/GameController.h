@@ -23,7 +23,10 @@ public:
         const Rectf& viewPort,
         std::vector<GameObject*>& playerThrowables,
         std::vector<GameObject*>& enemyThrowables,
-        std::vector<GameObject*>& effects
+        std::vector<GameObject*>& effects,
+        std::vector<GameObject*>& zombies,
+        std::vector<GameObject*>& flyingKnights,
+        std::vector<GameObject*>& woodyPigs
         );
     
     ~GameController() = default;
@@ -32,12 +35,15 @@ public:
     GameController& operator=(const GameController& other) = delete;
     GameController& operator=(GameController&& other) noexcept = delete;
 
+    std::map<std::string, Game::Label>& m_Labels;
     json& m_Data;
     Rectf m_ViewPort;
     std::vector<GameObject*>& m_PlayerThrowables;
     std::vector<GameObject*>& m_EnemyThrowables;
     std::vector<GameObject*>& m_Effects;
-    std::map<std::string, Game::Label>& m_Labels;
+    std::vector<GameObject*>& m_Zombies;
+    std::vector<GameObject*>& m_FlyingKnights;
+    std::vector<GameObject*>& m_WoodyPigs;
 
     TextureManager* m_pTextureManager;
     SpriteFactory* m_pSpriteFactory;

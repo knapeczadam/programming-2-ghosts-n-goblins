@@ -10,6 +10,7 @@
 #include "engine/Sprite.h"
 #include "engine/Clock.h"
 #include "engine/SpriteFactory.h"
+#include "characters/IEnemy.h"
 
 GameObject::GameObject()
     : m_Label{Game::Label::D_DUMMY}
@@ -31,7 +32,9 @@ GameObject::GameObject(Game::Label label, GameController* pGameController)
     : m_Label{label}
       , m_HasSprite{true}
       , m_pGameController{pGameController}
-      , m_pSprite{m_HasSprite and m_pGameController ? m_pGameController->m_pSpriteFactory->CreateSprite(label) : nullptr}
+      , m_pSprite{
+          m_HasSprite and m_pGameController ? m_pGameController->m_pSpriteFactory->CreateSprite(label) : nullptr
+      }
       , m_Shape{0.0f, 0.0f, 0.0f, 0.0f}
       , m_CollisionBox{0.0f, 0.0f, 0.0f, 0.0f}
       , m_OriginalCollisionBox{m_CollisionBox}
@@ -54,7 +57,9 @@ GameObject::GameObject(Game::Label label, const Rectf& shape, bool collisionEnab
     : m_Label{label}
       , m_HasSprite{hasSprite}
       , m_pGameController{pGameController}
-      , m_pSprite{m_HasSprite and m_pGameController ? m_pGameController->m_pSpriteFactory->CreateSprite(label) : nullptr}
+      , m_pSprite{
+          m_HasSprite and m_pGameController ? m_pGameController->m_pSpriteFactory->CreateSprite(label) : nullptr
+      }
       , m_Shape{shape}
       , m_CollisionBox{shape}
       , m_OriginalCollisionBox{m_CollisionBox}
@@ -70,7 +75,9 @@ GameObject::GameObject(Game::Label label, const Point2f& pos, bool collisionEnab
     : m_Label{label}
       , m_HasSprite{true}
       , m_pGameController{pGameController}
-      , m_pSprite{m_HasSprite and m_pGameController ? m_pGameController->m_pSpriteFactory->CreateSprite(label) : nullptr}
+      , m_pSprite{
+          m_HasSprite and m_pGameController ? m_pGameController->m_pSpriteFactory->CreateSprite(label) : nullptr
+      }
       , m_Shape{0.0f, 0.0f, 0.0f, 0.0f}
       , m_CollisionBox{0.0f, 0.0f, 0.0f, 0.0f}
       , m_OriginalCollisionBox{m_CollisionBox}
@@ -210,8 +217,9 @@ void GameObject::InitCollisionBox()
     m_CollisionBox.height = m_pSprite->GetCollisionHeight();
     const float horizontalOffset{(m_Shape.width - m_pSprite->GetCollisionWidth()) / 2};
     const float verticalOffset{(m_Shape.height - m_pSprite->GetCollisionHeight()) / 2};
-    m_CollisionBox.left = m_Shape.left + horizontalOffset + m_pSprite->GetCollisionHorizontalOffset();
-    m_CollisionBox.bottom = m_Shape.bottom + verticalOffset + m_pSprite->GetCollisionVerticalOffset();
+    const int dir{m_Flipped ? -1 : 1};
+    m_CollisionBox.left = m_Shape.left + horizontalOffset + m_pSprite->GetCollisionHorizontalOffset() * dir;
+    m_CollisionBox.bottom = m_Shape.bottom + verticalOffset + m_pSprite->GetCollisionVerticalOffset() * dir;
     m_OriginalCollisionBox = m_CollisionBox;
 }
 
@@ -221,8 +229,9 @@ void GameObject::UpdateCollisionBox()
     {
         const float horizontalOffset{(m_Shape.width - m_pSprite->GetCollisionWidth()) / 2};
         const float verticalOffset{(m_Shape.height - m_pSprite->GetCollisionHeight()) / 2};
-        m_CollisionBox.left = m_Shape.left + horizontalOffset + m_pSprite->GetCollisionHorizontalOffset();
-        m_CollisionBox.bottom = m_Shape.bottom + verticalOffset + m_pSprite->GetCollisionVerticalOffset();
+        const int dir{m_Flipped ? -1 : 1};
+        m_CollisionBox.left = m_Shape.left + horizontalOffset + m_pSprite->GetCollisionHorizontalOffset() * dir;
+        m_CollisionBox.bottom = m_Shape.bottom + verticalOffset + m_pSprite->GetCollisionVerticalOffset() * dir;
     }
     else
     {
@@ -253,11 +262,11 @@ void GameObject::ResetCollisionBox()
 
 Point2f GameObject::GetContactPoint(const GameObject* other) const
 {
-   Point2f contactPoint;
+    Point2f contactPoint;
     contactPoint.y = other->GetCollisionBoxCenter().y;
     if (other->IsFlipped())
     {
-        contactPoint.x = other->GetCollisionBox().left;    
+        contactPoint.x = other->GetCollisionBox().left;
     }
     else
     {
@@ -301,7 +310,8 @@ void GameObject::InitShape(const Point2f& pos)
 {
     if (not m_pSprite)
     {
-        std::cerr << "GameObject::InitShape(const Point2f&) > No sprite attached - label: " << static_cast<int>(m_Label) << '\n';
+        std::cerr << "GameObject::InitShape(const Point2f&) > No sprite attached - label: " << static_cast<int>(m_Label)
+            << '\n';
         std::abort();
     }
     m_Shape.left = pos.x;

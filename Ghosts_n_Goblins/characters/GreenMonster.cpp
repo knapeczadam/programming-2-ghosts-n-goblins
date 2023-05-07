@@ -35,11 +35,11 @@ void GreenMonster::Update(float elapsedSec)
 void GreenMonster::HandleCollision(GameObject* other)
 {
     if (not IsOverlapping(other)) return;
-    --m_Health;
+    --m_HP;
 
     other->SetActive(false);
     other->SetVisible(false);
-    if (m_Health == 0)
+    if (m_HP == 0)
     {
         m_Active = false;
         m_Visible = false;

@@ -16,15 +16,17 @@ public:
     virtual bool IsAwake() const final;
     virtual void SetAwake(bool awake) final;
     virtual int GetScore() const final;
+    virtual void ResetHP() final;
+    virtual bool IsFixedDirection() const final;
 
 protected:
-    virtual void Awake();
+    virtual void Awake(float elapsedSec);
     virtual void Wait(float elapsedSec);
     virtual void Walk(float elapsedSec);
     virtual void Jump(float elapsedSec);
     virtual void Shoot(float elapsedSec);
     virtual void Fly(float elapsedSec);
-    virtual void Spawn();
+    virtual void Spawn(float elapsedSec);
     virtual float GetAngle() const final;
     virtual bool IsFlipped() const override;
     virtual void Switch(float interval);
@@ -33,11 +35,13 @@ protected:
 protected:
     const Point2f m_SpawnPos;
     int m_Score;
-    int m_Health;
+    int m_HP;
+    int m_OriginalHP;
     bool m_Awake;
     bool m_AwakeFired;
     float m_AwakeDistance;
     float m_HorVelocity;
     float m_VerVelocity;
     bool m_Ping;
+    bool m_FixedDirection;
 };

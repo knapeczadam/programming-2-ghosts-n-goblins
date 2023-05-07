@@ -9,7 +9,7 @@ RedArremer::RedArremer(const Point2f& pos, GameController* pGameController)
     : IEnemy{Game::Label::C_RED_ARREMER, pos, pGameController}
 {
     m_Score = 1000;
-    m_Health = 3;
+    m_HP = 3;
 }
 
 void RedArremer::Draw() const
@@ -20,16 +20,17 @@ void RedArremer::Draw() const
 void RedArremer::Update(float elapsedSec)
 {
     IEnemy::Update(elapsedSec);
+    UpdateCollisionBox();
 }
 
 void RedArremer::HandleCollision(GameObject* other)
 {
     if (not IsOverlapping(other)) return;
-    --m_Health;
+    --m_HP;
     other->SetActive(false);
     other->SetVisible(false);
     m_pGameController->m_pFXManager->PlayEffect(Game::Label::F_PROJECTILE_BLOCK_ENEMY, GetContactPoint(other), other->IsFlipped());
-    if (m_Health == 0)
+    if (m_HP == 0)
     {
         m_Active = false;
         m_Visible = false;

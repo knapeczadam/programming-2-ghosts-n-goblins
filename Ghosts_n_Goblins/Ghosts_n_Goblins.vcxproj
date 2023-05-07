@@ -900,6 +900,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(IntDir)$(TargetName).pch</PrecompiledHeaderOutputFile>
     </ClCompile>
+    <ClCompile Include="game\FlyingKnightSpawner.cpp" />
     <ClCompile Include="game\GameController.cpp" />
     <ClCompile Include="game\CollisionBox.cpp" />
     <ClCompile Include="game\Game.cpp">
@@ -1064,6 +1065,9 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(IntDir)$(TargetName).pch</PrecompiledHeaderOutputFile>
     </ClCompile>
+    <ClCompile Include="game\Spawner.cpp" />
+    <ClCompile Include="game\WoodyPigSpawner.cpp" />
+    <ClCompile Include="game\ZombieSpawner.cpp" />
     <ClCompile Include="level\Door.cpp" />
     <ClCompile Include="level\KillZone.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
@@ -1570,11 +1574,15 @@
     <ClInclude Include="fx\ProjectileDeath.h" />
     <ClInclude Include="fx\Score.h" />
     <ClInclude Include="game\Camera.h" />
+    <ClInclude Include="game\FlyingKnightSpawner.h" />
     <ClInclude Include="game\GameController.h" />
     <ClInclude Include="game\CollisionBox.h" />
     <ClInclude Include="game\Game.h" />
     <ClInclude Include="game\GameObject.h" />
     <ClInclude Include="game\Macros.h" />
+    <ClInclude Include="game\Spawner.h" />
+    <ClInclude Include="game\WoodyPigSpawner.h" />
+    <ClInclude Include="game\ZombieSpawner.h" />
     <ClInclude Include="level\Door.h" />
     <ClInclude Include="level\IClimable.h" />
     <ClInclude Include="level\KillZone.h" />

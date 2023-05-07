@@ -13,7 +13,6 @@ public:
     Sprite& operator=(const Sprite& other) = delete;
     Sprite& operator=(Sprite&& other) noexcept = delete;
 
-    // SPRITE RELATED FUNCTIONS
     void Draw() const;
     void Update(float elapsedSec);
     void SetCurrRowsCols();
@@ -25,6 +24,7 @@ public:
     void UpdateDestinationRect();
     void DrawFlipped() const;
     void ResetOriginalClipSize();
+    void ResetCurrFrame();
 
     // GETTERS & SETTERS
     float GetLeftOffsetPx() const;

@@ -42,10 +42,10 @@ void Crow::Update(float elapsedSec)
 void Crow::HandleCollision(GameObject* other)
 {
     if (not IsOverlapping(other)) return;
-    --m_Health;
+    --m_HP;
     other->SetActive(false);
     other->SetVisible(false);
-    if (m_Health == 0)
+    if (m_HP == 0)
     {
         m_Active = false;
         m_Visible = false;
@@ -55,7 +55,7 @@ void Crow::HandleCollision(GameObject* other)
     }
 }
 
-void Crow::Awake()
+void Crow::Awake(float elapsedSec)
 {
     m_pGameController->m_pSoundManager->PlayEffect(Game::Label::E_CROW);
     m_Flipped = IsFlipped();

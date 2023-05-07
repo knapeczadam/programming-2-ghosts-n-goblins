@@ -169,6 +169,11 @@ void Sprite::ResetOriginalClipSize()
     m_CurrClipHeight = m_OriginalClipHeight;
 }
 
+void Sprite::ResetCurrFrame()
+{
+    m_CurrFrame = 0;
+}
+
 float Sprite::GetLeftOffsetPx() const
 {
     return m_LeftOffsetPx;

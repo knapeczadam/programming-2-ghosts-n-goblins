@@ -9,6 +9,7 @@ FlyingKnight::FlyingKnight(const Point2f& pos, GameController* pGameController)
     : IEnemy{Game::Label::C_FLYING_KNIGHT, pos, pGameController}
 {
     m_Score = 100;
+    m_FixedDirection = true;
 }
 
 void FlyingKnight::Draw() const
@@ -19,6 +20,7 @@ void FlyingKnight::Draw() const
 void FlyingKnight::Update(float elapsedSec)
 {
     IEnemy::Update(elapsedSec);
+    UpdateCollisionBox();
 }
 
 void FlyingKnight::HandleCollision(GameObject* other)
@@ -26,7 +28,7 @@ void FlyingKnight::HandleCollision(GameObject* other)
     if (not IsOverlapping(other)) return;
     if (other->IsFlipped())
     {
-        --m_Health;
+        --m_HP;
     }
     else
     {
@@ -35,7 +37,7 @@ void FlyingKnight::HandleCollision(GameObject* other)
     }
     other->SetActive(false);
     other->SetVisible(false);
-    if (m_Health == 0)
+    if (m_HP == 0)
     {
         m_Active = false;
         m_Visible = false;

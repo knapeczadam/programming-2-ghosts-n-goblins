@@ -395,14 +395,14 @@
     {
       "label": "c_zombie",
       "rows": 1,
-      "columns": 6,
+      "columns": 16,
       "sub_rows": 1,
-      "sub_columns": 6,
-      "frames_per_second": 5,
+      "sub_columns": 7,
+      "frames_per_second": 7,
       "scale": 2,
-      "collision_width": 12,
-      "collision_height": 31,
-      "collision_horizontal_offset": -3
+      "collision_width": 10,
+      "collision_height": 32,
+      "collision_horizontal_offset": 3
     },
     {
       "label": "o_pot",

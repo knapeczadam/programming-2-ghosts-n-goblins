@@ -33,6 +33,10 @@ class IClimable;
 
 class GameController;
 
+class FlyingKnightSpawner;
+class WoodyPigSpawner;
+class ZombieSpawner;
+
 
 /*
  * https://strategywiki.org/wiki/Ghosts_%27n_Goblins#Story
@@ -214,7 +218,7 @@ private:
     void DeactivateThrowablesOutOfView();
     void UpdateRemainingTime();
 
-    
+
     void Initialize();
     
     void InitLabels();
@@ -243,6 +247,9 @@ private:
     void InitRedArremer();
     void InitWoodyPigs();
     void InitZombies();
+
+    void InitSpawners();
+    void SpawnEnemies();
     
     // DATA MEMBERS
     
@@ -254,6 +261,9 @@ private:
     std::vector<GameObject*> m_Collectibles;
     std::vector<GameObject*> m_Ladders;
     std::vector<GameObject*> m_Effects;
+    std::vector<GameObject*> m_Zombies;
+    std::vector<GameObject*> m_FlyingKnights;
+    std::vector<GameObject*> m_WoodyPigs;
     
     SpriteFactory* m_pSpriteFactory;
     TextureManager* m_pTextureManager;
@@ -267,6 +277,9 @@ private:
     HUD* m_pHUD;
     GameController* m_pGameController;
     FXManager* m_pFXManager;
+    FlyingKnightSpawner* m_pFlyingKnightSpawner;
+    WoodyPigSpawner* m_pWoodyPigSpawner;
+    ZombieSpawner* m_pZombieSpawner;
 #if TEST_OBJECT
     GameObject* m_pTestObject;
 #endif
