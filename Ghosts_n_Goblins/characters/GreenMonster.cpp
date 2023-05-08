@@ -67,6 +67,7 @@ void GreenMonster::Shoot(float elapsedSec)
             {
                 Eyeball* pEyeball{dynamic_cast<Eyeball*>(pThrowable)};
                 pEyeball->SetActive(true);
+                pEyeball->SetVisible(true);
                 pEyeball->SetPosition(GetShapeCenter());
                 pEyeball->SetDirection(direction.Normalized());
                 return;

@@ -102,33 +102,35 @@ Game::~Game()
 void Game::Cleanup()
 {
     auto deleteGameObject = [](const GameObject* pGameObject) { delete pGameObject; };
-    delete m_pCamera;
+    
+    std::ranges::for_each(m_Effects, deleteGameObject);
+    delete m_pZombieSpawner;
+    delete m_pWoodyPigSpawner;
+    delete m_pFlyingKnightSpawner;
+    std::ranges::for_each(m_EnemyThrowables, deleteGameObject);
+    std::ranges::for_each(m_Enemies, deleteGameObject);
     delete m_pHUD;
-    delete m_pForeground;
+    delete m_pCamera;
+    std::ranges::for_each(m_PlayerThrowables, deleteGameObject);
+    delete m_pPlayer;
+    std::ranges::for_each(m_Collectibles, deleteGameObject);
+    std::ranges::for_each(m_CollisionBoxes, deleteGameObject);
+    std::ranges::for_each(m_Waters, deleteGameObject);
+    std::ranges::for_each(m_Tombstones, deleteGameObject);
+    std::ranges::for_each(m_Ladders, deleteGameObject);
     delete m_pLevel;
     delete m_pKillZone;
+    delete m_pForeground;
     delete m_pPlatform;
+    delete m_pFXManager;
+    delete m_pSoundManager;
     delete m_pSpriteFactory;
     delete m_pTextureManager;
-    delete m_pPlayer;
-    delete m_pSoundManager;
     delete m_pGameController;
-    delete m_pFXManager;
-    delete m_pFlyingKnightSpawner;
-    delete m_pWoodyPigSpawner;
-    delete m_pZombieSpawner;
+    
 #if TEST_OBJECT
     delete m_pTestObject;
 #endif
-    // TODO: change order of deletion to avoid access violation
-    std::ranges::for_each(m_Waters, deleteGameObject);
-    std::ranges::for_each(m_PlayerThrowables, deleteGameObject);
-    std::ranges::for_each(m_EnemyThrowables, deleteGameObject);
-    std::ranges::for_each(m_Enemies, deleteGameObject);
-    std::ranges::for_each(m_Tombstones, deleteGameObject);
-    std::ranges::for_each(m_Collectibles, deleteGameObject);
-    std::ranges::for_each(m_Ladders, deleteGameObject);
-    std::ranges::for_each(m_Effects, deleteGameObject);
 }
 
 void Game::Initialize()
