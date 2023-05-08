@@ -13,11 +13,15 @@ public:
     UI& operator=(const UI& other) = delete;
     UI& operator=(UI&& other) noexcept = delete;
 
-    virtual void Draw();
     virtual void Draw() const;
     virtual void Reset() const;
     virtual void Update(float elapsedSec);
+    virtual bool IsActive() const final;
+    virtual bool IsVisible() const final;
+    
 protected:
     Game::Label m_Label;
     GameController* m_pGameController;
+    bool m_Active;
+    bool m_Visible;
 };

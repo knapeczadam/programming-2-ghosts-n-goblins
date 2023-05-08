@@ -32,10 +32,12 @@ class ICollectible;
 class IClimable;
 
 class GameController;
+class InputManager;
 
 class FlyingKnightSpawner;
 class WoodyPigSpawner;
 class ZombieSpawner;
+class Menu;
 
 
 /*
@@ -198,6 +200,23 @@ public:
         D_MISSING,
         D_DUMMY,
 
+        // --- INPUT ---
+        I_LEFT,
+        I_RIGHT,
+        I_UP,
+        I_DOWN,
+        I_JUMP,
+        I_ATTACK,
+        I_SELECT,
+        I_START,
+        I_SAVE,
+        I_LOAD,
+        I_PRINT,
+        I_DEBUG,
+        I_QUIT,
+        I_INCREASE_VOLUME,
+        I_DECREASE_VOLUME,
+        
         // MINIGAME
         AVATAR
     };
@@ -299,6 +318,8 @@ private:
     FlyingKnightSpawner* m_pFlyingKnightSpawner;
     WoodyPigSpawner* m_pWoodyPigSpawner;
     ZombieSpawner* m_pZombieSpawner;
+    Menu* m_pMenu;
+    InputManager* m_pInputManager;
 #if TEST_OBJECT
     GameObject* m_pTestObject;
 #endif
@@ -307,9 +328,6 @@ private:
     json m_Data;
     const std::string m_DataPath;
     std::map<std::string, Label> m_Labels;
-
-    bool m_AttackKeyReleased;
-    bool m_JumpKeyReleased;
 
     std::queue<std::pair<Label, float>> m_BootIntervals;
     Label m_CurrBoot;

@@ -14,7 +14,7 @@ void ArmorCollisionBox::HandleCollision(GameObject* other)
 {
     if (not IsOverlapping(other)) return;
     Player* pPlayer{static_cast<Player*>(other)};
-    if (pPlayer->GetState() == Player::State::jumping_standing)
+    if (pPlayer->GetState() == Player::State::jumping_standing and pPlayer->GetHP() == 1)
     {
         m_Active = false;
         for (GameObject* pCollectible : m_pGameController->m_Collectibles)

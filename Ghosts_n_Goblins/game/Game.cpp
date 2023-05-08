@@ -32,6 +32,7 @@
 #include <ranges>
 
 #include "FlyingKnightSpawner.h"
+#include "InputManager.h"
 #include "WoodyPigSpawner.h"
 #include "ZombieSpawner.h"
 #include "characters/Crow.h"
@@ -48,6 +49,7 @@
 #include "fx/FXManager.h"
 #include "level/ArmorCollisionBox.h"
 #include "level/YashichiCollisionBox.h"
+#include "ui/Menu.h"
 
 
 Game::Game(const Window& window)
@@ -76,17 +78,17 @@ Game::Game(const Window& window)
       , m_pHUD{nullptr}
       , m_pGameController{nullptr}
       , m_pFXManager{nullptr}
-      , m_pFlyingKnightSpawner{}
+      , m_pFlyingKnightSpawner{nullptr}
       , m_pWoodyPigSpawner{nullptr}
       , m_pZombieSpawner{nullptr}
+      , m_pMenu{nullptr}
+      , m_pInputManager{nullptr}
 #if TEST_OBJECT
       , m_pTestObject{nullptr}
 #endif
       , m_Data{nullptr}
       , m_DataPath{"../../Resources/data.json"}
       , m_Labels{}
-      , m_AttackKeyReleased{true}
-      , m_JumpKeyReleased{true}
       , m_BootIntervals{}
       , m_CurrBoot{Label::B_01}
       , m_Boot{false}
@@ -102,13 +104,14 @@ Game::~Game()
 void Game::Cleanup()
 {
     auto deleteGameObject = [](const GameObject* pGameObject) { delete pGameObject; };
-    
+
     std::ranges::for_each(m_Effects, deleteGameObject);
     delete m_pZombieSpawner;
     delete m_pWoodyPigSpawner;
     delete m_pFlyingKnightSpawner;
     std::ranges::for_each(m_EnemyThrowables, deleteGameObject);
     std::ranges::for_each(m_Enemies, deleteGameObject);
+    delete m_pMenu;
     delete m_pHUD;
     delete m_pCamera;
     std::ranges::for_each(m_PlayerThrowables, deleteGameObject);
@@ -126,8 +129,9 @@ void Game::Cleanup()
     delete m_pSoundManager;
     delete m_pSpriteFactory;
     delete m_pTextureManager;
+    delete m_pInputManager;
     delete m_pGameController;
-    
+
 #if TEST_OBJECT
     delete m_pTestObject;
 #endif
@@ -166,10 +170,14 @@ void Game::Initialize()
     // SOUND
     m_pSoundManager = new SoundManager{m_pGameController};
     m_pGameController->m_pSoundManager = m_pSoundManager;
+    m_pSoundManager->PlayStream(Label::S_08_BOSS, false);
 
     // FX
     m_pFXManager = new FXManager{m_pGameController};
     m_pGameController->m_pFXManager = m_pFXManager;
+
+    m_pInputManager = new InputManager{};
+    m_pGameController->m_pInputManager = m_pInputManager;
 
     // LEVEL
     InitLevel();
@@ -184,8 +192,9 @@ void Game::Initialize()
     // CAMERA - has to be after level and player initialization
     InitCamera();
 
-    // HUD
+    // UI 
     m_pHUD = new HUD{m_pGameController};
+    m_pMenu = new Menu{m_pGameController};
 
     // ENEMIES
     InitEnemies();
@@ -202,7 +211,7 @@ void Game::Initialize()
 void Game::InitLabels()
 {
     // --- IMAGES ---
-    
+
     // Boot
     m_Labels["b_black"] = Label::B_BLACK;
     m_Labels["b_01"] = Label::B_01;
@@ -230,7 +239,7 @@ void Game::InitLabels()
     m_Labels["b_23"] = Label::B_23;
     m_Labels["b_24"] = Label::B_24;
     m_Labels["b_25"] = Label::B_25;
-    
+
     // Characters
     m_Labels["c_arthur"] = Label::C_ARTHUR;
     m_Labels["c_crow"] = Label::C_CROW;
@@ -281,7 +290,7 @@ void Game::InitLabels()
     m_Labels["t_spear"] = Label::T_SPEAR;
     m_Labels["t_spell"] = Label::T_SPELL;
     m_Labels["t_torch"] = Label::T_TORCH;
-    
+
     // Ui
     m_Labels["u_abc"] = Label::U_ABC;
     m_Labels["u_frame"] = Label::U_FRAME;
@@ -294,7 +303,7 @@ void Game::InitLabels()
     m_Labels["u_weapons"] = Label::U_WEAPONS;
 
     // --- SOUNDS ---
-    
+
     // Effects
     m_Labels["e_armor_pickup"] = Label::E_ARMOR_PICKUP;
     m_Labels["e_arthur_hit"] = Label::E_ARTHUR_HIT;
@@ -464,9 +473,9 @@ void Game::InitWaters()
 void Game::InitCollisionBoxes()
 {
     m_CollisionBoxes.insert(m_CollisionBoxes.end(), {
-        new ArmorCollisionBox{Rectf{2868.0f, 140.0f, 30.0f, 30.0f}, m_pGameController},
-        new YashichiCollisionBox{Rectf{5924.0f, 140.0f, 24.0f, 24.0f}, m_pGameController},
-    });
+                                new ArmorCollisionBox{Rectf{2868.0f, 140.0f, 30.0f, 30.0f}, m_pGameController},
+                                new YashichiCollisionBox{Rectf{5924.0f, 140.0f, 24.0f, 24.0f}, m_pGameController},
+                            });
 }
 
 void Game::InitCollectibles()
@@ -580,7 +589,6 @@ void Game::InitFlyingKnights()
 
 void Game::InitGreenMonsters()
 {
-    // GREEN MONSTERS
     m_Enemies.insert(m_Enemies.end(), {
                          new GreenMonster{Point2f{4622.0f, 54.0f}, m_pGameController},
                          new GreenMonster{Point2f{6190.0f, 54.0f}, m_pGameController},
@@ -697,8 +705,9 @@ void Game::Draw() const
 #endif
     glPopMatrix();
 
-    // HUD
-    m_pHUD->Draw();
+    // UI
+    if (m_pHUD->IsVisible()) m_pHUD->Draw();
+    if (m_pMenu->IsVisible()) m_pMenu->Draw();
 }
 
 void Game::Update(float elapsedSec)
@@ -740,7 +749,9 @@ void Game::Update(float elapsedSec)
     // EFFECTS
     std::ranges::for_each(m_Effects | std::views::filter(isActive), update);
 
-    m_pHUD->Update(elapsedSec);
+    // UI
+    if (m_pHUD->IsActive()) m_pHUD->Update(elapsedSec);
+    if (m_pMenu->IsActive()) m_pMenu->Update(elapsedSec);
 
 #if TEST_OBJECT
     if (m_pTestObject->IsActive())m_pTestObject->Update(elapsedSec);
@@ -826,52 +837,35 @@ void Game::LateUpdate(float elapsedSec)
 
 void Game::ProcessKeyDownEvent(const SDL_KeyboardEvent& e)
 {
-    switch (e.keysym.sym)
+    m_pInputManager->ProcessKeyDownEvent(e);
+
+
+    if (m_pInputManager->IsPressed(Label::I_QUIT))
     {
-    case SDLK_x:
-        if (m_AttackKeyReleased)
-        {
-            m_pPlayer->Attack();
-            m_AttackKeyReleased = false;
-        }
-        break;
-    case SDLK_s:
-        if (m_JumpKeyReleased)
-        {
-            m_pPlayer->CanJump(true);
-            m_JumpKeyReleased = false;
-        }
-        break;
-    case SDLK_ESCAPE:
         Cleanup();
         std::exit(0); // Function is not thread-safe
-        break;
-    case SDLK_i:
+    }
+    if (m_pInputManager->IsPressed(Label::I_PRINT))
+    {
         PrintInfo();
-        break;
-    case SDLK_d:
+    }
+    if (m_pInputManager->IsPressed(Label::I_DEBUG))
+    {
         Debug();
-        break;
-    case SDLK_o:
+    }
+    if (m_pInputManager->IsPressed(Label::I_INCREASE_VOLUME))
+    {
         SoundManager::IncreaseMasterVolume();
-        break;
-    case SDLK_l:
+    }
+    if (m_pInputManager->IsPressed(Label::I_DECREASE_VOLUME))
+    {
         SoundManager::DecreaseMasterVolume();
-        break;
     }
 }
 
 void Game::ProcessKeyUpEvent(const SDL_KeyboardEvent& e)
 {
-    switch (e.keysym.sym)
-    {
-    case SDLK_x:
-        m_AttackKeyReleased = true;
-        break;
-    case SDLK_s:
-        m_JumpKeyReleased = true;
-        break;
-    }
+    m_pInputManager->ProcessKeyUpEvent(e);
 }
 
 void Game::ProcessMouseDownEvent(const SDL_MouseButtonEvent& e)

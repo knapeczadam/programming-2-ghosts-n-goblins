@@ -12,16 +12,15 @@ public:
     HUD& operator=(const HUD& other) = delete;
     HUD& operator=(HUD&& other) noexcept = delete;
 
-    virtual void Draw() override;
-    virtual void SetFirstDigit(int digit) final;
-    virtual void SetSecondDigit(int digit) final;
-    virtual void SetThirdDigit(int digit) final;
-    
+    virtual void Draw() const override;
+    void SetFirstDigit(int digit);
+    void SetSecondDigit(int digit);
+    void SetThirdDigit(int digit); 
 private:
-    void DrawLives();
-    void DrawPlayerScore();
-    void DrawHighScore();
-    void DrawTime();
+    void DrawLives() const;
+    void DrawPlayerScore() const;
+    void DrawHighScore() const;
+    void DrawTime() const;
     void DrawFrame() const;
     void DrawWeapon() const;
     

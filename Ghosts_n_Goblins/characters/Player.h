@@ -75,11 +75,11 @@ protected:
 private:
     void UpdatePosition(float elapsedSec);
     
-    void Move(float elapsedSec, const Uint8* pState);
-    void MoveHorizontal(const Uint8* pState);
-    void Jump(const Uint8* pState);
-    void Crouch(const Uint8* pState);
-    void Climb(const Uint8* pState);
+    void Move();
+    void MoveHorizontal();
+    void Jump();
+    void Crouch();
+    void Climb();
     void ApplyGravity(float elapsedSec);
     
     void CheckForBoundaries(const Rectf& boundaries);

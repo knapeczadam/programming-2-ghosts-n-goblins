@@ -23,6 +23,7 @@
 
 #include "fx/FXManager.h"
 #include "game/GameController.h"
+#include "game/InputManager.h"
 
 
 const Point2f Player::m_SpawnPos{6000.0f, 64.0f};
@@ -152,6 +153,7 @@ void Player::UpdateSprite() const
 
 void Player::Update(float elapsedSec)
 {
+    Attack();
     UpdateCooldown(elapsedSec);
     UpdatePosition(elapsedSec);
     UpdateCollisionBox();
@@ -239,8 +241,9 @@ void Player::Throw()
  */
 void Player::Attack()
 {
-    if (not m_Attacking)
+    if (not m_Attacking and m_pGameController->m_pInputManager->IsPressed(Game::Label::I_ATTACK) and not m_pGameController->m_pInputManager->IsTriggered(Game::Label::I_ATTACK))
     {
+        m_pGameController->m_pInputManager->SetTriggered(Game::Label::I_ATTACK, true);
         m_pGameController->m_pSoundManager->PlayEffect(Game::Label::E_ARTHUR_THROW);
         m_ShortAccuCooldown += m_ShortCooldownTime;
         m_LongAccuCooldown += m_LongCooldownTime;
@@ -252,10 +255,9 @@ void Player::Attack()
 
 void Player::UpdatePosition(float elapsedSec)
 {
-    const Uint8* pState{SDL_GetKeyboardState(nullptr)};
     if (m_pGameController->m_pLevel->IsOnGround(this))
     {
-        Move(elapsedSec, pState);
+        Move();
         m_OnGround = true;
     }
     else
@@ -289,29 +291,29 @@ void Player::UpdatePosition(float elapsedSec)
     CheckForBoundaries(m_pGameController->m_pLevel->GetBoundaries());
 }
 
-void Player::Move(float elapsedSec, const Uint8* pState)
+void Player::Move()
 {
-    Crouch(pState);
+    Crouch();
     if (m_Crouching or m_Attacking)
     {
-        Jump(pState);
+        Jump();
         m_Velocity.x = 0;
     }
     else
     {
-        Jump(pState);
-        MoveHorizontal(pState);
+        Jump();
+        MoveHorizontal();
     }
 }
 
-void Player::MoveHorizontal(const Uint8* pState)
+void Player::MoveHorizontal()
 {
-    if (pState[SDL_SCANCODE_LEFT])
+    if (m_pGameController->m_pInputManager->IsPressed(Game::Label::I_LEFT))
     {
         m_Velocity.x = -m_HorVelocity;
         m_Flipped = true;
     }
-    else if (pState[SDL_SCANCODE_RIGHT])
+    else if (m_pGameController->m_pInputManager->IsPressed(Game::Label::I_RIGHT))
     {
         m_Velocity.x = m_HorVelocity;
         m_Flipped = false;
@@ -327,26 +329,24 @@ void Player::MoveHorizontal(const Uint8* pState)
  * Use in conjunction with left or right to make Arthur jump in a particular direction.
  * Note that a Jump in this game is a 100% commitment; there is no reversing or manipulating a mid-air jump.
  */
-void Player::Jump(const Uint8* pState)
+void Player::Jump()
 {
-    if (m_CanJump)
+    if (m_pGameController->m_pInputManager->IsPressed(Game::Label::I_JUMP) and not m_pGameController->m_pInputManager->IsTriggered(Game::Label::I_JUMP))
     {
-        if (pState[SDL_SCANCODE_S])
-        {
-            m_pGameController->m_pSoundManager->PlayEffect(Game::Label::E_ARTHUR_JUMP);
-            m_Velocity.y = m_JumpVelocity;
-            m_CanJump = false;
-        }
-        else
-        {
-            m_Velocity.y = 0;
-        }
+        m_pGameController->m_pInputManager->SetTriggered(Game::Label::I_JUMP, true);
+        m_pGameController->m_pSoundManager->PlayEffect(Game::Label::E_ARTHUR_JUMP);
+        m_Velocity.y = m_JumpVelocity;
+        m_CanJump = false;
+    }
+    else
+    {
+        m_Velocity.y = 0;
     }
 }
 
-void Player::Crouch(const Uint8* pState)
+void Player::Crouch()
 {
-    if (pState[SDL_SCANCODE_DOWN])
+    if (m_pGameController->m_pInputManager->IsPressed(Game::Label::I_DOWN))
     {
         m_Crouching = true;
     }
@@ -356,14 +356,14 @@ void Player::Crouch(const Uint8* pState)
     }
 }
 
-void Player::Climb(const Uint8* pState)
+void Player::Climb()
 {
-    if (pState[SDL_SCANCODE_UP])
+    if (m_pGameController->m_pInputManager->IsPressed(Game::Label::I_UP))
     {
         m_Velocity.y = m_VerVelocity;
         m_State = State::climbing;
     }
-    else if (pState[SDL_SCANCODE_DOWN])
+    else if (m_pGameController->m_pInputManager->IsPressed(Game::Label::I_DOWN))
     {
         if (not m_OnGround)
         {
@@ -599,13 +599,6 @@ bool Player::HandleCollisionBox(GameObject* other)
     CollisionBox* pBox{dynamic_cast<CollisionBox*>(other)};
     if (pBox)
     {
-        switch (other->GetLabel())
-        {
-        case Game::Label::L_ARMOR:
-            break;
-        case Game::Label::L_YASHICHI:
-            break;
-        }
         return true;
     }
     return false;

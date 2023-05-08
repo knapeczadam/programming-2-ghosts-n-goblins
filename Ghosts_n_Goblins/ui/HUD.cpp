@@ -23,7 +23,7 @@ HUD::HUD(GameController* pGameController)
 {
 }
 
-void HUD::Draw()
+void HUD::Draw() const
 {
     DrawLives();
     DrawPlayerScore();
@@ -48,7 +48,7 @@ void HUD::SetThirdDigit(int digit)
     m_ThirdDigit = digit;
 }
 
-void HUD::DrawLives()
+void HUD::DrawLives() const
 {
     for (int idx{}; idx < m_pGameController->m_pPlayer->GetLives() - 1; ++idx)
     {
@@ -57,7 +57,7 @@ void HUD::DrawLives()
     }
 }
 
-void HUD::DrawPlayerScore()
+void HUD::DrawPlayerScore() const
 {
     const int playerScore{m_pGameController->m_pPlayer->GetScore()};
     Point2f pos{128.0f, m_pGameController->m_ViewPort.height - m_pNumbers->GetScaledClipHeight() * 2};
@@ -83,7 +83,7 @@ void HUD::DrawPlayerScore()
     }
 }
 
-void HUD::DrawHighScore()
+void HUD::DrawHighScore() const
 {
     const int testHighScore{10000};
     Point2f pos{304.0f, m_pGameController->m_ViewPort.height - m_pNumbers->GetScaledClipHeight() * 2};
@@ -100,7 +100,7 @@ void HUD::DrawHighScore()
     }
 }
 
-void HUD::DrawTime()
+void HUD::DrawTime() const
 {
     Point2f pos{32, m_pGameController->m_ViewPort.height - m_pNumbers->GetScaledClipHeight() * 4};
     const float offset{m_pNumbers->GetScaledClipWidth()};
