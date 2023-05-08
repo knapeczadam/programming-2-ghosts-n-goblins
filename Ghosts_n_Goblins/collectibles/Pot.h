@@ -25,4 +25,11 @@ public:
     Pot(Pot&& other) noexcept = delete;
     Pot& operator=(const Pot& other) = delete;
     Pot& operator=(Pot&& other) noexcept = delete;
+
+    virtual void Update(float elapsedSec) override;
+    void Fall(Game::Label contentLabel, const Point2f& pos);
+
+private:
+    Game::Label m_ContentLabel;
+    const float m_Gravity{ -200.f };
 };

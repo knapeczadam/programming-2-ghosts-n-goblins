@@ -25,7 +25,7 @@
 #include "game/GameController.h"
 
 
-const Point2f Player::m_SpawnPos{100.0f, 64.0f};
+const Point2f Player::m_SpawnPos{6000.0f, 64.0f};
 
 Player::Player(const Point2f& pos, GameController* pGameController)
     : GameObject{Game::Label::C_ARTHUR, pos, true, pGameController}
@@ -88,51 +88,45 @@ void Player::Draw() const
 
 void Player::UpdateSprite() const
 {
-    m_pSprite->SetTopOffsetRows(0);
-    m_pSprite->SetLeftOffsetCols(0);
-
+    int leftOffset{1};
     switch (m_State)
     {
     case State::idle:
-        m_pSprite->SetSubRows(1);
+        m_pSprite->SetTopOffsetRows(0);
         m_pSprite->SetSubCols(1);
         break;
     case State::running:
         m_pSprite->SetTopOffsetRows(1);
-        m_pSprite->SetSubRows(1);
         m_pSprite->SetSubCols(4);
         m_pSprite->SetFramesPerSec(10);
+        leftOffset = 4;
         break;
     case State::jumping_running:
         m_pSprite->SetTopOffsetRows(2);
-        m_pSprite->SetSubRows(1);
         m_pSprite->SetSubCols(1);
         break;
     case State::jumping_standing:
         m_pSprite->SetTopOffsetRows(3);
-        m_pSprite->SetSubRows(1);
         m_pSprite->SetSubCols(1);
         break;
     case State::crouching:
         m_pSprite->SetTopOffsetRows(4);
-        m_pSprite->SetSubRows(1);
         m_pSprite->SetSubCols(1);
         break;
     case State::attacking_normal:
         m_pSprite->SetTopOffsetRows(5);
-        m_pSprite->SetSubRows(1);
         m_pSprite->SetSubCols(2);
         m_pSprite->SetFramesPerSec(9);
+        leftOffset = 2;
         break;
     case State::attacking_crouching:
         m_pSprite->SetTopOffsetRows(6);
-        m_pSprite->SetSubRows(1);
         m_pSprite->SetSubCols(2);
         m_pSprite->SetFramesPerSec(9);
+        leftOffset = 2;
         break;
     case State::climbing:
         m_pSprite->SetTopOffsetRows(7);
-        m_pSprite->SetSubRows(1);
         m_pSprite->SetSubCols(2);
         if (m_Climbing)
         {
@@ -142,12 +136,17 @@ void Player::UpdateSprite() const
         {
             m_pSprite->SetFramesPerSec(0);
         }
+        leftOffset = 2;
         break;
     case State::climbing_top:
+        leftOffset = 2;
         break;
     }
-    m_pSprite->CalculateFrameTime();
+    const int offsetMultiplier{m_HP - 1};
+    m_pSprite->SetLeftOffsetCols(leftOffset * offsetMultiplier);
+    m_pSprite->SetSubRows(1);
     m_pSprite->SetCurrRowsCols();
+    m_pSprite->CalculateFrameTime();
     m_pSprite->UpdateSourceRect();
 }
 
@@ -521,8 +520,11 @@ bool Player::HandleEnemy(GameObject* other)
     IEnemy* pEnemy{dynamic_cast<IEnemy*>(other)};
     if (pEnemy)
     {
-        // m_pSoundManager->PlayEffect(Game::Label::E_ARTHUR_HIT);
+        // m_pGameController->m_pSoundManager->PlayEffect(Game::Label::E_ARTHUR_HIT);
         --m_HP;
+        if (m_HP == 0)
+        {
+        }
         return true;
     }
     return false;
@@ -535,7 +537,7 @@ bool Player::HandleWeapon(GameObject* other)
     {
         other->SetActive(false);
         other->SetVisible(false);
-        // m_pSoundManager->PlayEffect(Game::Label::E_WEAPON_PICKUP);
+        m_pGameController->m_pSoundManager->PlayEffect(Game::Label::E_WEAPON_PICKUP);
         switch (other->GetLabel())
         {
         case Game::Label::T_DAGGER:
@@ -546,8 +548,6 @@ bool Player::HandleWeapon(GameObject* other)
             break;
         case Game::Label::T_TORCH:
             m_CurrWeapon = Game::Label::T_TORCH;
-            break;
-        case Game::Label::O_SHIELD:
             break;
         }
         return true;
@@ -567,7 +567,7 @@ bool Player::HandleCollectible(GameObject* other)
         case Game::Label::O_KEY:
             m_Score += pCollectable->GetScore();
             break;
-        case Game::Label::O_SHIELD:
+        case Game::Label::O_ARMOR:
             ++m_HP;
             m_pGameController->m_pSoundManager->PlayEffect(Game::Label::E_ARMOR_PICKUP);
             break;
@@ -599,9 +599,21 @@ bool Player::HandleCollisionBox(GameObject* other)
     CollisionBox* pBox{dynamic_cast<CollisionBox*>(other)};
     if (pBox)
     {
+        switch (other->GetLabel())
+        {
+        case Game::Label::L_ARMOR:
+            break;
+        case Game::Label::L_YASHICHI:
+            break;
+        }
         return true;
     }
     return false;
+}
+
+Player::State Player::GetState() const
+{
+    return m_State;
 }
 
 void Player::HandleCollision(GameObject* other)

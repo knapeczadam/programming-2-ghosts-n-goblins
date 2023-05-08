@@ -10,7 +10,8 @@ GameController::GameController(
     std::vector<GameObject*>& effects,
     std::vector<GameObject*>& zombies,
     std::vector<GameObject*>& flyingKnights,
-    std::vector<GameObject*>& woodyPigs
+    std::vector<GameObject*>& woodyPigs,
+    std::vector<GameObject*>& collectibles
 )
     : m_Labels{labels}
       , m_Data(data)
@@ -21,6 +22,7 @@ GameController::GameController(
       , m_Zombies{zombies}
       , m_FlyingKnights{flyingKnights}
       , m_WoodyPigs{woodyPigs}
+      , m_Collectibles{collectibles}
       , m_pTextureManager{nullptr}
       , m_pSpriteFactory{nullptr}
       , m_pSoundManager{nullptr}

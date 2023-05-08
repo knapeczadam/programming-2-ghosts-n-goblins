@@ -26,7 +26,8 @@ public:
         std::vector<GameObject*>& effects,
         std::vector<GameObject*>& zombies,
         std::vector<GameObject*>& flyingKnights,
-        std::vector<GameObject*>& woodyPigs
+        std::vector<GameObject*>& woodyPigs,
+        std::vector<GameObject*>& collectibles
         );
     
     ~GameController() = default;
@@ -44,6 +45,7 @@ public:
     std::vector<GameObject*>& m_Zombies;
     std::vector<GameObject*>& m_FlyingKnights;
     std::vector<GameObject*>& m_WoodyPigs;
+    std::vector<GameObject*>& m_Collectibles;
 
     TextureManager* m_pTextureManager;
     SpriteFactory* m_pSpriteFactory;

@@ -41,7 +41,13 @@
 #include "characters/Unicorn.h"
 #include "characters/WoodyPig.h"
 #include "characters/Zombie.h"
+#include "collectibles/Armor.h"
+#include "collectibles/Necklace.h"
+#include "collectibles/Pot.h"
+#include "collectibles/Yashichi.h"
 #include "fx/FXManager.h"
+#include "level/ArmorCollisionBox.h"
+#include "level/YashichiCollisionBox.h"
 
 
 Game::Game(const Window& window)
@@ -57,6 +63,7 @@ Game::Game(const Window& window)
       , m_Zombies{}
       , m_FlyingKnights{}
       , m_WoodyPigs{}
+      , m_CollisionBoxes{}
       , m_pSpriteFactory{nullptr}
       , m_pTextureManager{nullptr}
       , m_pSoundManager{nullptr}
@@ -113,7 +120,7 @@ void Game::Cleanup()
 #if TEST_OBJECT
     delete m_pTestObject;
 #endif
-
+    // TODO: change order of deletion to avoid access violation
     std::ranges::for_each(m_Waters, deleteGameObject);
     std::ranges::for_each(m_PlayerThrowables, deleteGameObject);
     std::ranges::for_each(m_EnemyThrowables, deleteGameObject);
@@ -142,6 +149,7 @@ void Game::Initialize()
         m_Zombies,
         m_FlyingKnights,
         m_WoodyPigs,
+        m_Collectibles
     };
 
     // Order of initialization is important
@@ -205,6 +213,7 @@ void Game::InitLabels()
     m_Labels["c_zombie"] = Label::C_ZOMBIE;
 
     // COLLECTIBLES
+    m_Labels["o_armor"] = Label::O_ARMOR;
     m_Labels["o_coin"] = Label::O_COIN;
     m_Labels["o_doll"] = Label::O_DOLL;
     m_Labels["o_key"] = Label::O_KEY;
@@ -212,7 +221,6 @@ void Game::InitLabels()
     m_Labels["o_money_bag"] = Label::O_MONEY_BAG;
     m_Labels["o_necklace"] = Label::O_NECKLACE;
     m_Labels["o_pot"] = Label::O_POT;
-    m_Labels["o_shield"] = Label::O_SHIELD;
     m_Labels["o_yashichi"] = Label::O_YASHICHI;
 
     // FX
@@ -394,6 +402,7 @@ void Game::InitLevel()
     InitLadders();
     InitTombstones();
     InitWaters();
+    InitCollisionBoxes();
 }
 
 void Game::InitLadders()
@@ -440,10 +449,23 @@ void Game::InitWaters()
                     });
 }
 
+void Game::InitCollisionBoxes()
+{
+    m_CollisionBoxes.insert(m_CollisionBoxes.end(), {
+        new ArmorCollisionBox{Rectf{2868.0f, 140.0f, 30.0f, 30.0f}, m_pGameController},
+        new YashichiCollisionBox{Rectf{5924.0f, 140.0f, 24.0f, 24.0f}, m_pGameController},
+    });
+}
+
 void Game::InitCollectibles()
 {
     InitCoins();
     InitMoneyBags();
+    InitArmor();
+    InitNecklace();
+    InitYashichi();
+    InitPot();
+    m_pGameController->m_Collectibles = m_Collectibles;
 }
 
 void Game::InitCoins()
@@ -463,6 +485,38 @@ void Game::InitMoneyBags()
                               new MoneyBag{Point2f{2799.0f, 63.0f}, m_pGameController},
                               new MoneyBag{Point2f{4814.0f, 63.0f}, m_pGameController}
                           });
+}
+
+void Game::InitArmor()
+{
+    GameObject* pArmor = new Armor{Point2f{0.0f, 0.0f}, m_pGameController};
+    pArmor->SetActive(false);
+    pArmor->SetVisible(false);
+    m_Collectibles.push_back(pArmor);
+}
+
+void Game::InitNecklace()
+{
+    GameObject* pNecklace = new Necklace{Point2f{0.0f, 0.0f}, m_pGameController};
+    pNecklace->SetActive(false);
+    pNecklace->SetVisible(false);
+    m_Collectibles.push_back(pNecklace);
+}
+
+void Game::InitYashichi()
+{
+    GameObject* pYashichi = new Yashichi{Point2f{0.0f, 0.0f}, m_pGameController};
+    pYashichi->SetActive(false);
+    pYashichi->SetVisible(false);
+    m_Collectibles.push_back(pYashichi);
+}
+
+void Game::InitPot()
+{
+    GameObject* pPot = new Pot{Point2f{0.0f, 0.0f}, m_pGameController};
+    pPot->SetActive(false);
+    pPot->SetVisible(false);
+    m_Collectibles.push_back(pPot);
 }
 
 void Game::InitEnemies()
@@ -627,6 +681,7 @@ void Game::Draw() const
     m_pKillZone->Draw();
     std::ranges::for_each(m_Tombstones, draw);
     std::ranges::for_each(m_Ladders, draw);
+    std::ranges::for_each(m_CollisionBoxes, draw);
 #endif
     glPopMatrix();
 
@@ -685,27 +740,18 @@ void Game::Update(float elapsedSec)
 
 void Game::DoCollisionTests()
 {
+    static const auto isActive{[](const GameObject* pGameObject) { return pGameObject->IsActive(); }};
+    static const auto playerHandleCollision{[&](GameObject* pGameObject) { m_pPlayer->HandleCollision(pGameObject); }};
+    static const auto objectHandleCollision{[&](GameObject* pGameObject) { pGameObject->HandleCollision(m_pPlayer); }};
+
     // kill-z continuous collision detection
     m_pKillZone->HandleCollision(m_pPlayer);
 
     if (m_pPlayer->IsActive()) m_pLevel->HandleCollision(m_pPlayer);
 
     // Player on enemies
-    for (GameObject* enemy : m_Enemies)
-    {
-        if (enemy->IsActive())
-        {
-            m_pPlayer->HandleCollision(enemy);
-        }
-    }
-
-    for (GameObject* enemyThrowable : m_EnemyThrowables)
-    {
-        if (enemyThrowable->IsActive())
-        {
-            m_pPlayer->HandleCollision(enemyThrowable);
-        }
-    }
+    std::ranges::for_each(m_Enemies | std::views::filter(isActive), playerHandleCollision);
+    std::ranges::for_each(m_EnemyThrowables | std::views::filter(isActive), playerHandleCollision);
 
     // Weapons on game enemies and tombstones
     for (GameObject* weapon : m_PlayerThrowables)
@@ -729,16 +775,14 @@ void Game::DoCollisionTests()
         }
     }
 
-    for (GameObject* pCollectible : m_Collectibles)
-    {
-        if (pCollectible->IsActive()) m_pPlayer->HandleCollision(pCollectible);
-    }
+    std::ranges::for_each(m_Collectibles | std::views::filter(isActive), playerHandleCollision);
+    std::ranges::for_each(m_CollisionBoxes | std::views::filter(isActive), objectHandleCollision);
 
     const bool canClimb{
         std::ranges::any_of(m_Ladders, [&](const GameObject* pLadder) { return pLadder->IsOverlapping(m_pPlayer); })
     };
     m_pPlayer->CanClimb(canClimb);
-    std::ranges::for_each(m_Ladders, [&](GameObject* pLadder) { pLadder->HandleCollision(m_pPlayer); });
+    std::ranges::for_each(m_Ladders, objectHandleCollision);
 
 #if TEST_OBJECT
     if (m_pTestObject->IsActive()) m_pPlayer->HandleCollision(m_pTestObject);

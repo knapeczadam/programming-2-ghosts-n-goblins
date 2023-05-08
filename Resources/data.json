@@ -73,8 +73,8 @@
       "path": "collectibles/necklace.png"
     },
     {
-      "label": "o_shield",
-      "path": "collectibles/shield.png"
+      "label": "o_armor",
+      "path": "collectibles/armor.png"
     },
     {
       "label": "o_yashichi",
@@ -448,7 +448,7 @@
       "scale": 2
     },
     {
-      "label": "o_shield",
+      "label": "o_armor",
       "scale": 2
     },
     {

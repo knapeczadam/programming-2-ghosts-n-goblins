@@ -63,6 +63,7 @@ public:
         C_ZOMBIE,
 
         // COLLECTIBLES
+        O_ARMOR,
         O_COIN,
         O_DOLL,
         O_KEY,
@@ -70,7 +71,6 @@ public:
         O_MONEY_BAG,
         O_NECKLACE,
         O_POT,
-        O_SHIELD,
         O_YASHICHI,
 
         // FX
@@ -92,6 +92,8 @@ public:
         L_PLATFORM,
         L_TOMBSTONE,
         L_WATER,
+        L_ARMOR,
+        L_YASHICHI,
 
         // UI
         U_HUD,
@@ -215,7 +217,6 @@ private:
     void DoCollisionTests();
     void Debug() const;
     void DoFrustumCulling();
-    void DeactivateThrowablesOutOfView();
     void UpdateRemainingTime();
 
 
@@ -231,11 +232,17 @@ private:
     void InitLadders();
     void InitTombstones();
     void InitWaters();
+    void InitCollisionBoxes();
 
     // COLLECTIBLES
     void InitCollectibles();
     void InitCoins();
     void InitMoneyBags();
+    void InitArmor();
+    void InitPot();
+    void InitNecklace();
+    void InitYashichi();
+    
 
     // ENEMIES
     void InitEnemies();
@@ -264,6 +271,7 @@ private:
     std::vector<GameObject*> m_Zombies;
     std::vector<GameObject*> m_FlyingKnights;
     std::vector<GameObject*> m_WoodyPigs;
+    std::vector<GameObject*> m_CollisionBoxes;
     
     SpriteFactory* m_pSpriteFactory;
     TextureManager* m_pTextureManager;

@@ -11,7 +11,7 @@ public:
     // CONSTRUCTORS & DESTRUCTOR
     explicit GameObject();
     explicit GameObject(Game::Label label, GameController* pGameController);
-    explicit GameObject(Game::Label label, const Rectf& shape, bool collisionEnabled = true, bool hasSprite = false, const Color4f& color = Color4f{0.f, 1.f, 1.f, 1.f}, GameController* pGameController = nullptr);
+    explicit GameObject(Game::Label label, const Rectf& shape, bool collisionEnabled = true, bool hasSprite = false, const Color4f& color = Color4f{0, 0, 0, 1.0f}, GameController* pGameController = nullptr);
     explicit GameObject(Game::Label label, const Point2f& pos,  bool collisionEnabled = true, GameController* pGameController = nullptr);
     virtual ~GameObject() override = default;
     GameObject(const GameObject& other) = delete;

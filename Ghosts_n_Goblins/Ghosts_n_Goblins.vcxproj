@@ -389,7 +389,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">pch.h</PrecompiledHeaderFile>
     </ClCompile>
-    <ClCompile Include="collectibles\Shield.cpp" />
     <ClCompile Include="collectibles\Yashichi.cpp" />
     <ClCompile Include="engine\Clock.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
@@ -1068,6 +1067,7 @@
     <ClCompile Include="game\Spawner.cpp" />
     <ClCompile Include="game\WoodyPigSpawner.cpp" />
     <ClCompile Include="game\ZombieSpawner.cpp" />
+    <ClCompile Include="level\ArmorCollisionBox.cpp" />
     <ClCompile Include="level\Door.cpp" />
     <ClCompile Include="level\KillZone.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
@@ -1259,6 +1259,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">pch.h</PrecompiledHeaderFile>
     </ClCompile>
+    <ClCompile Include="level\YashichiCollisionBox.cpp" />
     <ClCompile Include="pch.cpp">
       <RuntimeLibrary>MultiThreadedDebugDll</RuntimeLibrary>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -1560,7 +1561,6 @@
     <ClInclude Include="collectibles\Key.h" />
     <ClInclude Include="collectibles\MoneyBag.h" />
     <ClInclude Include="collectibles\Necklace.h" />
-    <ClInclude Include="collectibles\Shield.h" />
     <ClInclude Include="collectibles\Yashichi.h" />
     <ClInclude Include="engine\Clock.h" />
     <ClInclude Include="engine\json.hpp" />
@@ -1583,6 +1583,7 @@
     <ClInclude Include="game\Spawner.h" />
     <ClInclude Include="game\WoodyPigSpawner.h" />
     <ClInclude Include="game\ZombieSpawner.h" />
+    <ClInclude Include="level\ArmorCollisionBox.h" />
     <ClInclude Include="level\Door.h" />
     <ClInclude Include="level\IClimable.h" />
     <ClInclude Include="level\KillZone.h" />
@@ -1591,6 +1592,7 @@
     <ClInclude Include="level\Platform.h" />
     <ClInclude Include="level\Tombstone.h" />
     <ClInclude Include="level\Water.h" />
+    <ClInclude Include="level\YashichiCollisionBox.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="fx\ProjectileBlock.h" />
     <ClInclude Include="ui\HUD.h" />

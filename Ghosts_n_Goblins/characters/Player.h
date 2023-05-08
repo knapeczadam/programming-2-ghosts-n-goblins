@@ -66,6 +66,7 @@ public:
     bool HandleCollectible(GameObject* other);
     bool HandleLadder(GameObject* other);
     bool HandleCollisionBox(GameObject* other);
+    State GetState() const;
 
     void UpdateState();
 protected:
