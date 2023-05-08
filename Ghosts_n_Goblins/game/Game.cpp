@@ -185,7 +185,7 @@ void Game::Initialize()
     InitCamera();
 
     // HUD
-    m_pHUD = new HUD{m_pSpriteFactory->CreateSprite(Label::U_HUD), m_pPlayer, GetViewPort(), m_pSoundManager};
+    m_pHUD = new HUD{m_pGameController};
 
     // ENEMIES
     InitEnemies();
@@ -201,108 +201,9 @@ void Game::Initialize()
 
 void Game::InitLabels()
 {
-    // CHARACTERS
-    m_Labels["c_arthur"] = Label::C_ARTHUR;
-    m_Labels["c_crow"] = Label::C_CROW;
-    m_Labels["c_flying_knight"] = Label::C_FLYING_KNIGHT;
-    m_Labels["c_green_monster"] = Label::C_GREEN_MONSTER;
-    m_Labels["c_magician"] = Label::C_MAGICIAN;
-    m_Labels["c_princess"] = Label::C_PRINCESS;
-    m_Labels["c_red_arremer"] = Label::C_RED_ARREMER;
-    m_Labels["c_satan"] = Label::C_SATAN;
-    m_Labels["c_unicorn"] = Label::C_UNICORN;
-    m_Labels["c_woody_pig"] = Label::C_WOODY_PIG;
-    m_Labels["c_zombie"] = Label::C_ZOMBIE;
-
-    // COLLECTIBLES
-    m_Labels["o_armor"] = Label::O_ARMOR;
-    m_Labels["o_coin"] = Label::O_COIN;
-    m_Labels["o_doll"] = Label::O_DOLL;
-    m_Labels["o_key"] = Label::O_KEY;
-    m_Labels["o_king"] = Label::O_KING;
-    m_Labels["o_money_bag"] = Label::O_MONEY_BAG;
-    m_Labels["o_necklace"] = Label::O_NECKLACE;
-    m_Labels["o_pot"] = Label::O_POT;
-    m_Labels["o_yashichi"] = Label::O_YASHICHI;
-
-    // FX
-    m_Labels["f_fire_boss"] = Label::F_FIRE_BOSS;
-    m_Labels["f_fire_enemy"] = Label::F_FIRE_ENEMY;
-    m_Labels["f_fire_torch"] = Label::F_FIRE_TORCH;
-    m_Labels["f_projectile_block_boss"] = Label::F_PROJECTILE_BLOCK_BOSS;
-    m_Labels["f_projectile_block_enemy"] = Label::F_PROJECTILE_BLOCK_ENEMY;
-    m_Labels["f_projectile_death"] = Label::F_PROJECTILE_DEATH;
-    m_Labels["f_score"] = Label::F_SCORE;
-    m_Labels["f_vanish"] = Label::F_VANISH;
-
-    // LEVEL
-    m_Labels["l_door"] = Label::L_DOOR;
-    m_Labels["l_foreground"] = Label::L_FOREGROUND;
-    m_Labels["l_level"] = Label::L_LEVEL;
-    m_Labels["l_platform"] = Label::L_PLATFORM;
-    m_Labels["l_water"] = Label::L_WATER;
-
-    // UI
-    m_Labels["u_hud"] = Label::U_HUD;
-    m_Labels["u_map"] = Label::U_MAP;
-    m_Labels["u_pin"] = Label::U_PIN;
-
-    // THROWABLES
-    m_Labels["t_dagger"] = Label::T_DAGGER;
-    m_Labels["t_eyeball"] = Label::T_EYEBALL;
-    m_Labels["t_fireball_red_arremer"] = Label::T_FIREBALL_RED_ARREMER;
-    m_Labels["t_fireball_unicorn"] = Label::T_FIREBALL_UNICORN;
-    m_Labels["t_lance"] = Label::T_LANCE;
-    m_Labels["t_spear"] = Label::T_SPEAR;
-    m_Labels["t_spell"] = Label::T_SPELL;
-    m_Labels["t_torch"] = Label::T_TORCH;
-
-    // DEBUG
-    m_Labels["d_level_debug"] = Label::D_LEVEL_DEBUG;
-    m_Labels["d_fallback"] = Label::D_FALLBACK;
-
-    // EFFECTS
-    m_Labels["e_armor_pickup"] = Label::E_ARMOR_PICKUP;
-    m_Labels["e_arthur_hit"] = Label::E_ARTHUR_HIT;
-    m_Labels["e_arthur_jump"] = Label::E_ARTHUR_JUMP;
-    m_Labels["e_arthur_jump_frog"] = Label::E_ARTHUR_JUMP_FROG;
-    m_Labels["e_arthur_land"] = Label::E_ARTHUR_LAND;
-    m_Labels["e_arthur_throw"] = Label::E_ARTHUR_THROW;
-    m_Labels["e_arthur_transform"] = Label::E_ARTHUR_TRANSFORM;
-    m_Labels["e_big_enemy_walk"] = Label::E_BIG_ENEMY_WALK;
-    m_Labels["e_boss_death"] = Label::E_BOSS_DEATH;
-    m_Labels["e_boss_hit"] = Label::E_BOSS_HIT;
-    m_Labels["e_crow"] = Label::E_CROW;
-    m_Labels["e_door_open"] = Label::E_DOOR_OPEN;
-    m_Labels["e_enemy_death"] = Label::E_ENEMY_DEATH;
-    m_Labels["e_enemy_hit"] = Label::E_ENEMY_HIT;
-    m_Labels["e_extra_life"] = Label::E_EXTRA_LIFE;
-    m_Labels["e_flying_knight"] = Label::E_FLYING_KNIGHT;
-    m_Labels["e_magician"] = Label::E_MAGICIAN;
-    m_Labels["e_projectile_block"] = Label::E_PROJECTILE_BLOCK;
-    m_Labels["e_red_arremer_attack"] = Label::E_RED_ARREMER_ATTACK;
-    m_Labels["e_torch"] = Label::E_TORCH;
-    m_Labels["e_treasure_pickup"] = Label::E_TREASURE_PICKUP;
-    m_Labels["e_weapon_pickup"] = Label::E_WEAPON_PICKUP;
-    m_Labels["e_woody_pig"] = Label::E_WOODY_PIG;
-    m_Labels["e_zombie_spawn"] = Label::E_ZOMBIE_SPAWN;
-
-    // STREAMS
-    m_Labels["s_01_credit"] = Label::S_01_CREDIT;
-    m_Labels["s_02_start_demo"] = Label::S_02_START_DEMO;
-    m_Labels["s_03_stage_introduction_map"] = Label::S_03_STAGE_INTRODUCTION_MAP;
-    m_Labels["s_04_ground_bgm"] = Label::S_04_GROUND_BGM;
-    m_Labels["s_05_hurry_up"] = Label::S_05_HURRY_UP;
-    m_Labels["s_06_player_out"] = Label::S_06_PLAYER_OUT;
-    m_Labels["s_07_game_over"] = Label::S_07_GAME_OVER;
-    m_Labels["s_08_boss"] = Label::S_08_BOSS;
-    m_Labels["s_09_stage_clear"] = Label::S_09_STAGE_CLEAR;
-    m_Labels["s_10_1st_place_name_registration"] = Label::S_10_1ST_PLACE_NAME_REGISTRATION;
-    m_Labels["s_11_1st_place_entry_end"] = Label::S_11_1ST_PLACE_ENTRY_END;
-    m_Labels["s_12_below_2nd_place_name_registration"] = Label::S_12_BELOW_2ND_PLACE_NAME_REGISTRATION;
-    m_Labels["s_13_below_2nd_place_entry_end"] = Label::S_13_BELOW_2ND_PLACE_ENTRY_END;
-
-    // BOOT
+    // --- IMAGES ---
+    
+    // Boot
     m_Labels["b_black"] = Label::B_BLACK;
     m_Labels["b_01"] = Label::B_01;
     m_Labels["b_02"] = Label::B_02;
@@ -329,6 +230,115 @@ void Game::InitLabels()
     m_Labels["b_23"] = Label::B_23;
     m_Labels["b_24"] = Label::B_24;
     m_Labels["b_25"] = Label::B_25;
+    
+    // Characters
+    m_Labels["c_arthur"] = Label::C_ARTHUR;
+    m_Labels["c_crow"] = Label::C_CROW;
+    m_Labels["c_flying_knight"] = Label::C_FLYING_KNIGHT;
+    m_Labels["c_green_monster"] = Label::C_GREEN_MONSTER;
+    m_Labels["c_magician"] = Label::C_MAGICIAN;
+    m_Labels["c_princess"] = Label::C_PRINCESS;
+    m_Labels["c_red_arremer"] = Label::C_RED_ARREMER;
+    m_Labels["c_satan"] = Label::C_SATAN;
+    m_Labels["c_unicorn"] = Label::C_UNICORN;
+    m_Labels["c_woody_pig"] = Label::C_WOODY_PIG;
+    m_Labels["c_zombie"] = Label::C_ZOMBIE;
+
+    // Collectibles
+    m_Labels["o_armor"] = Label::O_ARMOR;
+    m_Labels["o_coin"] = Label::O_COIN;
+    m_Labels["o_doll"] = Label::O_DOLL;
+    m_Labels["o_key"] = Label::O_KEY;
+    m_Labels["o_king"] = Label::O_KING;
+    m_Labels["o_money_bag"] = Label::O_MONEY_BAG;
+    m_Labels["o_necklace"] = Label::O_NECKLACE;
+    m_Labels["o_pot"] = Label::O_POT;
+    m_Labels["o_yashichi"] = Label::O_YASHICHI;
+
+    // Fx
+    m_Labels["f_fire_boss"] = Label::F_FIRE_BOSS;
+    m_Labels["f_fire_enemy"] = Label::F_FIRE_ENEMY;
+    m_Labels["f_fire_torch"] = Label::F_FIRE_TORCH;
+    m_Labels["f_projectile_block_boss"] = Label::F_PROJECTILE_BLOCK_BOSS;
+    m_Labels["f_projectile_block_enemy"] = Label::F_PROJECTILE_BLOCK_ENEMY;
+    m_Labels["f_projectile_death"] = Label::F_PROJECTILE_DEATH;
+    m_Labels["f_score"] = Label::F_SCORE;
+    m_Labels["f_vanish"] = Label::F_VANISH;
+
+    // Level
+    m_Labels["l_door"] = Label::L_DOOR;
+    m_Labels["l_foreground"] = Label::L_FOREGROUND;
+    m_Labels["l_level"] = Label::L_LEVEL;
+    m_Labels["l_platform"] = Label::L_PLATFORM;
+    m_Labels["l_water"] = Label::L_WATER;
+
+    // Throwables
+    m_Labels["t_dagger"] = Label::T_DAGGER;
+    m_Labels["t_eyeball"] = Label::T_EYEBALL;
+    m_Labels["t_fireball_red_arremer"] = Label::T_FIREBALL_RED_ARREMER;
+    m_Labels["t_fireball_unicorn"] = Label::T_FIREBALL_UNICORN;
+    m_Labels["t_lance"] = Label::T_LANCE;
+    m_Labels["t_spear"] = Label::T_SPEAR;
+    m_Labels["t_spell"] = Label::T_SPELL;
+    m_Labels["t_torch"] = Label::T_TORCH;
+    
+    // Ui
+    m_Labels["u_abc"] = Label::U_ABC;
+    m_Labels["u_frame"] = Label::U_FRAME;
+    m_Labels["u_life"] = Label::U_LIFE;
+    m_Labels["u_map"] = Label::U_MAP;
+    m_Labels["u_numbers"] = Label::U_NUMBERS;
+    m_Labels["u_pin"] = Label::U_PIN;
+    m_Labels["u_ranking"] = Label::U_RANKING;
+    m_Labels["u_title"] = Label::U_TITLE;
+    m_Labels["u_weapons"] = Label::U_WEAPONS;
+
+    // --- SOUNDS ---
+    
+    // Effects
+    m_Labels["e_armor_pickup"] = Label::E_ARMOR_PICKUP;
+    m_Labels["e_arthur_hit"] = Label::E_ARTHUR_HIT;
+    m_Labels["e_arthur_jump"] = Label::E_ARTHUR_JUMP;
+    m_Labels["e_arthur_jump_frog"] = Label::E_ARTHUR_JUMP_FROG;
+    m_Labels["e_arthur_land"] = Label::E_ARTHUR_LAND;
+    m_Labels["e_arthur_throw"] = Label::E_ARTHUR_THROW;
+    m_Labels["e_arthur_transform"] = Label::E_ARTHUR_TRANSFORM;
+    m_Labels["e_big_enemy_walk"] = Label::E_BIG_ENEMY_WALK;
+    m_Labels["e_boss_death"] = Label::E_BOSS_DEATH;
+    m_Labels["e_boss_hit"] = Label::E_BOSS_HIT;
+    m_Labels["e_crow"] = Label::E_CROW;
+    m_Labels["e_door_open"] = Label::E_DOOR_OPEN;
+    m_Labels["e_enemy_death"] = Label::E_ENEMY_DEATH;
+    m_Labels["e_enemy_hit"] = Label::E_ENEMY_HIT;
+    m_Labels["e_extra_life"] = Label::E_EXTRA_LIFE;
+    m_Labels["e_flying_knight"] = Label::E_FLYING_KNIGHT;
+    m_Labels["e_magician"] = Label::E_MAGICIAN;
+    m_Labels["e_projectile_block"] = Label::E_PROJECTILE_BLOCK;
+    m_Labels["e_red_arremer_attack"] = Label::E_RED_ARREMER_ATTACK;
+    m_Labels["e_torch"] = Label::E_TORCH;
+    m_Labels["e_treasure_pickup"] = Label::E_TREASURE_PICKUP;
+    m_Labels["e_weapon_pickup"] = Label::E_WEAPON_PICKUP;
+    m_Labels["e_woody_pig"] = Label::E_WOODY_PIG;
+    m_Labels["e_zombie_spawn"] = Label::E_ZOMBIE_SPAWN;
+
+    // Streams
+    m_Labels["s_01_credit"] = Label::S_01_CREDIT;
+    m_Labels["s_02_start_demo"] = Label::S_02_START_DEMO;
+    m_Labels["s_03_stage_introduction_map"] = Label::S_03_STAGE_INTRODUCTION_MAP;
+    m_Labels["s_04_ground_bgm"] = Label::S_04_GROUND_BGM;
+    m_Labels["s_05_hurry_up"] = Label::S_05_HURRY_UP;
+    m_Labels["s_06_player_out"] = Label::S_06_PLAYER_OUT;
+    m_Labels["s_07_game_over"] = Label::S_07_GAME_OVER;
+    m_Labels["s_08_boss"] = Label::S_08_BOSS;
+    m_Labels["s_09_stage_clear"] = Label::S_09_STAGE_CLEAR;
+    m_Labels["s_10_1st_place_name_registration"] = Label::S_10_1ST_PLACE_NAME_REGISTRATION;
+    m_Labels["s_11_1st_place_entry_end"] = Label::S_11_1ST_PLACE_ENTRY_END;
+    m_Labels["s_12_below_2nd_place_name_registration"] = Label::S_12_BELOW_2ND_PLACE_NAME_REGISTRATION;
+    m_Labels["s_13_below_2nd_place_entry_end"] = Label::S_13_BELOW_2ND_PLACE_ENTRY_END;
+
+    // --- DEBUG --- 
+    m_Labels["d_level_debug"] = Label::D_LEVEL_DEBUG;
+    m_Labels["d_fallback"] = Label::D_FALLBACK;
 
     // MINIGAME
     m_Labels["avatar"] = Label::AVATAR;

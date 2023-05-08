@@ -3,11 +3,9 @@
 
 #include "engine/Sprite.h"
 
-UI::UI(Game::Label label, Sprite* pSprite, const Rectf& viewPort, SoundManager* pSoundManager)
+UI::UI(Game::Label label, GameController* pGameController)
     : m_Label{label}
-    , m_pSprite{pSprite}
-    , m_ViewPort{viewPort}
-    , m_pSoundManager{pSoundManager}
+    , m_pGameController{pGameController}
 {
 }
 
@@ -17,7 +15,6 @@ void UI::Draw()
 
 void UI::Draw() const
 {
-    m_pSprite->Draw();
 }
 
 void UI::Reset() const
@@ -26,5 +23,4 @@ void UI::Reset() const
 
 void UI::Update(float elapsedSec)
 {
-    m_pSprite->Update(elapsedSec);
 }

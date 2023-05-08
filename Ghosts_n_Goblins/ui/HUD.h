@@ -2,12 +2,10 @@
 #pragma once
 #include "UI.h"
 
-class Player;
-
 class HUD : public UI
 {
 public:
-    explicit HUD(Sprite* pSprite, Player* pPlayer, const Rectf& viewPort, SoundManager* pSoundManager);
+    explicit HUD(GameController* pGameController);
     virtual ~HUD() override = default;
     HUD(const HUD& other) = delete;
     HUD(HUD&& other) noexcept = delete;
@@ -23,17 +21,15 @@ private:
     void DrawLives();
     void DrawPlayerScore();
     void DrawHighScore();
-    void DrawTopScore();
     void DrawTime();
-    void DrawRemainingTime();
     void DrawFrame() const;
     void DrawWeapon() const;
-    void DrawPlayer1() const;
     
-    void ResetSprite() const;
-
 private:
-    Player* m_pPlayer;
+    Sprite* m_pFrame;
+    Sprite* m_pLife;
+    Sprite* m_pNumbers;
+    Sprite* m_pWeapons;
     int m_FirstDigit;
     int m_SecondDigit;
     int m_ThirdDigit;

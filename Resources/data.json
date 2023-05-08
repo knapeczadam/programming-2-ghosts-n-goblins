@@ -137,16 +137,40 @@
       "path": "level/water.png"
     },
     {
-      "label": "u_hud",
-      "path": "ui/hud.png"
+      "label": "u_abc",
+      "path": "ui/abc.png"
+    },
+    {
+      "label": "u_frame",
+      "path": "ui/frame.png"
+    },
+    {
+      "label": "u_life",
+      "path": "ui/life.png"
     },
     {
       "label": "u_map",
       "path": "ui/map.png"
     },
     {
+      "label": "u_numbers",
+      "path": "ui/numbers.png"
+    },
+    {
       "label": "u_pin",
       "path": "ui/pin.png"
+    },
+    {
+      "label": "u_ranking",
+      "path": "ui/ranking.png"
+    },
+    {
+      "label": "u_title",
+      "path": "ui/title.png"
+    },
+    {
+      "label": "u_weapons",
+      "path": "ui/weapons.png"
     },
     {
       "label": "t_dagger",
@@ -532,9 +556,45 @@
       "frames_per_second": 3
     },
     {
-      "label": "u_hud",
-      "rows": 7,
+      "label": "u_abc",
+      "rows": 15,
+      "columns": 13,
+      "scale": 2
+    },
+    {
+      "label": "u_frame",
+      "scale": 2
+    },
+    {
+      "label": "u_life",
+      "scale": 2
+    },
+    {
+      "label": "u_map",
+      "scale": 2
+    },
+    {
+      "label": "u_numbers",
+      "rows": 3,
       "columns": 11,
+      "scale": 2
+    },
+    {
+      "label": "u_pin",
+      "scale": 2
+    },
+    {
+      "label": "u_ranking",
+      "scale": 2
+    },
+    {
+      "label": "u_title",
+      "scale": 2
+    },
+    {
+      "label": "u_weapons",
+      "rows": 1,
+      "columns": 3,
       "scale": 2
     },
     {

@@ -98,7 +98,7 @@ Sprite* SpriteFactory::CreateSprite(Game::Label label)
     if (pSprite == nullptr)
     {
         std::cerr << "SpriteFactory::CreateSprite() - ERROR: label (" << static_cast<int>(label) <<
-            ") not found in data.json/sprites!" << std::endl;
+            ") in m_Labels map but not found in data.json/sprites!" << std::endl;
         std::abort();
     }
     return pSprite;

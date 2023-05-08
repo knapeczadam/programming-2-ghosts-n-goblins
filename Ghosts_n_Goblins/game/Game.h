@@ -49,116 +49,9 @@ class Game : public BaseGame, public ITimer
 public:
     enum class Label
     {
-        // CHARACTERS
-        C_ARTHUR,
-        C_CROW,
-        C_FLYING_KNIGHT,
-        C_GREEN_MONSTER,
-        C_MAGICIAN,
-        C_PRINCESS,
-        C_RED_ARREMER,
-        C_SATAN,
-        C_UNICORN,
-        C_WOODY_PIG,
-        C_ZOMBIE,
-
-        // COLLECTIBLES
-        O_ARMOR,
-        O_COIN,
-        O_DOLL,
-        O_KEY,
-        O_KING,
-        O_MONEY_BAG,
-        O_NECKLACE,
-        O_POT,
-        O_YASHICHI,
-
-        // FX
-        F_FIRE_BOSS,
-        F_FIRE_ENEMY,
-        F_FIRE_TORCH,
-        F_PROJECTILE_BLOCK_BOSS,
-        F_PROJECTILE_BLOCK_ENEMY,
-        F_PROJECTILE_DEATH,
-        F_SCORE,
-        F_VANISH,
-
-        // LEVEL
-        L_DOOR,
-        L_FOREGROUND,
-        L_KILLZONE,
-        L_LADDER,
-        L_LEVEL,
-        L_PLATFORM,
-        L_TOMBSTONE,
-        L_WATER,
-        L_ARMOR,
-        L_YASHICHI,
-
-        // UI
-        U_HUD,
-        U_MAP,
-        U_MENU,
-        U_PIN,
-
-        // THROWABLES
-        T_DAGGER,
-        T_EYEBALL,
-        T_FIREBALL_RED_ARREMER,
-        T_FIREBALL_UNICORN,
-        T_LANCE,
-        T_SPEAR,
-        T_SPELL,
-        T_TORCH,
-
-        // DEBUG
-        D_LEVEL_DEBUG,
-        D_FALLBACK,
-        D_MISSING,
-        D_DUMMY,
-
-        // EFFECTS
-        E_ARMOR_PICKUP,
-        E_ARTHUR_HIT,
-        E_ARTHUR_JUMP,
-        E_ARTHUR_JUMP_FROG,
-        E_ARTHUR_LAND,
-        E_ARTHUR_THROW,
-        E_ARTHUR_TRANSFORM,
-        E_BIG_ENEMY_WALK,
-        E_BOSS_DEATH,
-        E_BOSS_HIT,
-        E_CROW,
-        E_DOOR_OPEN,
-        E_ENEMY_DEATH,
-        E_ENEMY_HIT,
-        E_EXTRA_LIFE,
-        E_FLYING_KNIGHT,
-        E_MAGICIAN,
-        E_PROJECTILE_BLOCK,
-        E_RED_ARREMER_ATTACK,
-        E_TORCH,
-        E_TREASURE_PICKUP,
-        E_WEAPON_PICKUP,
-        E_WOODY_PIG,
-        E_ZOMBIE_SPAWN,
+        // --- IMAGES ---
         
-        // STREAMS
-        S_01_CREDIT,
-        S_02_START_DEMO,
-        S_03_STAGE_INTRODUCTION_MAP,
-        S_04_GROUND_BGM,
-        S_05_HURRY_UP,
-        S_06_PLAYER_OUT,
-        S_07_GAME_OVER,
-        S_08_BOSS,
-        S_09_STAGE_CLEAR,
-        S_10_1ST_PLACE_NAME_REGISTRATION,
-        S_11_1ST_PLACE_ENTRY_END,
-        S_12_BELOW_2ND_PLACE_NAME_REGISTRATION,
-        S_13_BELOW_2ND_PLACE_ENTRY_END,
-
-        // BOOT
+        // Boot
         B_BLACK,
         B_01,
         B_02,
@@ -187,6 +80,124 @@ public:
         B_25,
         B_END,
         
+        // Characters
+        C_ARTHUR,
+        C_CROW,
+        C_FLYING_KNIGHT,
+        C_GREEN_MONSTER,
+        C_MAGICIAN,
+        C_PRINCESS,
+        C_RED_ARREMER,
+        C_SATAN,
+        C_UNICORN,
+        C_WOODY_PIG,
+        C_ZOMBIE,
+
+        // Collectibles
+        O_ARMOR,
+        O_COIN,
+        O_DOLL,
+        O_KEY,
+        O_KING,
+        O_MONEY_BAG,
+        O_NECKLACE,
+        O_POT,
+        O_YASHICHI,
+
+        // Fx
+        F_FIRE_BOSS,
+        F_FIRE_ENEMY,
+        F_FIRE_TORCH,
+        F_PROJECTILE_BLOCK_BOSS,
+        F_PROJECTILE_BLOCK_ENEMY,
+        F_PROJECTILE_DEATH,
+        F_SCORE,
+        F_VANISH,
+
+        // Level
+        L_DOOR,
+        L_FOREGROUND,
+        L_KILLZONE,
+        L_LADDER,
+        L_LEVEL,
+        L_PLATFORM,
+        L_TOMBSTONE,
+        L_WATER,
+        L_ARMOR,
+        L_YASHICHI,
+
+        // Throwables
+        T_DAGGER,
+        T_EYEBALL,
+        T_FIREBALL_RED_ARREMER,
+        T_FIREBALL_UNICORN,
+        T_LANCE,
+        T_SPEAR,
+        T_SPELL,
+        T_TORCH,
+        
+        // Ui
+        U_ABC,
+        U_FRAME,
+        U_HUD,
+        U_LIFE,
+        U_MAP,
+        U_MENU,
+        U_NUMBERS,
+        U_PIN,
+        U_RANKING,
+        U_TITLE,
+        U_WEAPONS,
+
+        // --- SOUNDS ---
+        
+        // Effects
+        E_ARMOR_PICKUP,
+        E_ARTHUR_HIT,
+        E_ARTHUR_JUMP,
+        E_ARTHUR_JUMP_FROG,
+        E_ARTHUR_LAND,
+        E_ARTHUR_THROW,
+        E_ARTHUR_TRANSFORM,
+        E_BIG_ENEMY_WALK,
+        E_BOSS_DEATH,
+        E_BOSS_HIT,
+        E_CROW,
+        E_DOOR_OPEN,
+        E_ENEMY_DEATH,
+        E_ENEMY_HIT,
+        E_EXTRA_LIFE,
+        E_FLYING_KNIGHT,
+        E_MAGICIAN,
+        E_PROJECTILE_BLOCK,
+        E_RED_ARREMER_ATTACK,
+        E_TORCH,
+        E_TREASURE_PICKUP,
+        E_WEAPON_PICKUP,
+        E_WOODY_PIG,
+        E_ZOMBIE_SPAWN,
+
+        // Streams
+        S_01_CREDIT,
+        S_02_START_DEMO,
+        S_03_STAGE_INTRODUCTION_MAP,
+        S_04_GROUND_BGM,
+        S_05_HURRY_UP,
+        S_06_PLAYER_OUT,
+        S_07_GAME_OVER,
+        S_08_BOSS,
+        S_09_STAGE_CLEAR,
+        S_10_1ST_PLACE_NAME_REGISTRATION,
+        S_11_1ST_PLACE_ENTRY_END,
+        S_12_BELOW_2ND_PLACE_NAME_REGISTRATION,
+        S_13_BELOW_2ND_PLACE_ENTRY_END,
+
+        // --- DEBUG ---
+        D_LEVEL_DEBUG,
+        D_FALLBACK,
+        D_MISSING,
+        D_DUMMY,
+
         // MINIGAME
         AVATAR
     };
