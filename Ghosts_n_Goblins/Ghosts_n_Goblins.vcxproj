@@ -1064,6 +1064,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(IntDir)$(TargetName).pch</PrecompiledHeaderOutputFile>
     </ClCompile>
+    <ClCompile Include="game\InputManager.cpp" />
     <ClCompile Include="game\Spawner.cpp" />
     <ClCompile Include="game\WoodyPigSpawner.cpp" />
     <ClCompile Include="game\ZombieSpawner.cpp" />
@@ -1579,6 +1580,7 @@
     <ClInclude Include="game\CollisionBox.h" />
     <ClInclude Include="game\Game.h" />
     <ClInclude Include="game\GameObject.h" />
+    <ClInclude Include="game\InputManager.h" />
     <ClInclude Include="game\Macros.h" />
     <ClInclude Include="game\Spawner.h" />
     <ClInclude Include="game\WoodyPigSpawner.h" />
