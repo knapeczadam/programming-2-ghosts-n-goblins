@@ -38,7 +38,7 @@ class FlyingKnightSpawner;
 class WoodyPigSpawner;
 class ZombieSpawner;
 class Menu;
-
+class ScoreManager;
 
 /*
  * https://strategywiki.org/wiki/Ghosts_%27n_Goblins#Story
@@ -287,6 +287,8 @@ private:
 
     void InitSpawners();
     void SpawnEnemies();
+
+    void InitUI();
     
     // DATA MEMBERS
     
@@ -320,6 +322,7 @@ private:
     ZombieSpawner* m_pZombieSpawner;
     Menu* m_pMenu;
     InputManager* m_pInputManager;
+    ScoreManager* m_pScoreManager;
 #if TEST_OBJECT
     GameObject* m_pTestObject;
 #endif

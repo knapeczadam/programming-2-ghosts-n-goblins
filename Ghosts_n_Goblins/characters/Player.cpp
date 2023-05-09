@@ -560,6 +560,8 @@ bool Player::HandleCollectible(GameObject* other)
     ICollectible* pCollectable{dynamic_cast<ICollectible*>(other)};
     if (pCollectable)
     {
+        if (other->GetLabel() == Game::Label::O_POT) return false;
+        
         other->SetVisible(false);
         other->SetActive(false);
         switch (other->GetLabel())

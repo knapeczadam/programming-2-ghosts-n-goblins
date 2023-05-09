@@ -33,6 +33,7 @@
 
 #include "FlyingKnightSpawner.h"
 #include "InputManager.h"
+#include "ScoreManager.h"
 #include "WoodyPigSpawner.h"
 #include "ZombieSpawner.h"
 #include "characters/Crow.h"
@@ -83,6 +84,7 @@ Game::Game(const Window& window)
       , m_pZombieSpawner{nullptr}
       , m_pMenu{nullptr}
       , m_pInputManager{nullptr}
+      , m_pScoreManager{nullptr}
 #if TEST_OBJECT
       , m_pTestObject{nullptr}
 #endif
@@ -130,6 +132,7 @@ void Game::Cleanup()
     delete m_pSpriteFactory;
     delete m_pTextureManager;
     delete m_pInputManager;
+    delete m_pScoreManager;
     delete m_pGameController;
 
 #if TEST_OBJECT
@@ -176,6 +179,7 @@ void Game::Initialize()
     m_pFXManager = new FXManager{m_pGameController};
     m_pGameController->m_pFXManager = m_pFXManager;
 
+    // INPUT
     m_pInputManager = new InputManager{};
     m_pGameController->m_pInputManager = m_pInputManager;
 
@@ -193,8 +197,7 @@ void Game::Initialize()
     InitCamera();
 
     // UI 
-    m_pHUD = new HUD{m_pGameController};
-    m_pMenu = new Menu{m_pGameController};
+    InitUI();
 
     // ENEMIES
     InitEnemies();
@@ -659,6 +662,17 @@ void Game::SpawnEnemies()
     m_pFlyingKnightSpawner->Spawn();
     m_pWoodyPigSpawner->Spawn();
     m_pZombieSpawner->Spawn();
+}
+
+void Game::InitUI()
+{
+    m_pHUD = new HUD{m_pGameController};
+    m_pMenu = new Menu{m_pGameController};
+    
+    m_pScoreManager = new ScoreManager{};
+    m_pGameController->m_pScoreManager = m_pScoreManager;
+
+    m_pScoreManager->LoadHighScores();
 }
 
 void Game::ClearBackground() const

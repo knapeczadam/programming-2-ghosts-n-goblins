@@ -8,6 +8,9 @@
 
 #include <iostream>
 
+#include "characters/Player.h"
+#include "game/ScoreManager.h"
+
 Menu::Menu(GameController* pGameController)
     : UI{Game::Label::U_MENU, pGameController}
       , m_pBlueChar{pGameController->m_pSpriteFactory->CreateSprite(Game::Label::U_ABC)}
@@ -89,6 +92,8 @@ void Menu::OnEnter()
 void Menu::SaveInitial()
 {
     std::cout << m_Initial << std::endl;
+    m_pGameController->m_pScoreManager->SetScore(m_Initial, m_pGameController->m_pPlayer->GetScore());
+    m_pGameController->m_pScoreManager->SaveHighScores();
     m_Initial.clear();
 }
 

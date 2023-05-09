@@ -58,4 +58,5 @@ public:
     FXManager* m_pFXManager;
     Magician* m_pMagician;
     InputManager* m_pInputManager;
+    ScoreManager* m_pScoreManager;
 };

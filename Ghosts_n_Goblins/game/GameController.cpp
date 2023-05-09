@@ -32,5 +32,7 @@ GameController::GameController(
       , m_pFXManager{nullptr}
       , m_pMagician{nullptr}
       , m_pInputManager{nullptr}
+      , m_pScoreManager{nullptr}
+
 {
 }

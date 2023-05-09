@@ -9,6 +9,7 @@
 #include "engine/SoundManager.h"
 #include "engine/SpriteFactory.h"
 #include "game/GameController.h"
+#include "game/ScoreManager.h"
 
 
 HUD::HUD(GameController* pGameController)
@@ -85,10 +86,10 @@ void HUD::DrawPlayerScore() const
 
 void HUD::DrawHighScore() const
 {
-    const int testHighScore{10000};
+    const int highScore{m_pGameController->m_pScoreManager->GetHighScore()};
     Point2f pos{304.0f, m_pGameController->m_ViewPort.height - m_pNumbers->GetScaledClipHeight() * 2};
     const float offset{m_pNumbers->GetScaledClipWidth()};
-    for (int score = testHighScore; score > 0; score /= 10)
+    for (int score = highScore; score > 0; score /= 10)
     {
         const int digit{score % 10};
         m_pNumbers->SetLeftOffsetCols(digit);
