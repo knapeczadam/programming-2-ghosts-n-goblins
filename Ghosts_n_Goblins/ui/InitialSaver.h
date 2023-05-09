@@ -1,38 +1,37 @@
 ﻿#pragma once
 #include "UI.h"
 
-class Menu : public UI
+class InitialSaver : public UI
 {
 public:
-    Menu(GameController* pGameController);
-    virtual ~Menu() override = default;
-    Menu(const Menu& other) = delete;
-    Menu(Menu&& other) noexcept = delete;
-    Menu& operator=(const Menu& other) = delete;
-    Menu& operator=(Menu&& other) noexcept = delete;
+    InitialSaver(GameController* pGameController);
+    virtual ~InitialSaver() override = default;
+    InitialSaver(const InitialSaver& other) = delete;
+    InitialSaver(InitialSaver&& other) noexcept = delete;
+    InitialSaver& operator=(const InitialSaver& other) = delete;
+    InitialSaver& operator=(InitialSaver&& other) noexcept = delete;
 
     virtual void Draw() const override;
     virtual void Update(float elapsedSec) override;
 
 private:
     void DrawAbc() const;
-    void InitCharacterLookup();
+    auto DrawInitial() const -> void;
     void FlickerCharacter() const;
-    char GetCharacter() const;
     void OnEnter();
     void SaveInitial();
     
 private:
     Sprite* m_pBlueChar;
     Sprite* m_pRedChar;
+    Sprite* m_pTextInitial;
     const Point2f m_BlueCharPos;
     const Point2f m_RedCharPos;
+    const Point2f m_TextInitialPos;
     const int m_NrRows;
     const int m_NrCols;
-    std::vector<char> m_Characters;
     int m_RowIdx;
     int m_ColIdx;
-    bool m_Flicker;
     std::string m_Initial;
     const size_t m_MaxLength;
 };

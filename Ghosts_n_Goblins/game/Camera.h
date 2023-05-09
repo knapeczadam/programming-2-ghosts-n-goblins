@@ -17,17 +17,17 @@ public:
     Camera& operator=(Camera&& other) noexcept = delete;
     
     void Draw() const;
-    void Transform();
-
+    void Transform(const GameObject* pGameObject);
+    void SetBoundaries(const Rectf& boundaries);
     bool IsOutOfWindow(const GameObject* pGameObject) const;
 
 private:
-    void Track();
+    void Track(const GameObject* pGameObject);
     void Clamp();
 
 private:
     GameController* m_pGameController;
-    Rectf m_LevelBoundaries;
+    Rectf m_Boundaries;
     float m_Width;
     float m_Height;
     Point2f m_Pos;

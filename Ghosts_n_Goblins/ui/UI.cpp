@@ -8,6 +8,8 @@ UI::UI(Game::Label label, GameController* pGameController)
     , m_pGameController{pGameController}
     , m_Active{true}
     , m_Visible{true}
+    , m_Blinking{false}
+    , m_BlinkingTime{0.0f}
 {
 }
 
@@ -21,6 +23,14 @@ void UI::Reset() const
 
 void UI::Update(float elapsedSec)
 {
+    if (m_BlinkingTime > 0.0f)
+    {
+        StartTimer(m_BlinkingTime);
+        if (IsTimerFinished())
+        {
+            m_Blinking = not m_Blinking;
+        }
+    }
 }
 
 bool UI::IsActive() const

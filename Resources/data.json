@@ -150,7 +150,7 @@
     },
     {
       "label": "u_map",
-      "path": "ui/map.png"
+      "path": "ui/map.bmp"
     },
     {
       "label": "u_numbers",
@@ -163,6 +163,18 @@
     {
       "label": "u_ranking",
       "path": "ui/ranking.png"
+    },
+    {
+      "label": "u_text_game_over",
+      "path": "ui/text_game_over.png"
+    },
+    {
+      "label": "u_text_initial",
+      "path": "ui/text_initial.png"
+    },
+    {
+      "label": "u_text_player_one_ready",
+      "path": "ui/text_player_one_ready.png"
     },
     {
       "label": "u_title",
@@ -570,8 +582,7 @@
       "scale": 2
     },
     {
-      "label": "u_map",
-      "scale": 2
+      "label": "u_map"
     },
     {
       "label": "u_numbers",
@@ -585,6 +596,18 @@
     },
     {
       "label": "u_ranking",
+      "scale": 2
+    },
+    {
+      "label": "u_text_game_over",
+      "scale": 2
+    },
+    {
+      "label": "u_text_initial",
+      "scale": 2
+    },
+    {
+      "label": "u_text_player_one_ready",
       "scale": 2
     },
     {

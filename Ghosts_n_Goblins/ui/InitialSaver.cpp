@@ -1,5 +1,5 @@
 ﻿#include "pch.h"
-#include "Menu.h"
+#include "InitialSaver.h"
 
 #include "engine/Sprite.h"
 #include "engine/SpriteFactory.h"
@@ -8,34 +8,39 @@
 
 #include <iostream>
 
+#include "InitialDrawer.h"
 #include "characters/Player.h"
-#include "game/ScoreManager.h"
+#include "ScoreManager.h"
 
-Menu::Menu(GameController* pGameController)
+InitialSaver::InitialSaver(GameController* pGameController)
     : UI{Game::Label::U_MENU, pGameController}
       , m_pBlueChar{pGameController->m_pSpriteFactory->CreateSprite(Game::Label::U_ABC)}
       , m_pRedChar{pGameController->m_pSpriteFactory->CreateSprite(Game::Label::U_ABC)}
+      , m_pTextInitial{pGameController->m_pSpriteFactory->CreateSprite(Game::Label::U_TEXT_INITIAL)}
       , m_BlueCharPos{56.0f, 234.0f}
       , m_RedCharPos{56.0f, 362.0f}
+      , m_TextInitialPos{132.0f, 64.0f}
       , m_NrRows{5}
       , m_NrCols{13}
-      , m_Characters{}
       , m_RowIdx{m_NrRows - 1}
       , m_ColIdx{m_NrCols - 1}
-      , m_Flicker{}
       , m_Initial{}
       , m_MaxLength{3}
 {
+    m_Blinking = true;
+    m_BlinkingTime = 0.4f;
     m_pBlueChar->SetPosition(m_BlueCharPos);
-    InitCharacterLookup();
+    m_pTextInitial->SetPosition(m_TextInitialPos);
 }
 
-void Menu::Draw() const
+void InitialSaver::Draw() const
 {
     DrawAbc();
+    DrawInitial();
+    m_pTextInitial->Draw();
 }
 
-void Menu::DrawAbc() const
+void InitialSaver::DrawAbc() const
 {
     m_pBlueChar->SetTopOffsetRows(0);
     m_pBlueChar->SetLeftOffsetCols(0);
@@ -46,41 +51,31 @@ void Menu::DrawAbc() const
     FlickerCharacter();
 }
 
-void Menu::InitCharacterLookup()
+void InitialSaver::DrawInitial() const
 {
-    m_Characters.insert(m_Characters.end(), {
-                            'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
-                            'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
-                            'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
-                            'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
-                            '!', '?', '&', ',', '.', '(', ')', '/', ':', '*', ' ', ' ', ' '
-                        });
+    m_pGameController->m_pInitialDrawer->DrawInitial(Point2f{256.0f, 64.0f}, m_Initial, InitialDrawer::Color::RED);
 }
 
-void Menu::FlickerCharacter() const
+void InitialSaver::FlickerCharacter() const
 {
     m_pRedChar->SetTopOffsetRows(5 + m_RowIdx);
     m_pRedChar->SetLeftOffsetCols(m_ColIdx);
     m_pRedChar->UpdateSourceRect();
-    if (m_Flicker)
+    if (m_Blinking)
     {
         m_pRedChar->Draw();
     }
 }
 
-char Menu::GetCharacter() const
+void InitialSaver::OnEnter()
 {
-    return m_Characters[m_RowIdx * m_NrCols + m_ColIdx];
-}
-
-void Menu::OnEnter()
-{
-    if (m_pGameController->m_pInputManager->IsPressed(Game::Label::I_START) and not m_pGameController->m_pInputManager->IsTriggered(Game::Label::I_START))
+    if (m_pGameController->m_pInputManager->IsPressed(Game::Label::I_START) and not m_pGameController->m_pInputManager->
+        IsTriggered(Game::Label::I_START))
     {
         m_pGameController->m_pInputManager->SetTriggered(Game::Label::I_START, true);
         if (m_Initial.length() < m_MaxLength)
         {
-            m_Initial += GetCharacter();
+            m_Initial += m_pGameController->m_pInitialDrawer->GetCharacter(m_RowIdx, m_ColIdx);
         }
         if (m_Initial.length() == m_MaxLength)
         {
@@ -89,21 +84,15 @@ void Menu::OnEnter()
     }
 }
 
-void Menu::SaveInitial()
+void InitialSaver::SaveInitial()
 {
-    std::cout << m_Initial << std::endl;
     m_pGameController->m_pScoreManager->SetScore(m_Initial, m_pGameController->m_pPlayer->GetScore());
     m_pGameController->m_pScoreManager->SaveHighScores();
-    m_Initial.clear();
 }
 
-void Menu::Update(float elapsedSec)
+void InitialSaver::Update(float elapsedSec)
 {
-    StartTimer(0.2f);
-    if (IsTimerFinished())
-    {
-        m_Flicker = not m_Flicker;
-    }
+    UI::Update(elapsedSec);
 
     if (m_pGameController->m_pInputManager->IsPressed(Game::Label::I_UP) and not m_pGameController->m_pInputManager->
         IsTriggered(Game::Label::I_UP))

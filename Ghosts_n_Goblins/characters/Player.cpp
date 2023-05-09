@@ -9,7 +9,7 @@
 #include "engine/SoundManager.h"
 #include "engine/Sprite.h"
 #include "engine/SpriteFactory.h"
-#include "game/CollisionBox.h"
+#include "level/CollisionBox.h"
 #include "game/Macros.h"
 #include "level/IClimable.h"
 #include "level/Level.h"

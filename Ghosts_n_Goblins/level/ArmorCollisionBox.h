@@ -1,5 +1,6 @@
 ﻿#pragma once
-#include "game/CollisionBox.h"
+#include "CollisionBox.h"
+#include "game/GameController.h"
 
 class ArmorCollisionBox : public CollisionBox
 {

@@ -2,55 +2,55 @@
 #include "pch.h"
 #include "Game.h"
 #include "Camera.h"
+#include "InputManager.h"
+#include "ui/ScoreManager.h"
 #include "Texture.h"
 #include "utils.h"
+#include "characters/Crow.h"
+#include "characters/FlyingKnight.h"
 #include "characters/GreenMonster.h"
 #include "characters/IEnemy.h"
+#include "characters/Magician.h"
 #include "characters/Player.h"
+#include "characters/RedArremer.h"
+#include "characters/Unicorn.h"
+#include "characters/WoodyPig.h"
+#include "characters/Zombie.h"
+#include "collectibles/Armor.h"
 #include "collectibles/Coin.h"
 #include "collectibles/MoneyBag.h"
+#include "collectibles/Necklace.h"
+#include "collectibles/Pot.h"
+#include "collectibles/Yashichi.h"
 #include "engine/Clock.h"
 #include "engine/json.hpp"
 #include "engine/SoundManager.h"
 #include "engine/Sprite.h"
 #include "engine/SpriteFactory.h"
 #include "engine/TextureManager.h"
+#include "fx/FXManager.h"
 #include "game/GameController.h"
 #include "game/Macros.h"
+#include "level/ArmorCollisionBox.h"
+#include "level/FlyingKnightSpawner.h"
 #include "level/KillZone.h"
 #include "level/Ladder.h"
 #include "level/Level.h"
 #include "level/Platform.h"
 #include "level/Tombstone.h"
 #include "level/Water.h"
+#include "level/WoodyPigSpawner.h"
+#include "level/YashichiCollisionBox.h"
+#include "level/ZombieSpawner.h"
 #include "ui/HUD.h"
-#include "throwables/IThrowable.h"
-#include "throwables/Lance.h"
+#include "ui/InitialSaver.h"
+#include "ui/Map.h"
 
 #include <fstream>
 #include <iostream>
 #include <ranges>
 
-#include "FlyingKnightSpawner.h"
-#include "InputManager.h"
-#include "ScoreManager.h"
-#include "WoodyPigSpawner.h"
-#include "ZombieSpawner.h"
-#include "characters/Crow.h"
-#include "characters/FlyingKnight.h"
-#include "characters/Magician.h"
-#include "characters/RedArremer.h"
-#include "characters/Unicorn.h"
-#include "characters/WoodyPig.h"
-#include "characters/Zombie.h"
-#include "collectibles/Armor.h"
-#include "collectibles/Necklace.h"
-#include "collectibles/Pot.h"
-#include "collectibles/Yashichi.h"
-#include "fx/FXManager.h"
-#include "level/ArmorCollisionBox.h"
-#include "level/YashichiCollisionBox.h"
-#include "ui/Menu.h"
+#include "ui/InitialDrawer.h"
 
 
 Game::Game(const Window& window)
@@ -82,14 +82,16 @@ Game::Game(const Window& window)
       , m_pFlyingKnightSpawner{nullptr}
       , m_pWoodyPigSpawner{nullptr}
       , m_pZombieSpawner{nullptr}
-      , m_pMenu{nullptr}
+      , m_pInitialSaver{nullptr}
       , m_pInputManager{nullptr}
       , m_pScoreManager{nullptr}
+      , m_pMap{nullptr}
+      , m_pInitialDrawer{nullptr}
 #if TEST_OBJECT
       , m_pTestObject{nullptr}
 #endif
       , m_Data{nullptr}
-      , m_DataPath{"../../Resources/data.json"}
+      , m_DataPath{"data.json"}
       , m_Labels{}
       , m_BootIntervals{}
       , m_CurrBoot{Label::B_01}
@@ -113,7 +115,7 @@ void Game::Cleanup()
     delete m_pFlyingKnightSpawner;
     std::ranges::for_each(m_EnemyThrowables, deleteGameObject);
     std::ranges::for_each(m_Enemies, deleteGameObject);
-    delete m_pMenu;
+    delete m_pInitialSaver;
     delete m_pHUD;
     delete m_pCamera;
     std::ranges::for_each(m_PlayerThrowables, deleteGameObject);
@@ -133,6 +135,8 @@ void Game::Cleanup()
     delete m_pTextureManager;
     delete m_pInputManager;
     delete m_pScoreManager;
+    delete m_pMap;
+    delete m_pInitialDrawer;
     delete m_pGameController;
 
 #if TEST_OBJECT
@@ -193,11 +197,12 @@ void Game::Initialize()
     m_pPlayer = new Player{Player::GetSpawnPos(), m_pGameController};
     m_pGameController->m_pPlayer = m_pPlayer;
 
+    // UI 
+    InitUI();
+
     // CAMERA - has to be after level and player initialization
     InitCamera();
 
-    // UI 
-    InitUI();
 
     // ENEMIES
     InitEnemies();
@@ -302,6 +307,9 @@ void Game::InitLabels()
     m_Labels["u_numbers"] = Label::U_NUMBERS;
     m_Labels["u_pin"] = Label::U_PIN;
     m_Labels["u_ranking"] = Label::U_RANKING;
+    m_Labels["u_text_game_over"] = Label::U_TEXT_GAME_OVER;
+    m_Labels["u_text_initial"] = Label::U_TEXT_INITIAL;
+    m_Labels["u_text_player_one_ready"] = Label::U_TEXT_PLAYER_ONE_READY;
     m_Labels["u_title"] = Label::U_TITLE;
     m_Labels["u_weapons"] = Label::U_WEAPONS;
 
@@ -373,6 +381,7 @@ void Game::LoadData()
 void Game::InitCamera()
 {
     m_pCamera = new Camera{m_pGameController};
+    m_pCamera->SetBoundaries(m_pLevel->GetBoundaries());
 }
 
 void Game::InitBootIntervals()
@@ -667,10 +676,14 @@ void Game::SpawnEnemies()
 void Game::InitUI()
 {
     m_pHUD = new HUD{m_pGameController};
-    m_pMenu = new Menu{m_pGameController};
-    
-    m_pScoreManager = new ScoreManager{};
+    m_pInitialSaver = new InitialSaver{m_pGameController};
+    m_pMap = new Map{m_pGameController};
+
+    m_pScoreManager = new ScoreManager{m_pGameController};
     m_pGameController->m_pScoreManager = m_pScoreManager;
+
+    m_pInitialDrawer = new InitialDrawer{m_pGameController};
+    m_pGameController->m_pInitialDrawer = m_pInitialDrawer;
 
     m_pScoreManager->LoadHighScores();
 }
@@ -698,7 +711,7 @@ void Game::Draw() const
     }
 
     glPushMatrix();
-    m_pCamera->Transform();
+    m_pCamera->Transform(m_pPlayer);
     m_pLevel->Draw();
     std::ranges::for_each(m_Enemies | std::views::filter(isVisible), draw);
     std::ranges::for_each(m_PlayerThrowables | std::views::filter(isVisible), draw);
@@ -721,7 +734,13 @@ void Game::Draw() const
 
     // UI
     if (m_pHUD->IsVisible()) m_pHUD->Draw();
-    if (m_pMenu->IsVisible()) m_pMenu->Draw();
+    if (m_pInitialSaver->IsVisible()) m_pInitialSaver->Draw();
+
+#if DRAW_CENTER_GUIDE
+    utils::SetColor(Color4f{1.0f, 1.0f, 1.0f, 0.5f});
+    utils::DrawLine(Point2f{GetViewPort().width / 2, 0}, Point2f{GetViewPort().width / 2, GetViewPort().height});
+    utils::DrawLine(Point2f{0, GetViewPort().height / 2}, Point2f{GetViewPort().width, GetViewPort().height / 2});
+#endif
 }
 
 void Game::Update(float elapsedSec)
@@ -765,7 +784,8 @@ void Game::Update(float elapsedSec)
 
     // UI
     if (m_pHUD->IsActive()) m_pHUD->Update(elapsedSec);
-    if (m_pMenu->IsActive()) m_pMenu->Update(elapsedSec);
+    if (m_pInitialSaver->IsActive()) m_pInitialSaver->Update(elapsedSec);
+    // if (m_pMap->IsActive()) m_pMap->Update(elapsedSec);
 
 #if TEST_OBJECT
     if (m_pTestObject->IsActive())m_pTestObject->Update(elapsedSec);

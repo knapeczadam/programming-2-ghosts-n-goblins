@@ -37,8 +37,10 @@ class InputManager;
 class FlyingKnightSpawner;
 class WoodyPigSpawner;
 class ZombieSpawner;
-class Menu;
+class InitialSaver;
 class ScoreManager;
+class Map;
+class InitialDrawer;
 
 /*
  * https://strategywiki.org/wiki/Ghosts_%27n_Goblins#Story
@@ -140,7 +142,9 @@ public:
         
         // Ui
         U_ABC,
+        U_CHARACTER_DRAWER,
         U_FRAME,
+        U_HIGH_SCORE_LISTER,
         U_HUD,
         U_LIFE,
         U_MAP,
@@ -148,6 +152,9 @@ public:
         U_NUMBERS,
         U_PIN,
         U_RANKING,
+        U_TEXT_GAME_OVER,
+        U_TEXT_INITIAL,
+        U_TEXT_PLAYER_ONE_READY,
         U_TITLE,
         U_WEAPONS,
 
@@ -218,7 +225,7 @@ public:
         I_DECREASE_VOLUME,
         
         // MINIGAME
-        AVATAR
+        AVATAR,
     };
 
 public:
@@ -320,9 +327,11 @@ private:
     FlyingKnightSpawner* m_pFlyingKnightSpawner;
     WoodyPigSpawner* m_pWoodyPigSpawner;
     ZombieSpawner* m_pZombieSpawner;
-    Menu* m_pMenu;
+    InitialSaver* m_pInitialSaver;
     InputManager* m_pInputManager;
     ScoreManager* m_pScoreManager;
+    InitialDrawer* m_pInitialDrawer;
+    Map* m_pMap;
 #if TEST_OBJECT
     GameObject* m_pTestObject;
 #endif

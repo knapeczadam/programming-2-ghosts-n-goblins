@@ -14,6 +14,7 @@ class TextureManager;
 class FXManager;
 class Magician;
 class InputManager;
+class InitialDrawer;
 
 
 class GameController final
@@ -59,4 +60,5 @@ public:
     Magician* m_pMagician;
     InputManager* m_pInputManager;
     ScoreManager* m_pScoreManager;
+    InitialDrawer* m_pInitialDrawer;
 };

@@ -24,4 +24,6 @@ protected:
     GameController* m_pGameController;
     bool m_Active;
     bool m_Visible;
+    bool m_Blinking;
+    float m_BlinkingTime;
 };

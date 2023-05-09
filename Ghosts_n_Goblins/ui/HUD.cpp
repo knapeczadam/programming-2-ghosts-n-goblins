@@ -9,7 +9,7 @@
 #include "engine/SoundManager.h"
 #include "engine/SpriteFactory.h"
 #include "game/GameController.h"
-#include "game/ScoreManager.h"
+#include "ScoreManager.h"
 
 
 HUD::HUD(GameController* pGameController)
@@ -62,43 +62,14 @@ void HUD::DrawPlayerScore() const
 {
     const int playerScore{m_pGameController->m_pPlayer->GetScore()};
     Point2f pos{128.0f, m_pGameController->m_ViewPort.height - m_pNumbers->GetScaledClipHeight() * 2};
-    const float offset{m_pNumbers->GetScaledClipWidth()};
-    m_pNumbers->SetTopOffsetRows(0);
-    if (playerScore == 0)
-    {
-        m_pNumbers->SetLeftOffsetCols(0);
-        m_pNumbers->SetPosition(pos);
-        m_pNumbers->UpdateSourceRect();
-        m_pNumbers->UpdateDestinationRect();
-        m_pNumbers->Draw();
-    }
-    for (int score = playerScore; score > 0; score /= 10)
-    {
-        const int digit{score % 10};
-        m_pNumbers->SetLeftOffsetCols(digit);
-        m_pNumbers->SetPosition(pos);
-        m_pNumbers->UpdateSourceRect();
-        m_pNumbers->UpdateDestinationRect();
-        m_pNumbers->Draw();
-        pos.x -= offset;
-    }
+    m_pGameController->m_pScoreManager->DrawScore(pos, playerScore,ScoreManager::Color::WHITE_TAN );
 }
 
 void HUD::DrawHighScore() const
 {
     const int highScore{m_pGameController->m_pScoreManager->GetHighScore()};
     Point2f pos{304.0f, m_pGameController->m_ViewPort.height - m_pNumbers->GetScaledClipHeight() * 2};
-    const float offset{m_pNumbers->GetScaledClipWidth()};
-    for (int score = highScore; score > 0; score /= 10)
-    {
-        const int digit{score % 10};
-        m_pNumbers->SetLeftOffsetCols(digit);
-        m_pNumbers->SetPosition(pos);
-        m_pNumbers->UpdateSourceRect();
-        m_pNumbers->UpdateDestinationRect();
-        m_pNumbers->Draw();
-        pos.x -= offset;
-    }
+    m_pGameController->m_pScoreManager->DrawScore(pos, highScore, ScoreManager::Color::WHITE_TAN);
 }
 
 void HUD::DrawTime() const

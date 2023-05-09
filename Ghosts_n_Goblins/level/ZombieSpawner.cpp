@@ -1,8 +1,8 @@
 ﻿#include "pch.h"
 #include "ZombieSpawner.h"
 
-#include "GameObject.h"
-#include "GameController.h"
+#include "game/GameObject.h"
+#include "game/GameController.h"
 #include "characters/Player.h"
 #include "characters/IEnemy.h"
 

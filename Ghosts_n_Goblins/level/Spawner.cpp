@@ -1,8 +1,8 @@
 ﻿#include "pch.h"
 #include "Spawner.h"
 
-#include "GameController.h"
 #include "characters/Player.h"
+#include "game/GameController.h"
 
 Spawner::Spawner(const Rectf& boundaries, GameController* pGameController)
     : m_SpawnBoundaries{boundaries}

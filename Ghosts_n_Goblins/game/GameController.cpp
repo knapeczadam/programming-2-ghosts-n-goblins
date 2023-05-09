@@ -33,6 +33,7 @@ GameController::GameController(
       , m_pMagician{nullptr}
       , m_pInputManager{nullptr}
       , m_pScoreManager{nullptr}
+      , m_pInitialDrawer{nullptr}
 
 {
 }

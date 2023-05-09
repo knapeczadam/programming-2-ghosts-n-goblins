@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include "GameObject.h"
+#include "game/GameObject.h"
 
 class CollisionBox :  public GameObject
 {

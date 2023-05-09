@@ -12,7 +12,7 @@
 
 Camera::Camera(GameController* pGameController)
     : m_pGameController{pGameController}
-    , m_LevelBoundaries{m_pGameController->m_pLevel->GetBoundaries()}
+    , m_Boundaries{0.0f, 0.0f, 0.0f, 0.0f}
     , m_Width(m_pGameController->m_ViewPort.width)
     , m_Height(m_pGameController->m_ViewPort.height)
     , m_Pos{0.0f, 0.0f}
@@ -32,11 +32,16 @@ void Camera::Draw() const
     utils::DrawRect(m_Pos.x, m_Pos.y, m_Width, m_Height);
 }
 
-void Camera::Transform()
+void Camera::Transform(const GameObject* pGameObject)
 {
-    Track();
+    Track(pGameObject);
     Clamp();
     glTranslatef(-m_Pos.x, -m_Pos.y, 0.0f);
+}
+
+void Camera::SetBoundaries(const Rectf& boundaries)
+{
+    m_Boundaries = boundaries;
 }
 
 bool Camera::IsOutOfWindow(const GameObject* pGameObject) const
@@ -55,9 +60,9 @@ bool Camera::IsOutOfWindow(const GameObject* pGameObject) const
  A helper function that positions the camera around the given rectangle
  target and returns this new position.
  */
-void Camera::Track()
+void Camera::Track(const GameObject* pGameObject)
 {
-    const Point2f targetCenter{m_pGameController->m_pPlayer->GetShapeCenter()};
+    const Point2f targetCenter{pGameObject->GetShapeCenter()};
     m_Pos.x = targetCenter.x - m_Width / 2.0f;
     m_Pos.y = targetCenter.y - m_Height / 2.0f;
 }
@@ -68,20 +73,20 @@ void Camera::Track()
  */
 void Camera::Clamp()
 {
-    if (m_Pos.x < m_LevelBoundaries.left)
+    if (m_Pos.x < m_Boundaries.left)
     {
-        m_Pos.x = m_LevelBoundaries.left;
+        m_Pos.x = m_Boundaries.left;
     }
-    if (m_Pos.x + m_Width > m_LevelBoundaries.left + m_LevelBoundaries.width)
+    if (m_Pos.x + m_Width > m_Boundaries.left + m_Boundaries.width)
     {
-        m_Pos.x = m_LevelBoundaries.left + m_LevelBoundaries.width - m_Width;
+        m_Pos.x = m_Boundaries.left + m_Boundaries.width - m_Width;
     }
-    if (m_Pos.y < m_LevelBoundaries.bottom)
+    if (m_Pos.y < m_Boundaries.bottom)
     {
-        m_Pos.y = m_LevelBoundaries.bottom;
+        m_Pos.y = m_Boundaries.bottom;
     }
-    if (m_Pos.y + m_Height > m_LevelBoundaries.bottom + m_LevelBoundaries.height)
+    if (m_Pos.y + m_Height > m_Boundaries.bottom + m_Boundaries.height)
     {
-        m_Pos.y = m_LevelBoundaries.bottom + m_LevelBoundaries.height - m_Height;
+        m_Pos.y = m_Boundaries.bottom + m_Boundaries.height - m_Height;
     }
 }

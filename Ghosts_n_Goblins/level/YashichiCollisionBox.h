@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include "game/CollisionBox.h"
+#include "CollisionBox.h"
 
 class YashichiCollisionBox : public CollisionBox
 {

@@ -30,7 +30,7 @@ void TextureManager::LoadTextures()
         auto it = m_pGameController->m_Labels.find(label);
         if (it == m_pGameController->m_Labels.end())
         {
-            std::cerr << "TextureManager::LoadTextures() - ERROR: label not found: " << label << std::endl;
+            std::cerr << "TextureManager::LoadTextures() - ERROR: label (" << label << ") found in data.json/images is not in the label map!" << std::endl;
             std::abort();
         }
         //m_Textures.emplace(std::make_pair(m_Labels[label], new Texture{m_Path + path}));
