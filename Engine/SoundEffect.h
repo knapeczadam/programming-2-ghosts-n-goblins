@@ -1,6 +1,6 @@
 #pragma once
 #include <string>
-class Mix_Chunk;
+
 class SoundEffect final
 {
 public:
