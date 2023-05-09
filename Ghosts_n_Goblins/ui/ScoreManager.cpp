@@ -10,12 +10,12 @@
 #include "engine/SpriteFactory.h"
 
 ScoreManager::ScoreManager(GameController* pGameController)
-    : m_Path{"highscores.txt"}
+    : UI{Game::Label::U_SCORE_MANAGER, pGameController}
+    , m_Path{"highscores.txt"}
     , m_HighScore{0}
     , m_Scores{}
-    , m_pSprite(pGameController->m_pSpriteFactory->CreateSprite(Game::Label::U_NUMBERS))
-    , m_pGameController{pGameController}
 {
+    m_pSprite = pGameController->m_pSpriteFactory->CreateSprite(Game::Label::U_NUMBERS);
 }
 
 void ScoreManager::LoadHighScores()
@@ -62,7 +62,7 @@ int ScoreManager::GetHighScore() const
 /*
  * color: 0 = white tan, 1 = sky blue, 2 = dark tan
  */
-void ScoreManager::DrawScore(Point2f pos, int score, Color color) const
+void ScoreManager::DrawNumber(Point2f pos, int score, Color color) const
 {
     const float offset{m_pSprite->GetScaledClipWidth()};
     m_pSprite->SetTopOffsetRows(int(color));

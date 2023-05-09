@@ -62,14 +62,14 @@ void HUD::DrawPlayerScore() const
 {
     const int playerScore{m_pGameController->m_pPlayer->GetScore()};
     Point2f pos{128.0f, m_pGameController->m_ViewPort.height - m_pNumbers->GetScaledClipHeight() * 2};
-    m_pGameController->m_pScoreManager->DrawScore(pos, playerScore,ScoreManager::Color::WHITE_TAN );
+    m_pGameController->m_pScoreManager->DrawNumber(pos, playerScore,ScoreManager::Color::WHITE_TAN );
 }
 
 void HUD::DrawHighScore() const
 {
     const int highScore{m_pGameController->m_pScoreManager->GetHighScore()};
     Point2f pos{304.0f, m_pGameController->m_ViewPort.height - m_pNumbers->GetScaledClipHeight() * 2};
-    m_pGameController->m_pScoreManager->DrawScore(pos, highScore, ScoreManager::Color::WHITE_TAN);
+    m_pGameController->m_pScoreManager->DrawNumber(pos, highScore, ScoreManager::Color::WHITE_TAN);
 }
 
 void HUD::DrawTime() const

@@ -161,8 +161,12 @@
       "path": "ui/pin.png"
     },
     {
-      "label": "u_ranking",
-      "path": "ui/ranking.png"
+      "label": "u_best_ranking",
+      "path": "ui/best_ranking.png"
+    },
+    {
+      "label": "u_text_credit",
+      "path": "ui/text_credit.png"
     },
     {
       "label": "u_text_game_over",
@@ -595,7 +599,11 @@
       "scale": 2
     },
     {
-      "label": "u_ranking",
+      "label": "u_best_ranking",
+      "scale": 2
+    },
+    {
+      "label": "u_text_credit",
       "scale": 2
     },
     {

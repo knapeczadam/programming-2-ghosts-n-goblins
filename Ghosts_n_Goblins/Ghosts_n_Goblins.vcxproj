@@ -1704,8 +1704,9 @@
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(IntDir)$(TargetName).pch</PrecompiledHeaderOutputFile>
     </ClCompile>
     <ClCompile Include="fx\ProjectileBlock.cpp" />
+    <ClCompile Include="ui\CreditManager.cpp" />
     <ClCompile Include="ui\InitialDrawer.cpp" />
-    <ClCompile Include="ui\HighScoreLister.cpp" />
+    <ClCompile Include="ui\RankingDrawer.cpp" />
     <ClCompile Include="ui\HUD.cpp">
       <RuntimeLibrary>MultiThreadedDebugDll</RuntimeLibrary>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -2039,8 +2040,9 @@
     <ClInclude Include="level\ZombieSpawner.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="fx\ProjectileBlock.h" />
+    <ClInclude Include="ui\CreditManager.h" />
     <ClInclude Include="ui\InitialDrawer.h" />
-    <ClInclude Include="ui\HighScoreLister.h" />
+    <ClInclude Include="ui\RankingDrawer.h" />
     <ClInclude Include="ui\HUD.h" />
     <ClInclude Include="ui\InitialSaver.h" />
     <ClInclude Include="ui\Map.h" />

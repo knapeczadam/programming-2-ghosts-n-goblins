@@ -41,6 +41,8 @@ class InitialSaver;
 class ScoreManager;
 class Map;
 class InitialDrawer;
+class RankingDrawer;
+class CreditManager;
 
 /*
  * https://strategywiki.org/wiki/Ghosts_%27n_Goblins#Story
@@ -143,15 +145,18 @@ public:
         // Ui
         U_ABC,
         U_CHARACTER_DRAWER,
+        U_CREDIT_MANAGER,
         U_FRAME,
-        U_HIGH_SCORE_LISTER,
+        U_RANKING_DRAWER,
         U_HUD,
         U_LIFE,
         U_MAP,
         U_MENU,
         U_NUMBERS,
         U_PIN,
-        U_RANKING,
+        U_BEST_RANKING,
+        U_TEXT_CREDIT,
+        U_SCORE_MANAGER,
         U_TEXT_GAME_OVER,
         U_TEXT_INITIAL,
         U_TEXT_PLAYER_ONE_READY,
@@ -225,7 +230,7 @@ public:
         I_DECREASE_VOLUME,
         
         // MINIGAME
-        AVATAR,
+        AVATAR
     };
 
 public:
@@ -331,6 +336,8 @@ private:
     InputManager* m_pInputManager;
     ScoreManager* m_pScoreManager;
     InitialDrawer* m_pInitialDrawer;
+    RankingDrawer* m_pRankingDrawer;
+    CreditManager* m_pCreditManager;
     Map* m_pMap;
 #if TEST_OBJECT
     GameObject* m_pTestObject;

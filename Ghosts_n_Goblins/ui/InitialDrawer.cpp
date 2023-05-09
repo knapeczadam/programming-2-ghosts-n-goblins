@@ -9,8 +9,8 @@ InitialDrawer::InitialDrawer(GameController* pGameController)
     : UI(Game::Label::U_CHARACTER_DRAWER, pGameController)
     , m_Characters{}
     , m_NrCols{13}
-    , m_pSprite{pGameController->m_pSpriteFactory->CreateSprite(Game::Label::U_ABC)}
 {
+    m_pSprite = pGameController->m_pSpriteFactory->CreateSprite(Game::Label::U_ABC);
     InitLookup();
     m_pSprite->SetLeftOffsetPx(4);
     m_pSprite->SetTopOffsetPx(4);

@@ -26,4 +26,5 @@ protected:
     bool m_Visible;
     bool m_Blinking;
     float m_BlinkingTime;
+    Sprite* m_pSprite;
 };

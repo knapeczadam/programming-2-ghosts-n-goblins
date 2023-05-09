@@ -50,6 +50,8 @@
 #include <iostream>
 #include <ranges>
 
+#include "ui/CreditManager.h"
+#include "ui/RankingDrawer.h"
 #include "ui/InitialDrawer.h"
 
 
@@ -85,8 +87,10 @@ Game::Game(const Window& window)
       , m_pInitialSaver{nullptr}
       , m_pInputManager{nullptr}
       , m_pScoreManager{nullptr}
-      , m_pMap{nullptr}
       , m_pInitialDrawer{nullptr}
+      , m_pRankingDrawer{nullptr}
+      , m_pCreditManager{nullptr}
+      , m_pMap{nullptr}
 #if TEST_OBJECT
       , m_pTestObject{nullptr}
 #endif
@@ -306,7 +310,8 @@ void Game::InitLabels()
     m_Labels["u_map"] = Label::U_MAP;
     m_Labels["u_numbers"] = Label::U_NUMBERS;
     m_Labels["u_pin"] = Label::U_PIN;
-    m_Labels["u_ranking"] = Label::U_RANKING;
+    m_Labels["u_best_ranking"] = Label::U_BEST_RANKING;
+    m_Labels["u_text_credit"] = Label::U_TEXT_CREDIT;
     m_Labels["u_text_game_over"] = Label::U_TEXT_GAME_OVER;
     m_Labels["u_text_initial"] = Label::U_TEXT_INITIAL;
     m_Labels["u_text_player_one_ready"] = Label::U_TEXT_PLAYER_ONE_READY;
@@ -685,6 +690,10 @@ void Game::InitUI()
     m_pInitialDrawer = new InitialDrawer{m_pGameController};
     m_pGameController->m_pInitialDrawer = m_pInitialDrawer;
 
+    m_pRankingDrawer = new RankingDrawer{m_pGameController};
+
+    m_pCreditManager = new CreditManager{m_pGameController};
+
     m_pScoreManager->LoadHighScores();
 }
 
@@ -733,8 +742,10 @@ void Game::Draw() const
     glPopMatrix();
 
     // UI
-    if (m_pHUD->IsVisible()) m_pHUD->Draw();
-    if (m_pInitialSaver->IsVisible()) m_pInitialSaver->Draw();
+    // if (m_pHUD->IsVisible()) m_pHUD->Draw();
+    // if (m_pInitialSaver->IsVisible()) m_pInitialSaver->Draw();
+    // if (m_pRankingDrawer->IsVisible()) m_pRankingDrawer->Draw();
+    if (m_pCreditManager->IsVisible()) m_pCreditManager->Draw();
 
 #if DRAW_CENTER_GUIDE
     utils::SetColor(Color4f{1.0f, 1.0f, 1.0f, 0.5f});
@@ -786,6 +797,7 @@ void Game::Update(float elapsedSec)
     if (m_pHUD->IsActive()) m_pHUD->Update(elapsedSec);
     if (m_pInitialSaver->IsActive()) m_pInitialSaver->Update(elapsedSec);
     // if (m_pMap->IsActive()) m_pMap->Update(elapsedSec);
+    if (m_pCreditManager->IsActive()) m_pCreditManager->Update(elapsedSec);
 
 #if TEST_OBJECT
     if (m_pTestObject->IsActive())m_pTestObject->Update(elapsedSec);

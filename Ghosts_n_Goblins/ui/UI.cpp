@@ -10,6 +10,7 @@ UI::UI(Game::Label label, GameController* pGameController)
     , m_Visible{true}
     , m_Blinking{false}
     , m_BlinkingTime{0.0f}
+    , m_pSprite{nullptr}
 {
 }
 

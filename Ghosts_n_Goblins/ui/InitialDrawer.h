@@ -26,5 +26,4 @@ public:
 private:
     std::vector<char> m_Characters;
     const int m_NrCols;
-    Sprite* m_pSprite;
 };
