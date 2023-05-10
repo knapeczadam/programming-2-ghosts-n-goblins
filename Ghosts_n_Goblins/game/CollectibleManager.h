@@ -11,8 +11,8 @@ public:
     explicit CollectibleManager(GameController* pGameController);
     virtual ~CollectibleManager() override;
     CollectibleManager(const CollectibleManager&) = delete;
-    CollectibleManager& operator=(const CollectibleManager&) = delete;
     CollectibleManager(CollectibleManager&&) = delete;
+    CollectibleManager& operator=(const CollectibleManager&) = delete;
     CollectibleManager& operator=(CollectibleManager&&) = delete;
 
     virtual void Reset() override;

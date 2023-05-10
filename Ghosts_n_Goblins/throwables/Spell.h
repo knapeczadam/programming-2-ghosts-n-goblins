@@ -10,4 +10,5 @@ public:
     Spell(const Spell& other) = delete;
     Spell(Spell&& other) noexcept = delete;
     Spell& operator=(const Spell& other) = delete;
+    Spell& operator=(Spell&& other) noexcept = delete;
 };

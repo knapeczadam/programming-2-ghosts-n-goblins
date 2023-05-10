@@ -9,8 +9,8 @@ public:
     ISpawner(const Rectf& boundaries, GameController* pGameController);
     virtual ~ISpawner() = default;
     ISpawner(const ISpawner&) = delete;
-    ISpawner& operator=(const ISpawner&) = delete;
     ISpawner(ISpawner&&) = delete;
+    ISpawner& operator=(const ISpawner&) = delete;
     ISpawner& operator=(ISpawner&&) = delete;
 
     virtual void Spawn() = 0;

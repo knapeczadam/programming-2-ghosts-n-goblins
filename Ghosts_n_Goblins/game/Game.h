@@ -234,8 +234,8 @@ public:
     explicit Game(const Window& window);
     virtual ~Game() override;
     Game(const Game& other) = delete;
-    Game& operator=(const Game& other) = delete;
     Game(Game&& other) = delete;
+    Game& operator=(const Game& other) = delete;
     Game& operator=(Game&& other) = delete;
 
     virtual void Draw() const override;

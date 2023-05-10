@@ -9,6 +9,7 @@ public:
     YashichiCollisionBox(const YashichiCollisionBox& other) = delete;
     YashichiCollisionBox(YashichiCollisionBox&& other) noexcept = delete;
     YashichiCollisionBox& operator=(const YashichiCollisionBox& other) = delete;
+    YashichiCollisionBox& operator=(YashichiCollisionBox&& other) noexcept = delete;
 
 
     virtual void HandleCollision(GameObject* other) override;

@@ -11,8 +11,8 @@ public:
     explicit PlayerManager(GameController* pGameController);
     virtual ~PlayerManager() override;
     PlayerManager(const PlayerManager&) = delete;
-    PlayerManager& operator=(const PlayerManager&) = delete;
     PlayerManager(PlayerManager&&) = delete;
+    PlayerManager& operator=(const PlayerManager&) = delete;
     PlayerManager& operator=(PlayerManager&&) = delete;
 
     std::vector<GameObject*>& GetThrowables();

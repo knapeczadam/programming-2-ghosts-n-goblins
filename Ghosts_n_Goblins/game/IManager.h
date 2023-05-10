@@ -9,8 +9,8 @@ public:
     explicit IManager(GameController* pGameController);
     virtual ~IManager() override = default;
     IManager(const IManager& other) = delete;
-    IManager& operator=(const IManager& other) = delete;
     IManager(IManager&& other) = delete;
+    IManager& operator=(const IManager& other) = delete;
     IManager& operator=(IManager&& other) = delete;
 
     virtual void Reset();

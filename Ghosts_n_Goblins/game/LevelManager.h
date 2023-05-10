@@ -13,8 +13,8 @@ public:
     explicit LevelManager(GameController* pGameController);
     virtual ~LevelManager() override;
     LevelManager(const LevelManager&) = delete;
-    LevelManager& operator=(const LevelManager&) = delete;
     LevelManager(LevelManager&&) = delete;
+    LevelManager& operator=(const LevelManager&) = delete;
     LevelManager& operator=(LevelManager&&) = delete;
 
     std::vector<GameObject*>& GetCollisionBoxes();

@@ -15,8 +15,8 @@ public:
     explicit UIManager(GameController* pGameController);
     virtual ~UIManager() override;
     UIManager(const UIManager&) = delete;
-    UIManager& operator=(const UIManager&) = delete;
     UIManager(UIManager&&) = delete;
+    UIManager& operator=(const UIManager&) = delete;
     UIManager& operator=(UIManager&&) = delete;
 
     virtual void Reset() override;

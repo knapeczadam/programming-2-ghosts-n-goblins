@@ -10,6 +10,7 @@ public:
     Eyeball(const Eyeball& other) = delete;
     Eyeball(Eyeball&& other) noexcept = delete;
     Eyeball& operator=(const Eyeball& other) = delete;
+    Eyeball& operator=(Eyeball&& other) noexcept = delete;
 
     virtual void Update(float elapsedSec) override;
     void SetDirection(const Vector2f& direction);
