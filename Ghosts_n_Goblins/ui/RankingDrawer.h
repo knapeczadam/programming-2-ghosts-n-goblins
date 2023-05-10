@@ -3,7 +3,7 @@
 
 class Sprite;
 
-class RankingDrawer : public UI
+class RankingDrawer final : public UI
 {
 public:
     explicit RankingDrawer(GameController* pGameController);

@@ -9,7 +9,7 @@
  * They differ from blue crows in that they won't only travel horizontally.
  * They will take a diagonal flight path in order to attack you.
  */
-class Crow : public IEnemy
+class Crow final : public IEnemy
 {
 public:
     explicit Crow(const Point2f& pos, GameController* pGameController);

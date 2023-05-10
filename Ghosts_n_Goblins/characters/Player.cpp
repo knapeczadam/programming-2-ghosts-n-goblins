@@ -1,6 +1,7 @@
 // Knapecz, Adam - 1DAE11
 #include "pch.h"
 #include "Player.h"
+
 #include "IEnemy.h"
 #include "Matrix2x3.h"
 #include "Texture.h"
@@ -8,23 +9,21 @@
 #include "collectibles/ICollectible.h"
 #include "engine/SoundManager.h"
 #include "engine/Sprite.h"
-#include "engine/SpriteFactory.h"
-#include "level/CollisionBox.h"
+#include "fx/FXManager.h"
+#include "game/GameController.h"
+#include "game/InputManager.h"
+#include "game/LevelManager.h"
 #include "game/Macros.h"
+#include "game/PlayerManager.h"
+#include "level/CollisionBox.h"
 #include "level/IClimable.h"
 #include "level/Level.h"
-#include "level/Platform.h"
 #include "throwables/Dagger.h"
 #include "throwables/Lance.h"
 #include "throwables/Torch.h"
 
 #include <iostream>
 #include <numeric>
-
-#include "fx/FXManager.h"
-#include "game/GameController.h"
-#include "game/InputManager.h"
-
 
 const Point2f Player::m_SpawnPos{6000.0f, 64.0f};
 
@@ -35,7 +34,7 @@ Player::Player(const Point2f& pos, GameController* pGameController)
       , m_JumpVelocity{500.0f}
       , m_Velocity{0.0f, 0.0f}
       , m_Acceleration{0.0f, -1391.0f} // -981.0f
-      , m_State{State::idle}
+      , m_State{State::IDLE}
       , m_Crouching{false}
       , m_ShortAccuCooldown{0.0f}
       , m_LongAccuCooldown{0.0f}
@@ -92,41 +91,41 @@ void Player::UpdateSprite() const
     int leftOffset{1};
     switch (m_State)
     {
-    case State::idle:
+    case State::IDLE:
         m_pSprite->SetTopOffsetRows(0);
         m_pSprite->SetSubCols(1);
         break;
-    case State::running:
+    case State::RUNNING:
         m_pSprite->SetTopOffsetRows(1);
         m_pSprite->SetSubCols(4);
         m_pSprite->SetFramesPerSec(10);
         leftOffset = 4;
         break;
-    case State::jumping_running:
+    case State::JUMPING_RUNNING:
         m_pSprite->SetTopOffsetRows(2);
         m_pSprite->SetSubCols(1);
         break;
-    case State::jumping_standing:
+    case State::JUMPING_STANDING:
         m_pSprite->SetTopOffsetRows(3);
         m_pSprite->SetSubCols(1);
         break;
-    case State::crouching:
+    case State::CROUCHING:
         m_pSprite->SetTopOffsetRows(4);
         m_pSprite->SetSubCols(1);
         break;
-    case State::attacking_normal:
+    case State::ATTACKING_NORMAL:
         m_pSprite->SetTopOffsetRows(5);
         m_pSprite->SetSubCols(2);
         m_pSprite->SetFramesPerSec(9);
         leftOffset = 2;
         break;
-    case State::attacking_crouching:
+    case State::ATTACKING_CROUCHING:
         m_pSprite->SetTopOffsetRows(6);
         m_pSprite->SetSubCols(2);
         m_pSprite->SetFramesPerSec(9);
         leftOffset = 2;
         break;
-    case State::climbing:
+    case State::CLIMBING:
         m_pSprite->SetTopOffsetRows(7);
         m_pSprite->SetSubCols(2);
         if (m_Climbing)
@@ -139,7 +138,7 @@ void Player::UpdateSprite() const
         }
         leftOffset = 2;
         break;
-    case State::climbing_top:
+    case State::CLIMBING_TOP:
         leftOffset = 2;
         break;
     }
@@ -197,9 +196,10 @@ void Player::UpdateCooldown(float elapsedSec)
     }
 }
 
+// TODO: weapons are not shown when attacking
 void Player::Throw()
 {
-    for (GameObject* pWeapon : m_pGameController->m_PlayerThrowables)
+    for (GameObject* pWeapon : m_pGameController->m_pPlayerManager->GetThrowables())
     {
         if (pWeapon->GetLabel() == m_CurrWeapon and not pWeapon->IsActive())
         {
@@ -218,16 +218,16 @@ void Player::Throw()
     switch (m_CurrWeapon)
     {
     case Game::Label::T_DAGGER:
-        m_pGameController->m_PlayerThrowables.push_back(new Dagger{
+        m_pGameController->m_pPlayerManager->GetThrowables().push_back(new Dagger{
             GetShapeCenter(), m_Flipped, false, m_pGameController
         });
         break;
     case Game::Label::T_LANCE:
-        m_pGameController->m_PlayerThrowables.push_back(
+        m_pGameController->m_pPlayerManager->GetThrowables().push_back(
             new Lance{GetShapeCenter(), m_Flipped, false, m_pGameController});
         break;
     case Game::Label::T_TORCH:
-        m_pGameController->m_PlayerThrowables.push_back(
+        m_pGameController->m_pPlayerManager->GetThrowables().push_back(
             new Torch{GetShapeCenter(), m_Flipped, false, m_pGameController});
         break;
     }
@@ -255,7 +255,7 @@ void Player::Attack()
 
 void Player::UpdatePosition(float elapsedSec)
 {
-    if (m_pGameController->m_pLevel->IsOnGround(this))
+    if (m_pGameController->m_pLevelManager->GetLevel()->IsOnGround(this))
     {
         Move();
         m_OnGround = true;
@@ -288,7 +288,7 @@ void Player::UpdatePosition(float elapsedSec)
     }
     m_Shape.bottom += m_Velocity.y * elapsedSec;
 
-    CheckForBoundaries(m_pGameController->m_pLevel->GetBoundaries());
+    CheckForBoundaries(m_pGameController->m_pLevelManager->GetLevel()->GetBoundaries());
 }
 
 void Player::Move()
@@ -361,14 +361,14 @@ void Player::Climb()
     if (m_pGameController->m_pInputManager->IsPressed(Game::Label::I_UP))
     {
         m_Velocity.y = m_VerVelocity;
-        m_State = State::climbing;
+        m_State = State::CLIMBING;
     }
     else if (m_pGameController->m_pInputManager->IsPressed(Game::Label::I_DOWN))
     {
         if (not m_OnGround)
         {
             m_Velocity.y = -m_VerVelocity;
-            m_State = State::climbing;
+            m_State = State::CLIMBING;
         }
     }
 }
@@ -382,15 +382,15 @@ void Player::SyncWithPlatform(float elapsedSec)
 {
     if (m_OffsetSnapshot == Vector2f{0, 0})
     {
-        m_OffsetSnapshot.x = GetPosition<Point2f>().x - m_pGameController->m_pLevel->GetPlatform()->GetPosition<
+        m_OffsetSnapshot.x = GetPosition<Point2f>().x - m_pGameController->m_pLevelManager->GetPlatform()->GetPosition<
             Point2f>().x;
-        m_OffsetSnapshot.y = m_Shape.bottom - m_pGameController->m_pLevel->GetPlatform()->GetPosition<Point2f>().y;
+        m_OffsetSnapshot.y = m_Shape.bottom - m_pGameController->m_pLevelManager->GetPlatform()->GetPosition<Point2f>().y;
     }
     m_OffsetSnapshot.x += m_Velocity.x * elapsedSec;
     Matrix2x3 pos{};
     Matrix2x3 T2{Matrix2x3::CreateTranslationMatrix(m_OffsetSnapshot)};
     Matrix2x3 T1{
-        Matrix2x3::CreateTranslationMatrix(m_pGameController->m_pLevel->GetPlatform()->GetPosition<Vector2f>())
+        Matrix2x3::CreateTranslationMatrix(m_pGameController->m_pLevelManager->GetPlatform()->GetPosition<Vector2f>())
     };
     pos = T1 * T2 * pos;
     m_Shape.left = pos.orig.x;
@@ -405,44 +405,44 @@ void Player::UpdateState()
 
     if (not m_Crouching and m_Velocity == Vector2f{})
     {
-        m_State = State::idle;
+        m_State = State::IDLE;
     }
     else if (absVelX > 0.0f and absVelY < epsilon)
     {
-        m_State = State::running;
+        m_State = State::RUNNING;
     }
     else if (absVelX > 0.0f and absVelY > epsilon)
     {
-        m_State = State::jumping_running;
+        m_State = State::JUMPING_RUNNING;
         m_Crouching = false;
         m_CanClimb = false;
     }
     else if (absVelX < epsilon and absVelY > epsilon)
     {
-        m_State = State::jumping_standing;
+        m_State = State::JUMPING_STANDING;
         m_Crouching = false;
         m_CanClimb = false;
     }
 
     if (m_Crouching)
     {
-        m_State = State::crouching;
+        m_State = State::CROUCHING;
     }
 
     if (m_Attacking)
     {
         if (m_Crouching)
         {
-            m_State = State::attacking_crouching;
+            m_State = State::ATTACKING_CROUCHING;
         }
         else
         {
-            m_State = State::attacking_normal;
+            m_State = State::ATTACKING_NORMAL;
         }
     }
     if (m_OnLadder)
     {
-        m_State = State::climbing;
+        m_State = State::CLIMBING;
     }
 }
 

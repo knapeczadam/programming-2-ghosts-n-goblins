@@ -1,10 +1,10 @@
 ﻿#pragma once
 #include "UI.h"
 
-class CreditManager : public UI
+class CreditManager final : public UI
 {
 public:
-    CreditManager(GameController* pGameController);
+    explicit CreditManager(GameController* pGameController);
     virtual ~CreditManager() override = default;
     CreditManager(const CreditManager& other) = delete;
     CreditManager(CreditManager&& other) noexcept = delete;
@@ -13,6 +13,8 @@ public:
 
     virtual void Draw() const override;
     virtual void Update(float elapsedSec) override;
+
+    int GetCredits() const;
 private:
     int m_Credits;
     const int m_MaxCredits;

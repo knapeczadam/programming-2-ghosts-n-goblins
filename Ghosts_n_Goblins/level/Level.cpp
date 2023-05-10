@@ -1,19 +1,15 @@
 // Knapecz, Adam - 1DAE11
 #include "pch.h"
 #include "Level.h"
-#include "game/Macros.h"
 
-#include "SVGParser.h"
-#include "Texture.h"
 #include "Platform.h"
+#include "SVGParser.h"
 #include "utils.h"
-#include "ranges"
-#include "algorithm"
-#include "Ladder.h"
 #include "characters/Player.h"
-#include "engine/SoundManager.h"
 #include "engine/Sprite.h"
 #include "game/GameController.h"
+#include "game/LevelManager.h"
+#include "game/Macros.h"
 
 Level::Level(GameController* pGameController)
     : GameObject{Game::Label::L_LEVEL, pGameController}
@@ -29,7 +25,6 @@ Draws the background texture
 void Level::Draw() const
 {
     m_pSprite->Draw();
-    m_pGameController->m_pPlatform->Draw();
 #if DEBUG_LEVEL
     utils::SetColor(Color4f{1, 0, 1, 1});
     for (const std::vector<Point2f>& collisionShapes : m_Vertices)
@@ -37,11 +32,6 @@ void Level::Draw() const
         utils::DrawPolygon(collisionShapes);
     }
 #endif
-}
-
-void Level::Update(float elapsedSec)
-{
-    m_pGameController->m_pPlatform->Update(elapsedSec);
 }
 
 /*
@@ -56,7 +46,7 @@ Tip: use Raycast with a vertical ray (blue line) in the middle of the actor.
 void Level::HandleCollision(GameObject* other)
 {
     Player* pPlayer{dynamic_cast<Player*>(other)};
-    m_pGameController->m_pPlatform->HandleCollision(other);
+    m_pGameController->m_pLevelManager->GetPlatform()->HandleCollision(other);
     // const bool canClimb{ std::any_of(m_pLadders.begin(), m_pLadders.end(), [&](GameObject* pLadder){return pLadder->IsOverlapping(other);})};
     // pPlayer->CanClimb(canClimb);
 
@@ -136,7 +126,7 @@ bool Level::IsOnGround(GameObject* pGameObject) const
             isHit = true;
         }
     });
-    return isHit or m_pGameController->m_pPlatform->IsOnGround(pGameObject);
+    return isHit or m_pGameController->m_pLevelManager->GetPlatform()->IsOnGround(pGameObject);
 }
 
 void Level::SetVertices()
@@ -164,9 +154,4 @@ bool Level::HasReachedEnd(const Rectf& collisionBox) const
     const float distance{utils::GetDistance(playerCenter, endSignCenter)};
     const float epsilon{50.0f};
     return distance <= epsilon;
-}
-
-Platform* Level::GetPlatform() const
-{
-    return m_pGameController->m_pPlatform;
 }

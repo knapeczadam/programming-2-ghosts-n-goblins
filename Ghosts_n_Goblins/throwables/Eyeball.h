@@ -2,7 +2,7 @@
 #include "IThrowable.h"
 #include "game/GameObject.h"
 
-class Eyeball : public GameObject, public IThrowable
+class Eyeball final : public GameObject, public IThrowable
 {
 public:
     explicit Eyeball(const Point2f& pos, const Vector2f& direction, GameController* pGameController);

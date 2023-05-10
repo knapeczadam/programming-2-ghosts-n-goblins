@@ -3,7 +3,7 @@
 class IThrowable
 {
 public:
-    IThrowable() = default;
+    explicit IThrowable() = default;
     virtual ~IThrowable() = default;
     IThrowable(const IThrowable& other) = delete;
     IThrowable(IThrowable&& other) noexcept = delete;

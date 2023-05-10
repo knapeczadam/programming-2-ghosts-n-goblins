@@ -1,10 +1,10 @@
 ﻿#pragma once
 #include "UI.h"
 
-class InitialSaver : public UI
+class InitialSaver final : public UI
 {
 public:
-    InitialSaver(GameController* pGameController);
+    explicit InitialSaver(GameController* pGameController);
     virtual ~InitialSaver() override = default;
     InitialSaver(const InitialSaver& other) = delete;
     InitialSaver(InitialSaver&& other) noexcept = delete;

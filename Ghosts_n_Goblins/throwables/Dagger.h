@@ -8,7 +8,7 @@
  * The Dagger is very much like the Lance, in that it travels straight across and can only be interrupted by hitting an enemy.
  * However, the Dagger is much faster, allowing Arthur to throw many more of them over a period of time.
  */
-class Dagger : public GameObject, public IThrowable, public ICollectible
+class Dagger final : public GameObject, public IThrowable, public ICollectible
 {
 public:
 	explicit Dagger(const Point2f& pos, bool isFlipped, bool collectible, GameController* pGameController);

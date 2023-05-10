@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include "game/GameObject.h"
 
-class ProjectileDeath : public GameObject
+class ProjectileDeath final : public GameObject
 {
 public:
     explicit ProjectileDeath(const Point2f& pos, bool flipped, GameController* pGameController);

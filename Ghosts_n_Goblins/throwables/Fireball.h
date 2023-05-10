@@ -2,7 +2,7 @@
 #include "IThrowable.h"
 #include "game/GameObject.h"
 
-class Fireball : public GameObject, public IThrowable
+class Fireball final : public GameObject, public IThrowable
 {
 public:
     explicit Fireball(Game::Label label, const Point2f& pos, GameController* pGameController);

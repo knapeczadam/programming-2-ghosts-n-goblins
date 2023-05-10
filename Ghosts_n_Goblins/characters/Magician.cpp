@@ -1,9 +1,11 @@
 ﻿#include "pch.h"
 #include "Magician.h"
-#include "engine/SoundManager.h"
+
 #include "Player.h"
+#include "engine/SoundManager.h"
 #include "fx/FXManager.h"
 #include "game/GameController.h"
+#include "game/PlayerManager.h"
 
 Magician::Magician(const Point2f& pos, GameController* pGameController)
     : IEnemy{Game::Label::C_MAGICIAN, pos, pGameController}
@@ -31,7 +33,7 @@ void Magician::HandleCollision(GameObject* other)
     {
         m_Active = false;
         m_Visible = false;
-        m_pGameController->m_pPlayer->AddScore(m_Score);
+        m_pGameController->m_pPlayerManager->GetPlayer()->AddScore(m_Score);
         m_pGameController->m_pFXManager->PlayEffect(Game::Label::F_PROJECTILE_DEATH, GetContactPoint(other), other->IsFlipped());
         m_pGameController->m_pFXManager->PlayEffect(Game::Label::F_SCORE, GetContactPoint(other), false, this);
         m_pGameController->m_pSoundManager->PlayEffect(Game::Label::E_ENEMY_DEATH);

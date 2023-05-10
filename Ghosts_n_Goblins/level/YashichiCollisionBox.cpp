@@ -1,8 +1,10 @@
 ﻿#include "pch.h"
 #include "YashichiCollisionBox.h"
-#include "game/GameController.h"
+
 #include "characters/Player.h"
 #include "collectibles/Pot.h"
+#include "game/CollectibleManager.h"
+#include "game/GameController.h"
 
 YashichiCollisionBox::YashichiCollisionBox(const Rectf& shape, GameController* pGameController)
     : CollisionBox(Game::Label::L_YASHICHI, shape, pGameController)
@@ -14,10 +16,10 @@ void YashichiCollisionBox::HandleCollision(GameObject* other)
 {
     if (not IsOverlapping(other)) return;
     Player* pPlayer{ static_cast<Player*>(other) };
-    if (pPlayer->GetState() == Player::State::jumping_standing)
+    if (pPlayer->GetState() == Player::State::JUMPING_STANDING)
     {
         m_Active = false;
-        for (GameObject* pCollectible : m_pGameController->m_Collectibles)
+        for (GameObject* pCollectible : m_pGameController->m_pCollectibleManager->GetCollectibles())
         {
             if (pCollectible->GetLabel() == Game::Label::O_POT)
             {

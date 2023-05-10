@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include "game/GameObject.h"
 
-class KillZone : public GameObject
+class KillZone final : public GameObject
 {
 public:
     explicit KillZone(float width, float height);

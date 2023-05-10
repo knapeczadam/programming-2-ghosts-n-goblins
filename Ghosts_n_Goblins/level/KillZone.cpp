@@ -1,6 +1,5 @@
 ﻿#include "pch.h"
 #include "KillZone.h"
-#include <iostream>
 
 #include "characters/Player.h"
 

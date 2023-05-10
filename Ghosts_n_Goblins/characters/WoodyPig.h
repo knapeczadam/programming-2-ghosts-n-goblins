@@ -9,7 +9,7 @@
  * They only take one hit to destroy, are worth 100 points, and can carry a pot, but their motion can be hard to predict.
  * Be especially careful when they are just above the height of your head.
  */
-class WoodyPig : public IEnemy
+class WoodyPig final : public IEnemy
 {
 public:
     explicit WoodyPig(const Point2f& pos, GameController* pGameController);

@@ -1,16 +1,14 @@
 ﻿#include "pch.h"
 #include "InitialSaver.h"
 
+#include "InitialDrawer.h"
+#include "ScoreManager.h"
+#include "characters/Player.h"
 #include "engine/Sprite.h"
 #include "engine/SpriteFactory.h"
 #include "game/GameController.h"
 #include "game/InputManager.h"
-
-#include <iostream>
-
-#include "InitialDrawer.h"
-#include "characters/Player.h"
-#include "ScoreManager.h"
+#include "game/PlayerManager.h"
 
 InitialSaver::InitialSaver(GameController* pGameController)
     : UI{Game::Label::U_MENU, pGameController}
@@ -86,7 +84,7 @@ void InitialSaver::OnEnter()
 
 void InitialSaver::SaveInitial()
 {
-    m_pGameController->m_pScoreManager->SetScore(m_Initial, m_pGameController->m_pPlayer->GetScore());
+    m_pGameController->m_pScoreManager->SetScore(m_Initial, m_pGameController->m_pPlayerManager->GetPlayer()->GetScore());
     m_pGameController->m_pScoreManager->SaveHighScores();
 }
 

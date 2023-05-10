@@ -1,5 +1,6 @@
 ﻿#include "pch.h"
 #include "Ladder.h"
+
 #include "characters/Player.h"
 
 Ladder::Ladder(const Rectf& shape)
@@ -10,7 +11,6 @@ Ladder::Ladder(const Rectf& shape)
 
 void Ladder::HandleCollision(GameObject* other)
 {
-    Player* pPlayer{dynamic_cast<Player*>(other)};
     const float epsilon{1.0f};
 
     // LEFT

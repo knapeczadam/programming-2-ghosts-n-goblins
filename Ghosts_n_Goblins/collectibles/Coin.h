@@ -2,7 +2,7 @@
 #include "ICollectible.h"
 #include "game/GameObject.h"
 
-class Coin : public GameObject, public ICollectible
+class Coin final : public GameObject, public ICollectible
 {
 public:
     explicit Coin(const Point2f& pos, GameController* pGameController);

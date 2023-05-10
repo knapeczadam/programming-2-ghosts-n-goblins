@@ -1,10 +1,10 @@
 ﻿#pragma once
 #include "game/GameObject.h"
 
-class Score : public GameObject
+class Score final : public GameObject
 {
 public:
-    Score(const Point2f& pos, int score, GameController* pGameController);
+    explicit Score(const Point2f& pos, int score, GameController* pGameController);
     virtual ~Score() override = default;
     Score(const Score& other) = delete;
     Score(Score&& other) noexcept = delete;

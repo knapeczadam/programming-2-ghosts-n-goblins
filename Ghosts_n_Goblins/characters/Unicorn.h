@@ -13,7 +13,7 @@
  * Unicorns occupy some parts of Stage 6 as well, but not as bosses.
  * In the Famicom/NES-based versions of the game, Unicorns are invulnerable to the Shield/Cross.
  */
-class Unicorn : public IEnemy
+class Unicorn final : public IEnemy
 {
 public:
     explicit Unicorn(const Point2f& pos, GameController* pGameController);

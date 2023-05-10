@@ -8,7 +8,7 @@
  * If Arthur is hit by this spell, he will be transformed into a Frog, and be defenseless for a number of seconds, before transforming back into a human.
  * He can be destroyed with one hit, and he is worth 2000 points, but it's best to avoid seeing him all together.
 */
-class Magician : public IEnemy
+class Magician final : public IEnemy
 {
 public:
     explicit Magician(const Point2f& pos, GameController* pGameController);

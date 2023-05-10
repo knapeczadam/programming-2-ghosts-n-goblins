@@ -1,16 +1,17 @@
 ﻿#include "pch.h"
 #include "SpriteFactory.h"
 
-#include <iostream>
-#include <engine/Sprite.h>
-
 #include "TextureManager.h"
+#include <engine/Sprite.h>
 #include "game/GameController.h"
+
+#include <iostream>
 
 SpriteFactory::SpriteFactory(GameController* pGameController)
     : m_pGameController{pGameController}
       , m_pSprites{}
 {
+    pGameController->m_pSpriteFactory = this;
 }
 
 SpriteFactory::~SpriteFactory()

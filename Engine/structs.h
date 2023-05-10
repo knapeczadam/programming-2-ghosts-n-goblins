@@ -1,4 +1,6 @@
 #pragma once
+#include <iomanip>
+#include <sstream>
 #include <string>
 
 struct Window
@@ -21,6 +23,15 @@ struct Point2f
 	float y;
 };
 
+inline std::ostream& operator<< ( std::ostream& lhs, const Point2f& rhs )
+{
+	std::stringstream buffer;
+	buffer << std::fixed;
+	buffer << std::setprecision( 2 );
+	buffer << "Point2f(" <<  rhs.x  << ", " <<  rhs.y << ")";
+	lhs << buffer.str();
+	return lhs;
+}
 
 
 struct Rectf
@@ -35,6 +46,15 @@ struct Rectf
 
 };
 
+inline std::ostream& operator<< ( std::ostream& lhs, const Rectf& rhs )
+{
+	std::stringstream buffer;
+	buffer << std::fixed;
+	buffer << std::setprecision( 2 );
+	buffer << "Rectf(" <<  rhs.left  << ", " <<  rhs.bottom  << ", " << rhs.width << ", " << rhs.height << ")";
+	lhs << buffer.str();
+	return lhs;
+}
 
 struct Color4f
 {

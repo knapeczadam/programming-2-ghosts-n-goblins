@@ -1,13 +1,12 @@
 // Knapecz, Adam - 1DAE11
 #include "pch.h"
 #include "Platform.h"
+
 #include "Texture.h"
 #include "utils.h"
-#include "engine/Sprite.h"
 #include "characters/Player.h"
 #include "engine/SoundManager.h"
-
-#include <iostream>
+#include "engine/Sprite.h"
 
 Platform::Platform(const Point2f& pos,GameController* pGameController)
     : GameObject{Game::Label::L_PLATFORM, pos, true, pGameController}

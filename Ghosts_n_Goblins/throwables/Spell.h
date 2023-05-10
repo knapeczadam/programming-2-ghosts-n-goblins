@@ -2,7 +2,7 @@
 #include "IThrowable.h"
 #include "game/GameObject.h"
 
-class Spell : public GameObject, public IThrowable
+class Spell final : public GameObject, public IThrowable
 {
 public:
     explicit Spell(const Point2f& pos, GameController* pGameController);

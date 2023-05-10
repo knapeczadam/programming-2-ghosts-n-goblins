@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include "game/GameObject.h"
 
-class Water : public GameObject
+class Water final : public GameObject
 {
 public:
     explicit Water(const Point2f& pos, GameController* pGameController);

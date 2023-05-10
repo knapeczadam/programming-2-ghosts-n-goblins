@@ -1,9 +1,11 @@
 ﻿#include "pch.h"
 #include "WoodyPig.h"
-#include "engine/SoundManager.h"
+
 #include "Player.h"
-#include "game/GameController.h"
+#include "engine/SoundManager.h"
 #include "fx/FXManager.h"
+#include "game/GameController.h"
+#include "game/PlayerManager.h"
 
 WoodyPig::WoodyPig(const Point2f& pos, GameController* pGameController)
     : IEnemy{Game::Label::C_WOODY_PIG, pos, pGameController}
@@ -32,7 +34,7 @@ void WoodyPig::HandleCollision(GameObject* other)
     {
         m_Active = false;
         m_Visible = false;
-        m_pGameController->m_pPlayer->AddScore(m_Score);
+        m_pGameController->m_pPlayerManager->GetPlayer()->AddScore(m_Score);
         m_pGameController->m_pFXManager->PlayEffect(Game::Label::F_FIRE_ENEMY, GetCollisionBoxCenter(), other->IsFlipped());
         m_pGameController->m_pSoundManager->PlayEffect(Game::Label::E_ENEMY_DEATH);
     }

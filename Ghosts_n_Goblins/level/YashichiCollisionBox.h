@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include "CollisionBox.h"
 
-class YashichiCollisionBox : public CollisionBox
+class YashichiCollisionBox final : public CollisionBox
 {
 public:
     explicit YashichiCollisionBox(const Rectf& shape, GameController* pGameController);

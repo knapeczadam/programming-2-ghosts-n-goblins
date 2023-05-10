@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include "game/GameObject.h"
 
-class Tombstone : public GameObject
+class Tombstone final : public GameObject
 {
 public:
     explicit Tombstone(const Rectf& shape, GameController* pGameController);

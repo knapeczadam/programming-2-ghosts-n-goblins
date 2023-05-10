@@ -2,6 +2,7 @@
 #include <map>
 
 #include "Game.h"
+#include "IManager.h"
 
 struct KeyState
 {
@@ -20,11 +21,11 @@ struct KeyState
     bool m_JumpKeyTriggered{false};
 };
 
-class InputManager final
+class InputManager final : public IManager
 {
 public:
-    explicit InputManager();
-    ~InputManager() = default;
+    explicit InputManager(GameController* pGameController);
+    virtual ~InputManager() override = default;
     InputManager(const InputManager& other) = delete;
     InputManager(InputManager&& other) noexcept = delete;
     InputManager& operator=(const InputManager& other) = delete;
@@ -37,10 +38,17 @@ public:
 
     void ProcessKeyDownEvent(const SDL_KeyboardEvent& e);
     void ProcessKeyUpEvent(const SDL_KeyboardEvent& e);
+
+    std::string ToString(Game::Label control) const;
+    
+protected:
+    virtual void Initialize() override;
     
 private:
     void InitControls();
+    void InitScancodeToString();
 private:
     std::map<Game::Label, std::vector<SDL_Scancode>> m_Controls;
     std::map<Game::Label, std::pair<bool, bool>> m_Keys; // first = pressed, second = triggered
+    std::map<SDL_Scancode, std::string> m_ScancodeToString;
 };

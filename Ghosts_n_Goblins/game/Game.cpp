@@ -1,151 +1,62 @@
 // Knapecz, Adam - 1DAE11
 #include "pch.h"
 #include "Game.h"
+
+#include "BootManager.h"
 #include "Camera.h"
+#include "CollectibleManager.h"
+#include "EnemyManager.h"
 #include "InputManager.h"
-#include "ui/ScoreManager.h"
+#include "LevelManager.h"
+#include "PlayerManager.h"
 #include "Texture.h"
-#include "utils.h"
-#include "characters/Crow.h"
-#include "characters/FlyingKnight.h"
-#include "characters/GreenMonster.h"
+#include "UIManager.h"
 #include "characters/IEnemy.h"
-#include "characters/Magician.h"
 #include "characters/Player.h"
-#include "characters/RedArremer.h"
-#include "characters/Unicorn.h"
-#include "characters/WoodyPig.h"
 #include "characters/Zombie.h"
-#include "collectibles/Armor.h"
-#include "collectibles/Coin.h"
-#include "collectibles/MoneyBag.h"
-#include "collectibles/Necklace.h"
-#include "collectibles/Pot.h"
-#include "collectibles/Yashichi.h"
 #include "engine/Clock.h"
-#include "engine/json.hpp"
 #include "engine/SoundManager.h"
-#include "engine/Sprite.h"
 #include "engine/SpriteFactory.h"
 #include "engine/TextureManager.h"
+#include "engine/json.hpp"
 #include "fx/FXManager.h"
 #include "game/GameController.h"
 #include "game/Macros.h"
-#include "level/ArmorCollisionBox.h"
-#include "level/FlyingKnightSpawner.h"
-#include "level/KillZone.h"
-#include "level/Ladder.h"
 #include "level/Level.h"
-#include "level/Platform.h"
-#include "level/Tombstone.h"
-#include "level/Water.h"
-#include "level/WoodyPigSpawner.h"
-#include "level/YashichiCollisionBox.h"
-#include "level/ZombieSpawner.h"
+#include "ui/CreditManager.h"
 #include "ui/HUD.h"
-#include "ui/InitialSaver.h"
-#include "ui/Map.h"
+#include "ui/ScoreManager.h"
+#include "utils.h"
 
 #include <fstream>
 #include <iostream>
 #include <ranges>
 
-#include "ui/CreditManager.h"
-#include "ui/RankingDrawer.h"
-#include "ui/InitialDrawer.h"
-
 
 Game::Game(const Window& window)
     : BaseGame{window}
-      , m_Enemies{}
-      , m_PlayerThrowables{}
-      , m_EnemyThrowables{}
-      , m_Waters{}
-      , m_Tombstones{}
-      , m_Collectibles{}
-      , m_Ladders{}
-      , m_Effects{}
-      , m_Zombies{}
-      , m_FlyingKnights{}
-      , m_WoodyPigs{}
-      , m_CollisionBoxes{}
-      , m_pSpriteFactory{nullptr}
-      , m_pTextureManager{nullptr}
-      , m_pSoundManager{nullptr}
-      , m_pPlayer{nullptr}
-      , m_pForeground{nullptr}
-      , m_pLevel{nullptr}
-      , m_pKillZone{nullptr}
-      , m_pPlatform{nullptr}
-      , m_pCamera{nullptr}
-      , m_pHUD{nullptr}
-      , m_pGameController{nullptr}
-      , m_pFXManager{nullptr}
-      , m_pFlyingKnightSpawner{nullptr}
-      , m_pWoodyPigSpawner{nullptr}
-      , m_pZombieSpawner{nullptr}
-      , m_pInitialSaver{nullptr}
-      , m_pInputManager{nullptr}
-      , m_pScoreManager{nullptr}
-      , m_pInitialDrawer{nullptr}
-      , m_pRankingDrawer{nullptr}
-      , m_pCreditManager{nullptr}
-      , m_pMap{nullptr}
-#if TEST_OBJECT
-      , m_pTestObject{nullptr}
-#endif
       , m_Data{nullptr}
       , m_DataPath{"data.json"}
       , m_Labels{}
-      , m_BootIntervals{}
-      , m_CurrBoot{Label::B_01}
-      , m_Boot{false}
+      , m_State{State::BOOT}
+      , m_pBootManager{nullptr}
+      , m_pCamera{nullptr}
+      , m_pCollectibleManager{nullptr}
+      , m_pEnemyManager{nullptr}
+      , m_pFXManager{nullptr}
+      , m_pGameController{nullptr}
+      , m_pInputManager{nullptr}
+      , m_pLevelManager{nullptr}
+      , m_pPlayerManager{nullptr}
+      , m_pSoundManager{nullptr}
+      , m_pSpriteFactory{nullptr}
+      , m_pTextureManager{nullptr}
+      , m_pUIManager{nullptr}
+#if TEST_OBJECT
+      , m_pTestObject{nullptr}
+#endif
 {
     Initialize();
-}
-
-Game::~Game()
-{
-    Cleanup();
-}
-
-void Game::Cleanup()
-{
-    auto deleteGameObject = [](const GameObject* pGameObject) { delete pGameObject; };
-
-    std::ranges::for_each(m_Effects, deleteGameObject);
-    delete m_pZombieSpawner;
-    delete m_pWoodyPigSpawner;
-    delete m_pFlyingKnightSpawner;
-    std::ranges::for_each(m_EnemyThrowables, deleteGameObject);
-    std::ranges::for_each(m_Enemies, deleteGameObject);
-    delete m_pInitialSaver;
-    delete m_pHUD;
-    delete m_pCamera;
-    std::ranges::for_each(m_PlayerThrowables, deleteGameObject);
-    delete m_pPlayer;
-    std::ranges::for_each(m_Collectibles, deleteGameObject);
-    std::ranges::for_each(m_CollisionBoxes, deleteGameObject);
-    std::ranges::for_each(m_Waters, deleteGameObject);
-    std::ranges::for_each(m_Tombstones, deleteGameObject);
-    std::ranges::for_each(m_Ladders, deleteGameObject);
-    delete m_pLevel;
-    delete m_pKillZone;
-    delete m_pForeground;
-    delete m_pPlatform;
-    delete m_pFXManager;
-    delete m_pSoundManager;
-    delete m_pSpriteFactory;
-    delete m_pTextureManager;
-    delete m_pInputManager;
-    delete m_pScoreManager;
-    delete m_pMap;
-    delete m_pInitialDrawer;
-    delete m_pGameController;
-
-#if TEST_OBJECT
-    delete m_pTestObject;
-#endif
 }
 
 void Game::Initialize()
@@ -153,70 +64,51 @@ void Game::Initialize()
     InitLabels();
     // Loading data from JSON
     LoadData();
-    InitBootIntervals();
 
     // GAME CONTROLLER
-    m_pGameController = new GameController{
-        m_Labels,
-        m_Data,
-        GetViewPort(),
-        m_PlayerThrowables,
-        m_EnemyThrowables,
-        m_Effects,
-        m_Zombies,
-        m_FlyingKnights,
-        m_WoodyPigs,
-        m_Collectibles
-    };
+    m_pGameController = new GameController{m_Labels, m_Data, GetViewPort()};
 
     // Order of initialization is important
     // 1. TEXTURE MANAGER
     // 2. SPRITE FACTORY
-    m_pTextureManager = new TextureManager{m_pGameController};
-    m_pGameController->m_pTextureManager = m_pTextureManager;
-
     m_pSpriteFactory = new SpriteFactory{m_pGameController};
-    m_pGameController->m_pSpriteFactory = m_pSpriteFactory;
+    m_pTextureManager = new TextureManager{m_pGameController};
 
-    // SOUND
     m_pSoundManager = new SoundManager{m_pGameController};
-    m_pGameController->m_pSoundManager = m_pSoundManager;
-    m_pSoundManager->PlayStream(Label::S_08_BOSS, false);
-
-    // FX
     m_pFXManager = new FXManager{m_pGameController};
-    m_pGameController->m_pFXManager = m_pFXManager;
-
-    // INPUT
-    m_pInputManager = new InputManager{};
-    m_pGameController->m_pInputManager = m_pInputManager;
-
-    // LEVEL
-    InitLevel();
-
-    // COLLECTIBLES
-    InitCollectibles();
-
-    // PLAYER
-    m_pPlayer = new Player{Player::GetSpawnPos(), m_pGameController};
-    m_pGameController->m_pPlayer = m_pPlayer;
-
-    // UI 
-    InitUI();
+    m_pInputManager = new InputManager{m_pGameController};
+    m_pBootManager = new BootManager{m_pGameController};
+    m_pCollectibleManager = new CollectibleManager{m_pGameController};
+    m_pEnemyManager = new EnemyManager{m_pGameController};
+    m_pLevelManager = new LevelManager{m_pGameController};
+    m_pPlayerManager = new PlayerManager{m_pGameController};
+    m_pUIManager = new UIManager{m_pGameController};
 
     // CAMERA - has to be after level and player initialization
     InitCamera();
-
-
-    // ENEMIES
-    InitEnemies();
-
-    // SPAWNERS
-    InitSpawners();
-
-
 #if TEST_OBJECT
     m_pTestObject = new Zombie{Point2f{200.f, 62.f}, m_pGameController};
+#endif
+}
+
+Game::~Game()
+{
+    delete m_pCamera;
+
+    delete m_pUIManager;
+    delete m_pPlayerManager;
+    delete m_pLevelManager;
+    delete m_pEnemyManager;
+    delete m_pCollectibleManager;
+    delete m_pBootManager;
+    delete m_pInputManager;
+    delete m_pFXManager;
+    delete m_pSoundManager;
+    delete m_pTextureManager;
+    delete m_pSpriteFactory;
+    delete m_pGameController;
+#if TEST_OBJECT
+    delete m_pTestObject;
 #endif
 }
 
@@ -315,7 +207,7 @@ void Game::InitLabels()
     m_Labels["u_text_game_over"] = Label::U_TEXT_GAME_OVER;
     m_Labels["u_text_initial"] = Label::U_TEXT_INITIAL;
     m_Labels["u_text_player_one_ready"] = Label::U_TEXT_PLAYER_ONE_READY;
-    m_Labels["u_title"] = Label::U_TITLE;
+    m_Labels["u_text_title"] = Label::U_TEXT_TITLE;
     m_Labels["u_weapons"] = Label::U_WEAPONS;
 
     // --- SOUNDS ---
@@ -386,315 +278,36 @@ void Game::LoadData()
 void Game::InitCamera()
 {
     m_pCamera = new Camera{m_pGameController};
-    m_pCamera->SetBoundaries(m_pLevel->GetBoundaries());
+    m_pCamera->SetBoundaries(m_pLevelManager->GetLevel()->GetBoundaries());
 }
 
-void Game::InitBootIntervals()
+
+void Game::UpdateState()
 {
-    m_BootIntervals.push({Label::B_01, 1.16f});
-    m_BootIntervals.push({Label::B_BLACK, 0.192f});
-    m_BootIntervals.push({Label::B_02, 0.09613f});
-    m_BootIntervals.push({Label::B_BLACK, 0.0961f});
-    m_BootIntervals.push({Label::B_03, 0.08f});
-    m_BootIntervals.push({Label::B_BLACK, 0.064f});
-    m_BootIntervals.push({Label::B_04, 0.0961f});
-    m_BootIntervals.push({Label::B_BLACK, 0.08f});
-    m_BootIntervals.push({Label::B_05, 0.016f});
-    m_BootIntervals.push({Label::B_06, 0.064f});
-    m_BootIntervals.push({Label::B_BLACK, 0.08f});
-    m_BootIntervals.push({Label::B_07, 0.07956f});
-    m_BootIntervals.push({Label::B_BLACK, 0.38445f});
-    m_BootIntervals.push({Label::B_08, 0.03201f});
-    m_BootIntervals.push({Label::B_09, 0.01f});
-    m_BootIntervals.push({Label::B_10, 0.016f});
-    m_BootIntervals.push({Label::B_11, 0.016f});
-    m_BootIntervals.push({Label::B_12, 0.016f});
-    m_BootIntervals.push({Label::B_13, 0.016f});
-    m_BootIntervals.push({Label::B_14, 0.016f});
-    m_BootIntervals.push({Label::B_15, 0.032f});
-    m_BootIntervals.push({Label::B_BLACK, 0.016f});
-    m_BootIntervals.push({Label::B_09, 0.016f});
-    m_BootIntervals.push({Label::B_BLACK, 0.16f});
-    m_BootIntervals.push({Label::B_16, 0.096f});
-    m_BootIntervals.push({Label::B_17, 0.14401f});
-    m_BootIntervals.push({Label::B_18, 1.016f});
-    m_BootIntervals.push({Label::B_19, 0.048f});
-    m_BootIntervals.push({Label::B_20, 0.032f}); // edit
-    m_BootIntervals.push({Label::B_21, 3.0f}); // blue
-    m_BootIntervals.push({Label::B_22, 0.016f}); // blue
-    m_BootIntervals.push({Label::B_23, 4.016f}); // blue
-    m_BootIntervals.push({Label::B_24, 5.0f}); // best ranking
-    m_BootIntervals.push({Label::B_25, 0.033f});
-    m_BootIntervals.push({Label::B_END, 0.0f});
-}
-
-void Game::InitLevel()
-{
-    m_pPlatform = new Platform{Point2f{3295.0f, 28.0f}, m_pGameController};
-    m_pGameController->m_pPlatform = m_pPlatform;
-    m_pForeground = new GameObject{Label::L_FOREGROUND, m_pGameController};
-    m_pKillZone = new KillZone{m_pTextureManager->GetTexture(Label::L_LEVEL)->GetWidth(), 10.0f};
-    m_pLevel = new Level{m_pGameController};
-    m_pGameController->m_pLevel = m_pLevel;
-
-    InitLadders();
-    InitTombstones();
-    InitWaters();
-    InitCollisionBoxes();
-}
-
-void Game::InitLadders()
-{
-    m_Ladders.insert(m_Ladders.end(), {
-                         new Ladder{Rectf{1424.0f, 62.0f, 32.0f, 158.0f}},
-                         new Ladder{Rectf{1808.0f, 62.0f, 32.0f, 158.0f}},
-                         new Ladder{Rectf{2128.0f, 62.0f, 32.0f, 158.0f}},
-                     });
-}
-
-void Game::InitTombstones()
-{
-    // BOTTOM
-    m_Tombstones.insert(m_Tombstones.end(), {
-                            new Tombstone{Rectf{83.0f, 66.0f, 30.0f, 30.0f}, m_pGameController},
-                            new Tombstone{Rectf{499.0f, 66.0f, 30.0f, 30.0f}, m_pGameController},
-                            new Tombstone{Rectf{817.0f, 66.0f, 30.0f, 30.0f}, m_pGameController},
-                            new Tombstone{Rectf{1044.0f, 66.0f, 30.0f, 30.0f}, m_pGameController},
-                            new Tombstone{Rectf{1490.0f, 66.0f, 30.0f, 30.0f}, m_pGameController},
-                            new Tombstone{Rectf{1903.0f, 66.0f, 30.0f, 30.0f}, m_pGameController},
-                            new Tombstone{Rectf{2191.0f, 66.0f, 30.0f, 30.0f}, m_pGameController},
-                            new Tombstone{Rectf{2516.0f, 66.0f, 30.0f, 30.0f}, m_pGameController},
-                            new Tombstone{Rectf{3028.0f, 66.0f, 30.0f, 30.0f}, m_pGameController},
-
-                        });
-
-    // TOP
-    m_Tombstones.insert(m_Tombstones.end(), {
-                            new Tombstone{Rectf{1519.0f, 221.0f, 30.0f, 30.0f}, m_pGameController},
-                            new Tombstone{Rectf{1716.0f, 221.0f, 30.0f, 30.0f}, m_pGameController},
-                            new Tombstone{Rectf{1909.0f, 221.0f, 30.0f, 30.0f}, m_pGameController},
-                        });
-}
-
-void Game::InitWaters()
-{
-    m_Waters.insert(m_Waters.end(), {
-                        new Water{Point2f{3295.0f, 0.0f}, m_pGameController},
-                        new Water{Point2f{3903.0f, 0.0f}, 64.0f, m_pGameController},
-                        new Water{Point2f{4031.0f, 0.0f}, 64.0f, m_pGameController},
-                        new Water{Point2f{4927.0f, 0.0f}, 64.0f, m_pGameController},
-                        new Water{Point2f{5566.0f, 0.0f}, 64.0f, m_pGameController},
-                    });
-}
-
-void Game::InitCollisionBoxes()
-{
-    m_CollisionBoxes.insert(m_CollisionBoxes.end(), {
-                                new ArmorCollisionBox{Rectf{2868.0f, 140.0f, 30.0f, 30.0f}, m_pGameController},
-                                new YashichiCollisionBox{Rectf{5924.0f, 140.0f, 24.0f, 24.0f}, m_pGameController},
-                            });
-}
-
-void Game::InitCollectibles()
-{
-    InitCoins();
-    InitMoneyBags();
-    InitArmor();
-    InitNecklace();
-    InitYashichi();
-    InitPot();
-    m_pGameController->m_Collectibles = m_Collectibles;
-}
-
-void Game::InitCoins()
-{
-    m_Collectibles.insert(m_Collectibles.end(), {
-                              new Coin{Point2f{720.0f, 62.0f}, m_pGameController},
-                              new Coin{Point2f{6190.0f, 72.0f}, m_pGameController},
-                              new Coin{Point2f{1232.0f, 223.0f}, m_pGameController},
-                              new Coin{Point2f{1616.0f, 223.0f}, m_pGameController},
-                              new Coin{Point2f{2158.0f, 223.0f}, m_pGameController}
-                          });
-}
-
-void Game::InitMoneyBags()
-{
-    m_Collectibles.insert(m_Collectibles.end(), {
-                              new MoneyBag{Point2f{2799.0f, 63.0f}, m_pGameController},
-                              new MoneyBag{Point2f{4814.0f, 63.0f}, m_pGameController}
-                          });
-}
-
-void Game::InitArmor()
-{
-    GameObject* pArmor = new Armor{Point2f{0.0f, 0.0f}, m_pGameController};
-    pArmor->SetActive(false);
-    pArmor->SetVisible(false);
-    m_Collectibles.push_back(pArmor);
-}
-
-void Game::InitNecklace()
-{
-    GameObject* pNecklace = new Necklace{Point2f{0.0f, 0.0f}, m_pGameController};
-    pNecklace->SetActive(false);
-    pNecklace->SetVisible(false);
-    m_Collectibles.push_back(pNecklace);
-}
-
-void Game::InitYashichi()
-{
-    GameObject* pYashichi = new Yashichi{Point2f{0.0f, 0.0f}, m_pGameController};
-    pYashichi->SetActive(false);
-    pYashichi->SetVisible(false);
-    m_Collectibles.push_back(pYashichi);
-}
-
-void Game::InitPot()
-{
-    GameObject* pPot = new Pot{Point2f{0.0f, 0.0f}, m_pGameController};
-    pPot->SetActive(false);
-    pPot->SetVisible(false);
-    m_Collectibles.push_back(pPot);
-}
-
-void Game::InitEnemies()
-{
-    InitCrows();
-    InitFlyingKnights();
-    InitGreenMonsters();
-    InitMagician();
-    InitRedArremer();
-    InitUnicorn();
-    InitWoodyPigs();
-    InitZombies();
-}
-
-void Game::InitUnicorn()
-{
-    m_Enemies.push_back(new Unicorn{Point2f{6903.0f, 62.0f}, m_pGameController});
-}
-
-void Game::InitCrows()
-{
-    m_Enemies.insert(m_Enemies.end(), {
-                         new Crow{Point2f{1505.0f, 100.0f}, m_pGameController},
-                         new Crow{Point2f{2210.0f, 100.0f}, m_pGameController},
-                         new Crow{Point2f{2526.0f, 100.0f}, m_pGameController},
-                         new Crow{Point2f{3035.0f, 102.0f}, m_pGameController},
-                         new Crow{Point2f{1724.0f, 262.0f}, m_pGameController},
-                     });
-}
-
-void Game::InitFlyingKnights()
-{
-    FlyingKnight* pFlyingKnight1{new FlyingKnight{Point2f{500.0f, 100.0f}, m_pGameController}};
-    FlyingKnight* pFlyingKnight2{new FlyingKnight{Point2f{500.0f, 100.0f}, m_pGameController}};
-    FlyingKnight* pFlyingKnight3{new FlyingKnight{Point2f{500.0f, 100.0f}, m_pGameController}};
-
-    pFlyingKnight1->SetActive(false);
-    pFlyingKnight2->SetActive(false);
-    pFlyingKnight3->SetActive(false);
-
-    pFlyingKnight1->SetVisible(false);
-    pFlyingKnight2->SetVisible(false);
-    pFlyingKnight3->SetVisible(false);
-
-    m_Enemies.insert(m_Enemies.end(), {pFlyingKnight1, pFlyingKnight2, pFlyingKnight3,});
-    m_FlyingKnights.insert(m_FlyingKnights.end(), {pFlyingKnight1, pFlyingKnight2, pFlyingKnight3});
-    m_pGameController->m_FlyingKnights = m_FlyingKnights;
-}
-
-void Game::InitGreenMonsters()
-{
-    m_Enemies.insert(m_Enemies.end(), {
-                         new GreenMonster{Point2f{4622.0f, 54.0f}, m_pGameController},
-                         new GreenMonster{Point2f{6190.0f, 54.0f}, m_pGameController},
-                         new GreenMonster{Point2f{1615.0f, 213.0f}, m_pGameController},
-                         new GreenMonster{Point2f{2191.0f, 213.0f}, m_pGameController},
-                     });
-}
-
-void Game::InitMagician()
-{
-    Magician* pMagician{new Magician{Point2f{600.0f, 62.0f}, m_pGameController}};
-    m_Enemies.push_back(pMagician);
-    m_pGameController->m_pMagician = pMagician;
-}
-
-void Game::InitRedArremer()
-{
-    m_Enemies.push_back(new RedArremer{Point2f{2929.0f, 65.0f}, m_pGameController});
-}
-
-void Game::InitWoodyPigs()
-{
-    WoodyPig* pWoodyPig1{new WoodyPig{Point2f{1000.0f, 200.0f}, m_pGameController}};
-    WoodyPig* pWoodyPig2{new WoodyPig{Point2f{1000.0f, 200.0f}, m_pGameController}};
-    WoodyPig* pWoodyPig3{new WoodyPig{Point2f{1000.0f, 200.0f}, m_pGameController}};
-
-    pWoodyPig1->SetActive(false);
-    pWoodyPig2->SetActive(false);
-    pWoodyPig3->SetActive(false);
-
-    pWoodyPig1->SetVisible(false);
-    pWoodyPig2->SetVisible(false);
-    pWoodyPig3->SetVisible(false);
-
-    m_Enemies.insert(m_Enemies.end(), {pWoodyPig1, pWoodyPig2, pWoodyPig3});
-    m_WoodyPigs.insert(m_WoodyPigs.end(), {pWoodyPig1, pWoodyPig2, pWoodyPig3});
-    m_pGameController->m_WoodyPigs = m_WoodyPigs;
-}
-
-void Game::InitZombies()
-{
-    Zombie* pZombie1{new Zombie{Point2f{1000.0f, 62.0f}, m_pGameController}};
-    Zombie* pZombie2{new Zombie{Point2f{1000.0f, 62.0f}, m_pGameController}};
-    Zombie* pZombie3{new Zombie{Point2f{1000.0f, 62.0f}, m_pGameController}};
-
-    pZombie1->SetActive(false);
-    pZombie2->SetActive(false);
-    pZombie3->SetActive(false);
-
-    pZombie1->SetVisible(false);
-    pZombie2->SetVisible(false);
-    pZombie3->SetVisible(false);
-
-    m_Enemies.insert(m_Enemies.end(), {pZombie1, pZombie2, pZombie3});
-    m_Zombies.insert(m_Zombies.end(), {pZombie1, pZombie2, pZombie3});
-    m_pGameController->m_Zombies = m_Zombies;
-}
-
-void Game::InitSpawners()
-{
-    m_pFlyingKnightSpawner = new FlyingKnightSpawner{Rectf{0.0f, 0.0f, 0.0f, GetViewPort().height}, m_pGameController};
-    m_pWoodyPigSpawner = new WoodyPigSpawner{Rectf{0.0f, 0.0f, 0.0f, GetViewPort().height}, m_pGameController};
-    m_pZombieSpawner = new ZombieSpawner{Rectf{0.0f, 0.0f, 2485.0f, GetViewPort().height}, m_pGameController};
-}
-
-void Game::SpawnEnemies()
-{
-    m_pFlyingKnightSpawner->Spawn();
-    m_pWoodyPigSpawner->Spawn();
-    m_pZombieSpawner->Spawn();
-}
-
-void Game::InitUI()
-{
-    m_pHUD = new HUD{m_pGameController};
-    m_pInitialSaver = new InitialSaver{m_pGameController};
-    m_pMap = new Map{m_pGameController};
-
-    m_pScoreManager = new ScoreManager{m_pGameController};
-    m_pGameController->m_pScoreManager = m_pScoreManager;
-
-    m_pInitialDrawer = new InitialDrawer{m_pGameController};
-    m_pGameController->m_pInitialDrawer = m_pInitialDrawer;
-
-    m_pRankingDrawer = new RankingDrawer{m_pGameController};
-
-    m_pCreditManager = new CreditManager{m_pGameController};
-
-    m_pScoreManager->LoadHighScores();
+    if (m_pBootManager->GetState() == Label::B_END)
+    {
+        m_State = State::GAME;
+    }
+    else if (m_pUIManager->m_pCreditManager->GetCredits() and m_pGameController->m_pInputManager->IsPressed(
+        Label::I_START))
+    {
+        m_State = State::INTRO;
+    }
+    // else if first cutscene is over -> game
+    else if (m_pPlayerManager->GetPlayer()->GetLives() == 0 and m_pPlayerManager->GetPlayer()->GetScore() < m_pUIManager
+        ->m_pScoreManager->GetHighScore())
+    {
+        m_State = State::GAME_OVER;
+    }
+    else if (m_pPlayerManager->GetPlayer()->GetLives() == 0 and m_pPlayerManager->GetPlayer()->GetScore() >=
+        m_pUIManager->m_pScoreManager->GetHighScore())
+    {
+        m_State = State::SAVE_SCORE;
+    }
+    else if (m_pPlayerManager->GetPlayer()->GetLives() and m_pPlayerManager->GetPlayer()->GetHP() == 0)
+    {
+        m_State = State::MAP;
+    }
 }
 
 void Game::ClearBackground() const
@@ -705,135 +318,114 @@ void Game::ClearBackground() const
 
 void Game::Draw() const
 {
-    // static lambda functions
-    static auto draw{[](const GameObject* pGameObject) { pGameObject->Draw(); }};
-    static auto isVisible{[](const GameObject* pGameObject) { return pGameObject->IsVisible(); }};
-
     // CLEAR
     ClearBackground();
 
-    // BOOT
-    if (m_Boot)
+    switch (m_State)
     {
-        DrawBoot();
-        return;
+    case State::BOOT:
+        m_pBootManager->Draw();
+        break;
+    case State::MENU:
+        DrawMenu();
+        break;
+    case State::INTRO:
+        DrawIntro();
+        break;
+    case State::GAME:
+        DrawGame();
+        break;
+    case State::MAP:
+        DrawMap();
+        break;
+    case State::GAME_OVER:
+        DrawGameOver();
+        break;
+    case State::CONTINUE:
+        DrawContinue();
+        break;
+    case State::RANKING:
+        DrawRanking();
+        break;
+    case State::OUTRO:
+        DrawOutro();
+        break;
+    case State::SAVE_SCORE:
+        DrawSaveScore();
+        break;
     }
-
-    glPushMatrix();
-    m_pCamera->Transform(m_pPlayer);
-    m_pLevel->Draw();
-    std::ranges::for_each(m_Enemies | std::views::filter(isVisible), draw);
-    std::ranges::for_each(m_PlayerThrowables | std::views::filter(isVisible), draw);
-    std::ranges::for_each(m_Collectibles | std::views::filter(isVisible), draw);
-    m_pPlayer->Draw();
-    std::ranges::for_each(m_Waters, draw);
-    m_pForeground->Draw();
-    std::ranges::for_each(m_Effects | std::views::filter(isVisible), draw);
-    std::ranges::for_each(m_EnemyThrowables | std::views::filter(isVisible), draw);
-#if TEST_OBJECT
-    if (m_pTestObject->IsVisible()) m_pTestObject->Draw();
-#endif
-#if DEBUG_COLLISION
-    m_pKillZone->Draw();
-    std::ranges::for_each(m_Tombstones, draw);
-    std::ranges::for_each(m_Ladders, draw);
-    std::ranges::for_each(m_CollisionBoxes, draw);
-#endif
-    glPopMatrix();
-
-    // UI
-    // if (m_pHUD->IsVisible()) m_pHUD->Draw();
-    // if (m_pInitialSaver->IsVisible()) m_pInitialSaver->Draw();
-    // if (m_pRankingDrawer->IsVisible()) m_pRankingDrawer->Draw();
-    if (m_pCreditManager->IsVisible()) m_pCreditManager->Draw();
-
-#if DRAW_CENTER_GUIDE
-    utils::SetColor(Color4f{1.0f, 1.0f, 1.0f, 0.5f});
-    utils::DrawLine(Point2f{GetViewPort().width / 2, 0}, Point2f{GetViewPort().width / 2, GetViewPort().height});
-    utils::DrawLine(Point2f{0, GetViewPort().height / 2}, Point2f{GetViewPort().width, GetViewPort().height / 2});
-#endif
 }
 
 void Game::Update(float elapsedSec)
 {
-    // static lambda functions
-    static const auto isActive{[](const GameObject* pGameObject) { return pGameObject->IsActive(); }};
-    static const auto update{[&](GameObject* pGameObject) { pGameObject->Update(elapsedSec); }};
-
     Clock::Update(elapsedSec);
 
-    // BOOT
-    if (m_Boot)
+    switch (m_State)
     {
-        Boot();
-        return;
+    case State::BOOT:
+        UpdateBoot(elapsedSec);
+        break;
+    case State::MENU:
+        UpdateMenu(elapsedSec);
+        break;
+    case State::INTRO:
+        UpdateIntro(elapsedSec);
+        break;
+    case State::GAME:
+        UpdateGame(elapsedSec);
+        break;
+    case State::MAP:
+        UpdateMap(elapsedSec);
+        break;
+    case State::GAME_OVER:
+        UpdateGameOver(elapsedSec);
+        break;
+    case State::CONTINUE:
+        UpdateContinue(elapsedSec);
+        break;
+    case State::RANKING:
+        UpdateRanking(elapsedSec);
+        break;
+    case State::OUTRO:
+        UpdateOutro(elapsedSec);
+        break;
+    case State::SAVE_SCORE:
+        UpdateSaveScore(elapsedSec);
+        break;
     }
 
-    // LEVEL
-    m_pLevel->Update(elapsedSec);
-    std::ranges::for_each(m_Waters, update);
-
-    // PLAYER
-    if (m_pPlayer->IsActive()) m_pPlayer->Update(elapsedSec);
-
-    // EMENIES
-    SpawnEnemies();
-
-    std::ranges::for_each(m_Enemies | std::views::filter(isActive), update);
-
-    // THROWABLES
-    std::ranges::for_each(m_PlayerThrowables | std::views::filter(isActive), update);
-
-    // ENEMY THROWABLES
-    std::ranges::for_each(m_EnemyThrowables | std::views::filter(isActive), update);
-
-    // COLLECTIBLES
-    std::ranges::for_each(m_Collectibles | std::views::filter(isActive), update);
-
-    // EFFECTS
-    std::ranges::for_each(m_Effects | std::views::filter(isActive), update);
-
-    // UI
-    if (m_pHUD->IsActive()) m_pHUD->Update(elapsedSec);
-    if (m_pInitialSaver->IsActive()) m_pInitialSaver->Update(elapsedSec);
-    // if (m_pMap->IsActive()) m_pMap->Update(elapsedSec);
-    if (m_pCreditManager->IsActive()) m_pCreditManager->Update(elapsedSec);
-
-#if TEST_OBJECT
-    if (m_pTestObject->IsActive())m_pTestObject->Update(elapsedSec);
-#endif
-
-    // Do collision
-    DoCollisionTests();
+    UpdateState();
 }
 
 void Game::DoCollisionTests()
 {
+    GameObject* pPlayer{m_pPlayerManager->GetPlayer()};
     static const auto isActive{[](const GameObject* pGameObject) { return pGameObject->IsActive(); }};
-    static const auto playerHandleCollision{[&](GameObject* pGameObject) { m_pPlayer->HandleCollision(pGameObject); }};
-    static const auto objectHandleCollision{[&](GameObject* pGameObject) { pGameObject->HandleCollision(m_pPlayer); }};
+    static const auto playerHandleCollision{[&](GameObject* pGameObject) { pPlayer->HandleCollision(pGameObject); }};
+    static const auto objectHandleCollision{[&](GameObject* pGameObject) { pGameObject->HandleCollision(pPlayer); }};
+
 
     // kill-z continuous collision detection
-    m_pKillZone->HandleCollision(m_pPlayer);
+    m_pLevelManager->GetKillZone()->HandleCollision(pPlayer);
 
-    if (m_pPlayer->IsActive()) m_pLevel->HandleCollision(m_pPlayer);
+    if (pPlayer->IsActive()) m_pLevelManager->GetLevel()->HandleCollision(pPlayer);
 
     // Player on enemies
-    std::ranges::for_each(m_Enemies | std::views::filter(isActive), playerHandleCollision);
-    std::ranges::for_each(m_EnemyThrowables | std::views::filter(isActive), playerHandleCollision);
+    std::ranges::for_each(m_pEnemyManager->GetEnemies() | std::views::filter(isActive), playerHandleCollision);
+    std::ranges::for_each(m_pEnemyManager->GetThrowables() | std::views::filter(isActive), playerHandleCollision);
 
     // Weapons on game enemies and tombstones
-    for (GameObject* weapon : m_PlayerThrowables)
+    for (GameObject* weapon : m_pPlayerManager->GetThrowables())
     {
         if (weapon->IsActive())
         {
             // ENEMIES
-            for (GameObject* enemy : m_Enemies)
+            for (GameObject* enemy : m_pEnemyManager->GetEnemies())
             {
                 if (enemy->IsActive()) enemy->HandleCollision(weapon);
             }
             // TOMBSTONE
-            for (GameObject* pTombstone : m_Tombstones)
+            for (GameObject* pTombstone : m_pLevelManager->GetTombstones())
             {
                 if (weapon->IsActive()) pTombstone->HandleCollision(weapon);
             }
@@ -844,54 +436,40 @@ void Game::DoCollisionTests()
         }
     }
 
-    std::ranges::for_each(m_Collectibles | std::views::filter(isActive), playerHandleCollision);
-    std::ranges::for_each(m_CollisionBoxes | std::views::filter(isActive), objectHandleCollision);
+    std::ranges::for_each(m_pCollectibleManager->GetCollectibles() | std::views::filter(isActive),
+                          playerHandleCollision);
+    std::ranges::for_each(m_pLevelManager->GetCollisionBoxes() | std::views::filter(isActive), objectHandleCollision);
 
-    const bool canClimb{
-        std::ranges::any_of(m_Ladders, [&](const GameObject* pLadder) { return pLadder->IsOverlapping(m_pPlayer); })
-    };
-    m_pPlayer->CanClimb(canClimb);
-    std::ranges::for_each(m_Ladders, objectHandleCollision);
+    // const bool canClimb{
+    //     std::ranges::any_of(m_Ladders, [&](const GameObject* pLadder) { return pLadder->IsOverlapping(pPlayer); })
+    // };
+    // pPlayer->CanClimb(canClimb);
+    // std::ranges::for_each(m_Ladders, objectHandleCollision);
 
 #if TEST_OBJECT
-    if (m_pTestObject->IsActive()) m_pPlayer->HandleCollision(m_pTestObject);
+    if (m_pTestObject->IsActive()) pPlayer->HandleCollision(m_pTestObject);
 #endif
 }
 
 void Game::LateUpdate(float elapsedSec)
 {
-    // static lambda functions
-    static const auto lateUpdate{[&](GameObject* pGameObject) { pGameObject->LateUpdate(elapsedSec); }};
-
-    m_pPlayer->LateUpdate(elapsedSec);
-
-    std::ranges::for_each(m_Waters, lateUpdate);
-    std::ranges::for_each(m_Enemies, lateUpdate);
-    std::ranges::for_each(m_PlayerThrowables, lateUpdate);
-    std::ranges::for_each(m_EnemyThrowables, lateUpdate);
-    std::ranges::for_each(m_Collectibles, lateUpdate);
-    std::ranges::for_each(m_Effects, lateUpdate);
-
-    DoFrustumCulling();
-
-    UpdateRemainingTime();
-
-#if TEST_OBJECT
-    m_pTestObject->LateUpdate(elapsedSec);
-#endif
+    switch (m_State)
+    {
+    case State::GAME:
+        LateUpdateGame(elapsedSec);
+        break;
+    }
 }
 
 void Game::ProcessKeyDownEvent(const SDL_KeyboardEvent& e)
 {
     m_pInputManager->ProcessKeyDownEvent(e);
 
-
     if (m_pInputManager->IsPressed(Label::I_QUIT))
     {
-        Cleanup();
         std::exit(0); // Function is not thread-safe
     }
-    if (m_pInputManager->IsPressed(Label::I_PRINT))
+    if (m_pInputManager->IsPressed(Label::I_INFO))
     {
         PrintInfo();
     }
@@ -914,43 +492,185 @@ void Game::ProcessKeyUpEvent(const SDL_KeyboardEvent& e)
     m_pInputManager->ProcessKeyUpEvent(e);
 }
 
-void Game::ProcessMouseDownEvent(const SDL_MouseButtonEvent& e)
+void Game::DrawGame() const
+{
+    // static lambda functions
+    static auto draw{[](const GameObject* pGameObject) { pGameObject->Draw(); }};
+    static auto isVisible{[](const GameObject* pGameObject) { return pGameObject->IsVisible(); }};
+
+
+    glPushMatrix();
+    m_pCamera->Transform(m_pPlayerManager->GetPlayer());
+    m_pLevelManager->DrawLevel();
+    m_pLevelManager->DrawPlatform();
+    m_pEnemyManager->DrawEnemies();
+    m_pPlayerManager->DrawThrowables();
+    m_pCollectibleManager->Draw();
+    m_pPlayerManager->DrawPlayer();
+    m_pLevelManager->DrawWaters();
+    m_pLevelManager->DrawForeGround();
+    std::ranges::for_each(m_pFXManager->GetEffects() | std::views::filter(isVisible), draw);
+    m_pEnemyManager->DrawThrowables();
+#if TEST_OBJECT
+    if (m_pTestObject->IsVisible()) m_pTestObject->Draw();
+#endif
+#if DEBUG_COLLISION
+    m_pLevelManager->DrawKillZone();
+    m_pLevelManager->DrawTombstones();
+    m_pLevelManager->DrawLadders();
+    m_pLevelManager->DrawCollisionBoxes();
+#endif
+    glPopMatrix();
+
+#if DRAW_CENTER_GUIDE
+    utils::SetColor(Color4f{1.0f, 1.0f, 1.0f, 0.5f});
+    utils::DrawLine(Point2f{GetViewPort().width / 2, 0}, Point2f{GetViewPort().width / 2, GetViewPort().height});
+    utils::DrawLine(Point2f{0, GetViewPort().height / 2}, Point2f{GetViewPort().width, GetViewPort().height / 2});
+#endif
+}
+
+void Game::DrawMenu() const
 {
 }
 
-void Game::DrawBoot() const
+void Game::DrawIntro() const
 {
-    if (m_CurrBoot == Label::B_END) return;
-    m_pSpriteFactory->CreateSprite(m_CurrBoot)->Draw();
 }
 
-void Game::Boot()
+void Game::DrawMap() const
 {
-    StartTimer(m_BootIntervals.front().second);
-    m_CurrBoot = m_BootIntervals.front().first;
-    if (m_CurrBoot == Label::B_END)
+}
+
+void Game::DrawGameOver() const
+{
+}
+
+void Game::DrawContinue() const
+{
+}
+
+void Game::DrawRanking() const
+{
+}
+
+void Game::DrawOutro() const
+{
+}
+
+void Game::DrawSaveScore() const
+{
+}
+
+void Game::DrawDebug() const
+{
+}
+
+void Game::UpdateBoot(float elapsedSec)
+{
+    m_pBootManager->Update(elapsedSec);
+}
+
+void Game::UpdateGame(float elapsedSec)
+{
+    m_pLevelManager->Update(elapsedSec);
+    m_pPlayerManager->Update(elapsedSec);
+    m_pEnemyManager->SpawnEnemies();
+    m_pEnemyManager->Update(elapsedSec);
+    m_pCollectibleManager->Update(elapsedSec);
+    m_pFXManager->Update(elapsedSec);
+    m_pUIManager->m_pHUD->Update(elapsedSec);
+
+#if TEST_OBJECT
+    if (m_pTestObject->IsActive())m_pTestObject->Update(elapsedSec);
+#endif
+
+    DoCollisionTests();
+}
+
+void Game::UpdateMenu(float elapsedSec)
+{
+}
+
+void Game::UpdateIntro(float elapsedSec)
+{
+}
+
+void Game::UpdateMap(float elapsedSec)
+{
+}
+
+void Game::UpdateGameOver(float elapsedSec)
+{
+}
+
+void Game::UpdateContinue(float elapsedSec)
+{
+}
+
+void Game::UpdateRanking(float elapsedSec)
+{
+}
+
+void Game::UpdateOutro(float elapsedSec)
+{
+}
+
+void Game::UpdateSaveScore(float elapsedSec)
+{
+}
+
+void Game::LateUpdateGame(float elapsedSec)
+{
+    switch (m_State)
     {
-        m_Boot = false;
-        return;
+    case State::GAME:
+        m_pPlayerManager->LateUpdate(elapsedSec);
+        m_pEnemyManager->LateUpdate(elapsedSec);
+        m_pCollectibleManager->LateUpdate(elapsedSec);
+        m_pFXManager->LateUpdate(elapsedSec);
+        m_pUIManager->UpdateRemainingTime();
+        DoFrustumCulling();
+        break;
     }
-    if (IsTimerFinished())
-    {
-        m_BootIntervals.pop();
-    }
+#if TEST_OBJECT
+    m_pTestObject->LateUpdate(elapsedSec);
+#endif
 }
 
 // TODO
 void Game::PrintInfo() const
 {
-    std::cout << "Game info:" << std::endl;
+    std::cout << "--- Controls ---" << std::endl;
+    std::cout << " * Insert coin: " << m_pInputManager->ToString(Label::I_SELECT) << std::endl;
+    std::cout << " * Start: " << m_pInputManager->ToString(Label::I_START) << std::endl;
+    std::cout << " * Up: " << m_pInputManager->ToString(Label::I_UP) << std::endl;
+    std::cout << " * Down: " << m_pInputManager->ToString(Label::I_DOWN) << std::endl;
+    std::cout << " * Left: " << m_pInputManager->ToString(Label::I_LEFT) << std::endl;
+    std::cout << " * Right: " << m_pInputManager->ToString(Label::I_RIGHT) << std::endl;
+    std::cout << " * Jump: " << m_pInputManager->ToString(Label::I_JUMP) << std::endl;
+    std::cout << " * Attack: " << m_pInputManager->ToString(Label::I_ATTACK) << std::endl;
+    std::cout << " * Save state: " << m_pInputManager->ToString(Label::I_SAVE) << std::endl;
+    std::cout << " * Load state: " << m_pInputManager->ToString(Label::I_LOAD) << std::endl;
+    std::cout << " * Increase volume: " << m_pInputManager->ToString(Label::I_INCREASE_VOLUME) << std::endl;
+    std::cout << " * Decrease volume: " << m_pInputManager->ToString(Label::I_DECREASE_VOLUME) << std::endl;
+    std::cout << " * Debug: " << m_pInputManager->ToString(Label::I_DEBUG) << std::endl;
+    std::cout << std::endl;
 }
 
 void Game::Debug() const
 {
-    std::cout << "Game debug:" << std::endl;
-    std::cout << " -- Player --" << std::endl;
-    std::cout << "Position: x - " << m_pPlayer->GetPosition<Point2f>().x << " y - " << m_pPlayer->GetPosition<Point2f>()
-        .y << std::endl;
+    const Player* pPlayer{m_pPlayerManager->GetPlayer()};
+    std::cout << " -- Debug --" << std::endl;
+    std::cout << " * Position: x - " << pPlayer->GetPosition<Point2f>() << std::endl;
+    std::cout << " * Lives: " << pPlayer->GetLives() << std::endl;
+    std::cout << " * HP: " << pPlayer->GetHP() << std::endl;
+    std::cout << " * State: " << static_cast<int>(pPlayer->GetState()) << std::endl;
+    std::cout << " * Weapon: " << static_cast<int>(pPlayer->GetWeapon()) << std::endl;
+    std::cout << " * Score: " << pPlayer->GetScore() << std::endl;
+    std::cout << " * Velocity: " << pPlayer->GetVelocity() << std::endl;
+    std::cout << " * Shape: " << pPlayer->GetShape() << std::endl;
+    std::cout << " * Collision box: " << pPlayer->GetCollisionBox() << std::endl;
+    std::cout << std::endl;
 }
 
 void Game::DoFrustumCulling()
@@ -967,10 +687,10 @@ void Game::DoFrustumCulling()
         }
     };
 
-    std::ranges::for_each(m_PlayerThrowables | std::views::filter(isOutOfWindow), deactivate);
-    std::ranges::for_each(m_EnemyThrowables | std::views::filter(isOutOfWindow), deactivate);
+    std::ranges::for_each(m_pPlayerManager->GetThrowables() | std::views::filter(isOutOfWindow), deactivate);
+    std::ranges::for_each(m_pEnemyManager->GetThrowables() | std::views::filter(isOutOfWindow), deactivate);
 
-    for (GameObject* pGameObject : m_Enemies)
+    for (GameObject* pGameObject : m_pEnemyManager->GetEnemies())
     {
         IEnemy* pEnemy{dynamic_cast<IEnemy*>(pGameObject)};
         if (pEnemy)
@@ -986,37 +706,4 @@ void Game::DoFrustumCulling()
 #if TEST_OBJECT
     // if (isOutOfWindow(m_pTestObject)) deactivate(m_pTestObject);
 #endif
-}
-
-void Game::UpdateRemainingTime()
-{
-    StartTimer(120);
-    const int seconds{GetSeconds()};
-    const int minutes{GetMinutes()};
-
-    int firstDigit, secondDigit, thirdDigit;
-    firstDigit = minutes;
-    if (seconds > 9)
-    {
-        secondDigit = seconds / 10;
-        thirdDigit = seconds % 10;
-    }
-    else
-    {
-        secondDigit = 0;
-        thirdDigit = seconds;
-    }
-    if (GetRemainingTime() <= 15.0f)
-    {
-        // m_pSoundManager->PlayStream(Game::Label::S_05_HURRY_UP, false);
-    }
-    m_pHUD->SetFirstDigit(firstDigit);
-    m_pHUD->SetSecondDigit(secondDigit);
-    m_pHUD->SetThirdDigit(thirdDigit);
-
-    if (IsTimerFinished())
-    {
-        std::cout << "Time is up!\n";
-        // TODO: Game over
-    }
 }

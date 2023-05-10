@@ -2,7 +2,7 @@
 #include "CollisionBox.h"
 #include "game/GameController.h"
 
-class ArmorCollisionBox : public CollisionBox
+class ArmorCollisionBox final: public CollisionBox
 {
 public:
     explicit ArmorCollisionBox(const Rectf& shape, GameController* pGameController);

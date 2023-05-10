@@ -8,7 +8,7 @@
  * A single attack which hits them from behind will destroy them.
  * They are worth 100 points, and they can carry pots with them.
  */
-class FlyingKnight : public IEnemy
+class FlyingKnight final : public IEnemy
 {
 public:
     explicit FlyingKnight(const Point2f& pos, GameController* pGameController);

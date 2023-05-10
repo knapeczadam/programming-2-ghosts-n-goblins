@@ -2,17 +2,20 @@
 #include "SoundEffect.h"
 #include "SoundStream.h"
 #include "game/Game.h"
+#include "game/IManager.h"
 
-class SoundManager final
+class SoundManager final : public IManager
 {
 public:
     explicit SoundManager(GameController* pGameController);
-    ~SoundManager();
+    virtual ~SoundManager() override;
     SoundManager(const SoundManager& other) = delete;
     SoundManager(SoundManager&& other) noexcept = delete;
     SoundManager& operator=(const SoundManager& other) = delete;
     SoundManager& operator=(SoundManager&& other) noexcept = delete;
 
+
+public:
     void PlayEffect(Game::Label label) const;
     void PlayStream(Game::Label label, bool repeat) const;
     void StopStream() const;
@@ -30,11 +33,15 @@ public:
 public:
     static void IncreaseMasterVolume();
     static void DecreaseMasterVolume();
+    
+protected:
+    virtual void Initialize() override;
+
 private:
     void LoadSounds();
     void DeleteSounds();
+
 private:
-    GameController* m_pGameController;
     const std::string m_EffectPath;
     const std::string m_StreamPath;
     std::map<Game::Label, SoundEffect*> m_Effects;

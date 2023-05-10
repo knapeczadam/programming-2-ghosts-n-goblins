@@ -16,7 +16,7 @@
  *
  * Every fourth time this cycle initiates itself, the first doll encountered will always be the 10,000 point King doll.
  */ 
-class Pot : public GameObject, public ICollectible
+class Pot final : public GameObject, public ICollectible
 {
 public:
     explicit Pot(const Point2f& pos, GameController* pGameController);

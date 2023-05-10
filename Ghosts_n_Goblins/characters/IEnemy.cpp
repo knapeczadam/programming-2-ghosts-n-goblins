@@ -1,8 +1,10 @@
 ﻿#include "pch.h"
 #include "IEnemy.h"
-#include "engine/SoundManager.h"
+
 #include "Player.h"
+#include "engine/SoundManager.h"
 #include "game/GameController.h"
+#include "game/PlayerManager.h"
 
 IEnemy::IEnemy(Game::Label label, const Point2f& pos, GameController* pGameController)
     : GameObject{label, pos, true, pGameController}
@@ -24,7 +26,7 @@ void IEnemy::Update(float elapsedSec)
 {
     if (not m_AwakeFired)
     {
-        if (utils::GetDistance(GetShapeCenter(), m_pGameController->m_pPlayer->GetShapeCenter()) < m_AwakeDistance)
+        if (utils::GetDistance(GetShapeCenter(), m_pGameController->m_pPlayerManager->GetPlayer()->GetShapeCenter()) < m_AwakeDistance)
         {
             m_Awake = true;
         }
@@ -90,7 +92,7 @@ void IEnemy::Spawn(float elapsedSec)
 // Enemy looks to the left by default
 bool IEnemy::IsFlipped() const
 {
-    if (GetPosition<Point2f>().x < m_pGameController->m_pPlayer->GetPosition<Point2f>().x)
+    if (GetPosition<Point2f>().x < m_pGameController->m_pPlayerManager->GetPlayer()->GetPosition<Point2f>().x)
     {
         return true;
     }
@@ -134,7 +136,7 @@ bool IEnemy::IsFixedDirection() const
 
 float IEnemy::GetAngle() const
 {
-    const float dx{m_pGameController->m_pPlayer->GetPosition<Point2f>().x - GetPosition<Point2f>().x};
-    const float dy{m_pGameController->m_pPlayer->GetPosition<Point2f>().y - GetPosition<Point2f>().y};
+    const float dx{m_pGameController->m_pPlayerManager->GetPlayer()->GetPosition<Point2f>().x - GetPosition<Point2f>().x};
+    const float dy{m_pGameController->m_pPlayerManager->GetPlayer()->GetPosition<Point2f>().y - GetPosition<Point2f>().y};
     return std::atan2f(dy, dx);
 }

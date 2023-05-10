@@ -1,7 +1,9 @@
 ﻿#include "pch.h"
 #include "Pot.h"
 
+#include "game/CollectibleManager.h"
 #include "game/GameController.h"
+#include "game/LevelManager.h"
 #include "level/Level.h"
 
 Pot::Pot(const Point2f& pos, GameController* pGameController)
@@ -14,11 +16,11 @@ void Pot::Update(float elapsedSec)
 {
     m_Shape.bottom += m_Gravity * elapsedSec;
     UpdateCollisionBox();
-    if (m_pGameController->m_pLevel->IsOnGround(this))
+    if (m_pGameController->m_pLevelManager->GetLevel()->IsOnGround(this))
     {
         m_Active = false;
         m_Visible = false;
-        for (GameObject* pCollectible : m_pGameController->m_Collectibles)
+        for (GameObject* pCollectible : m_pGameController->m_pCollectibleManager->GetCollectibles())
         {
             if (pCollectible->GetLabel() == m_ContentLabel)
             {

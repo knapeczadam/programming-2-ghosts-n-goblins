@@ -5,6 +5,7 @@
 #include "engine/SoundManager.h"
 #include "fx/FXManager.h"
 #include "game/GameController.h"
+#include "game/PlayerManager.h"
 
 Unicorn::Unicorn(const Point2f& pos, GameController* pGameController)
     : IEnemy{Game::Label::C_UNICORN, pos, pGameController}
@@ -36,7 +37,7 @@ void Unicorn::HandleCollision(GameObject* other)
     {
         m_Active = false;
         m_Visible = false;
-        m_pGameController->m_pPlayer->AddScore(m_Score);
+        m_pGameController->m_pPlayerManager->GetPlayer()->AddScore(m_Score);
         m_pGameController->m_pFXManager->PlayEffect(Game::Label::F_FIRE_BOSS, GetCollisionBoxCenter(), other->IsFlipped());
         m_pGameController->m_pFXManager->PlayEffect(Game::Label::F_SCORE, GetCollisionBoxCenter(), other->IsFlipped(), this);
         m_pGameController->m_pSoundManager->PlayEffect(Game::Label::E_BOSS_DEATH);

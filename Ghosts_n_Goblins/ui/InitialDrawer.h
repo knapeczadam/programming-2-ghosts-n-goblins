@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include "UI.h"
 
-class InitialDrawer : public UI
+class InitialDrawer final : public UI
 {
 public:
     enum class Color

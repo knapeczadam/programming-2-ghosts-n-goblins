@@ -1,48 +1,27 @@
 // Knapecz, Adam - 1DAE11
 #pragma once
 
-#include <queue>
-
 #include "BaseGame.h"
 #include "engine/json.hpp"
 #include "engine/ITimer.h"
 #include "Macros.h"
 
-
 using json = nlohmann::json;
 
-class HUD;
-class Level;
-class KillZone;
-class Platform;
-class Tombstone;
-class Water;
-class Player;
+class BootManager;
 class Camera;
-class TextureManager;
-class SpriteFactory;
-class GameObject;
-class SoundManager;
-class Ladder;
+class CollectibleManager;
+class EnemyManager;
 class FXManager;
-
-class IThrowable;
-class IEnemy;
-class ICollectible;
-class IClimable;
-
 class GameController;
+class GameObject;
 class InputManager;
-
-class FlyingKnightSpawner;
-class WoodyPigSpawner;
-class ZombieSpawner;
-class InitialSaver;
-class ScoreManager;
-class Map;
-class InitialDrawer;
-class RankingDrawer;
-class CreditManager;
+class LevelManager;
+class PlayerManager;
+class SoundManager;
+class SpriteFactory;
+class TextureManager;
+class UIManager;
 
 /*
  * https://strategywiki.org/wiki/Ghosts_%27n_Goblins#Story
@@ -121,6 +100,7 @@ public:
         F_VANISH,
 
         // Level
+        L_ARMOR,
         L_DOOR,
         L_FOREGROUND,
         L_KILLZONE,
@@ -129,7 +109,6 @@ public:
         L_PLATFORM,
         L_TOMBSTONE,
         L_WATER,
-        L_ARMOR,
         L_YASHICHI,
 
         // Throwables
@@ -144,23 +123,23 @@ public:
         
         // Ui
         U_ABC,
+        U_BEST_RANKING,
         U_CHARACTER_DRAWER,
         U_CREDIT_MANAGER,
         U_FRAME,
-        U_RANKING_DRAWER,
         U_HUD,
         U_LIFE,
         U_MAP,
         U_MENU,
         U_NUMBERS,
         U_PIN,
-        U_BEST_RANKING,
-        U_TEXT_CREDIT,
+        U_RANKING_DRAWER,
         U_SCORE_MANAGER,
+        U_TEXT_CREDIT,
         U_TEXT_GAME_OVER,
         U_TEXT_INITIAL,
         U_TEXT_PLAYER_ONE_READY,
-        U_TITLE,
+        U_TEXT_TITLE,
         U_WEAPONS,
 
         // --- SOUNDS ---
@@ -207,12 +186,14 @@ public:
         S_13_BELOW_2ND_PLACE_ENTRY_END,
 
         // --- DEBUG ---
-        D_LEVEL_DEBUG,
-        D_FALLBACK,
-        D_MISSING,
+        
         D_DUMMY,
+        D_FALLBACK,
+        D_LEVEL_DEBUG,
+        D_MISSING,
 
         // --- INPUT ---
+        
         I_LEFT,
         I_RIGHT,
         I_UP,
@@ -223,7 +204,7 @@ public:
         I_START,
         I_SAVE,
         I_LOAD,
-        I_PRINT,
+        I_INFO,
         I_DEBUG,
         I_QUIT,
         I_INCREASE_VOLUME,
@@ -231,6 +212,20 @@ public:
         
         // MINIGAME
         AVATAR
+    };
+
+    enum class State
+    {
+        BOOT,
+        MENU,
+        INTRO,
+        GAME,
+        MAP,
+        GAME_OVER,
+        CONTINUE,
+        RANKING,
+        OUTRO,
+        SAVE_SCORE
     };
 
 public:
@@ -241,115 +236,72 @@ public:
     Game(Game&& other) = delete;
     Game& operator=(Game&& other) = delete;
 
+    virtual void Draw() const override;
     virtual void Update(float elapsedSec) override;
     virtual void LateUpdate(float elapsedSec) override;
-    virtual void Draw() const override;
 
-    // Event handling
     virtual void ProcessKeyDownEvent(const SDL_KeyboardEvent& e) override;
     virtual void ProcessKeyUpEvent(const SDL_KeyboardEvent& e) override;
-    virtual void ProcessMouseDownEvent(const SDL_MouseButtonEvent& e) override;
 
 private:
-    void Cleanup();
+    void Initialize();
+    void InitCamera();
+    void InitLabels();
+    void LoadData();
+    
     void ClearBackground() const;
-    void DrawBoot() const;
-    void Boot();
-    void PrintInfo() const;
+    
+    void DrawContinue() const;
+    void DrawDebug() const;
+    void DrawGame() const;
+    void DrawGameOver() const;
+    void DrawIntro() const;
+    void DrawMap() const;
+    void DrawMenu() const;
+    void DrawOutro() const;
+    void DrawRanking() const;
+    void DrawSaveScore() const;
+    
+    void UpdateBoot(float elapsedSec);
+    void UpdateContinue(float elapsedSec);
+    void UpdateGame(float elapsedSec);
+    void UpdateGameOver(float elapsedSec);
+    void UpdateIntro(float elapsedSec);
+    void UpdateMap(float elapsedSec);
+    void UpdateMenu(float elapsedSec);
+    void UpdateOutro(float elapsedSec);
+    void UpdateRanking(float elapsedSec);
+    void UpdateSaveScore(float elapsedSec);
+
+    void UpdateState();
+    void LateUpdateGame(float elapsedSec);
+    
     void DoCollisionTests();
     void Debug() const;
     void DoFrustumCulling();
-    void UpdateRemainingTime();
+    void PrintInfo() const;
 
-
-    void Initialize();
-    
-    void InitLabels();
-    void LoadData();
-    void InitBootIntervals();
-    void InitCamera();
-
-    // LEVEL
-    void InitLevel();
-    void InitLadders();
-    void InitTombstones();
-    void InitWaters();
-    void InitCollisionBoxes();
-
-    // COLLECTIBLES
-    void InitCollectibles();
-    void InitCoins();
-    void InitMoneyBags();
-    void InitArmor();
-    void InitPot();
-    void InitNecklace();
-    void InitYashichi();
-    
-
-    // ENEMIES
-    void InitEnemies();
-    void InitUnicorn();
-    void InitCrows();
-    void InitFlyingKnights();
-    void InitGreenMonsters();
-    void InitMagician();
-    void InitRedArremer();
-    void InitWoodyPigs();
-    void InitZombies();
-
-    void InitSpawners();
-    void SpawnEnemies();
-
-    void InitUI();
-    
-    // DATA MEMBERS
-    
-    std::vector<GameObject*> m_Enemies;
-    std::vector<GameObject*> m_PlayerThrowables;
-    std::vector<GameObject*> m_EnemyThrowables;
-    std::vector<GameObject*> m_Waters;
-    std::vector<GameObject*> m_Tombstones;
-    std::vector<GameObject*> m_Collectibles;
-    std::vector<GameObject*> m_Ladders;
-    std::vector<GameObject*> m_Effects;
-    std::vector<GameObject*> m_Zombies;
-    std::vector<GameObject*> m_FlyingKnights;
-    std::vector<GameObject*> m_WoodyPigs;
-    std::vector<GameObject*> m_CollisionBoxes;
-    
-    SpriteFactory* m_pSpriteFactory;
-    TextureManager* m_pTextureManager;
-    SoundManager* m_pSoundManager;
-    Player* m_pPlayer;
-    GameObject* m_pForeground;
-    Level* m_pLevel;
-    KillZone* m_pKillZone;
-    Platform* m_pPlatform;
-    Camera* m_pCamera;
-    HUD* m_pHUD;
-    GameController* m_pGameController;
-    FXManager* m_pFXManager;
-    FlyingKnightSpawner* m_pFlyingKnightSpawner;
-    WoodyPigSpawner* m_pWoodyPigSpawner;
-    ZombieSpawner* m_pZombieSpawner;
-    InitialSaver* m_pInitialSaver;
-    InputManager* m_pInputManager;
-    ScoreManager* m_pScoreManager;
-    InitialDrawer* m_pInitialDrawer;
-    RankingDrawer* m_pRankingDrawer;
-    CreditManager* m_pCreditManager;
-    Map* m_pMap;
-#if TEST_OBJECT
-    GameObject* m_pTestObject;
-#endif
-    
-    
+private:
     json m_Data;
     const std::string m_DataPath;
     std::map<std::string, Label> m_Labels;
-
-    std::queue<std::pair<Label, float>> m_BootIntervals;
-    Label m_CurrBoot;
-    bool m_Boot;
-
+    State m_State;
+    
+    BootManager* m_pBootManager;
+    Camera* m_pCamera;
+    CollectibleManager* m_pCollectibleManager;
+    EnemyManager* m_pEnemyManager;
+    FXManager* m_pFXManager;
+    GameController* m_pGameController;
+    InputManager* m_pInputManager;
+    LevelManager* m_pLevelManager;
+    PlayerManager* m_pPlayerManager;
+    SoundManager* m_pSoundManager;
+    SpriteFactory* m_pSpriteFactory;
+    TextureManager* m_pTextureManager;
+    UIManager* m_pUIManager;
+    
+#if TEST_OBJECT
+    GameObject* m_pTestObject;
+#endif
 };

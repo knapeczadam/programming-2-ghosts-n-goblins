@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include "game/GameObject.h"
 
-class Fire : public GameObject
+class Fire final : public GameObject
 {
 public:
     explicit Fire(Game::Label label, const Point2f& pos, GameController* pGameController);

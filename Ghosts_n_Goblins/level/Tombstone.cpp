@@ -1,10 +1,7 @@
 ﻿#include "pch.h"
 #include "Tombstone.h"
-#include "throwables/IThrowable.h"
-#include "utils.h"
-#include "engine/SoundManager.h"
-#include <iostream>
 
+#include "engine/SoundManager.h"
 #include "fx/FXManager.h"
 #include "game/GameController.h"
 

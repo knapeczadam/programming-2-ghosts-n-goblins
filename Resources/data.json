@@ -181,8 +181,8 @@
       "path": "ui/text_player_one_ready.png"
     },
     {
-      "label": "u_title",
-      "path": "ui/title.png"
+      "label": "u_text_title",
+      "path": "ui/text_title.png"
     },
     {
       "label": "u_weapons",
@@ -619,7 +619,7 @@
       "scale": 2
     },
     {
-      "label": "u_title",
+      "label": "u_text_title",
       "scale": 2
     },
     {

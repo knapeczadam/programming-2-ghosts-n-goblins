@@ -8,7 +8,7 @@
 class Sprite;
 class GameController;
 
-class ScoreManager : public UI
+class ScoreManager final : public UI
 {
 public:
     enum class Color

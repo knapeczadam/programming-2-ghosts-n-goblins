@@ -4,7 +4,7 @@
 class Sprite;
 class GameObject;
 
-class Map : public UI
+class Map final : public UI
 {
 public:
     explicit Map(GameController* pGameController);

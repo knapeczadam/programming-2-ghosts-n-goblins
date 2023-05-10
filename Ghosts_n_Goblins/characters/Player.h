@@ -15,20 +15,20 @@
  * While in this state, if just one enemy touches him, Arthur is doomed and loses one life.
  * It is possible to find and collect armor when Arthur is without any, but they are usually hidden from sight.
  */
-class Player : public GameObject
+class Player final : public GameObject
 {
 public:
     enum class State
     {
-        idle,
-        running,
-        jumping_running,
-        jumping_standing,
-        crouching,
-        attacking_normal,
-        attacking_crouching,
-        climbing,
-        climbing_top
+        IDLE,
+        RUNNING,
+        JUMPING_RUNNING,
+        JUMPING_STANDING,
+        CROUCHING,
+        ATTACKING_NORMAL,
+        ATTACKING_CROUCHING,
+        CLIMBING,
+        CLIMBING_TOP
     };
 
 public:

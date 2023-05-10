@@ -818,6 +818,7 @@
     </ClCompile>
     <ClCompile Include="fx\ProjectileDeath.cpp" />
     <ClCompile Include="fx\Score.cpp" />
+    <ClCompile Include="game\BootManager.cpp" />
     <ClCompile Include="game\Camera.cpp">
       <RuntimeLibrary>MultiThreadedDebugDll</RuntimeLibrary>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -899,6 +900,9 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(IntDir)$(TargetName).pch</PrecompiledHeaderOutputFile>
     </ClCompile>
+    <ClCompile Include="game\CollectibleManager.cpp" />
+    <ClCompile Include="game\CutsceneManager.cpp" />
+    <ClCompile Include="game\EnemyManager.cpp" />
     <ClCompile Include="game\GameController.cpp" />
     <ClCompile Include="game\Game.cpp">
       <RuntimeLibrary>MultiThreadedDebugDll</RuntimeLibrary>
@@ -1062,7 +1066,11 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(IntDir)$(TargetName).pch</PrecompiledHeaderOutputFile>
     </ClCompile>
+    <ClCompile Include="game\IManager.cpp" />
     <ClCompile Include="game\InputManager.cpp" />
+    <ClCompile Include="game\LevelManager.cpp" />
+    <ClCompile Include="game\PlayerManager.cpp" />
+    <ClCompile Include="game\UIManager.cpp" />
     <ClCompile Include="level\ArmorCollisionBox.cpp" />
     <ClCompile Include="level\CollisionBox.cpp">
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -1385,7 +1393,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(IntDir)$(TargetName).pch</PrecompiledHeaderOutputFile>
     </ClCompile>
-    <ClCompile Include="level\Spawner.cpp">
+    <ClCompile Include="level\ISpawner.cpp">
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <Optimization>Disabled</Optimization>
@@ -2017,12 +2025,20 @@
     <ClInclude Include="fx\FXManager.h" />
     <ClInclude Include="fx\ProjectileDeath.h" />
     <ClInclude Include="fx\Score.h" />
+    <ClInclude Include="game\BootManager.h" />
     <ClInclude Include="game\Camera.h" />
+    <ClInclude Include="game\CollectibleManager.h" />
+    <ClInclude Include="game\CutsceneManager.h" />
+    <ClInclude Include="game\EnemyManager.h" />
     <ClInclude Include="game\GameController.h" />
     <ClInclude Include="game\Game.h" />
     <ClInclude Include="game\GameObject.h" />
+    <ClInclude Include="game\IManager.h" />
     <ClInclude Include="game\InputManager.h" />
+    <ClInclude Include="game\LevelManager.h" />
     <ClInclude Include="game\Macros.h" />
+    <ClInclude Include="game\PlayerManager.h" />
+    <ClInclude Include="game\UIManager.h" />
     <ClInclude Include="level\ArmorCollisionBox.h" />
     <ClInclude Include="level\CollisionBox.h" />
     <ClInclude Include="level\Door.h" />
@@ -2032,7 +2048,7 @@
     <ClInclude Include="level\Ladder.h" />
     <ClInclude Include="level\Level.h" />
     <ClInclude Include="level\Platform.h" />
-    <ClInclude Include="level\Spawner.h" />
+    <ClInclude Include="level\ISpawner.h" />
     <ClInclude Include="level\Tombstone.h" />
     <ClInclude Include="level\Water.h" />
     <ClInclude Include="level\WoodyPigSpawner.h" />

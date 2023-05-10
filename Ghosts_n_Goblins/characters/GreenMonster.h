@@ -7,7 +7,7 @@
  * They have so many eyeballs to spare, that occasionally, they open their mouths and spit one at you.
  * They take only one shot to hit, and are worth 100 points, but watch out for the eyeball projectile that they shoot at you.
  */
-class GreenMonster : public IEnemy
+class GreenMonster final : public IEnemy
 {
 public:
     explicit GreenMonster(const Point2f& pos, GameController* pGameController);

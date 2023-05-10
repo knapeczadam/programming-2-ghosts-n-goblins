@@ -33,3 +33,8 @@ void CreditManager::Update(float elapsedSec)
         }
     }
 }
+
+int CreditManager::GetCredits() const
+{
+    return m_Credits;
+}

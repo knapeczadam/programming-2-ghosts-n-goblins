@@ -2,7 +2,7 @@
 #include "IClimable.h"
 #include "game/GameObject.h"
 
-class Ladder : public GameObject, public IClimable
+class Ladder final : public GameObject, public IClimable
 {
 public:
     explicit Ladder(const Rectf& shape);

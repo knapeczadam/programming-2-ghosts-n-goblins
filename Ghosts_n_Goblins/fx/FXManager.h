@@ -1,22 +1,31 @@
 ﻿#pragma once
-#include <vector>
 
 #include "game/Game.h"
+#include "game/IManager.h"
 
 class GameController;
 class GameObject;
 
-class FXManager final
+class FXManager final : public IManager
 {
 public:
     explicit FXManager(GameController* pGameController);
-    ~FXManager() = default;
+    virtual ~FXManager() override;
     FXManager(const FXManager& other) = delete;
     FXManager(FXManager&& other) noexcept = delete;
     FXManager& operator=(const FXManager& other) = delete;
     FXManager& operator=(FXManager&& other) noexcept = delete;
 
+    void Draw() const;
+    void Update(float elapsedSec);
+    void LateUpdate(float elapsedSec);
+    std::vector<GameObject*>& GetEffects();
+
+protected:
+    virtual void Initialize() override;
+
+public:
     void PlayEffect(Game::Label label, const Point2f& pos, bool flipped, GameObject* other = nullptr);
 private:
-    GameController* m_pGameController;
+    std::vector<GameObject*> m_Effects;
 };

@@ -1,14 +1,11 @@
 // Knapecz, Adam - 1DAE11
 #include "pch.h"
 #include "Camera.h"
-#include "utils.h"
-#include "characters/Player.h"
-#include "level/Level.h"
-#include "game/GameObject.h"
-
-#include <iostream>
 
 #include "GameController.h"
+#include "utils.h"
+#include "characters/Player.h"
+#include "game/GameObject.h"
 
 Camera::Camera(GameController* pGameController)
     : m_pGameController{pGameController}

@@ -8,7 +8,7 @@
  * They fall from the sky and open the door to the next stage.
  * If you are not wearing armor when you collect the key, your armor will automatically be restored.
  */
-class Key : public GameObject, public ICollectible
+class Key final : public GameObject, public ICollectible
 {
 public:
     explicit Key(const Point2f& pos, GameController* pGameController);

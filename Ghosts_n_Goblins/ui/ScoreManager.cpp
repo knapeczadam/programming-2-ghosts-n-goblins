@@ -1,13 +1,12 @@
 ﻿#include "pch.h"
 #include "ScoreManager.h"
 
-#include <fstream>
-#include <sstream>
-
-#include "game/GameController.h"
-#include "characters/Player.h"
 #include "engine/Sprite.h"
 #include "engine/SpriteFactory.h"
+#include "game/GameController.h"
+
+#include <fstream>
+#include <sstream>
 
 ScoreManager::ScoreManager(GameController* pGameController)
     : UI{Game::Label::U_SCORE_MANAGER, pGameController}
@@ -15,6 +14,7 @@ ScoreManager::ScoreManager(GameController* pGameController)
     , m_HighScore{0}
     , m_Scores{}
 {
+    m_pGameController->m_pScoreManager = this;
     m_pSprite = pGameController->m_pSpriteFactory->CreateSprite(Game::Label::U_NUMBERS);
 }
 

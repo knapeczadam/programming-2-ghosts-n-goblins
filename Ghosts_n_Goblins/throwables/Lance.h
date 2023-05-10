@@ -11,7 +11,7 @@
  * In the Famicom/NES-based versions of the game, the Dragon is invulnerable to the Lance.
  * In addition, only two may be in the air at once.
  */
-class Lance: public GameObject, public IThrowable, public ICollectible
+class Lance final : public GameObject, public IThrowable, public ICollectible
 {
 public:
 	explicit Lance(const Point2f& pos, bool isFlipped, bool collectible, GameController* pGameController);

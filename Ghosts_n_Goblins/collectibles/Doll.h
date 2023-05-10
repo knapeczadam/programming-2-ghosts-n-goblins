@@ -2,7 +2,7 @@
 #include "ICollectible.h"
 #include "game/GameObject.h"
 
-class Doll : public GameObject, public ICollectible
+class Doll final : public GameObject, public ICollectible
 {
 public:
     explicit Doll(const Point2f& pos, GameController* pGameController);

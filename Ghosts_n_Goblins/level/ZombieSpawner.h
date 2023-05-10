@@ -1,10 +1,10 @@
 ﻿#pragma once
-#include "Spawner.h"
+#include "ISpawner.h"
 
-class ZombieSpawner : public Spawner
+class ZombieSpawner final : public ISpawner
 {
 public:
-    ZombieSpawner(const Rectf& boundaries,  GameController* pGameController);
+    explicit  ZombieSpawner(const Rectf& boundaries,  GameController* pGameController);
     virtual ~ZombieSpawner() override = default;
     ZombieSpawner(const ZombieSpawner&) = delete;
     ZombieSpawner& operator=(const ZombieSpawner&) = delete;

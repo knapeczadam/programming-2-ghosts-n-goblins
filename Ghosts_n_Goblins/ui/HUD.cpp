@@ -1,15 +1,14 @@
 // Knapecz, Adam - 1DAE11
 #include "pch.h"
 #include "HUD.h"
+
+#include "ScoreManager.h"
 #include "characters/Player.h"
-#include "engine/Sprite.h"
-
-#include <iostream>
-
 #include "engine/SoundManager.h"
+#include "engine/Sprite.h"
 #include "engine/SpriteFactory.h"
 #include "game/GameController.h"
-#include "ScoreManager.h"
+#include "game/PlayerManager.h"
 
 
 HUD::HUD(GameController* pGameController)
@@ -51,7 +50,7 @@ void HUD::SetThirdDigit(int digit)
 
 void HUD::DrawLives() const
 {
-    for (int idx{}; idx < m_pGameController->m_pPlayer->GetLives() - 1; ++idx)
+    for (int idx{}; idx < m_pGameController->m_pPlayerManager->GetPlayer()->GetLives() - 1; ++idx)
     {
         m_pLife->SetPosition(Point2f{idx * m_pLife->GetScaledClipWidth(), 0});
         m_pLife->Draw();
@@ -60,7 +59,7 @@ void HUD::DrawLives() const
 
 void HUD::DrawPlayerScore() const
 {
-    const int playerScore{m_pGameController->m_pPlayer->GetScore()};
+    const int playerScore{m_pGameController->m_pPlayerManager->GetPlayer()->GetScore()};
     Point2f pos{128.0f, m_pGameController->m_ViewPort.height - m_pNumbers->GetScaledClipHeight() * 2};
     m_pGameController->m_pScoreManager->DrawNumber(pos, playerScore,ScoreManager::Color::WHITE_TAN );
 }
@@ -120,7 +119,7 @@ void HUD::DrawWeapon() const
     pos.x = m_pGameController->m_ViewPort.width / 2 - m_pWeapons->GetScaledClipWidth() / 2;
     pos.y = m_pWeapons->GetScaledClipHeight() / 2;
 
-    switch (m_pGameController->m_pPlayer->GetWeapon())
+    switch (m_pGameController->m_pPlayerManager->GetPlayer()->GetWeapon())
     {
     case Game::Label::T_DAGGER:
         m_pWeapons->SetLeftOffsetCols(2);

@@ -1,21 +1,20 @@
 ﻿#pragma once
 
-#include <vector>
-
 #include "level/Platform.h"
 
-class Level;
-class Platform;
-class SpriteFactory;
-class SoundManager;
-class Player;
-class GameObject;
-class TextureManager;
+class BootManager;
+class CollectibleManager;
+class EnemyManager;
 class FXManager;
-class Magician;
-class InputManager;
 class InitialDrawer;
-
+class InputManager;
+class LevelManager;
+class PlayerManager;
+class ScoreManager;
+class SoundManager;
+class SpriteFactory;
+class TextureManager;
+class UIManager;
 
 class GameController final
 {
@@ -23,14 +22,7 @@ public:
     explicit GameController(
         std::map<std::string, Game::Label>& labels,
         json& data,
-        const Rectf& viewPort,
-        std::vector<GameObject*>& playerThrowables,
-        std::vector<GameObject*>& enemyThrowables,
-        std::vector<GameObject*>& effects,
-        std::vector<GameObject*>& zombies,
-        std::vector<GameObject*>& flyingKnights,
-        std::vector<GameObject*>& woodyPigs,
-        std::vector<GameObject*>& collectibles
+        const Rectf& viewPort
         );
     
     ~GameController() = default;
@@ -42,23 +34,18 @@ public:
     std::map<std::string, Game::Label>& m_Labels;
     json& m_Data;
     Rectf m_ViewPort;
-    std::vector<GameObject*>& m_PlayerThrowables;
-    std::vector<GameObject*>& m_EnemyThrowables;
-    std::vector<GameObject*>& m_Effects;
-    std::vector<GameObject*>& m_Zombies;
-    std::vector<GameObject*>& m_FlyingKnights;
-    std::vector<GameObject*>& m_WoodyPigs;
-    std::vector<GameObject*>& m_Collectibles;
 
-    TextureManager* m_pTextureManager;
-    SpriteFactory* m_pSpriteFactory;
-    SoundManager* m_pSoundManager;
-    Player* m_pPlayer;
-    Level* m_pLevel;
-    Platform* m_pPlatform;
+    BootManager* m_pBootManager;
+    CollectibleManager* m_pCollectibleManager;
+    EnemyManager* m_pEnemyManager;
     FXManager* m_pFXManager;
-    Magician* m_pMagician;
-    InputManager* m_pInputManager;
-    ScoreManager* m_pScoreManager;
     InitialDrawer* m_pInitialDrawer;
+    InputManager* m_pInputManager;
+    LevelManager* m_pLevelManager;
+    PlayerManager* m_pPlayerManager;
+    ScoreManager* m_pScoreManager;
+    SoundManager* m_pSoundManager;
+    SpriteFactory* m_pSpriteFactory;
+    TextureManager* m_pTextureManager;
+    UIManager* m_pUIManager;
 };

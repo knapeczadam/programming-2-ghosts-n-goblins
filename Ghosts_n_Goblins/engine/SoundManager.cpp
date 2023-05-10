@@ -1,11 +1,12 @@
 ﻿#include "pch.h"
 #include "SoundManager.h"
+
 #include <iostream>
 
 #include "game/GameController.h"
 
 SoundManager::SoundManager(GameController* pGameController)
-    : m_pGameController{pGameController}
+    : IManager(pGameController)
       , m_EffectPath{"sounds/effects/"}
       , m_StreamPath{"sounds/streams/"}
       , m_Effects{}
@@ -13,7 +14,8 @@ SoundManager::SoundManager(GameController* pGameController)
       , m_pEffects{}
       , m_pStreams{}
 {
-    LoadSounds();
+    m_pGameController->m_pSoundManager = this;
+    Initialize();
 }
 
 SoundManager::~SoundManager()
@@ -27,6 +29,11 @@ void SoundManager::PlayEffect(Game::Label label) const
     {
         GetEffect(label)->Play(0);
     }
+}
+
+void SoundManager::Initialize()
+{
+    LoadSounds();
 }
 
 void SoundManager::PlayStream(Game::Label label, bool repeat) const

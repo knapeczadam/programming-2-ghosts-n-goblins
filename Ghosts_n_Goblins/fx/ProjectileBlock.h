@@ -1,7 +1,7 @@
 #pragma once
 #include "game/GameObject.h"
 
-class ProjectileBlock : public GameObject
+class ProjectileBlock final : public GameObject
 {
 public:
     explicit ProjectileBlock(Game::Label label, const Point2f& pos, bool flipped, GameController* pGameController);

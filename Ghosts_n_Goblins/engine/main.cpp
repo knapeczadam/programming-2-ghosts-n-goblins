@@ -24,7 +24,6 @@ int SDL_main(int argv, char** args)
     return 0;
 }
 
-
 void StartHeapControl()
 {
 #if defined(DEBUG) | defined(_DEBUG)

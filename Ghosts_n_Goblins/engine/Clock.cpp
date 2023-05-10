@@ -1,6 +1,5 @@
 ﻿#include "pch.h"
 #include "Clock.h"
-#include <iostream>
 
 float Clock::s_AccuTime{};
 

@@ -3,7 +3,7 @@
 
 FlyingKnightSpawner::FlyingKnightSpawner(const Rectf& boundaries,
     GameController* pGameController)
-        : Spawner{boundaries, pGameController}
+        : ISpawner{boundaries, pGameController}
 {
 }
 

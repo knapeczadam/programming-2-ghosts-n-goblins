@@ -2,7 +2,7 @@
 #include "ICollectible.h"
 #include "game/GameObject.h"
 
-class King : public GameObject, public ICollectible
+class King final : public GameObject, public ICollectible
 {
 public:
     explicit King(const Point2f& pos, GameController* pGameController);

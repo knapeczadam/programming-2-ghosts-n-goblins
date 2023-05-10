@@ -2,7 +2,7 @@
 #pragma once
 #include "UI.h"
 
-class HUD : public UI
+class HUD final : public UI
 {
 public:
     explicit HUD(GameController* pGameController);

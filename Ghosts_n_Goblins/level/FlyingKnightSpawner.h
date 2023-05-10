@@ -1,7 +1,7 @@
 ﻿#pragma once
-#include "Spawner.h"
+#include "ISpawner.h"
 
-class FlyingKnightSpawner : public Spawner
+class FlyingKnightSpawner : public ISpawner
 {
 public:
     FlyingKnightSpawner(const Rectf& boundaries, GameController* pGameController);

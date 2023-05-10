@@ -4,36 +4,23 @@
 GameController::GameController(
     std::map<std::string, Game::Label>& labels,
     json& data,
-    const Rectf& viewPort,
-    std::vector<GameObject*>& playerThrowables,
-    std::vector<GameObject*>& enemyThrowables,
-    std::vector<GameObject*>& effects,
-    std::vector<GameObject*>& zombies,
-    std::vector<GameObject*>& flyingKnights,
-    std::vector<GameObject*>& woodyPigs,
-    std::vector<GameObject*>& collectibles
+    const Rectf& viewPort
 )
     : m_Labels{labels}
-      , m_Data(data)
-      , m_ViewPort{viewPort} // doesn't work with brace initialization
-      , m_PlayerThrowables{playerThrowables}
-      , m_EnemyThrowables{enemyThrowables}
-      , m_Effects{effects}
-      , m_Zombies{zombies}
-      , m_FlyingKnights{flyingKnights}
-      , m_WoodyPigs{woodyPigs}
-      , m_Collectibles{collectibles}
-      , m_pTextureManager{nullptr}
-      , m_pSpriteFactory{nullptr}
-      , m_pSoundManager{nullptr}
-      , m_pPlayer{nullptr}
-      , m_pLevel{nullptr}
-      , m_pPlatform{nullptr}
+      , m_Data(data) // doesn't work with brace initialization
+      , m_ViewPort{viewPort} 
+      , m_pBootManager{nullptr}
+      , m_pCollectibleManager{nullptr}
+      , m_pEnemyManager{nullptr}
       , m_pFXManager{nullptr}
-      , m_pMagician{nullptr}
-      , m_pInputManager{nullptr}
-      , m_pScoreManager{nullptr}
       , m_pInitialDrawer{nullptr}
-
+      , m_pInputManager{nullptr}
+      , m_pLevelManager{nullptr}
+      , m_pPlayerManager{nullptr}
+      , m_pScoreManager{nullptr}
+      , m_pSoundManager{nullptr}
+      , m_pSpriteFactory{nullptr}
+      , m_pTextureManager{nullptr}
+      , m_pUIManager{nullptr}
 {
 }

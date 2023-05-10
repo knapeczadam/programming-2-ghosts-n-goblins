@@ -2,7 +2,7 @@
 #include "ICollectible.h"
 #include "game/GameObject.h"
 
-class Necklace : public GameObject, public ICollectible
+class Necklace final : public GameObject, public ICollectible
 {
 public:
     explicit Necklace(const Point2f& pos, GameController* pGameController);

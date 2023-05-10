@@ -1,12 +1,12 @@
 ﻿#include "pch.h"
 #include "Zombie.h"
-#include "engine/SoundManager.h"
-#include "Player.h"
-#include "engine/Sprite.h"
-#include "game/GameController.h"
-#include "fx/FXManager.h"
 
-#include <numeric>
+#include "Player.h"
+#include "engine/SoundManager.h"
+#include "engine/Sprite.h"
+#include "fx/FXManager.h"
+#include "game/GameController.h"
+#include "game/PlayerManager.h"
 
 Zombie::Zombie(const Point2f& pos, GameController* pGameController)
     : IEnemy{Game::Label::C_ZOMBIE, pos, pGameController}
@@ -56,7 +56,7 @@ void Zombie::HandleCollision(GameObject* other)
     {
         m_Active = false;
         m_Visible = false;
-        m_pGameController->m_pPlayer->AddScore(m_Score);
+        m_pGameController->m_pPlayerManager->GetPlayer()->AddScore(m_Score);
         m_pGameController->m_pFXManager->PlayEffect(Game::Label::F_PROJECTILE_DEATH, GetContactPoint(other),
                                                     other->IsFlipped());
         m_pGameController->m_pSoundManager->PlayEffect(Game::Label::E_ENEMY_DEATH);

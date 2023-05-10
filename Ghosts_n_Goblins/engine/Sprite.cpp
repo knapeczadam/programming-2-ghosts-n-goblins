@@ -1,12 +1,12 @@
 ﻿#include "pch.h"
 #include "Sprite.h"
+
 #include "Texture.h"
 #include "utils.h"
 #include "game/Macros.h"
 
-#include <numeric>
 #include <cmath>
-#include <iostream>
+#include <numeric>
 
 Sprite::Sprite(Texture* pTexture)
     : m_pTexture{pTexture}

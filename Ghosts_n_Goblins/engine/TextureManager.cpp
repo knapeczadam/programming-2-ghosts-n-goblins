@@ -1,24 +1,31 @@
 ﻿#include "pch.h"
 #include "TextureManager.h"
+
 #include "Texture.h"
+#include "game/GameController.h"
 
 #include <fstream>
 #include <iostream>
 
-#include "game/GameController.h"
 
 TextureManager::TextureManager(GameController* pGameController)
-    : m_pGameController{pGameController}
+    : IManager(pGameController)
       , m_Textures{}
       , m_pTextures{}
       , m_Path{"images/"}
 {
-    LoadTextures();
+    pGameController->m_pTextureManager = this;
+    Initialize();
 }
 
 TextureManager::~TextureManager()
 {
     DeleteTextures();
+}
+
+void TextureManager::Initialize()
+{
+    LoadTextures();
 }
 
 void TextureManager::LoadTextures()
@@ -30,7 +37,8 @@ void TextureManager::LoadTextures()
         auto it = m_pGameController->m_Labels.find(label);
         if (it == m_pGameController->m_Labels.end())
         {
-            std::cerr << "TextureManager::LoadTextures() - ERROR: label (" << label << ") found in data.json/images is not in the label map!" << std::endl;
+            std::cerr << "TextureManager::LoadTextures() - ERROR: label (" << label <<
+                ") found in data.json/images is not in the label map!" << std::endl;
             std::abort();
         }
         //m_Textures.emplace(std::make_pair(m_Labels[label], new Texture{m_Path + path}));

@@ -11,7 +11,7 @@
  * They may also be holding pots. Players rarely see the same Arremer for 60 seconds, as they usually destroy them, or get destroyed by them before that time.
  * However, if you do deal with the same Arremer for around 60 seconds, they turn white and become even more aggressive.
  */
-class RedArremer : public IEnemy
+class RedArremer final : public IEnemy
 {
 public:
     explicit RedArremer(const Point2f& pos, GameController* pGameController);

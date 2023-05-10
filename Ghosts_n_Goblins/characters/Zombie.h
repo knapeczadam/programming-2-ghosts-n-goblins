@@ -10,10 +10,10 @@
  * They are the bearers of pots, and you will only ever see three above ground at one time.
  * You will encounter them on Stage 3 in addition to the first stage.
  */
-class Zombie : public IEnemy
+class Zombie final : public IEnemy
 {
 public:
-    Zombie(const Point2f& pos, GameController* pGameController);
+    explicit Zombie(const Point2f& pos, GameController* pGameController);
     virtual ~Zombie() override = default;
     Zombie(const Zombie& other) = delete;
     Zombie(Zombie&& other) noexcept = delete;

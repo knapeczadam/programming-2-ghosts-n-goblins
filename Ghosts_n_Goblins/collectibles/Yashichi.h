@@ -15,7 +15,7 @@
  * Like the armor, you must walk, jump, or fall through the correct position to make a Yashichi appear.
  * If you manage to find one and collect it, you will earn 10,000 points.
  */
-class Yashichi : public GameObject, public ICollectible
+class Yashichi final : public GameObject, public ICollectible
 {
 public:
     explicit Yashichi(const Point2f& pos, GameController* pGameController);

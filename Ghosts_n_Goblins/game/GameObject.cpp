@@ -1,16 +1,13 @@
 ﻿#include "pch.h"
 #include "GameObject.h"
-#include <cassert>
-#include <iostream>
 
 #include "GameController.h"
-#include "game/Macros.h"
-
 #include "utils.h"
 #include "engine/Sprite.h"
-#include "engine/Clock.h"
 #include "engine/SpriteFactory.h"
-#include "characters/IEnemy.h"
+#include "game/Macros.h"
+
+#include <iostream>
 
 GameObject::GameObject()
     : m_Label{Game::Label::D_DUMMY}

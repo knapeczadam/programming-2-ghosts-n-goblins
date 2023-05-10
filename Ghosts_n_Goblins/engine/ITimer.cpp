@@ -1,6 +1,8 @@
 ﻿#include "pch.h"
 #include "ITimer.h"
+
 #include "Clock.h"
+
 #include <numeric>
 
 ITimer::ITimer()

@@ -10,6 +10,7 @@ InitialDrawer::InitialDrawer(GameController* pGameController)
     , m_Characters{}
     , m_NrCols{13}
 {
+    m_pGameController->m_pInitialDrawer = this;
     m_pSprite = pGameController->m_pSpriteFactory->CreateSprite(Game::Label::U_ABC);
     InitLookup();
     m_pSprite->SetLeftOffsetPx(4);
@@ -54,6 +55,7 @@ int InitialDrawer::GetRowIdx(char character) const
             return int(idx) / m_NrCols;
         }
     }
+    return 0;
 }
 
 int InitialDrawer::GetColIdx(char character) const
@@ -65,6 +67,7 @@ int InitialDrawer::GetColIdx(char character) const
             return int(idx) % m_NrCols;
         }
     }
+    return 0;
 }
 
 char InitialDrawer::GetCharacter(int rowIdx, int colIdx) const

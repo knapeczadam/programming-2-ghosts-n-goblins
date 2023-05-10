@@ -1,7 +1,9 @@
 ﻿#include "pch.h"
 #include "ArmorCollisionBox.h"
+
 #include "characters/Player.h"
 #include "collectibles/Pot.h"
+#include "game/CollectibleManager.h"
 #include "game/GameController.h"
 
 ArmorCollisionBox::ArmorCollisionBox(const Rectf& shape, GameController* pGameController)
@@ -14,10 +16,10 @@ void ArmorCollisionBox::HandleCollision(GameObject* other)
 {
     if (not IsOverlapping(other)) return;
     Player* pPlayer{static_cast<Player*>(other)};
-    if (pPlayer->GetState() == Player::State::jumping_standing and pPlayer->GetHP() == 1)
+    if (pPlayer->GetState() == Player::State::JUMPING_STANDING and pPlayer->GetHP() == 1)
     {
         m_Active = false;
-        for (GameObject* pCollectible : m_pGameController->m_Collectibles)
+        for (GameObject* pCollectible : m_pGameController->m_pCollectibleManager->GetCollectibles())
         {
             if (pCollectible->GetLabel() == Game::Label::O_POT)
             {

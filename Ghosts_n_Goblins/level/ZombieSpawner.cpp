@@ -5,19 +5,21 @@
 #include "game/GameController.h"
 #include "characters/Player.h"
 #include "characters/IEnemy.h"
+#include "game/EnemyManager.h"
+#include "game/PlayerManager.h"
 
 ZombieSpawner::ZombieSpawner(const Rectf& boundaries, GameController* pGameController)
-    : Spawner{boundaries, pGameController}
+    : ISpawner{boundaries, pGameController}
       , range{200}
 {
 }
 
 void ZombieSpawner::Spawn()
 {
-    if (not IsPlayerBetwwenBoundaries()) return;
+    if (not IsPlayerBetweenBoundaries()) return;
     
-    const Point2f playerCenter{m_pGameController->m_pPlayer->GetCollisionBoxCenter()};
-    for (GameObject* pZombie : m_pGameController->m_Zombies)
+    const Point2f playerCenter{m_pGameController->m_pPlayerManager->GetPlayer()->GetCollisionBoxCenter()};
+    for (GameObject* pZombie : m_pGameController->m_pEnemyManager->GetZombies())
     {
         if (not pZombie->IsActive())
         {

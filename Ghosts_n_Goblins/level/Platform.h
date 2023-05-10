@@ -1,13 +1,10 @@
 // Knapecz, Adam - 1DAE11
 #pragma once
 #include "Vector2f.h"
-#include <vector>
 #include "game/Game.h"
 #include "game/GameObject.h"
 
-class Texture;
-
-class Platform : public GameObject
+class Platform final : public GameObject
 {
 public:
     explicit Platform(const Point2f& pos,GameController* pGameController);
