@@ -13,12 +13,15 @@ public:
 
     virtual void Draw() const override;
     virtual void Update(float elapsedSec) override;
+    virtual void Reset() override;
 
 private:
     void DrawAbc() const;
     auto DrawInitial() const -> void;
     void FlickerCharacter() const;
     void OnEnter();
+    
+private:
     void SaveInitial();
     
 private:

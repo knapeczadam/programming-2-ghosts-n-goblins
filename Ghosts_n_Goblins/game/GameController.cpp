@@ -8,13 +8,15 @@ GameController::GameController(
 )
     : m_Labels{labels}
       , m_Data(data) // doesn't work with brace initialization
-      , m_ViewPort{viewPort} 
+      , m_ViewPort{viewPort}
       , m_pBootManager{nullptr}
+      , m_pCameraManager{nullptr}
       , m_pCollectibleManager{nullptr}
       , m_pEnemyManager{nullptr}
       , m_pFXManager{nullptr}
       , m_pInputManager{nullptr}
       , m_pLevelManager{nullptr}
+      , m_pMenuManager{nullptr}
       , m_pPlayerManager{nullptr}
       , m_pSoundManager{nullptr}
       , m_pSpriteFactory{nullptr}

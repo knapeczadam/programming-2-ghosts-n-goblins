@@ -40,14 +40,16 @@ Game::Game(const Window& window)
       , m_Data{nullptr}
       , m_DataPath{"data.json"}
       , m_Labels{}
-      , m_State{State::BOOT}
+      , m_State{State::MENU}
       , m_pBootManager{nullptr}
+      , m_pCameraManager{nullptr}
       , m_pCollectibleManager{nullptr}
       , m_pEnemyManager{nullptr}
       , m_pFXManager{nullptr}
       , m_pGameController{nullptr}
       , m_pInputManager{nullptr}
       , m_pLevelManager{nullptr}
+      , m_pMenuManager{nullptr}
       , m_pPlayerManager{nullptr}
       , m_pSoundManager{nullptr}
       , m_pSpriteFactory{nullptr}
@@ -82,6 +84,7 @@ void Game::Initialize()
     m_pCollectibleManager = new CollectibleManager{m_pGameController};
     m_pEnemyManager = new EnemyManager{m_pGameController};
     m_pLevelManager = new LevelManager{m_pGameController};
+    m_pMenuManager = new MenuManager{m_pGameController};
     m_pPlayerManager = new PlayerManager{m_pGameController};
     m_pUIManager = new UIManager{m_pGameController};
 
@@ -101,6 +104,7 @@ Game::~Game()
     delete m_pUIManager;
     delete m_pPlayerManager;
     delete m_pLevelManager;
+    delete m_pMenuManager;
     delete m_pEnemyManager;
     delete m_pCollectibleManager;
     delete m_pBootManager;
@@ -206,6 +210,7 @@ void Game::InitLabels()
     m_Labels["u_numbers"] = Label::U_NUMBERS;
     m_Labels["u_pin"] = Label::U_PIN;
     m_Labels["u_text_best_ranking"] = Label::U_TEXT_BEST_RANKING;
+    m_Labels["u_text_bonus"] = Label::U_TEXT_BONUS;
     m_Labels["u_text_bottom_row"] = Label::U_TEXT_BOTTOM_ROW;
     m_Labels["u_text_deposit"] = Label::U_TEXT_DEPOSIT;
     m_Labels["u_text_game_over"] = Label::U_TEXT_GAME_OVER;
@@ -382,12 +387,14 @@ void Game::UpdateState()
 {
     if (m_pBootManager->GetState() == Label::B_END)
     {
-        m_State = State::GAME;
+        m_State = State::MENU;
     }
     else if (m_pUIManager->m_pCreditManager->GetCredits() and m_pGameController->m_pInputManager->IsPressed(
         Label::I_START))
     {
         m_State = State::INTRO;
+        m_pUIManager->m_pCreditManager->Reset();
+        m_pMenuManager->Reset();
     }
     // else if first cutscene is over -> game
     else if (m_pPlayerManager->GetPlayer()->GetLives() == 0 and m_pPlayerManager->GetPlayer()->GetScore() < m_pUIManager
@@ -510,7 +517,7 @@ void Game::DrawGame() const
     glPopMatrix();
 
     m_pUIManager->m_pHUD->Draw();
-    
+
 #if DRAW_CENTER_GUIDE
     utils::SetColor(Color4f{1.0f, 1.0f, 1.0f, 0.5f});
     utils::DrawLine(Point2f{GetViewPort().width / 2, 0}, Point2f{GetViewPort().width / 2, GetViewPort().height});
@@ -520,6 +527,7 @@ void Game::DrawGame() const
 
 void Game::DrawMenu() const
 {
+    m_pMenuManager->Draw();
 }
 
 void Game::DrawIntro() const
@@ -579,6 +587,7 @@ void Game::UpdateGame(float elapsedSec)
 
 void Game::UpdateMenu(float elapsedSec)
 {
+    m_pMenuManager->Update(elapsedSec);
 }
 
 void Game::UpdateIntro(float elapsedSec)
@@ -619,12 +628,45 @@ void Game::LateUpdateGame(float elapsedSec)
         m_pEnemyManager->LateUpdate(elapsedSec);
         m_pCollectibleManager->LateUpdate(elapsedSec);
         m_pFXManager->LateUpdate(elapsedSec);
-        m_pUIManager->UpdateRemainingTime();
+        UpdateRemainingTime();
         break;
     }
 #if TEST_OBJECT
     m_pTestObject->LateUpdate(elapsedSec);
 #endif
+}
+
+void Game::UpdateRemainingTime()
+{
+    StartTimer(121);
+    const int seconds{GetSeconds()};
+    const int minutes{GetMinutes()};
+
+    int firstDigit, secondDigit, thirdDigit;
+    firstDigit = minutes;
+    if (seconds > 9)
+    {
+        secondDigit = seconds / 10;
+        thirdDigit = seconds % 10;
+    }
+    else
+    {
+        secondDigit = 0;
+        thirdDigit = seconds;
+    }
+    if (GetRemainingTime() <= 15.0f)
+    {
+        m_pGameController->m_pSoundManager->PlayStream(Game::Label::S_05_HURRY_UP, false);
+    }
+    m_pGameController->m_pUIManager->m_pHUD->SetFirstDigit(firstDigit);
+    m_pGameController->m_pUIManager->m_pHUD->SetSecondDigit(secondDigit);
+    m_pGameController->m_pUIManager->m_pHUD->SetThirdDigit(thirdDigit);
+
+    if (IsTimerFinished())
+    {
+        std::cout << "Time is up!\n";
+        // TODO: Game over
+    }
 }
 
 void Game::PrintInfo() const
@@ -666,16 +708,26 @@ void Game::Debug() const
     std::cout << " * Game state: ";
     switch (m_State)
     {
-        case State::BOOT: std::cout << "BOOT"; break;
-        case State::GAME: std::cout << "GAME"; break;
-        case State::MENU: std::cout << "MENU"; break;
-        case State::INTRO: std::cout << "INTRO"; break;
-        case State::MAP: std::cout << "MAP"; break;
-        case State::GAME_OVER: std::cout << "GAME_OVER"; break;
-        case State::CONTINUE: std::cout << "CONTINUE"; break;
-        case State::RANKING: std::cout << "RANKING"; break;
-        case State::OUTRO: std::cout << "OUTRO"; break;
-        case State::SAVE_SCORE: std::cout << "SAVE_SCORE"; break;
+    case State::BOOT: std::cout << "BOOT";
+        break;
+    case State::GAME: std::cout << "GAME";
+        break;
+    case State::MENU: std::cout << "MENU";
+        break;
+    case State::INTRO: std::cout << "INTRO";
+        break;
+    case State::MAP: std::cout << "MAP";
+        break;
+    case State::GAME_OVER: std::cout << "GAME_OVER";
+        break;
+    case State::CONTINUE: std::cout << "CONTINUE";
+        break;
+    case State::RANKING: std::cout << "RANKING";
+        break;
+    case State::OUTRO: std::cout << "OUTRO";
+        break;
+    case State::SAVE_SCORE: std::cout << "SAVE_SCORE";
+        break;
     }
     std::cout << "\n\n";
 }

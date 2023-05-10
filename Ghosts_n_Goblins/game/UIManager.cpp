@@ -58,37 +58,3 @@ void UIManager::Reset()
 {
     IManager::Reset();
 }
-
-void UIManager::UpdateRemainingTime()
-{
-    
-    StartTimer(120);
-    const int seconds{GetSeconds()};
-    const int minutes{GetMinutes()};
-
-    int firstDigit, secondDigit, thirdDigit;
-    firstDigit = minutes;
-    if (seconds > 9)
-    {
-        secondDigit = seconds / 10;
-        thirdDigit = seconds % 10;
-    }
-    else
-    {
-        secondDigit = 0;
-        thirdDigit = seconds;
-    }
-    if (GetRemainingTime() <= 15.0f)
-    {
-        m_pGameController->m_pSoundManager->PlayStream(Game::Label::S_05_HURRY_UP, false);
-    }
-    m_pHUD->SetFirstDigit(firstDigit);
-    m_pHUD->SetSecondDigit(secondDigit);
-    m_pHUD->SetThirdDigit(thirdDigit);
-
-    if (IsTimerFinished())
-    {
-        std::cout << "Time is up!\n";
-        // TODO: Game over
-    }
-}

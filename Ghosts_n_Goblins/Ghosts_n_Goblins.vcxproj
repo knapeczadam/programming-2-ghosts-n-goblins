@@ -1070,6 +1070,7 @@
     <ClCompile Include="game\IManager.cpp" />
     <ClCompile Include="game\InputManager.cpp" />
     <ClCompile Include="game\LevelManager.cpp" />
+    <ClCompile Include="game\MenuManager.cpp" />
     <ClCompile Include="game\PlayerManager.cpp" />
     <ClCompile Include="game\UIManager.cpp" />
     <ClCompile Include="level\ArmorCollisionBox.cpp" />
@@ -2039,6 +2040,7 @@
     <ClInclude Include="game\InputManager.h" />
     <ClInclude Include="game\LevelManager.h" />
     <ClInclude Include="game\Macros.h" />
+    <ClInclude Include="game\MenuManager.h" />
     <ClInclude Include="game\PlayerManager.h" />
     <ClInclude Include="game\UIManager.h" />
     <ClInclude Include="level\ArmorCollisionBox.h" />

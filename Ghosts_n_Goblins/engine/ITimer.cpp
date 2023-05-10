@@ -21,6 +21,11 @@ void ITimer::StartTimer(float seconds)
     m_pClock = new Clock{seconds};
 }
 
+void ITimer::ResetTimer()
+{
+    delete m_pClock;
+}
+
 bool ITimer::IsTimerFinished()
 {
     if (not m_pClock) return true;

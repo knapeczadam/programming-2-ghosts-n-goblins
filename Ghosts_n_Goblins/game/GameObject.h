@@ -23,6 +23,7 @@ public:
     virtual void Update(float elapsedSec);
     virtual void LateUpdate(float elapsedSec);
     virtual void HandleCollision(GameObject* other);
+    virtual void Reset();
 
     // GETTERS & SETTERS
     Game::Label GetLabel() const;

@@ -165,6 +165,10 @@
       "path": "ui/text_best_ranking.png"
     },
     {
+      "label": "u_text_bonus",
+      "path": "ui/text_bonus.png"
+    },
+    {
       "label": "u_text_bottom_row",
       "path": "ui/text_bottom_row.png"
     },
@@ -615,6 +619,10 @@
       "scale": 2
     },
     {
+      "label": "u_text_bonus",
+      "scale": 2
+    },
+    {
       "label": "u_text_bottom_row",
       "scale": 2
     },
@@ -624,6 +632,9 @@
     },
     {
       "label": "u_text_game_over",
+      "rows": 2,
+      "columns": 1,
+      "frames_per_second": 2,
       "scale": 2
     },
     {

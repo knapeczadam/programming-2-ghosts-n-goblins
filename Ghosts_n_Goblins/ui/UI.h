@@ -21,13 +21,14 @@ public:
     UI& operator=(UI&& other) noexcept = delete;
 
     virtual void Draw() const;
-    virtual void Reset() const;
+    virtual void Reset();
     virtual void Update(float elapsedSec);
     virtual bool IsActive() const final;
     virtual bool IsVisible() const final;
     
     virtual void DrawPlayerScore() const final;
     virtual void DrawHighScore() const final;
+    virtual void DrawTextBonus() const final;
     virtual void DrawTextBottomRow() const final;
     virtual void DrawTextDeposit() const final;
     virtual void DrawTextGameOver() const final;
@@ -46,6 +47,7 @@ protected:
     float m_BlinkingTime;
 private:
     Sprite* m_pNumbers;
+    Sprite* m_pTextBonus;
     Sprite* m_pTextBottomRow;
     Sprite* m_pTextDeposit;
     Sprite* m_pTextGameOver;

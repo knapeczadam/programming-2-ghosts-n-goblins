@@ -17,12 +17,14 @@ UI::UI(Game::Label label, GameController* pGameController)
     , m_Blinking{false}
     , m_BlinkingTime{0.0f}
     , m_pNumbers{pGameController->m_pSpriteFactory->CreateSprite(Game::Label::U_NUMBERS)}
+    , m_pTextBonus{pGameController->m_pSpriteFactory->CreateSprite(Game::Label::U_TEXT_BONUS)}
     , m_pTextBottomRow{pGameController->m_pSpriteFactory->CreateSprite(Game::Label::U_TEXT_BOTTOM_ROW)}
     , m_pTextDeposit{pGameController->m_pSpriteFactory->CreateSprite(Game::Label::U_TEXT_DEPOSIT)}
     , m_pTextGameOver{pGameController->m_pSpriteFactory->CreateSprite(Game::Label::U_TEXT_GAME_OVER)}
     , m_pTextTitle{pGameController->m_pSpriteFactory->CreateSprite(Game::Label::U_TEXT_TITLE)}
     , m_pTextTopRow{pGameController->m_pSpriteFactory->CreateSprite(Game::Label::U_TEXT_TOP_ROW)}
 {
+    m_pTextBonus->SetPosition(Point2f{80.0f, 112.0f});
     m_pTextBottomRow->SetPosition(Point2f{32.0f, 0.0f});
     m_pTextDeposit->SetPosition(Point2f{112.0f, 224.0f});
     m_pTextGameOver->SetPosition(Point2f{192.0f, 224.0f});
@@ -34,12 +36,15 @@ void UI::Draw() const
 {
 }
 
-void UI::Reset() const
+void UI::Reset()
 {
+    
 }
 
 void UI::Update(float elapsedSec)
 {
+    m_pTextGameOver->Update(elapsedSec);
+    
     if (m_BlinkingTime > 0.0f)
     {
         StartTimer(m_BlinkingTime);
@@ -72,6 +77,11 @@ void UI::DrawHighScore() const
     const int highScore{m_pGameController->m_pUIManager->m_pScoreManager->GetHighScore()};
     Point2f pos{304.0f, m_pGameController->m_ViewPort.height - m_pNumbers->GetScaledClipHeight() * 2};
     m_pGameController->m_pUIManager->m_pScoreManager->DrawNumber(pos, highScore, ScoreManager::Color::WHITE_TAN);
+}
+
+void UI::DrawTextBonus() const
+{
+    m_pTextBonus->Draw();
 }
 
 void UI::DrawTextBottomRow() const

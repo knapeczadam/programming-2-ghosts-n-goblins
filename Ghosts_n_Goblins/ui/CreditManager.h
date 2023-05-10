@@ -12,8 +12,9 @@ public:
     CreditManager& operator=(CreditManager&& other) noexcept = delete;
 
     virtual void Update(float elapsedSec) override;
-    void DrawCredit() const;
+    void DrawCredits() const;
     int GetCredits() const;
+    virtual void Reset() override;
 
 private:
     int m_Credits;

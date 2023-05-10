@@ -4,6 +4,8 @@
 
 #include <cassert>
 
+#include "MenuManager.h"
+
 class BootManager;
 class CameraManager;
 class CollectibleManager;
@@ -41,6 +43,7 @@ public:
         assert(m_pFXManager != nullptr and "GameController::Test() m_pFXManager is nullptr");
         assert(m_pInputManager != nullptr and "GameController::Test() m_pInputManager is nullptr");
         assert(m_pLevelManager != nullptr and "GameController::Test() m_pLevelManager is nullptr");
+        assert(m_pMenuManager != nullptr and "GameController::Test() m_pMenuManager is nullptr");
         assert(m_pPlayerManager != nullptr and "GameController::Test() m_pPlayerManager is nullptr");
         assert(m_pSoundManager != nullptr and "GameController::Test() m_pSoundManager is nullptr");
         assert(m_pSpriteFactory != nullptr and "GameController::Test() m_pSpriteFactory is nullptr");
@@ -59,6 +62,7 @@ public:
     FXManager* m_pFXManager;
     InputManager* m_pInputManager;
     LevelManager* m_pLevelManager;
+    MenuManager* m_pMenuManager;
     PlayerManager* m_pPlayerManager;
     SoundManager* m_pSoundManager;
     SpriteFactory* m_pSpriteFactory;

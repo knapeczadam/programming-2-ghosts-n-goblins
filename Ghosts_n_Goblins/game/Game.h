@@ -17,6 +17,7 @@ class GameController;
 class GameObject;
 class InputManager;
 class LevelManager;
+class MenuManager;
 class PlayerManager;
 class SoundManager;
 class SpriteFactory;
@@ -124,6 +125,7 @@ public:
         // Ui
         U_ABC,
         U_TEXT_BEST_RANKING,
+        U_TEXT_BONUS,
         U_CHARACTER_DRAWER,
         U_CREDIT_MANAGER,
         U_FRAME,
@@ -278,6 +280,7 @@ private:
 
     void UpdateState();
     void LateUpdateGame(float elapsedSec);
+    void UpdateRemainingTime();
     
     void HandleCollisions();
     void Debug() const;
@@ -297,6 +300,7 @@ private:
     GameController* m_pGameController;
     InputManager* m_pInputManager;
     LevelManager* m_pLevelManager;
+    MenuManager* m_pMenuManager;
     PlayerManager* m_pPlayerManager;
     SoundManager* m_pSoundManager;
     SpriteFactory* m_pSpriteFactory;

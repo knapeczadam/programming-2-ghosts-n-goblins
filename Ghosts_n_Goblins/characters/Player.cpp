@@ -49,7 +49,7 @@ Player::Player(const Point2f& pos, GameController* pGameController)
       , m_MaxHP{2}
       , m_HP{m_MaxHP}
       , m_MaxLives{7}
-      , m_Lives{m_MaxLives}
+      , m_Lives{3}
       , m_Score{0}
       , m_CanClimb{false}
       , m_Climbing{false}

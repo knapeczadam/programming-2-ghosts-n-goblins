@@ -10,7 +10,7 @@
 CreditManager::CreditManager(GameController* pGameController)
     : UI{Game::Label::U_CREDIT_MANAGER, pGameController}
     , m_Credits{}
-    , m_MaxCredits{5}
+    , m_MaxCredits{1}
 {
 }
 
@@ -26,7 +26,7 @@ void CreditManager::Update(float elapsedSec)
     }
 }
 
-void CreditManager::DrawCredit() const
+void CreditManager::DrawCredits() const
 {
     Point2f pos{146.0f, 0.0f};
     DrawNumber(pos, m_Credits, ScoreManager::Color::DARK_TAN);
@@ -35,4 +35,9 @@ void CreditManager::DrawCredit() const
 int CreditManager::GetCredits() const
 {
     return m_Credits;
+}
+
+void CreditManager::Reset()
+{
+    m_Credits = 0;
 }

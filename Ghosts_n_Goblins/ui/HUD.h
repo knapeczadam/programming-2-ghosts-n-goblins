@@ -16,10 +16,10 @@ public:
     void SetFirstDigit(int digit);
     void SetSecondDigit(int digit);
     void SetThirdDigit(int digit);
+    void DrawTextTime() const;
+    void DrawRemainingTime() const;
 private:
     void DrawLives() const;
-    void DrawRemainingTime() const;
-    void DrawTextTime() const;
     void DrawWeapon() const;
     void DrawFrame() const;
     

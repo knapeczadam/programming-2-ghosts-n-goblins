@@ -135,3 +135,10 @@ void InitialSaver::Update(float elapsedSec)
 
     OnEnter();
 }
+
+void InitialSaver::Reset()
+{
+    m_Initial.clear();
+    m_RowIdx = m_NrRows - 1;
+    m_ColIdx = m_NrCols - 1;
+}

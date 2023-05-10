@@ -43,11 +43,9 @@ void Map::Update(float elapsedSec)
     pDummy->SetPosition(pDummy->GetPosition<Point2f>() + Vector2f{m_Speed * elapsedSec, 0});
 }
 
-void Map::Reset() const
+void Map::Reset()
 {
     pDummy->SetPosition(Point2f{});
-    // pDummy->SetPosition(
-        // Point2f{m_pGameController->m_ViewPort.width / 2.0f, m_pGameController->m_ViewPort.height / 2.0f});
 }
 
 Rectf Map::GetBoundaries() const

@@ -21,7 +21,6 @@ public:
     UIManager& operator=(UIManager&&) = delete;
 
     virtual void Reset() override;
-    void UpdateRemainingTime();
 
 protected:
     virtual void Initialize() override;
