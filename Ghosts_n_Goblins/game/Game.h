@@ -9,7 +9,7 @@
 using json = nlohmann::json;
 
 class BootManager;
-class Camera;
+class CameraManager;
 class CollectibleManager;
 class EnemyManager;
 class FXManager;
@@ -139,7 +139,9 @@ public:
         U_TEXT_GAME_OVER,
         U_TEXT_INITIAL,
         U_TEXT_PLAYER_ONE_READY,
+        U_TEXT_TIME,
         U_TEXT_TITLE,
+        U_TEXT_TOP_ROW,
         U_WEAPONS,
 
         // --- SOUNDS ---
@@ -245,7 +247,6 @@ public:
 
 private:
     void Initialize();
-    void InitCamera();
     void InitLabels();
     void LoadData();
     
@@ -276,9 +277,8 @@ private:
     void UpdateState();
     void LateUpdateGame(float elapsedSec);
     
-    void DoCollisionTests();
+    void HandleCollisions();
     void Debug() const;
-    void DoFrustumCulling();
     void PrintInfo() const;
 
 private:
@@ -288,7 +288,7 @@ private:
     State m_State;
     
     BootManager* m_pBootManager;
-    Camera* m_pCamera;
+    CameraManager* m_pCameraManager;
     CollectibleManager* m_pCollectibleManager;
     EnemyManager* m_pEnemyManager;
     FXManager* m_pFXManager;

@@ -58,8 +58,8 @@ void PlayerManager::Update(float elapsedSec)
 {
     static const auto isActive{[](const GameObject* pGameObject) { return pGameObject->IsActive(); }};
     static const auto update{[&](GameObject* pGameObject) { pGameObject->Update(elapsedSec); }};
-    std::ranges::for_each(m_Throwables | std::ranges::views::filter(isActive), update);
     if (m_pPlayer->IsActive()) m_pPlayer->Update(elapsedSec);
+    std::ranges::for_each(m_Throwables | std::ranges::views::filter(isActive), update);
 }
 
 void PlayerManager::LateUpdate(float elapsedSec)

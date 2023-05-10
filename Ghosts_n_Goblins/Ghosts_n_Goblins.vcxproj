@@ -900,6 +900,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(IntDir)$(TargetName).pch</PrecompiledHeaderOutputFile>
     </ClCompile>
+    <ClCompile Include="game\CameraManager.cpp" />
     <ClCompile Include="game\CollectibleManager.cpp" />
     <ClCompile Include="game\CutsceneManager.cpp" />
     <ClCompile Include="game\EnemyManager.cpp" />
@@ -2027,6 +2028,7 @@
     <ClInclude Include="fx\Score.h" />
     <ClInclude Include="game\BootManager.h" />
     <ClInclude Include="game\Camera.h" />
+    <ClInclude Include="game\CameraManager.h" />
     <ClInclude Include="game\CollectibleManager.h" />
     <ClInclude Include="game\CutsceneManager.h" />
     <ClInclude Include="game\EnemyManager.h" />

@@ -241,7 +241,8 @@ void Player::Throw()
  */
 void Player::Attack()
 {
-    if (not m_Attacking and m_pGameController->m_pInputManager->IsPressed(Game::Label::I_ATTACK) and not m_pGameController->m_pInputManager->IsTriggered(Game::Label::I_ATTACK))
+    if (not m_Attacking and m_pGameController->m_pInputManager->IsPressed(Game::Label::I_ATTACK) and not
+        m_pGameController->m_pInputManager->IsTriggered(Game::Label::I_ATTACK))
     {
         m_pGameController->m_pInputManager->SetTriggered(Game::Label::I_ATTACK, true);
         m_pGameController->m_pSoundManager->PlayEffect(Game::Label::E_ARTHUR_THROW);
@@ -331,7 +332,8 @@ void Player::MoveHorizontal()
  */
 void Player::Jump()
 {
-    if (m_pGameController->m_pInputManager->IsPressed(Game::Label::I_JUMP) and not m_pGameController->m_pInputManager->IsTriggered(Game::Label::I_JUMP))
+    if (m_pGameController->m_pInputManager->IsPressed(Game::Label::I_JUMP) and not m_pGameController->m_pInputManager->
+        IsTriggered(Game::Label::I_JUMP))
     {
         m_pGameController->m_pInputManager->SetTriggered(Game::Label::I_JUMP, true);
         m_pGameController->m_pSoundManager->PlayEffect(Game::Label::E_ARTHUR_JUMP);
@@ -384,7 +386,8 @@ void Player::SyncWithPlatform(float elapsedSec)
     {
         m_OffsetSnapshot.x = GetPosition<Point2f>().x - m_pGameController->m_pLevelManager->GetPlatform()->GetPosition<
             Point2f>().x;
-        m_OffsetSnapshot.y = m_Shape.bottom - m_pGameController->m_pLevelManager->GetPlatform()->GetPosition<Point2f>().y;
+        m_OffsetSnapshot.y = m_Shape.bottom - m_pGameController->m_pLevelManager->GetPlatform()->GetPosition<Point2f>().
+                                                                 y;
     }
     m_OffsetSnapshot.x += m_Velocity.x * elapsedSec;
     Matrix2x3 pos{};
@@ -520,7 +523,7 @@ bool Player::HandleEnemy(GameObject* other)
     IEnemy* pEnemy{dynamic_cast<IEnemy*>(other)};
     if (pEnemy)
     {
-        // m_pGameController->m_pSoundManager->PlayEffect(Game::Label::E_ARTHUR_HIT);
+        m_pGameController->m_pSoundManager->PlayEffect(Game::Label::E_ARTHUR_HIT);
         --m_HP;
         if (m_HP == 0)
         {
@@ -530,24 +533,36 @@ bool Player::HandleEnemy(GameObject* other)
     return false;
 }
 
-bool Player::HandleWeapon(GameObject* other)
+bool Player::HandleThrowable(GameObject* other)
 {
-    IThrowable* pWeapon{dynamic_cast<IThrowable*>(other)};
-    if (pWeapon)
+    IThrowable* pThrowable{dynamic_cast<IThrowable*>(other)};
+    if (pThrowable)
     {
         other->SetActive(false);
         other->SetVisible(false);
-        m_pGameController->m_pSoundManager->PlayEffect(Game::Label::E_WEAPON_PICKUP);
         switch (other->GetLabel())
         {
         case Game::Label::T_DAGGER:
             m_CurrWeapon = Game::Label::T_DAGGER;
+            m_pGameController->m_pSoundManager->PlayEffect(Game::Label::E_WEAPON_PICKUP);
             break;
         case Game::Label::T_LANCE:
             m_CurrWeapon = Game::Label::T_LANCE;
+            m_pGameController->m_pSoundManager->PlayEffect(Game::Label::E_WEAPON_PICKUP);
             break;
         case Game::Label::T_TORCH:
             m_CurrWeapon = Game::Label::T_TORCH;
+            m_pGameController->m_pSoundManager->PlayEffect(Game::Label::E_WEAPON_PICKUP);
+            break;
+        case Game::Label::T_EYEBALL:
+        case Game::Label::T_SPEAR:
+        case Game::Label::T_FIREBALL_UNICORN:
+        case Game::Label::T_FIREBALL_RED_ARREMER:
+            --m_HP;
+            m_pGameController->m_pSoundManager->PlayEffect(Game::Label::E_ARTHUR_HIT);
+            break;
+        case Game::Label::T_SPELL:
+            m_pGameController->m_pSoundManager->PlayEffect(Game::Label::E_ARTHUR_TRANSFORM);
             break;
         }
         return true;
@@ -561,7 +576,7 @@ bool Player::HandleCollectible(GameObject* other)
     if (pCollectable)
     {
         if (other->GetLabel() == Game::Label::O_POT) return false;
-        
+
         other->SetVisible(false);
         other->SetActive(false);
         switch (other->GetLabel())
@@ -616,7 +631,7 @@ void Player::HandleCollision(GameObject* other)
     if (not IsOverlapping(other)) return;
 
     if (HandleEnemy(other)) return;
-    if (HandleWeapon(other)) return;
+    if (HandleThrowable(other)) return;
     if (HandleCollectible(other)) return;
     if (HandleLadder(other)) return;
     if (HandleCollisionBox(other)) return;

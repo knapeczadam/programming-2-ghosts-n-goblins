@@ -13,14 +13,19 @@
 
 HUD::HUD(GameController* pGameController)
     : UI{Game::Label::U_HUD, pGameController}
-      , m_pFrame{pGameController->m_pSpriteFactory->CreateSprite(Game::Label::U_FRAME)}
+      , m_pTextTopRow{pGameController->m_pSpriteFactory->CreateSprite(Game::Label::U_TEXT_TOP_ROW)}
       , m_pLife{pGameController->m_pSpriteFactory->CreateSprite(Game::Label::U_LIFE)}
       , m_pNumbers(pGameController->m_pSpriteFactory->CreateSprite(Game::Label::U_NUMBERS))
       , m_pWeapons(pGameController->m_pSpriteFactory->CreateSprite(Game::Label::U_WEAPONS))
+      , m_pTextTime{pGameController->m_pSpriteFactory->CreateSprite(Game::Label::U_TEXT_TIME)}
+      , m_pFrame{pGameController->m_pSpriteFactory->CreateSprite(Game::Label::U_FRAME)}
       , m_FirstDigit{}
       , m_SecondDigit{}
       , m_ThirdDigit{}
 {
+    m_pTextTime->SetPosition(Point2f{32.0f, 400.0f});
+    m_pTextTopRow->SetPosition(Point2f{16.0f, 432.0f});
+    m_pFrame->SetPosition(Point2f{m_pGameController->m_ViewPort.width / 2 - m_pFrame->GetScaledClipWidth() / 2, 0.0f});
 }
 
 void HUD::Draw() const
@@ -28,7 +33,9 @@ void HUD::Draw() const
     DrawLives();
     DrawPlayerScore();
     DrawHighScore();
-    DrawTime();
+    DrawTextTime();
+    DrawRemainingTime();
+    DrawTextTopRow();
     DrawFrame();
     DrawWeapon();
 }
@@ -61,7 +68,7 @@ void HUD::DrawPlayerScore() const
 {
     const int playerScore{m_pGameController->m_pPlayerManager->GetPlayer()->GetScore()};
     Point2f pos{128.0f, m_pGameController->m_ViewPort.height - m_pNumbers->GetScaledClipHeight() * 2};
-    m_pGameController->m_pScoreManager->DrawNumber(pos, playerScore,ScoreManager::Color::WHITE_TAN );
+    m_pGameController->m_pScoreManager->DrawNumber(pos, playerScore, ScoreManager::Color::WHITE_TAN);
 }
 
 void HUD::DrawHighScore() const
@@ -71,7 +78,7 @@ void HUD::DrawHighScore() const
     m_pGameController->m_pScoreManager->DrawNumber(pos, highScore, ScoreManager::Color::WHITE_TAN);
 }
 
-void HUD::DrawTime() const
+void HUD::DrawRemainingTime() const
 {
     Point2f pos{32, m_pGameController->m_ViewPort.height - m_pNumbers->GetScaledClipHeight() * 4};
     const float offset{m_pNumbers->GetScaledClipWidth()};
@@ -108,9 +115,14 @@ void HUD::DrawTime() const
     m_pNumbers->Draw();
 }
 
-void HUD::DrawFrame() const
+void HUD::DrawTextTime() const
 {
-    m_pFrame->Draw();
+    m_pTextTime->Draw();
+}
+
+void HUD::DrawTextTopRow() const
+{
+    m_pTextTopRow->Draw();
 }
 
 void HUD::DrawWeapon() const
@@ -134,4 +146,9 @@ void HUD::DrawWeapon() const
     m_pWeapons->SetPosition(pos);
     m_pWeapons->UpdateSourceRect();
     m_pWeapons->Draw();
+}
+
+void HUD::DrawFrame() const
+{
+    m_pFrame->Draw();
 }

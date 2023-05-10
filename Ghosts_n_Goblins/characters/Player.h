@@ -3,6 +3,7 @@
 
 #include "Vector2f.h"
 #include "game/GameObject.h"
+#include "throwables/IThrowable.h"
 
 
 /*
@@ -62,7 +63,7 @@ public:
     int GetScore() const;
     void AddScore(int score);
     bool HandleEnemy(GameObject* other);
-    bool HandleWeapon(GameObject* other);
+    bool HandleThrowable(GameObject* other);
     bool HandleCollectible(GameObject* other);
     bool HandleLadder(GameObject* other);
     bool HandleCollisionBox(GameObject* other);

@@ -181,8 +181,16 @@
       "path": "ui/text_player_one_ready.png"
     },
     {
+      "label": "u_text_time",
+      "path": "ui/text_time.png"
+    },
+    {
       "label": "u_text_title",
       "path": "ui/text_title.png"
+    },
+    {
+      "label": "u_text_top_row",
+        "path": "ui/text_top_row.png"
     },
     {
       "label": "u_weapons",
@@ -619,8 +627,16 @@
       "scale": 2
     },
     {
+      "label": "u_text_time",
+      "scale": 2
+    },
+    {
       "label": "u_text_title",
       "scale": 2
+    },
+    {
+      "label": "u_text_top_row",
+        "scale": 2
     },
     {
       "label": "u_weapons",

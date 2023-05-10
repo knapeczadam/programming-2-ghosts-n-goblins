@@ -20,15 +20,19 @@ private:
     void DrawLives() const;
     void DrawPlayerScore() const;
     void DrawHighScore() const;
-    void DrawTime() const;
-    void DrawFrame() const;
+    void DrawRemainingTime() const;
+    void DrawTextTime() const;
+    void DrawTextTopRow() const;
     void DrawWeapon() const;
+    void DrawFrame() const;
     
 private:
-    Sprite* m_pFrame;
+    Sprite* m_pTextTopRow;
     Sprite* m_pLife;
     Sprite* m_pNumbers;
     Sprite* m_pWeapons;
+    Sprite* m_pTextTime;
+    Sprite* m_pFrame;
     int m_FirstDigit;
     int m_SecondDigit;
     int m_ThirdDigit;
