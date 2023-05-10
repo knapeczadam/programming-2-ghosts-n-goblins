@@ -12,14 +12,10 @@ CreditManager::CreditManager(GameController* pGameController)
     , m_Credits{}
     , m_MaxCredits{5}
 {
-    m_pSprite = pGameController->m_pSpriteFactory->CreateSprite(Game::Label::U_TEXT_CREDIT);
-    m_pSprite->SetPosition(Point2f{32.0f, 0.0f});
 }
 
 void CreditManager::Draw() const
 {
-    m_pSprite->Draw();
-    m_pGameController->m_pScoreManager->DrawNumber(Point2f{146.0f, 0.0f}, m_Credits, ScoreManager::Color::DARK_TAN);
 }
 
 void CreditManager::Update(float elapsedSec)
@@ -32,6 +28,12 @@ void CreditManager::Update(float elapsedSec)
             ++m_Credits;
         }
     }
+}
+
+void CreditManager::DrawCredit() const
+{
+    Point2f pos{146.0f, 0.0f};
+    DrawNumber(pos, m_Credits, ScoreManager::Color::DARK_TAN);
 }
 
 int CreditManager::GetCredits() const

@@ -12,6 +12,8 @@
 
 #include <iostream>
 
+#include "engine/SoundManager.h"
+
 UIManager::UIManager(GameController* pGameController)
     : IManager{pGameController}
     , m_pCreditManager{nullptr}
@@ -75,7 +77,7 @@ void UIManager::UpdateRemainingTime()
     }
     if (GetRemainingTime() <= 15.0f)
     {
-        // m_pSoundManager->PlayStream(Game::Label::S_05_HURRY_UP, false);
+        m_pGameController->m_pSoundManager->PlayStream(Game::Label::S_05_HURRY_UP, false);
     }
     m_pHUD->SetFirstDigit(firstDigit);
     m_pHUD->SetSecondDigit(secondDigit);

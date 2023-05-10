@@ -165,8 +165,12 @@
       "path": "ui/best_ranking.png"
     },
     {
-      "label": "u_text_credit",
-      "path": "ui/text_credit.png"
+      "label": "u_text_bottom_row",
+      "path": "ui/text_bottom_row.png"
+    },
+    {
+      "label": "u_text_deposit",
+      "path": "ui/text_deposit.png"
     },
     {
       "label": "u_text_game_over",
@@ -190,7 +194,7 @@
     },
     {
       "label": "u_text_top_row",
-        "path": "ui/text_top_row.png"
+      "path": "ui/text_top_row.png"
     },
     {
       "label": "u_weapons",
@@ -611,7 +615,11 @@
       "scale": 2
     },
     {
-      "label": "u_text_credit",
+      "label": "u_text_bottom_row",
+      "scale": 2
+    },
+    {
+      "label": "u_text_deposit",
       "scale": 2
     },
     {
@@ -636,7 +644,7 @@
     },
     {
       "label": "u_text_top_row",
-        "scale": 2
+      "scale": 2
     },
     {
       "label": "u_weapons",

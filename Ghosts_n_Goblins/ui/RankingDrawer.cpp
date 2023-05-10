@@ -38,7 +38,7 @@ void RankingDrawer::DrawScores() const
     const float offset{32.0f};
     for (const auto& result : m_pGameController->m_pScoreManager->GetScores())
     {
-        m_pGameController->m_pScoreManager->DrawNumber(pos, result.second, ScoreManager::Color::WHITE_TAN);
+        DrawNumber(pos, result.second, ScoreManager::Color::WHITE_TAN);
         pos.y -= offset;
     }
 }

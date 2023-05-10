@@ -1,7 +1,12 @@
 ﻿#include "pch.h"
 #include "UI.h"
 
+#include "ScoreManager.h"
+#include "characters/Player.h"
 #include "engine/Sprite.h"
+#include "engine/SpriteFactory.h"
+#include "game/GameController.h"
+#include "game/PlayerManager.h"
 
 UI::UI(Game::Label label, GameController* pGameController)
     : m_Label{label}
@@ -10,8 +15,15 @@ UI::UI(Game::Label label, GameController* pGameController)
     , m_Visible{true}
     , m_Blinking{false}
     , m_BlinkingTime{0.0f}
-    , m_pSprite{nullptr}
+    , m_pNumbers{pGameController->m_pSpriteFactory->CreateSprite(Game::Label::U_NUMBERS)}
+    , m_pTextBottomRow{pGameController->m_pSpriteFactory->CreateSprite(Game::Label::U_TEXT_BOTTOM_ROW)}
+    , m_pTextDeposit{pGameController->m_pSpriteFactory->CreateSprite(Game::Label::U_TEXT_DEPOSIT)}
+    , m_pTextGameOver{pGameController->m_pSpriteFactory->CreateSprite(Game::Label::U_TEXT_GAME_OVER)}
+    , m_pTextTitle{pGameController->m_pSpriteFactory->CreateSprite(Game::Label::U_TEXT_TITLE)}
+    , m_pTextTopRow{pGameController->m_pSpriteFactory->CreateSprite(Game::Label::U_TEXT_TOP_ROW)}
 {
+    m_pTextBottomRow->SetPosition(Point2f{32.0f, 0.0f});
+    m_pTextTopRow->SetPosition(Point2f{16.0f, 432.0f});
 }
 
 void UI::Draw() const
@@ -42,4 +54,78 @@ bool UI::IsActive() const
 bool UI::IsVisible() const
 {
     return m_Visible;
+}
+
+void UI::DrawPlayerScore() const
+{
+    const int playerScore{m_pGameController->m_pPlayerManager->GetPlayer()->GetScore()};
+    Point2f pos{128.0f, m_pGameController->m_ViewPort.height - m_pNumbers->GetScaledClipHeight() * 2};
+    m_pGameController->m_pScoreManager->DrawNumber(pos, playerScore, ScoreManager::Color::WHITE_TAN);
+}
+
+void UI::DrawHighScore() const
+{
+    const int highScore{m_pGameController->m_pScoreManager->GetHighScore()};
+    Point2f pos{304.0f, m_pGameController->m_ViewPort.height - m_pNumbers->GetScaledClipHeight() * 2};
+    m_pGameController->m_pScoreManager->DrawNumber(pos, highScore, ScoreManager::Color::WHITE_TAN);
+}
+
+void UI::DrawTextBottomRow() const
+{
+    m_pTextBottomRow->Draw();
+}
+
+void UI::DrawTextDeposit() const
+{
+    m_pTextDeposit->Draw();
+}
+
+void UI::DrawTextGameOver() const
+{
+    m_pTextGameOver->Draw();
+}
+
+void UI::DrawTextTitle() const
+{
+    m_pTextTitle->Draw();
+}
+
+void UI::DrawTextTopRow() const
+{
+    m_pTextTopRow->Draw();
+}
+
+void UI::DrawNumber(Point2f& pos, int number, Color color) const
+{
+    const float offset{m_pNumbers->GetScaledClipWidth()};
+    m_pNumbers->SetTopOffsetRows(int(color));
+    if (number == 0)
+    {
+        m_pNumbers->SetLeftOffsetCols(0);
+        m_pNumbers->SetPosition(pos);
+        m_pNumbers->UpdateSourceRect();
+        m_pNumbers->UpdateDestinationRect();
+        m_pNumbers->Draw();
+        pos.x -= offset;
+    }
+    if (number == -1) // colon
+    {
+        m_pNumbers->SetLeftOffsetCols(10);
+        m_pNumbers->SetPosition(pos);
+        m_pNumbers->UpdateSourceRect();
+        m_pNumbers->UpdateDestinationRect();
+        m_pNumbers->Draw();
+        pos.x -= offset;
+    }
+    for (int tempScore = number; tempScore > 0; tempScore /= 10)
+    {
+        const int digit{tempScore % 10};
+        m_pNumbers->SetLeftOffsetCols(digit);
+        m_pNumbers->SetPosition(pos);
+        m_pNumbers->UpdateSourceRect();
+        m_pNumbers->UpdateDestinationRect();
+        m_pNumbers->Draw();
+        pos.x -= offset;
+    }
+    
 }

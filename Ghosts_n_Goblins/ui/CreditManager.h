@@ -13,8 +13,9 @@ public:
 
     virtual void Draw() const override;
     virtual void Update(float elapsedSec) override;
-
+    void DrawCredit() const;
     int GetCredits() const;
+
 private:
     int m_Credits;
     const int m_MaxCredits;

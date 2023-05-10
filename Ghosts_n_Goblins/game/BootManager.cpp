@@ -2,8 +2,10 @@
 #include "BootManager.h"
 
 #include "GameController.h"
+#include "UIManager.h"
 #include "engine/Sprite.h"
 #include "engine/SpriteFactory.h"
+#include "ui/HUD.h"
 
 BootManager::BootManager(GameController* pGameController)
     : IManager{pGameController}
@@ -44,10 +46,10 @@ void BootManager::Initialize()
     m_Intervals.push({Game::Label::B_17, 0.14401f});
     m_Intervals.push({Game::Label::B_18, 1.016f});
     m_Intervals.push({Game::Label::B_19, 0.048f});
-    m_Intervals.push({Game::Label::B_20, 0.032f}); // edit
+    m_Intervals.push({Game::Label::B_20, 0.032f}); 
     m_Intervals.push({Game::Label::B_21, 3.0f}); // blue
-    m_Intervals.push({Game::Label::B_22, 0.016f}); // blue
-    m_Intervals.push({Game::Label::B_23, 4.016f}); // blue
+    m_Intervals.push({Game::Label::B_22, 0.016f}); 
+    m_Intervals.push({Game::Label::B_23, 4.016f}); // start screen
     m_Intervals.push({Game::Label::B_24, 5.0f}); // best ranking
     m_Intervals.push({Game::Label::B_25, 0.033f});
     m_Intervals.push({Game::Label::B_END, 0.0f});
@@ -56,7 +58,18 @@ void BootManager::Initialize()
 void BootManager::Draw() const
 {
     if (m_State == Game::Label::B_END) return;
-    m_pGameController->m_pSpriteFactory->CreateSprite(m_State)->Draw();
+    if (m_State == Game::Label::B_23)
+    {
+       m_pGameController->m_pUIManager->m_pHUD->DrawTextTopRow(); 
+    }
+    else if (m_State == Game::Label::B_24)
+    {
+        
+    }
+    else
+    {
+        m_pGameController->m_pSpriteFactory->CreateSprite(m_State)->Draw();
+    }
 }
 
 void BootManager::Update(float elapsedSec)

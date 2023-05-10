@@ -11,12 +11,6 @@ class GameController;
 class ScoreManager final : public UI
 {
 public:
-    enum class Color
-    {
-        WHITE_TAN = 0,
-        SKY_BLUE = 1,
-        DARK_TAN = 2
-    };
     explicit ScoreManager(GameController* pGameController);
     virtual ~ScoreManager() override = default;
     ScoreManager(const ScoreManager& other) = delete;
@@ -28,7 +22,6 @@ public:
     void SaveHighScores();
     void SetScore(std::string name, int score);
     int GetHighScore() const;
-    void DrawNumber(Point2f pos, int score, Color color) const;
     std::map<std::string, int, std::greater<>> GetScores() const;
 
 private:

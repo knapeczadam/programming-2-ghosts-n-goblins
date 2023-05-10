@@ -206,7 +206,8 @@ void Game::InitLabels()
     m_Labels["u_numbers"] = Label::U_NUMBERS;
     m_Labels["u_pin"] = Label::U_PIN;
     m_Labels["u_best_ranking"] = Label::U_BEST_RANKING;
-    m_Labels["u_text_credit"] = Label::U_TEXT_CREDIT;
+    m_Labels["u_text_bottom_row"] = Label::U_TEXT_BOTTOM_ROW;
+    m_Labels["u_text_deposit"] = Label::U_TEXT_DEPOSIT;
     m_Labels["u_text_game_over"] = Label::U_TEXT_GAME_OVER;
     m_Labels["u_text_initial"] = Label::U_TEXT_INITIAL;
     m_Labels["u_text_player_one_ready"] = Label::U_TEXT_PLAYER_ONE_READY;
@@ -443,8 +444,8 @@ void Game::HandleCollisions()
         }
     }
 
-    // std::ranges::for_each(m_pCollectibleManager->GetCollectibles() | std::views::filter(isActive),
-    //                       playerHandleCollision);
+    std::ranges::for_each(m_pCollectibleManager->GetCollectibles() | std::views::filter(isActive),
+                          playerHandleCollision);
     std::ranges::for_each(m_pLevelManager->GetCollisionBoxes() | std::views::filter(isActive), objectHandleCollision);
 
 #if TEST_OBJECT

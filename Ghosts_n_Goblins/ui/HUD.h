@@ -15,24 +15,22 @@ public:
     virtual void Draw() const override;
     void SetFirstDigit(int digit);
     void SetSecondDigit(int digit);
-    void SetThirdDigit(int digit); 
+    void SetThirdDigit(int digit);
+    void SetMinutes(int minutes);
+    void SetSeconds(int seconds);
 private:
     void DrawLives() const;
-    void DrawPlayerScore() const;
-    void DrawHighScore() const;
     void DrawRemainingTime() const;
     void DrawTextTime() const;
-    void DrawTextTopRow() const;
     void DrawWeapon() const;
     void DrawFrame() const;
     
 private:
-    Sprite* m_pTextTopRow;
+    Sprite* m_pFrame;
     Sprite* m_pLife;
     Sprite* m_pNumbers;
-    Sprite* m_pWeapons;
     Sprite* m_pTextTime;
-    Sprite* m_pFrame;
+    Sprite* m_pWeapons;
     int m_FirstDigit;
     int m_SecondDigit;
     int m_ThirdDigit;

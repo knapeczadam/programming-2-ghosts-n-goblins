@@ -11,27 +11,24 @@ InitialDrawer::InitialDrawer(GameController* pGameController)
     , m_NrCols{13}
 {
     m_pGameController->m_pInitialDrawer = this;
-    m_pSprite = pGameController->m_pSpriteFactory->CreateSprite(Game::Label::U_ABC);
+    m_pAbc = pGameController->m_pSpriteFactory->CreateSprite(Game::Label::U_ABC);
     InitLookup();
-    m_pSprite->SetLeftOffsetPx(4);
-    m_pSprite->SetTopOffsetPx(4);
+    m_pAbc->SetLeftOffsetPx(4);
+    m_pAbc->SetTopOffsetPx(4);
 }
 
-/*
- * color: 0 = sky blue, 1 = red, 2 = tan
- */
 void InitialDrawer::DrawInitial(Point2f pos, const std::string& initial, Color color) const
 {
-    pos.y -= m_pSprite->GetScaledClipHeight() / 2;
-    const float offset{m_pSprite->GetScaledClipWidth() / 2};
+    pos.y -= m_pAbc->GetScaledClipHeight() / 2;
+    const float offset{m_pAbc->GetScaledClipWidth() / 2};
     for (char c : initial)
     {
-        m_pSprite->SetTopOffsetRows(int(color) + GetRowIdx(c));
-        m_pSprite->SetLeftOffsetCols(GetColIdx(c));
-        m_pSprite->SetPosition(pos);
-        m_pSprite->UpdateSourceRect();
-        m_pSprite->UpdateDestinationRect();
-        m_pSprite->Draw();
+        m_pAbc->SetTopOffsetRows(int(color) + GetRowIdx(c));
+        m_pAbc->SetLeftOffsetCols(GetColIdx(c));
+        m_pAbc->SetPosition(pos);
+        m_pAbc->UpdateSourceRect();
+        m_pAbc->UpdateDestinationRect();
+        m_pAbc->Draw();
         pos.x += offset;
     }
 }

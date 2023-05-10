@@ -15,7 +15,6 @@ ScoreManager::ScoreManager(GameController* pGameController)
     , m_Scores{}
 {
     m_pGameController->m_pScoreManager = this;
-    m_pSprite = pGameController->m_pSpriteFactory->CreateSprite(Game::Label::U_NUMBERS);
 }
 
 void ScoreManager::LoadHighScores()
@@ -58,33 +57,6 @@ void ScoreManager::SetScore(std::string name, int score)
 int ScoreManager::GetHighScore() const
 {
     return m_HighScore;
-}
-/*
- * color: 0 = white tan, 1 = sky blue, 2 = dark tan
- */
-void ScoreManager::DrawNumber(Point2f pos, int score, Color color) const
-{
-    const float offset{m_pSprite->GetScaledClipWidth()};
-    m_pSprite->SetTopOffsetRows(int(color));
-    if (score == 0)
-    {
-        m_pSprite->SetLeftOffsetCols(0);
-        m_pSprite->SetPosition(pos);
-        m_pSprite->UpdateSourceRect();
-        m_pSprite->UpdateDestinationRect();
-        m_pSprite->Draw();
-    }
-    for (int tempScore = score; tempScore > 0; tempScore /= 10)
-    {
-        const int digit{tempScore % 10};
-        m_pSprite->SetLeftOffsetCols(digit);
-        m_pSprite->SetPosition(pos);
-        m_pSprite->UpdateSourceRect();
-        m_pSprite->UpdateDestinationRect();
-        m_pSprite->Draw();
-        pos.x -= offset;
-    }
-    
 }
 
 std::map<std::string, int, std::greater<>> ScoreManager::GetScores() const
