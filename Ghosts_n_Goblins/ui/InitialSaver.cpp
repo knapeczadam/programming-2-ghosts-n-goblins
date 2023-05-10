@@ -9,6 +9,7 @@
 #include "game/GameController.h"
 #include "game/InputManager.h"
 #include "game/PlayerManager.h"
+#include "game/UIManager.h"
 
 InitialSaver::InitialSaver(GameController* pGameController)
     : UI{Game::Label::U_MENU, pGameController}
@@ -51,7 +52,7 @@ void InitialSaver::DrawAbc() const
 
 void InitialSaver::DrawInitial() const
 {
-    m_pGameController->m_pInitialDrawer->DrawInitial(Point2f{256.0f, 64.0f}, m_Initial, InitialDrawer::Color::RED);
+    m_pGameController->m_pUIManager->m_pInitialDrawer->DrawInitial(Point2f{256.0f, 64.0f}, m_Initial, InitialDrawer::Color::RED);
 }
 
 void InitialSaver::FlickerCharacter() const
@@ -73,7 +74,7 @@ void InitialSaver::OnEnter()
         m_pGameController->m_pInputManager->SetTriggered(Game::Label::I_START, true);
         if (m_Initial.length() < m_MaxLength)
         {
-            m_Initial += m_pGameController->m_pInitialDrawer->GetCharacter(m_RowIdx, m_ColIdx);
+            m_Initial += m_pGameController->m_pUIManager->m_pInitialDrawer->GetCharacter(m_RowIdx, m_ColIdx);
         }
         if (m_Initial.length() == m_MaxLength)
         {
@@ -84,8 +85,8 @@ void InitialSaver::OnEnter()
 
 void InitialSaver::SaveInitial()
 {
-    m_pGameController->m_pScoreManager->SetScore(m_Initial, m_pGameController->m_pPlayerManager->GetPlayer()->GetScore());
-    m_pGameController->m_pScoreManager->SaveHighScores();
+    m_pGameController->m_pUIManager->m_pScoreManager->SetScore(m_pGameController->m_pPlayerManager->GetPlayer()->GetScore(), m_Initial);
+    m_pGameController->m_pUIManager->m_pScoreManager->SaveHighScores();
 }
 
 void InitialSaver::Update(float elapsedSec)

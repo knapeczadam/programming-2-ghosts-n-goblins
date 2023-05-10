@@ -8,6 +8,7 @@ class InitialSaver;
 class Map;
 class RankingDrawer;
 class ScoreManager;
+class UI;
 
 class UIManager final : public IManager
 {
@@ -33,4 +34,5 @@ public:
     Map* m_pMap;
     RankingDrawer* m_pRankingDrawer;
     ScoreManager* m_pScoreManager;
+    UI* m_pUI;
 };

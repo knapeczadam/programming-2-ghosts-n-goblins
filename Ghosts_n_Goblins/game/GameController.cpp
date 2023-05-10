@@ -13,11 +13,9 @@ GameController::GameController(
       , m_pCollectibleManager{nullptr}
       , m_pEnemyManager{nullptr}
       , m_pFXManager{nullptr}
-      , m_pInitialDrawer{nullptr}
       , m_pInputManager{nullptr}
       , m_pLevelManager{nullptr}
       , m_pPlayerManager{nullptr}
-      , m_pScoreManager{nullptr}
       , m_pSoundManager{nullptr}
       , m_pSpriteFactory{nullptr}
       , m_pTextureManager{nullptr}

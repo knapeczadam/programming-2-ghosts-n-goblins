@@ -20,12 +20,12 @@ public:
 
     void LoadHighScores();
     void SaveHighScores();
-    void SetScore(std::string name, int score);
+    void SetScore(int score, const std::string& initial);
     int GetHighScore() const;
-    std::map<std::string, int, std::greater<>> GetScores() const;
+    std::multimap<int, std::string, std::greater<>> GetScores() const;
 
 private:
     const std::string m_Path;
     int m_HighScore;
-    std::map<std::string, int, std::greater<>> m_Scores;
+    std::multimap<int, std::string, std::greater<>> m_Scores;
 };

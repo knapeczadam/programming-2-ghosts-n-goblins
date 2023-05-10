@@ -7,6 +7,7 @@
 #include "engine/SpriteFactory.h"
 #include "game/GameController.h"
 #include "game/PlayerManager.h"
+#include "game/UIManager.h"
 
 UI::UI(Game::Label label, GameController* pGameController)
     : m_Label{label}
@@ -23,6 +24,9 @@ UI::UI(Game::Label label, GameController* pGameController)
     , m_pTextTopRow{pGameController->m_pSpriteFactory->CreateSprite(Game::Label::U_TEXT_TOP_ROW)}
 {
     m_pTextBottomRow->SetPosition(Point2f{32.0f, 0.0f});
+    m_pTextDeposit->SetPosition(Point2f{112.0f, 224.0f});
+    m_pTextGameOver->SetPosition(Point2f{192.0f, 224.0f});
+    m_pTextTitle->SetPosition(Point2f{96.0f, 304.0f});
     m_pTextTopRow->SetPosition(Point2f{16.0f, 432.0f});
 }
 
@@ -60,14 +64,14 @@ void UI::DrawPlayerScore() const
 {
     const int playerScore{m_pGameController->m_pPlayerManager->GetPlayer()->GetScore()};
     Point2f pos{128.0f, m_pGameController->m_ViewPort.height - m_pNumbers->GetScaledClipHeight() * 2};
-    m_pGameController->m_pScoreManager->DrawNumber(pos, playerScore, ScoreManager::Color::WHITE_TAN);
+    m_pGameController->m_pUIManager->m_pScoreManager->DrawNumber(pos, playerScore, ScoreManager::Color::WHITE_TAN);
 }
 
 void UI::DrawHighScore() const
 {
-    const int highScore{m_pGameController->m_pScoreManager->GetHighScore()};
+    const int highScore{m_pGameController->m_pUIManager->m_pScoreManager->GetHighScore()};
     Point2f pos{304.0f, m_pGameController->m_ViewPort.height - m_pNumbers->GetScaledClipHeight() * 2};
-    m_pGameController->m_pScoreManager->DrawNumber(pos, highScore, ScoreManager::Color::WHITE_TAN);
+    m_pGameController->m_pUIManager->m_pScoreManager->DrawNumber(pos, highScore, ScoreManager::Color::WHITE_TAN);
 }
 
 void UI::DrawTextBottomRow() const

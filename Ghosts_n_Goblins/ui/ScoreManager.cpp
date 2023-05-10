@@ -1,7 +1,6 @@
 ﻿#include "pch.h"
 #include "ScoreManager.h"
 
-#include "engine/Sprite.h"
 #include "engine/SpriteFactory.h"
 #include "game/GameController.h"
 
@@ -14,7 +13,6 @@ ScoreManager::ScoreManager(GameController* pGameController)
     , m_HighScore{0}
     , m_Scores{}
 {
-    m_pGameController->m_pScoreManager = this;
 }
 
 void ScoreManager::LoadHighScores()
@@ -29,9 +27,9 @@ void ScoreManager::LoadHighScores()
             int score;
             std::stringstream ss{line};
             ss >> name >> score;
-            m_Scores[name] = score;
+            m_Scores.insert({score, name});
         }
-        m_HighScore = m_Scores.begin()->second; 
+        m_HighScore = m_Scores.begin()->first; 
     }
 }
 
@@ -47,9 +45,9 @@ void ScoreManager::SaveHighScores()
     }
 }
 
-void ScoreManager::SetScore(std::string name, int score)
+void ScoreManager::SetScore(int score, const std::string& initial)
 {
-    m_Scores[name] = score;
+    m_Scores.insert({score, initial});
     m_Scores.erase(std::prev(m_Scores.end()));
 }
 
@@ -59,7 +57,7 @@ int ScoreManager::GetHighScore() const
     return m_HighScore;
 }
 
-std::map<std::string, int, std::greater<>> ScoreManager::GetScores() const
+std::multimap<int, std::string, std::greater<>> ScoreManager::GetScores() const
 {
     return m_Scores;
 }

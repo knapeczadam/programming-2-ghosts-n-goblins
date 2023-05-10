@@ -40,7 +40,7 @@ Game::Game(const Window& window)
       , m_Data{nullptr}
       , m_DataPath{"data.json"}
       , m_Labels{}
-      , m_State{State::GAME}
+      , m_State{State::BOOT}
       , m_pBootManager{nullptr}
       , m_pCollectibleManager{nullptr}
       , m_pEnemyManager{nullptr}
@@ -205,7 +205,7 @@ void Game::InitLabels()
     m_Labels["u_map"] = Label::U_MAP;
     m_Labels["u_numbers"] = Label::U_NUMBERS;
     m_Labels["u_pin"] = Label::U_PIN;
-    m_Labels["u_best_ranking"] = Label::U_BEST_RANKING;
+    m_Labels["u_text_best_ranking"] = Label::U_TEXT_BEST_RANKING;
     m_Labels["u_text_bottom_row"] = Label::U_TEXT_BOTTOM_ROW;
     m_Labels["u_text_deposit"] = Label::U_TEXT_DEPOSIT;
     m_Labels["u_text_game_over"] = Label::U_TEXT_GAME_OVER;

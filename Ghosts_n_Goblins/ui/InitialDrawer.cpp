@@ -10,7 +10,6 @@ InitialDrawer::InitialDrawer(GameController* pGameController)
     , m_Characters{}
     , m_NrCols{13}
 {
-    m_pGameController->m_pInitialDrawer = this;
     m_pAbc = pGameController->m_pSpriteFactory->CreateSprite(Game::Label::U_ABC);
     InitLookup();
     m_pAbc->SetLeftOffsetPx(4);

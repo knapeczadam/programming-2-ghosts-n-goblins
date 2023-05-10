@@ -123,7 +123,7 @@ public:
         
         // Ui
         U_ABC,
-        U_BEST_RANKING,
+        U_TEXT_BEST_RANKING,
         U_CHARACTER_DRAWER,
         U_CREDIT_MANAGER,
         U_FRAME,
@@ -143,6 +143,7 @@ public:
         U_TEXT_TIME,
         U_TEXT_TITLE,
         U_TEXT_TOP_ROW,
+        U_UI,
         U_WEAPONS,
 
         // --- SOUNDS ---
@@ -214,7 +215,7 @@ public:
         I_DECREASE_VOLUME,
         
         // MINIGAME
-        AVATAR
+        AVATAR,
     };
 
     enum class State

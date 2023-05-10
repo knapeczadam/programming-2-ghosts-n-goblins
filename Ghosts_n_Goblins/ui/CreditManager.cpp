@@ -14,10 +14,6 @@ CreditManager::CreditManager(GameController* pGameController)
 {
 }
 
-void CreditManager::Draw() const
-{
-}
-
 void CreditManager::Update(float elapsedSec)
 {
     if (m_pGameController->m_pInputManager->IsPressed(Game::Label::I_SELECT) and not m_pGameController->m_pInputManager->IsTriggered(Game::Label::I_SELECT))

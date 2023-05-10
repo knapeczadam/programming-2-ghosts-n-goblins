@@ -5,12 +5,15 @@
 #include "UIManager.h"
 #include "engine/Sprite.h"
 #include "engine/SpriteFactory.h"
+#include "ui/CreditManager.h"
 #include "ui/HUD.h"
+#include "ui/RankingDrawer.h"
+#include "ui/ScoreManager.h"
 
 BootManager::BootManager(GameController* pGameController)
     : IManager{pGameController}
-    , m_Intervals{}
-    , m_State{Game::Label::B_01}
+      , m_Intervals{}
+      , m_State{Game::Label::B_01}
 {
     pGameController->m_pBootManager = this;
     Initialize();
@@ -46,9 +49,9 @@ void BootManager::Initialize()
     m_Intervals.push({Game::Label::B_17, 0.14401f});
     m_Intervals.push({Game::Label::B_18, 1.016f});
     m_Intervals.push({Game::Label::B_19, 0.048f});
-    m_Intervals.push({Game::Label::B_20, 0.032f}); 
+    m_Intervals.push({Game::Label::B_20, 0.032f});
     m_Intervals.push({Game::Label::B_21, 3.0f}); // blue
-    m_Intervals.push({Game::Label::B_22, 0.016f}); 
+    m_Intervals.push({Game::Label::B_22, 0.016f});
     m_Intervals.push({Game::Label::B_23, 4.016f}); // start screen
     m_Intervals.push({Game::Label::B_24, 5.0f}); // best ranking
     m_Intervals.push({Game::Label::B_25, 0.033f});
@@ -60,11 +63,22 @@ void BootManager::Draw() const
     if (m_State == Game::Label::B_END) return;
     if (m_State == Game::Label::B_23)
     {
-       m_pGameController->m_pUIManager->m_pHUD->DrawTextTopRow(); 
+        m_pGameController->m_pUIManager->m_pUI->DrawTextTopRow();
+        m_pGameController->m_pUIManager->m_pScoreManager->DrawPlayerScore();
+        m_pGameController->m_pUIManager->m_pScoreManager->DrawHighScore();
+        m_pGameController->m_pUIManager->m_pUI->DrawTextTitle();
+        m_pGameController->m_pUIManager->m_pUI->DrawTextDeposit();
+        m_pGameController->m_pUIManager->m_pUI->DrawTextBottomRow();
+        m_pGameController->m_pUIManager->m_pCreditManager->DrawCredit();
     }
     else if (m_State == Game::Label::B_24)
     {
-        
+        m_pGameController->m_pUIManager->m_pUI->DrawTextTopRow();
+        m_pGameController->m_pUIManager->m_pScoreManager->DrawPlayerScore();
+        m_pGameController->m_pUIManager->m_pScoreManager->DrawHighScore();
+        m_pGameController->m_pUIManager->m_pRankingDrawer->Draw();
+        m_pGameController->m_pUIManager->m_pUI->DrawTextBottomRow();
+        m_pGameController->m_pUIManager->m_pCreditManager->DrawCredit();
     }
     else
     {

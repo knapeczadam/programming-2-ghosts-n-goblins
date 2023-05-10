@@ -11,7 +11,6 @@ public:
     CreditManager& operator=(const CreditManager& other) = delete;
     CreditManager& operator=(CreditManager&& other) noexcept = delete;
 
-    virtual void Draw() const override;
     virtual void Update(float elapsedSec) override;
     void DrawCredit() const;
     int GetCredits() const;

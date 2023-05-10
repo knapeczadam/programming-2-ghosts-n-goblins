@@ -16,8 +16,6 @@ public:
     void SetFirstDigit(int digit);
     void SetSecondDigit(int digit);
     void SetThirdDigit(int digit);
-    void SetMinutes(int minutes);
-    void SetSeconds(int seconds);
 private:
     void DrawLives() const;
     void DrawRemainingTime() const;
