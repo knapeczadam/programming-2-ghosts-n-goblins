@@ -30,6 +30,12 @@ CameraManager::~CameraManager()
     delete m_pCamera;
 }
 
+void CameraManager::Initialize()
+{
+    m_pCamera = new Camera{m_pGameController};
+    m_pCamera->SetBoundaries(m_pGameController->m_pLevelManager->GetLevel()->GetBoundaries());
+}
+
 void CameraManager::DoFrustumCulling()
 {
     static const auto isOutOfWindow{
@@ -77,8 +83,7 @@ void CameraManager::Transform(Game::Label label)
     }
 }
 
-void CameraManager::Initialize()
+Camera* CameraManager::GetCamera() const
 {
-    m_pCamera = new Camera{m_pGameController};
-    m_pCamera->SetBoundaries(m_pGameController->m_pLevelManager->GetLevel()->GetBoundaries());
+    return m_pCamera;
 }

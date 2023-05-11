@@ -97,4 +97,5 @@ void MenuManager::Reset()
 {
     m_Idx = 0;
     m_CreditInserted = false;
+    m_pGameController->m_pUIManager->m_pCreditManager->Reset();
 }

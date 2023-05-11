@@ -10,6 +10,7 @@ using json = nlohmann::json;
 
 class BootManager;
 class CameraManager;
+class CutsceneManager;
 class CollectibleManager;
 class EnemyManager;
 class FXManager;
@@ -65,6 +66,42 @@ public:
         B_24,
         B_25,
         B_END,
+
+        // Cutscene, narration
+        N_01,
+        N_02,
+        N_03,
+        N_04,
+        N_05,
+        N_06,
+        N_07,
+        N_08,
+        N_09,
+        N_10,
+        N_11,
+        N_12,
+        N_13,
+        N_14,
+        N_15,
+        N_16,
+        N_17,
+        N_18,
+        N_19,
+        N_20,
+        N_21,
+        N_22,
+        N_23,
+        N_24,
+        N_25,
+        N_26,
+        N_27,
+        N_28,
+        N_29,
+        N_30,
+        N_31,
+        N_32,
+        N_33,
+        N_END,
         
         // Characters
         C_ARTHUR,
@@ -294,6 +331,7 @@ private:
     
     BootManager* m_pBootManager;
     CameraManager* m_pCameraManager;
+    CutsceneManager* m_pCutsceneManager;
     CollectibleManager* m_pCollectibleManager;
     EnemyManager* m_pEnemyManager;
     FXManager* m_pFXManager;

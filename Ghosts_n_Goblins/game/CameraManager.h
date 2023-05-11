@@ -16,6 +16,7 @@ public:
 
     void DoFrustumCulling();
     void Transform(Game::Label label);
+    Camera* GetCamera() const;
 
 protected:
     virtual void Initialize() override;

@@ -32,7 +32,10 @@
 #include <iostream>
 #include <ranges>
 
+#include "Camera.h"
 #include "CameraManager.h"
+#include "CutsceneManager.h"
+#include "ui/Map.h"
 
 
 Game::Game(const Window& window)
@@ -40,9 +43,10 @@ Game::Game(const Window& window)
       , m_Data{nullptr}
       , m_DataPath{"data.json"}
       , m_Labels{}
-      , m_State{State::MENU}
+      , m_State{State::BOOT}
       , m_pBootManager{nullptr}
       , m_pCameraManager{nullptr}
+      , m_pCutsceneManager{nullptr}
       , m_pCollectibleManager{nullptr}
       , m_pEnemyManager{nullptr}
       , m_pFXManager{nullptr}
@@ -82,6 +86,7 @@ void Game::Initialize()
     m_pInputManager = new InputManager{m_pGameController};
     m_pBootManager = new BootManager{m_pGameController};
     m_pCollectibleManager = new CollectibleManager{m_pGameController};
+    m_pCutsceneManager = new CutsceneManager{m_pGameController};
     m_pEnemyManager = new EnemyManager{m_pGameController};
     m_pLevelManager = new LevelManager{m_pGameController};
     m_pMenuManager = new MenuManager{m_pGameController};
@@ -106,6 +111,7 @@ Game::~Game()
     delete m_pLevelManager;
     delete m_pMenuManager;
     delete m_pEnemyManager;
+    delete m_pCutsceneManager;
     delete m_pCollectibleManager;
     delete m_pBootManager;
     delete m_pInputManager;
@@ -150,6 +156,41 @@ void Game::InitLabels()
     m_Labels["b_23"] = Label::B_23;
     m_Labels["b_24"] = Label::B_24;
     m_Labels["b_25"] = Label::B_25;
+
+    // Cutscene
+    m_Labels["n_01"] = Label::N_01;
+    m_Labels["n_02"] = Label::N_02;
+    m_Labels["n_03"] = Label::N_03;
+    m_Labels["n_04"] = Label::N_04;
+    m_Labels["n_05"] = Label::N_05;
+    m_Labels["n_06"] = Label::N_06;
+    m_Labels["n_07"] = Label::N_07;
+    m_Labels["n_08"] = Label::N_08;
+    m_Labels["n_09"] = Label::N_09;
+    m_Labels["n_10"] = Label::N_10;
+    m_Labels["n_11"] = Label::N_11;
+    m_Labels["n_12"] = Label::N_12;
+    m_Labels["n_13"] = Label::N_13;
+    m_Labels["n_14"] = Label::N_14;
+    m_Labels["n_15"] = Label::N_15;
+    m_Labels["n_16"] = Label::N_16;
+    m_Labels["n_17"] = Label::N_17;
+    m_Labels["n_18"] = Label::N_18;
+    m_Labels["n_19"] = Label::N_19;
+    m_Labels["n_20"] = Label::N_20;
+    m_Labels["n_21"] = Label::N_21;
+    m_Labels["n_22"] = Label::N_22;
+    m_Labels["n_23"] = Label::N_23;
+    m_Labels["n_24"] = Label::N_24;
+    m_Labels["n_25"] = Label::N_25;
+    m_Labels["n_26"] = Label::N_26;
+    m_Labels["n_27"] = Label::N_27;
+    m_Labels["n_28"] = Label::N_28;
+    m_Labels["n_29"] = Label::N_29;
+    m_Labels["n_30"] = Label::N_30;
+    m_Labels["n_31"] = Label::N_31;
+    m_Labels["n_32"] = Label::N_32;
+    m_Labels["n_33"] = Label::N_33;
 
     // Characters
     m_Labels["c_arthur"] = Label::C_ARTHUR;
@@ -387,16 +428,20 @@ void Game::UpdateState()
 {
     if (m_pBootManager->GetState() == Label::B_END)
     {
+        m_pBootManager->Reset();
         m_State = State::MENU;
     }
     else if (m_pUIManager->m_pCreditManager->GetCredits() and m_pGameController->m_pInputManager->IsPressed(
         Label::I_START))
     {
-        m_State = State::INTRO;
-        m_pUIManager->m_pCreditManager->Reset();
         m_pMenuManager->Reset();
+        m_State = State::INTRO;
     }
-    // else if first cutscene is over -> game
+    else if (m_pCutsceneManager->GetState() == Label::N_END)
+    {
+        m_pCutsceneManager->Reset();
+        m_State = State::GAME;
+    }
     else if (m_pPlayerManager->GetPlayer()->GetLives() == 0 and m_pPlayerManager->GetPlayer()->GetScore() < m_pUIManager
         ->m_pScoreManager->GetHighScore())
     {
@@ -407,9 +452,30 @@ void Game::UpdateState()
     {
         m_State = State::SAVE_SCORE;
     }
+    else if (m_State == State::MAP)
+    {
+        StartTimer(5);
+        if (IsTimerFinished())
+        {
+            m_pUIManager->m_pMap->Reset();
+            ResetTimer();
+            m_State = State::GAME;
+        }
+    }
     else if (m_pPlayerManager->GetPlayer()->GetLives() and m_pPlayerManager->GetPlayer()->GetHP() == 0)
     {
+        m_pPlayerManager->Reset();
+        m_pEnemyManager->Reset();
+        m_pLevelManager->Reset();
+        m_pCollectibleManager->Reset();
+        ResetTimer();
         m_State = State::MAP;
+        m_pCameraManager->GetCamera()->SetBoundaries(m_pUIManager->m_pMap->GetBoundaries());
+        
+    }
+    else if (m_pPlayerManager->GetPlayer()->HasKey())
+    {
+        
     }
 }
 
@@ -532,10 +598,15 @@ void Game::DrawMenu() const
 
 void Game::DrawIntro() const
 {
+    m_pCutsceneManager->DrawIntro();
 }
 
 void Game::DrawMap() const
 {
+    glPushMatrix();
+    m_pCameraManager->Transform(Label::D_DUMMY);
+    m_pUIManager->m_pMap->Draw();
+    glPopMatrix();
 }
 
 void Game::DrawGameOver() const
@@ -592,10 +663,12 @@ void Game::UpdateMenu(float elapsedSec)
 
 void Game::UpdateIntro(float elapsedSec)
 {
+    m_pCutsceneManager->Update(elapsedSec);
 }
 
 void Game::UpdateMap(float elapsedSec)
 {
+    m_pUIManager->m_pMap->Update(elapsedSec);
 }
 
 void Game::UpdateGameOver(float elapsedSec)

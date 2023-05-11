@@ -478,6 +478,12 @@ void Player::CanClimb(bool canClimb)
     m_CanClimb = canClimb;
 }
 
+// TODO
+bool Player::HasKey() const
+{
+    return false;
+}
+
 Vector2f Player::GetVelocity() const
 {
     return m_Velocity;
@@ -496,6 +502,11 @@ void Player::SetIsOnPlatform(bool isOnPlatform)
 int Player::GetHP() const
 {
     return m_HP;
+}
+
+void Player::SetHP(int hp)
+{
+    m_HP = hp;
 }
 
 int Player::GetLives() const

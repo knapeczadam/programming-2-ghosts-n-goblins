@@ -134,11 +134,6 @@ void GameObject::HandleCollision(GameObject* other)
 {
 }
 
-void GameObject::Reset()
-{
-    
-}
-
 Game::Label GameObject::GetLabel() const
 {
     return m_Label;

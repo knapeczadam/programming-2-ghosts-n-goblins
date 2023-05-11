@@ -40,6 +40,7 @@ void PlayerManager::Initialize()
 
 void PlayerManager::Reset()
 {
+    m_pPlayer->SetHP(2);
 }
 
 void PlayerManager::DrawPlayer() const

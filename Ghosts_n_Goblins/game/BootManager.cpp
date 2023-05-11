@@ -107,4 +107,5 @@ Game::Label BootManager::GetState() const
 
 void BootManager::Reset()
 {
+    m_State = Game::Label::B_01;
 }

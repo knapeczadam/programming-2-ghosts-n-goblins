@@ -24,6 +24,7 @@ void ITimer::StartTimer(float seconds)
 void ITimer::ResetTimer()
 {
     delete m_pClock;
+    m_pClock = nullptr;
 }
 
 bool ITimer::IsTimerFinished()

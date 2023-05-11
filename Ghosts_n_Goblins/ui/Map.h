@@ -19,15 +19,15 @@ public:
     virtual void Reset() override;
 
     Rectf GetBoundaries() const;
-
     GameObject* GetDummy() const;
 
 private:
     Sprite* m_pPin;
     Sprite* m_pMap;
-    Sprite* m_pText;
+    Sprite* m_pTextPlayerOneReady;
     GameObject* pDummy;
     const float m_Speed;
-    const Point2f m_PinPos;
+    const Point2f m_PinPos1;
+    const Point2f m_PinPos2;
     const Point2f m_TextPos;
 };

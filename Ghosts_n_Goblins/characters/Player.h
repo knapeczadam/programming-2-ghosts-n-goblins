@@ -53,11 +53,13 @@ public:
     bool IsAttacking() const;
     void CanJump(bool canJump);
     void CanClimb(bool canClimb);
+    bool HasKey() const;
 
     Vector2f GetVelocity() const;
     void SetVelocity(const Vector2f& velocity);
     void SetIsOnPlatform(bool isOnPlatform);
     int GetHP() const;
+    void SetHP(int hp);
     int GetLives() const;
     Game::Label GetWeapon() const;
     int GetScore() const;

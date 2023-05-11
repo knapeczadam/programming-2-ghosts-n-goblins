@@ -347,6 +347,138 @@
     {
       "label": "b_25",
       "path": "boot/25.png"
+    },
+    {
+      "label": "n_01",
+      "path": "intro/01.png"
+    },
+    {
+      "label": "n_02",
+      "path": "intro/02.png"
+    },
+    {
+      "label": "n_03",
+      "path": "intro/03.png"
+    },
+    {
+      "label": "n_04",
+      "path": "intro/04.png"
+    },
+    {
+      "label": "n_05",
+      "path": "intro/05.png"
+    },
+    {
+      "label": "n_06",
+      "path": "intro/06.png"
+    },
+    {
+      "label": "n_07",
+      "path": "intro/07.png"
+    },
+    {
+      "label": "n_08",
+      "path": "intro/08.png"
+    },
+    {
+      "label": "n_09",
+      "path": "intro/09.png"
+    },
+    {
+      "label": "n_10",
+      "path": "intro/10.png"
+    },
+    {
+      "label": "n_11",
+      "path": "intro/11.png"
+    },
+    {
+      "label": "n_12",
+      "path": "intro/12.png"
+    },
+    {
+      "label": "n_13",
+      "path": "intro/13.png"
+    },
+    {
+      "label": "n_14",
+      "path": "intro/14.png"
+    },
+    {
+      "label": "n_15",
+      "path": "intro/15.png"
+    },
+    {
+      "label": "n_16",
+      "path": "intro/16.png"
+    },
+    {
+      "label": "n_17",
+      "path": "intro/17.png"
+    },
+    {
+      "label": "n_18",
+      "path": "intro/18.png"
+    },
+    {
+      "label": "n_19",
+      "path": "intro/19.png"
+    },
+    {
+      "label": "n_20",
+      "path": "intro/20.png"
+    },
+    {
+      "label": "n_21",
+      "path": "intro/21.png"
+    },
+    {
+      "label": "n_22",
+      "path": "intro/22.png"
+    },
+    {
+      "label": "n_23",
+      "path": "intro/23.png"
+    },
+    {
+      "label": "n_24",
+      "path": "intro/24.png"
+    },
+    {
+      "label": "n_25",
+      "path": "intro/25.png"
+    },
+    {
+      "label": "n_26",
+      "path": "intro/26.png"
+    },
+    {
+      "label": "n_27",
+      "path": "intro/27.png"
+    },
+    {
+      "label": "n_28",
+      "path": "intro/28.png"
+    },
+    {
+      "label": "n_29",
+      "path": "intro/29.png"
+    },
+    {
+      "label": "n_30",
+      "path": "intro/30.png"
+    },
+    {
+      "label": "n_31",
+      "path": "intro/31.png"
+    },
+    {
+      "label": "n_32",
+      "path": "intro/32.png"
+    },
+    {
+      "label": "n_33",
+      "path": "intro/33.png"
     }
   ],
   "sprites": [
@@ -612,6 +744,9 @@
     },
     {
       "label": "u_pin",
+      "rows": 1,
+      "columns": 2,
+      "frames_per_second": 2,
       "scale": 2
     },
     {
@@ -643,6 +778,9 @@
     },
     {
       "label": "u_text_player_one_ready",
+      "rows": 2,
+      "columns": 1,
+      "frames_per_second": 2,
       "scale": 2
     },
     {
@@ -830,6 +968,138 @@
     },
     {
       "label": "b_25",
+      "scale": 2
+    },
+    {
+      "label": "n_01",
+      "scale": 2
+    },
+    {
+      "label": "n_02",
+      "scale": 2
+    },
+    {
+      "label": "n_03",
+      "scale": 2
+    },
+    {
+      "label": "n_04",
+      "scale": 2
+    },
+    {
+      "label": "n_05",
+      "scale": 2
+    },
+    {
+      "label": "n_06",
+      "scale": 2
+    },
+    {
+      "label": "n_07",
+      "scale": 2
+    },
+    {
+      "label": "n_08",
+      "scale": 2
+    },
+    {
+      "label": "n_09",
+      "scale": 2
+    },
+    {
+      "label": "n_10",
+      "scale": 2
+    },
+    {
+      "label": "n_11",
+      "scale": 2
+    },
+    {
+      "label": "n_12",
+      "scale": 2
+    },
+    {
+      "label": "n_13",
+      "scale": 2
+    },
+    {
+      "label": "n_14",
+      "scale": 2
+    },
+    {
+      "label": "n_15",
+      "scale": 2
+    },
+    {
+      "label": "n_16",
+      "scale": 2
+    },
+    {
+      "label": "n_17",
+      "scale": 2
+    },
+    {
+      "label": "n_18",
+      "scale": 2
+    },
+    {
+      "label": "n_19",
+      "scale": 2
+    },
+    {
+      "label": "n_20",
+      "scale": 2
+    },
+    {
+      "label": "n_21",
+      "scale": 2
+    },
+    {
+      "label": "n_22",
+      "scale": 2
+    },
+    {
+      "label": "n_23",
+      "scale": 2
+    },
+    {
+      "label": "n_24",
+      "scale": 2
+    },
+    {
+      "label": "n_25",
+      "scale": 2
+    },
+    {
+      "label": "n_26",
+      "scale": 2
+    },
+    {
+      "label": "n_27",
+      "scale": 2
+    },
+    {
+      "label": "n_28",
+      "scale": 2
+    },
+    {
+      "label": "n_29",
+      "scale": 2
+    },
+    {
+      "label": "n_30",
+      "scale": 2
+    },
+    {
+      "label": "n_31",
+      "scale": 2
+    },
+    {
+      "label": "n_32",
+      "scale": 2
+    },
+    {
+      "label": "n_33",
       "scale": 2
     }
   ],
