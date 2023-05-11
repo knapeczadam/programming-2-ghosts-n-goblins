@@ -153,6 +153,22 @@
       "path": "ui/map.bmp"
     },
     {
+      "label": "u_menu_background_1",
+      "path": "ui/menu_background_1.png"
+    },
+    {
+      "label": "u_menu_background_2",
+      "path": "ui/menu_background_2.png"
+    },
+    {
+      "label": "u_menu_background_3",
+      "path": "ui/menu_background_3.png"
+    },
+    {
+      "label": "u_menu_background_4",
+      "path": "ui/menu_background_4.png"
+    },
+    {
       "label": "u_numbers",
       "path": "ui/numbers.png"
     },
@@ -179,6 +195,10 @@
     {
       "label": "u_text_game_over",
       "path": "ui/text_game_over.png"
+    },
+    {
+      "label": "u_text_game_over_player_one",
+      "path": "ui/text_game_over_player_one.png"
     },
     {
       "label": "u_text_initial",
@@ -737,6 +757,22 @@
       "label": "u_map"
     },
     {
+      "label": "u_menu_background_1",
+      "scale": 2
+    },
+    {
+      "label": "u_menu_background_2",
+      "scale": 2
+    },
+    {
+      "label": "u_menu_background_3",
+      "scale": 2
+    },
+    {
+      "label": "u_menu_background_4",
+      "scale": 2
+    },
+    {
       "label": "u_numbers",
       "rows": 3,
       "columns": 11,
@@ -770,6 +806,10 @@
       "rows": 2,
       "columns": 1,
       "frames_per_second": 2,
+      "scale": 2
+    },
+    {
+      "label": "u_text_game_over_player_one",
       "scale": 2
     },
     {

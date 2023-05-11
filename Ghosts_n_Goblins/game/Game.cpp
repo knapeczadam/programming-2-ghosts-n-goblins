@@ -43,7 +43,7 @@ Game::Game(const Window& window)
       , m_Data{nullptr}
       , m_DataPath{"data.json"}
       , m_Labels{}
-      , m_State{State::BOOT}
+      , m_State{State::MENU}
       , m_pBootManager{nullptr}
       , m_pCameraManager{nullptr}
       , m_pCutsceneManager{nullptr}
@@ -248,6 +248,10 @@ void Game::InitLabels()
     m_Labels["u_frame"] = Label::U_FRAME;
     m_Labels["u_life"] = Label::U_LIFE;
     m_Labels["u_map"] = Label::U_MAP;
+    m_Labels["u_menu_background_1"] = Label::U_MENU_BACKGROUND_1;
+    m_Labels["u_menu_background_2"] = Label::U_MENU_BACKGROUND_2;
+    m_Labels["u_menu_background_3"] = Label::U_MENU_BACKGROUND_3;
+    m_Labels["u_menu_background_4"] = Label::U_MENU_BACKGROUND_4;
     m_Labels["u_numbers"] = Label::U_NUMBERS;
     m_Labels["u_pin"] = Label::U_PIN;
     m_Labels["u_text_best_ranking"] = Label::U_TEXT_BEST_RANKING;
@@ -255,6 +259,7 @@ void Game::InitLabels()
     m_Labels["u_text_bottom_row"] = Label::U_TEXT_BOTTOM_ROW;
     m_Labels["u_text_deposit"] = Label::U_TEXT_DEPOSIT;
     m_Labels["u_text_game_over"] = Label::U_TEXT_GAME_OVER;
+    m_Labels["u_text_game_over_player_one"] = Label::U_TEXT_GAME_OVER_PLAYER_ONE;
     m_Labels["u_text_initial"] = Label::U_TEXT_INITIAL;
     m_Labels["u_text_player_one_ready"] = Label::U_TEXT_PLAYER_ONE_READY;
     m_Labels["u_text_time"] = Label::U_TEXT_TIME;

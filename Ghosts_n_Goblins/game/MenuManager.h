@@ -3,6 +3,8 @@
 
 #include <vector>
 
+class Sprite;
+
 class MenuManager final : public IManager
 {
 public:
@@ -24,4 +26,8 @@ private:
     int m_Idx;
     std::vector<int> m_Intervals;
     bool m_CreditInserted;
+    Sprite* m_pBackground1;
+    Sprite* m_pBackground2;
+    Sprite* m_pBackground3;
+    Sprite* m_pBackground4;
 };

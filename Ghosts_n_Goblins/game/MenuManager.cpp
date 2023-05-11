@@ -3,6 +3,8 @@
 
 #include "GameController.h"
 #include "UIManager.h"
+#include "engine/Sprite.h"
+#include "engine/SpriteFactory.h"
 #include "ui/CreditManager.h"
 #include "ui/HUD.h"
 #include "ui/RankingDrawer.h"
@@ -13,6 +15,11 @@ MenuManager::MenuManager(GameController* pGameController)
       , m_MaxIdx{3}
       , m_Idx{0}
       , m_Intervals{}
+      , m_CreditInserted{false}
+    , m_pBackground1{pGameController->m_pSpriteFactory->CreateSprite(Game::Label::U_MENU_BACKGROUND_1)}
+    , m_pBackground2{pGameController->m_pSpriteFactory->CreateSprite(Game::Label::U_MENU_BACKGROUND_2)}
+    , m_pBackground3{pGameController->m_pSpriteFactory->CreateSprite(Game::Label::U_MENU_BACKGROUND_3)}
+    , m_pBackground4{pGameController->m_pSpriteFactory->CreateSprite(Game::Label::U_MENU_BACKGROUND_4)}
 {
     pGameController->m_pMenuManager = this;
     Initialize();
@@ -31,11 +38,13 @@ void MenuManager::Draw() const
     switch (m_Idx)
     {
     case 0:
+        m_pBackground2->Draw();
         m_pGameController->m_pUIManager->m_pHUD->Draw();
         m_pGameController->m_pUIManager->m_pUI->DrawTextTitle();
         m_pGameController->m_pUIManager->m_pUI->DrawTextGameOver();
         break;
     case 1:
+        m_pBackground3->Draw();
         m_pGameController->m_pUIManager->m_pUI->DrawTextTopRow();
         m_pGameController->m_pUIManager->m_pScoreManager->DrawPlayerScore();
         m_pGameController->m_pUIManager->m_pScoreManager->DrawHighScore();
@@ -45,14 +54,16 @@ void MenuManager::Draw() const
         m_pGameController->m_pUIManager->m_pCreditManager->DrawCredits();
         break;
     case 2:
+        m_pBackground4->Draw();
         m_pGameController->m_pUIManager->m_pUI->DrawTextTopRow();
         m_pGameController->m_pUIManager->m_pScoreManager->DrawPlayerScore();
         m_pGameController->m_pUIManager->m_pScoreManager->DrawHighScore();
-        m_pGameController->m_pUIManager->m_pRankingDrawer->Draw(); 
+        m_pGameController->m_pUIManager->m_pRankingDrawer->Draw();
         m_pGameController->m_pUIManager->m_pUI->DrawTextBottomRow();
         m_pGameController->m_pUIManager->m_pCreditManager->DrawCredits();
         break;
     case 3:
+        m_pBackground1->Draw();
         m_pGameController->m_pUIManager->m_pUI->DrawTextTopRow();
         m_pGameController->m_pUIManager->m_pScoreManager->DrawPlayerScore();
         m_pGameController->m_pUIManager->m_pScoreManager->DrawHighScore();
@@ -68,7 +79,7 @@ void MenuManager::Update(float elapsedSec)
 {
     m_pGameController->m_pUIManager->m_pUI->Update(elapsedSec);
     m_pGameController->m_pUIManager->m_pCreditManager->Update(elapsedSec);
-    
+
     if (m_pGameController->m_pUIManager->m_pCreditManager->GetCredits())
     {
         if (not m_CreditInserted)
