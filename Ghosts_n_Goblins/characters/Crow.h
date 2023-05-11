@@ -1,13 +1,15 @@
 ﻿#pragma once
 #include "IEnemy.h"
 
-/* https://strategywiki.org/wiki/Ghosts_%27n_Goblins/Enemies#Crows
+/**
+ * \brief
  * There are two types of crows in Arthur's land. 
- * They are found in stages 1 and 2, are destroyed in one hit, and are worth 100 points.
+ * They are found in stages 1 and 2, are destroyed in one hit, and are worth 100 points. 
  * Blue crows launch themselves straight forward whenever Arthur gets close to one of them.
  * Red crows are only found in stage 2, towards the end of the stage.
  * They differ from blue crows in that they won't only travel horizontally.
  * They will take a diagonal flight path in order to attack you.
+ * <a href="https://strategywiki.org/wiki/Ghosts_%27n_Goblins/Enemies#Crows">StrategyWiki</a>
  */
 class Crow final : public IEnemy
 {

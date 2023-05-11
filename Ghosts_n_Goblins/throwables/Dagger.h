@@ -3,10 +3,12 @@
 #include "collectibles/ICollectible.h"
 #include "game/GameObject.h"
 
-/* https://strategywiki.org/wiki/Ghosts_%27n_Goblins/How_to_play#Weapons
+/**
+ * \brief 
  * Dagger (aka Knife, Sword):
  * The Dagger is very much like the Lance, in that it travels straight across and can only be interrupted by hitting an enemy.
  * However, the Dagger is much faster, allowing Arthur to throw many more of them over a period of time.
+ * <a href="https://strategywiki.org/wiki/Ghosts_%27n_Goblins/How_to_play#Weapons">StrategyWiki</a>
  */
 class Dagger final : public GameObject, public IThrowable, public ICollectible
 {

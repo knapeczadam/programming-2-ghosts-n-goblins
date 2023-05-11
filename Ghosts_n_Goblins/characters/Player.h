@@ -6,8 +6,8 @@
 #include "throwables/IThrowable.h"
 
 
-/*
- * https://strategywiki.org/wiki/Ghosts_%27n_Goblins/How_to_play#Arthur
+/**
+ * \par Arthur 
  * You control Arthur throughout his quest to reach Astaroth's chamber at the top of his guarded castle, and rescue his love, the Princess PrinPrin.
  * Arthur can run and jump, as well as throw a number of weapons at his enemies.
  * Arthur cannot withstand the attacks of the monsters very well, but his armor will protect him from one hit.
@@ -15,6 +15,7 @@
  * However, if he is struck while wearing the armor, the armor will fall to pieces, and he will be left to fight against Astaroth's legions in nothing but his boxers, as depicted to the right.
  * While in this state, if just one enemy touches him, Arthur is doomed and loses one life.
  * It is possible to find and collect armor when Arthur is without any, but they are usually hidden from sight.
+ * <a href="https://strategywiki.org/wiki/Ghosts_%27n_Goblins/How_to_play#Arthur">StrategyWiki</a>
  */
 class Player final : public GameObject
 {

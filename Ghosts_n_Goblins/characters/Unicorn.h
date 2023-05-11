@@ -1,7 +1,8 @@
 ﻿#pragma once
 #include "IEnemy.h"
 
-/* https://strategywiki.org/wiki/Ghosts_%27n_Goblins/Enemies#Unicorn
+/**
+ * \brief
  * One Unicorn guards the gate at the end of Stage 1, while two of them double as the final boss of Stage 2.
  * Also known as Cyclops, these brutes don't mess around.
  * They like to intimidate their opponents by jumping high into the air and crashing down on the ground.
@@ -12,6 +13,7 @@
  * If you take one down, they are worth 2000, and they might even be carrying a pot with them.
  * Unicorns occupy some parts of Stage 6 as well, but not as bosses.
  * In the Famicom/NES-based versions of the game, Unicorns are invulnerable to the Shield/Cross.
+ * <a href="https://strategywiki.org/wiki/Ghosts_%27n_Goblins/Enemies#Unicorn">StrategyWiki</a>
  */
 class Unicorn final : public IEnemy
 {

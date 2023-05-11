@@ -1,7 +1,8 @@
 ﻿#pragma once
 #include "IEnemy.h"
 
-/* https://strategywiki.org/wiki/Ghosts_%27n_Goblins/Enemies#Red_Arremer
+/**
+ * \brief
  * The Red Arremer is possibly one of the most frustating enemies in Ghosts 'n Goblins, second only to the Satans.
  * They are found in every stage but the second stage and the final stage. They are intense guardians that rarely allow intruders past their posted position.
  * They begin on the ground, and leap into the air when fired upon.
@@ -10,6 +11,7 @@
  * Only the fastest players will be able to outrun their dive. Red Arremers take three hits to destroy, and are worth 1000 points.
  * They may also be holding pots. Players rarely see the same Arremer for 60 seconds, as they usually destroy them, or get destroyed by them before that time.
  * However, if you do deal with the same Arremer for around 60 seconds, they turn white and become even more aggressive.
+ * <a href="https://strategywiki.org/wiki/Ghosts_%27n_Goblins/Enemies#Red_Arremer">StrategyWiki</a>
  */
 class RedArremer final : public IEnemy
 {
