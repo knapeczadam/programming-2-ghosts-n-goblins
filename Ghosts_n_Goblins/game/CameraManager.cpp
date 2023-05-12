@@ -27,13 +27,18 @@ CameraManager::CameraManager(GameController* pGameController)
 
 CameraManager::~CameraManager()
 {
-    delete m_pCamera;
+    CleanUp();
 }
 
-void CameraManager::Initialize()
+void CameraManager::Initialize(bool fromCheckpoint)
 {
     m_pCamera = new Camera{m_pGameController};
-    m_pCamera->SetBoundaries(m_pGameController->m_pLevelManager->GetLevel()->GetBoundaries());
+    //m_pCamera->SetBoundaries(m_pGameController->m_pLevelManager->GetLevel()->GetBoundaries());
+}
+
+void CameraManager::CleanUp()
+{
+    delete m_pCamera;
 }
 
 void CameraManager::DoFrustumCulling()

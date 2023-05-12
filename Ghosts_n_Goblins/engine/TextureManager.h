@@ -20,7 +20,8 @@ public:
     Texture* GetTexture(Game::Label label);
 
 protected:
-    virtual void Initialize() override;
+    virtual void Initialize(bool fromCheckpoint = false) override;
+    virtual void CleanUp() override;
 
 private:
     void DeleteTextures();

@@ -22,7 +22,7 @@ public:
     UI& operator=(UI&& other) noexcept = delete;
 
     virtual void Draw() const;
-    virtual void Reset();
+    virtual void Reset(bool fromCheckpoint);
     virtual void Update(float elapsedSec);
     virtual bool IsActive() const final;
     virtual bool IsVisible() const final;

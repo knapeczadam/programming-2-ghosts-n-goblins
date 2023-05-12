@@ -20,11 +20,10 @@ CollectibleManager::CollectibleManager(GameController* pGameController)
 
 CollectibleManager::~CollectibleManager()
 {
-    auto deleteGameObject = [](const GameObject* pGameObject) { delete pGameObject; };
-    std::ranges::for_each(m_Collectibles, deleteGameObject);
+    CleanUp();
 }
 
-void CollectibleManager::Initialize()
+void CollectibleManager::Initialize(bool fromCheckpoint)
 {
     InitArmor();
     InitCoins();
@@ -34,8 +33,11 @@ void CollectibleManager::Initialize()
     InitYashichi();
 }
 
-void CollectibleManager::Reset(bool fromCheckpoint)
+void CollectibleManager::CleanUp()
 {
+    auto deleteGameObject = [](const GameObject* pGameObject) { delete pGameObject; };
+    std::ranges::for_each(m_Collectibles, deleteGameObject);
+    m_Collectibles.clear();
 }
 
 void CollectibleManager::Draw() const

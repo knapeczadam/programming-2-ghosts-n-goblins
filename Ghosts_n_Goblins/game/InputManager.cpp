@@ -13,10 +13,19 @@ InputManager::InputManager(GameController* pGameController)
     Initialize();
 }
 
-void InputManager::Initialize()
+InputManager::~InputManager()
+{
+    CleanUp();
+}
+
+void InputManager::Initialize(bool fromCheckpoint)
 {
     InitControls();
     InitScancodeToString();
+}
+
+void InputManager::CleanUp()
+{
 }
 
 void InputManager::InitControls()

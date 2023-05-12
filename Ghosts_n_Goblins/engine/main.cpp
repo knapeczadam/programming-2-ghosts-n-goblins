@@ -9,7 +9,7 @@ void DumpMemoryLeaks();
 
 int SDL_main(int argv, char** args)
 {
-    srand(static_cast<unsigned int>(time(nullptr)));
+    std::srand(static_cast<unsigned int>(std::time(nullptr)));
 
     StartHeapControl();
 

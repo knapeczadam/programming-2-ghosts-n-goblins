@@ -35,7 +35,8 @@ public:
     static void DecreaseMasterVolume();
     
 protected:
-    virtual void Initialize() override;
+    virtual void Initialize(bool fromCheckpoint = false) override;
+    virtual void CleanUp() override;
 
 private:
     void LoadSounds();

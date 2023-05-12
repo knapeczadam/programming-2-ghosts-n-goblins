@@ -14,7 +14,7 @@ public:
     virtual void Update(float elapsedSec) override;
     void DrawCredits() const;
     int GetCredits() const;
-    virtual void Reset() override;
+    virtual void Reset(bool fromCheckpoint = false) override;
 
 private:
     int m_Credits;

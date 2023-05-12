@@ -44,7 +44,7 @@ Game::Game(const Window& window)
       , m_Data{nullptr}
       , m_DataPath{"data.json"}
       , m_Labels{}
-      , m_State{State::GAME}
+      , m_State{State::BOOT}
       , m_pBootManager{nullptr}
       , m_pCameraManager{nullptr}
       , m_pCutsceneManager{nullptr}
@@ -437,7 +437,6 @@ void Game::UpdateState()
     else if (m_pUIManager->m_pCreditManager->GetCredits() and m_pGameController->m_pInputManager->IsPressed(
         Label::I_START))
     {
-        m_pMenuManager->Reset();
         m_State = State::INTRO;
     }
     else if (m_pCutsceneManager->GetState() == Label::N_END)
@@ -495,7 +494,6 @@ void Game::UpdateState()
         StartTimer(5);
         if (IsTimerFinished())
         {
-            m_pUIManager->m_pMap->Reset();
             ResetTimer();
             m_State = State::GAME;
         }
@@ -687,7 +685,7 @@ void Game::UpdateGame(float elapsedSec)
         m_pGameController->m_pLevelManager->GetLevel()->GetBoundaries());
     m_pLevelManager->Update(elapsedSec);
     m_pPlayerManager->Update(elapsedSec);
-    m_pEnemyManager->SpawnEnemies();
+    // m_pEnemyManager->SpawnEnemies();
     m_pEnemyManager->Update(elapsedSec);
     m_pCollectibleManager->Update(elapsedSec);
     m_pFXManager->Update(elapsedSec);
@@ -770,11 +768,12 @@ void Game::UpdateRemainingTime(int time)
 
 void Game::ResetGame(bool fromCheckpoint)
 {
-    m_pPlayerManager->Reset(fromCheckpoint);
-    m_pEnemyManager->Reset(fromCheckpoint);
-    m_pLevelManager->Reset(fromCheckpoint);
     m_pCollectibleManager->Reset(fromCheckpoint);
+    m_pEnemyManager->Reset(fromCheckpoint);
+    m_pPlayerManager->Reset(fromCheckpoint);
+    m_pLevelManager->Reset(fromCheckpoint);
     m_pMenuManager->Reset(fromCheckpoint);
+    m_pCameraManager->Reset(fromCheckpoint);
     ResetTimer();
 }
 

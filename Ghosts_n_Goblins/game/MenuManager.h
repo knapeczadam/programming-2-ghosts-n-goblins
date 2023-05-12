@@ -9,7 +9,7 @@ class MenuManager final : public IManager
 {
 public:
     explicit MenuManager(GameController* pGameController);
-    virtual ~MenuManager() override = default ;
+    virtual ~MenuManager() override;
     MenuManager(const MenuManager&) = delete;
     MenuManager(MenuManager&&) = delete;
     MenuManager& operator=(const MenuManager&) = delete;
@@ -32,7 +32,8 @@ public:
     virtual void Reset(bool fromCheckpoint = false) override;
 
 protected:
-    virtual void Initialize() override;
+    virtual void Initialize(bool fromCheckpoint = false) override;
+    virtual void CleanUp() override;
 private:
     const int m_MaxIdx; 
     int m_Idx;

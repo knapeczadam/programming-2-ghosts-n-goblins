@@ -7,10 +7,17 @@
 
 #include <ranges>
 
+#include "LevelManager.h"
+
 PlayerManager::PlayerManager(GameController* pGameController)
     : IManager{pGameController}
       , m_pPlayer{nullptr}
+      , m_SpawnPos{164.0f, 64.0f}
+      , m_CheckpointPos{3820.0f, 64.0f}
       , m_Throwables{}
+      , m_PrevLives{0}
+      , m_PrevScore{0}
+      , m_PrevWeapon{Game::Label::T_LANCE}
 {
     m_pGameController->m_pPlayerManager = this;
     Initialize();
@@ -18,8 +25,39 @@ PlayerManager::PlayerManager(GameController* pGameController)
 
 PlayerManager::~PlayerManager()
 {
+    CleanUp();
+}
+
+void PlayerManager::Initialize(bool fromCheckpoint)
+{
+    if (fromCheckpoint)
+    {
+        m_pPlayer = new Player{m_SpawnPos, m_pGameController};
+        if (m_PrevLives > 0)
+        {
+            m_pPlayer->SetLives(m_PrevLives);
+            m_pPlayer->SetScore(m_PrevScore);
+        }
+        m_pPlayer->SetWeapon(m_PrevWeapon);
+        if (m_pGameController->m_pLevelManager->CheckpointReached())
+        {
+            m_pPlayer->SetPosition(m_CheckpointPos);
+        }
+    }
+    else
+    {
+        m_pPlayer = new Player{m_SpawnPos, m_pGameController};
+    }
+}
+
+void PlayerManager::CleanUp()
+{
     auto deleteGameObject = [](const GameObject* pGameObject) { delete pGameObject; };
     std::ranges::for_each(m_Throwables, deleteGameObject);
+    m_Throwables.clear();
+    m_PrevLives = m_pPlayer->GetLives();
+    m_PrevScore = m_pPlayer->GetScore();
+    m_PrevWeapon = m_pPlayer->GetWeapon();
     delete m_pPlayer;
 }
 
@@ -33,28 +71,10 @@ Player* PlayerManager::GetPlayer() const
     return m_pPlayer;
 }
 
-void PlayerManager::Initialize()
-{
-    m_pPlayer = new Player{Player::GetSpawnPos(), m_pGameController};
-}
-
 void PlayerManager::Reset(bool fromCheckpoint)
 {
-    m_pPlayer->SetHP(2);
-    m_pPlayer->SetActive(true);
-    m_pPlayer->SetVisible(true);
-    m_pPlayer->SetPosition(Player::GetSpawnPos());
-    if (fromCheckpoint)
-    {
-        if (m_pPlayer->GetLives() == 0)
-        {
-            m_pPlayer->SetLives(3);
-        }
-    }
-    else
-    {
-        m_pPlayer->SetLives(3);
-    }
+    CleanUp();
+    Initialize(fromCheckpoint);
 }
 
 void PlayerManager::DrawPlayer() const
@@ -80,7 +100,7 @@ void PlayerManager::Update(float elapsedSec)
 void PlayerManager::UpdateLives()
 {
     if (m_pPlayer->GetLives() == 0) return;
-    
+
     if (m_pPlayer->GetHP() == 0)
     {
         m_pPlayer->SetLives(m_pPlayer->GetLives() - 1);

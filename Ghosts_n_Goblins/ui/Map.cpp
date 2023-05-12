@@ -6,6 +6,7 @@
 #include "engine/SpriteFactory.h"
 #include "game/GameController.h"
 #include "engine/Sprite.h"
+#include "game/LevelManager.h"
 #include "game/UIManager.h"
 
 Map::Map(GameController* pGameController)
@@ -43,10 +44,17 @@ void Map::Update(float elapsedSec)
     pDummy->SetPosition(Point2f{x, 0});
 }
 
-void Map::Reset()
+void Map::Reset(bool fromCheckpoint)
 {
+    if (m_pGameController->m_pLevelManager->CheckpointReached())
+    {
+        m_pPin->SetPosition(m_PinPos2);
+    }
+    else
+    {
+        m_pPin->SetPosition(m_PinPos1);
+    }
     pDummy->SetPosition(Point2f{});
-    m_pPin->SetPosition(m_PinPos1);
     pDummy->SetPosition(Point2f{0, m_pGameController->m_ViewPort.height / 2});
 }
 

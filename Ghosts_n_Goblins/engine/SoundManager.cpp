@@ -20,6 +20,16 @@ SoundManager::SoundManager(GameController* pGameController)
 
 SoundManager::~SoundManager()
 {
+    CleanUp();
+}
+
+void SoundManager::Initialize(bool fromCheckpoint)
+{
+    LoadSounds();
+}
+
+void SoundManager::CleanUp()
+{
     DeleteSounds();
 }
 
@@ -29,11 +39,6 @@ void SoundManager::PlayEffect(Game::Label label) const
     {
         GetEffect(label)->Play(0);
     }
-}
-
-void SoundManager::Initialize()
-{
-    LoadSounds();
 }
 
 void SoundManager::PlayStream(Game::Label label, bool repeat) const

@@ -30,12 +30,21 @@ MenuManager::MenuManager(GameController* pGameController)
     Initialize();
 }
 
-void MenuManager::Initialize()
+MenuManager::~MenuManager()
+{
+    CleanUp();
+}
+
+void MenuManager::Initialize(bool fromCheckpoint)
 {
     // intervals in seconds
     m_Intervals.insert(m_Intervals.end(), {
                            4.0f, 4.0f, 5.0f, 4.0f
                        });
+}
+
+void MenuManager::CleanUp()
+{
 }
 
 void MenuManager::DrawMenu() const
@@ -177,5 +186,6 @@ void MenuManager::Reset(bool fromCheckpoint)
     m_CreditInserted = false;
     m_pGameController->m_pUIManager->m_pCreditManager->Reset();
     m_pGameController->m_pUIManager->m_pInitialSaver->Reset();
+    m_pGameController->m_pUIManager->m_pMap->Reset(fromCheckpoint);
     ResetTimer();
 }

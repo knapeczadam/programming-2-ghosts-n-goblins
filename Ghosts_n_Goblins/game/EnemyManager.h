@@ -20,6 +20,7 @@ public:
     EnemyManager& operator=(EnemyManager&& other) noexcept = delete;
     
     virtual void Reset(bool fromCheckpoint = false) override;
+    
     void DrawEnemies() const;
     void DrawThrowables() const;
     void Update(float elapsedSec);
@@ -33,7 +34,8 @@ public:
     std::vector<GameObject*>& GetZombies();
 
 protected:
-    virtual void Initialize() override;
+    virtual void Initialize(bool fromCheckpoint = false) override;
+    virtual void CleanUp() override;
 
 private:
     void InitCrows();
@@ -45,7 +47,7 @@ private:
     void InitWoodyPigs();
     void InitZombies();
 
-    void InitSpawners();
+    void InitSpawners(bool fromCheckpoint);
 private:
     std::vector<GameObject*> m_Enemies;
     std::vector<GameObject*> m_Throwables;

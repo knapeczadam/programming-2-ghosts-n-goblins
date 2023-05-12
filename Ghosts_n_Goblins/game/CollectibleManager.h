@@ -15,14 +15,14 @@ public:
     CollectibleManager& operator=(const CollectibleManager&) = delete;
     CollectibleManager& operator=(CollectibleManager&&) = delete;
 
-    virtual void Reset(bool fromCheckpoint = false) override;
     void Draw() const;
     void Update(float elapsedSec);
     void LateUpdate(float elapsedSec);
     std::vector<GameObject*>& GetCollectibles();
 
 protected:
-    virtual void Initialize() override;
+    virtual void Initialize(bool fromCheckpoint = false) override;
+    virtual void CleanUp() override;
 private:
     void InitCoins();
     void InitMoneyBags();

@@ -37,7 +37,7 @@ int CreditManager::GetCredits() const
     return m_Credits;
 }
 
-void CreditManager::Reset()
+void CreditManager::Reset(bool fromCheckpoint)
 {
     m_Credits = 0;
 }

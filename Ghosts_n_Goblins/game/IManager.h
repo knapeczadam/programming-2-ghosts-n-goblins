@@ -16,7 +16,8 @@ public:
     virtual void Reset(bool fromCheckpoint = false);
 
 protected:
-    virtual void Initialize() = 0;
+    virtual void Initialize(bool fromCheckpoint) = 0;
+    virtual void CleanUp() = 0;
 
 protected:
     GameController* m_pGameController;

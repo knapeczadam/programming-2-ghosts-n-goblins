@@ -13,7 +13,12 @@ CutsceneManager::CutsceneManager(GameController* gameController)
     Initialize();
 }
 
-void CutsceneManager::Initialize()
+CutsceneManager::~CutsceneManager()
+{
+    CleanUp();
+}
+
+void CutsceneManager::Initialize(bool fromCheckpoint)
 {
     m_Intervals.push({Game::Label::N_01, 1.03f});
     m_Intervals.push({Game::Label::N_02, 1.02f});
@@ -69,6 +74,12 @@ void CutsceneManager::Initialize()
     m_Intervals.push({Game::Label::N_END, 0.0f});
 }
 
+void CutsceneManager::CleanUp()
+{
+    std::queue<std::pair<Game::Label, float>> empty;
+    std::swap(m_Intervals, empty);
+}
+
 void CutsceneManager::DrawIntro() const
 {
     if (m_State == Game::Label::N_END) return;
@@ -91,6 +102,8 @@ void CutsceneManager::Update(float elapsedSec)
 
 void CutsceneManager::Reset(bool fromCheckpoint)
 {
+    CleanUp();
+    Initialize();
     m_State = Game::Label::N_01;
 }
 

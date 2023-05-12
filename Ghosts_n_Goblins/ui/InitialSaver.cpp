@@ -136,7 +136,7 @@ void InitialSaver::Update(float elapsedSec)
     OnEnter();
 }
 
-void InitialSaver::Reset()
+void InitialSaver::Reset(bool fromCheckpoint)
 {
     m_Initial.clear();
     m_RowIdx = m_NrRows - 1;

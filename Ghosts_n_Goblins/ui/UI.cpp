@@ -40,7 +40,7 @@ void UI::Draw() const
 {
 }
 
-void UI::Reset()
+void UI::Reset(bool fromCheckpoint)
 {
     
 }

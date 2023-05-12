@@ -20,12 +20,17 @@ TextureManager::TextureManager(GameController* pGameController)
 
 TextureManager::~TextureManager()
 {
-    DeleteTextures();
+    CleanUp();
 }
 
-void TextureManager::Initialize()
+void TextureManager::Initialize(bool fromCheckpoint)
 {
     LoadTextures();
+}
+
+void TextureManager::CleanUp()
+{
+    DeleteTextures();
 }
 
 void TextureManager::LoadTextures()

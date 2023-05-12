@@ -22,7 +22,8 @@ public:
     std::vector<GameObject*>& GetEffects();
 
 protected:
-    virtual void Initialize() override;
+    virtual void Initialize(bool fromCheckpoint = false) override;
+    virtual void CleanUp() override;
 
 public:
     void PlayEffect(Game::Label label, const Point2f& pos, bool flipped, GameObject* other = nullptr);

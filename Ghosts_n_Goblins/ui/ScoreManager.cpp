@@ -33,7 +33,6 @@ void ScoreManager::LoadHighScores()
             ss >> name >> score;
             m_Scores.insert({score, name});
         }
-        m_HighScore = m_Scores.begin()->first; 
     }
 }
 
@@ -59,7 +58,7 @@ void ScoreManager::SetScore(int score, const std::string& initial)
 int ScoreManager::GetHighScore() const
 {
     Player* pPlayer{m_pGameController->m_pPlayerManager->GetPlayer()};
-    return m_HighScore > pPlayer->GetScore() ? m_HighScore : pPlayer->GetScore();
+    return m_Scores.begin()->first > pPlayer->GetScore() ? m_Scores.begin()->first : pPlayer->GetScore();
 }
 
 std::multimap<int, std::string, std::greater<>> ScoreManager::GetScores() const

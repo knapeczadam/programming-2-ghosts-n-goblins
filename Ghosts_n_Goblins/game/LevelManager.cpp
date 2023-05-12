@@ -15,6 +15,8 @@
 
 #include <ranges>
 
+#include "level/CheckpointCollisionBox.h"
+
 LevelManager::LevelManager(GameController* pGameController)
     : IManager{pGameController}
       , m_CollisionBoxes{}
@@ -25,6 +27,7 @@ LevelManager::LevelManager(GameController* pGameController)
       , m_pKillZone{nullptr}
       , m_pLevel{nullptr}
       , m_pPlatform{nullptr}
+    , m_CheckpointReached{false}
 {
     m_pGameController->m_pLevelManager = this;
     Initialize();
@@ -32,19 +35,10 @@ LevelManager::LevelManager(GameController* pGameController)
 
 LevelManager::~LevelManager()
 {
-    auto deleteGameObject = [](const GameObject* pGameObject) { delete pGameObject; };
-    std::ranges::for_each(m_CollisionBoxes, deleteGameObject);
-    std::ranges::for_each(m_Ladders, deleteGameObject);
-    std::ranges::for_each(m_Tombstones, deleteGameObject);
-    std::ranges::for_each(m_Waters, deleteGameObject);
-
-    delete m_pForeground;
-    delete m_pKillZone;
-    delete m_pLevel;
-    delete m_pPlatform;
+    CleanUp();
 }
 
-void LevelManager::Initialize()
+void LevelManager::Initialize(bool fromCheckpoint)
 {
     m_pPlatform = new Platform{Point2f{3295.0f, 28.0f}, m_pGameController};
     m_pForeground = new GameObject{Game::Label::L_FOREGROUND, m_pGameController};
@@ -56,11 +50,25 @@ void LevelManager::Initialize()
     InitLadders();
     InitTombstones();
     InitWaters();
-    InitCollisionBoxes();
+    InitCollisionBoxes(fromCheckpoint);
 }
 
-void LevelManager::Reset(bool fromCheckpoint)
+void LevelManager::CleanUp()
 {
+    auto deleteGameObject = [](const GameObject* pGameObject) { delete pGameObject; };
+    std::ranges::for_each(m_CollisionBoxes, deleteGameObject);
+    std::ranges::for_each(m_Ladders, deleteGameObject);
+    std::ranges::for_each(m_Tombstones, deleteGameObject);
+    std::ranges::for_each(m_Waters, deleteGameObject);
+    m_CollisionBoxes.clear();
+    m_Ladders.clear();
+    m_Tombstones.clear();
+    m_Waters.clear();
+
+    delete m_pForeground;
+    delete m_pKillZone;
+    delete m_pLevel;
+    delete m_pPlatform;
 }
 
 void LevelManager::DrawCollisionBoxes() const
@@ -126,12 +134,36 @@ void LevelManager::LateUpdate(float elapsedSec)
     std::ranges::for_each(m_Waters, lateUpdate);
 }
 
-void LevelManager::InitCollisionBoxes()
+void LevelManager::Reset(bool fromCheckpoint)
+{
+    CleanUp();
+    Initialize(fromCheckpoint);
+}
+
+bool LevelManager::CheckpointReached()
+{
+    for (const auto& pCollisionBox : m_CollisionBoxes)
+    {
+        if (pCollisionBox->GetLabel() == Game::Label::L_CHECKPOINT)
+        {
+            m_CheckpointReached = not pCollisionBox->IsActive();
+        }
+    }
+    return m_CheckpointReached;
+}
+
+void LevelManager::InitCollisionBoxes(bool fromCheckpoint)
 {
     m_CollisionBoxes.insert(m_CollisionBoxes.end(), {
                                 new ArmorCollisionBox{Rectf{2868.0f, 140.0f, 30.0f, 30.0f}, m_pGameController},
-                                new YashichiCollisionBox{Rectf{5924.0f, 140.0f, 24.0f, 24.0f}, m_pGameController},
+                                new YashichiCollisionBox{Rectf{5924.0f, 140.0f, 24.0f, 24.0f}, m_pGameController}
                             });
+    GameObject* pCheckpoint{new CheckpointCollisionBox{Rectf{3600.0f, 0.0f, 30.0f, m_pGameController->m_ViewPort.height}, m_pGameController}};
+    if (fromCheckpoint)
+    {
+        pCheckpoint->SetActive(not m_CheckpointReached);
+    }
+    m_CollisionBoxes.push_back(pCheckpoint);
 }
 
 void LevelManager::InitLadders()

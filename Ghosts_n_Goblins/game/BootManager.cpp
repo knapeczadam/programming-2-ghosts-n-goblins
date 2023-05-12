@@ -19,7 +19,12 @@ BootManager::BootManager(GameController* pGameController)
     Initialize();
 }
 
-void BootManager::Initialize()
+BootManager::~BootManager()
+{
+    CleanUp();
+}
+
+void BootManager::Initialize(bool fromCheckpoint)
 {
     m_Intervals.push({Game::Label::B_01, 1.16f});
     m_Intervals.push({Game::Label::B_BLACK, 0.192f});
@@ -56,6 +61,10 @@ void BootManager::Initialize()
     m_Intervals.push({Game::Label::B_24, 5.0f}); // best ranking
     m_Intervals.push({Game::Label::B_25, 0.033f});
     m_Intervals.push({Game::Label::B_END, 0.0f});
+}
+
+void BootManager::CleanUp()
+{
 }
 
 void BootManager::Draw() const

@@ -1074,6 +1074,7 @@
     <ClCompile Include="game\PlayerManager.cpp" />
     <ClCompile Include="game\UIManager.cpp" />
     <ClCompile Include="level\ArmorCollisionBox.cpp" />
+    <ClCompile Include="level\CheckpointCollisionBox.cpp" />
     <ClCompile Include="level\CollisionBox.cpp">
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -2044,6 +2045,7 @@
     <ClInclude Include="game\PlayerManager.h" />
     <ClInclude Include="game\UIManager.h" />
     <ClInclude Include="level\ArmorCollisionBox.h" />
+    <ClInclude Include="level\CheckpointCollisionBox.h" />
     <ClInclude Include="level\CollisionBox.h" />
     <ClInclude Include="level\Door.h" />
     <ClInclude Include="level\FlyingKnightSpawner.h" />

@@ -26,8 +26,6 @@ public:
     Platform* GetPlatform() const;
     GameObject* GetKillZone() const;
 
-    virtual void Reset(bool fromCheckpoint = false) override;
-
     void DrawCollisionBoxes() const;
     void DrawForeGround() const;
     void DrawKillZone() const;
@@ -39,12 +37,15 @@ public:
 
     void Update(float elapsedSec);
     void LateUpdate(float elapsedSec);
+    virtual void Reset(bool fromCheckpoint = false) override;
+    bool CheckpointReached();
 
 protected:
-    virtual void Initialize() override;
+    virtual void Initialize(bool fromCheckpoint = false) override;
+    virtual void CleanUp() override;
 
 private:
-    void InitCollisionBoxes();
+    void InitCollisionBoxes(bool fromCheckpoint);
     void InitLadders();
     void InitTombstones();
     void InitWaters();
@@ -59,4 +60,5 @@ private:
     GameObject* m_pKillZone;
     Level* m_pLevel;
     Platform* m_pPlatform;
+    bool m_CheckpointReached;
 };

@@ -140,6 +140,7 @@ public:
 
         // Level
         L_ARMOR,
+        L_CHECKPOINT,
         L_DOOR,
         L_FOREGROUND,
         L_KILLZONE,

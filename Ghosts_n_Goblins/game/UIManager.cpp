@@ -31,17 +31,10 @@ UIManager::UIManager(GameController* pGameController)
 
 UIManager::~UIManager()
 {
-    delete m_pCreditManager;
-    delete m_pHUD;
-    delete m_pInitialDrawer;
-    delete m_pInitialSaver;
-    delete m_pMap;
-    delete m_pRankingDrawer;
-    delete m_pScoreManager;
-    delete m_pUI;
+    CleanUp();
 }
 
-void UIManager::Initialize()
+void UIManager::Initialize(bool fromCheckpoint)
 {
     m_pCreditManager = new CreditManager{m_pGameController};
     m_pHUD = new HUD{m_pGameController};
@@ -53,6 +46,14 @@ void UIManager::Initialize()
     m_pUI = new UI{Game::Label::U_UI, m_pGameController};
 }
 
-void UIManager::Reset(bool fromCheckpoint)
+void UIManager::CleanUp()
 {
+    delete m_pCreditManager;
+    delete m_pHUD;
+    delete m_pInitialDrawer;
+    delete m_pInitialSaver;
+    delete m_pMap;
+    delete m_pRankingDrawer;
+    delete m_pScoreManager;
+    delete m_pUI;
 }

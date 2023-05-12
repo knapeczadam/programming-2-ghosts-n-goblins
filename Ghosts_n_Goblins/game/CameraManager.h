@@ -19,7 +19,8 @@ public:
     Camera* GetCamera() const;
 
 protected:
-    virtual void Initialize() override;
+    virtual void Initialize(bool fromCheckpoint = false) override;
+    virtual void CleanUp() override;
 private:
     Camera* m_pCamera;
 };

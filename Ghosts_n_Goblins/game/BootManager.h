@@ -8,7 +8,7 @@ class BootManager final : public IManager
 {
 public:
     explicit BootManager(GameController* pGameController);
-    virtual ~BootManager() override = default;
+    virtual ~BootManager() override;
     BootManager(const BootManager& other) = delete;
     BootManager(BootManager&& other) noexcept = delete;
     BootManager& operator=(const BootManager& other) = delete;
@@ -21,7 +21,9 @@ public:
     Game::Label GetState() const;
 
 protected:
-    virtual void Initialize() override;
+    virtual void Initialize(bool fromCheckpoint = false) override;
+    virtual void CleanUp() override;
+
 private:
     std::queue<std::pair<Game::Label, float>> m_Intervals;
     Game::Label m_State;

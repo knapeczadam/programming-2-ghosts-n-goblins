@@ -1,7 +1,9 @@
 ﻿#pragma once
 #include <vector>
 
+#include "Game.h"
 #include "IManager.h"
+
 class GameObject;
 class Player;
 
@@ -26,9 +28,15 @@ public:
     void LateUpdate(float elapsedSec);
     
 protected:
-    virtual void Initialize() override;
+    virtual void Initialize(bool fromCheckpoint = false) override;
+    virtual void CleanUp() override;
 
 private:
     Player* m_pPlayer;
+    const Point2f m_SpawnPos;
+    const Point2f m_CheckpointPos;
     std::vector<GameObject*> m_Throwables;
+    int m_PrevLives;
+    int m_PrevScore;
+    Game::Label m_PrevWeapon;
 };

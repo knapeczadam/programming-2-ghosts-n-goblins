@@ -17,9 +17,19 @@ FXManager::FXManager(GameController* pGameController)
     : IManager{pGameController}
 {
     pGameController->m_pFXManager = this;
+    Initialize();
 }
 
 FXManager::~FXManager()
+{
+    CleanUp();
+}
+
+void FXManager::Initialize(bool fromCheckpoint)
+{
+}
+
+void FXManager::CleanUp()
 {
     auto deleteGameObject = [](const GameObject* pGameObject) { delete pGameObject; };
     std::ranges::for_each(m_Effects, deleteGameObject);
@@ -48,10 +58,6 @@ void FXManager::LateUpdate(float elapsedSec)
 std::vector<GameObject*>& FXManager::GetEffects()
 {
     return m_Effects;
-}
-
-void FXManager::Initialize()
-{
 }
 
 void FXManager::PlayEffect(Game::Label label, const Point2f& pos, bool flipped, GameObject* other)

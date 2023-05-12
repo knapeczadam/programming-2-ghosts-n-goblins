@@ -10,4 +10,6 @@ IManager::IManager(GameController* pGameController)
 
 void IManager::Reset(bool fromCheckpoint)
 {
+    CleanUp();
+    Initialize(fromCheckpoint);
 }

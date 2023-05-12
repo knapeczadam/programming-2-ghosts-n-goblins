@@ -20,10 +20,9 @@ public:
     UIManager& operator=(const UIManager&) = delete;
     UIManager& operator=(UIManager&&) = delete;
 
-    virtual void Reset(bool fromCheckpoint = false) override;
-
 protected:
-    virtual void Initialize() override;
+    virtual void Initialize(bool fromCheckpoint = false) override;
+    virtual void CleanUp() override;
 
 public:
     CreditManager* m_pCreditManager;

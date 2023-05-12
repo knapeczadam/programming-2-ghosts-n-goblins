@@ -25,7 +25,7 @@ class InputManager final : public IManager
 {
 public:
     explicit InputManager(GameController* pGameController);
-    virtual ~InputManager() override = default;
+    virtual ~InputManager() override;
     InputManager(const InputManager& other) = delete;
     InputManager(InputManager&& other) noexcept = delete;
     InputManager& operator=(const InputManager& other) = delete;
@@ -42,7 +42,8 @@ public:
     std::string ToString(Game::Label control) const;
     
 protected:
-    virtual void Initialize() override;
+    virtual void Initialize(bool fromCheckpoint = false) override;
+    virtual void CleanUp() override;
     
 private:
     void InitControls();

@@ -25,8 +25,6 @@
 #include <iostream>
 #include <numeric>
 
-const Point2f Player::m_SpawnPos{6000.0f, 64.0f};
-
 Player::Player(const Point2f& pos, GameController* pGameController)
     : GameObject{Game::Label::C_ARTHUR, pos, true, pGameController}
       , m_HorVelocity{150.0f}
@@ -519,14 +517,29 @@ void Player::SetLives(int lives)
     m_Lives = lives;
 }
 
+int Player::GetMaxLives() const
+{
+    return m_MaxLives;
+}
+
 Game::Label Player::GetWeapon() const
 {
     return m_CurrWeapon;
 }
 
+void Player::SetWeapon(Game::Label weapon)
+{
+    m_CurrWeapon = weapon;
+}
+
 int Player::GetScore() const
 {
     return m_Score;
+}
+
+void Player::SetScore(int score)
+{
+    m_Score = score;
 }
 
 void Player::AddScore(int score)
@@ -537,13 +550,10 @@ void Player::AddScore(int score)
 bool Player::HandleEnemy(GameObject* other)
 {
     IEnemy* pEnemy{dynamic_cast<IEnemy*>(other)};
-    if (pEnemy)
+    if (pEnemy and m_HP > 0)
     {
         m_pGameController->m_pSoundManager->PlayEffect(Game::Label::E_ARTHUR_HIT);
         --m_HP;
-        if (m_HP == 0)
-        {
-        }
         return true;
     }
     return false;
@@ -574,8 +584,11 @@ bool Player::HandleThrowable(GameObject* other)
         case Game::Label::T_SPEAR:
         case Game::Label::T_FIREBALL_UNICORN:
         case Game::Label::T_FIREBALL_RED_ARREMER:
-            --m_HP;
-            m_pGameController->m_pSoundManager->PlayEffect(Game::Label::E_ARTHUR_HIT);
+            if (m_HP > 0)
+            {
+                --m_HP;
+                m_pGameController->m_pSoundManager->PlayEffect(Game::Label::E_ARTHUR_HIT);
+            }
             break;
         case Game::Label::T_SPELL:
             m_pGameController->m_pSoundManager->PlayEffect(Game::Label::E_ARTHUR_TRANSFORM);
@@ -680,9 +693,4 @@ void Player::CheckForBoundaries(const Rectf& boundaries)
     {
         m_Shape.left = boundaries.left + boundaries.width - m_CollisionBox.width - horizontalOffset;
     }
-}
-
-Point2f Player::GetSpawnPos()
-{
-    return m_SpawnPos;
 }

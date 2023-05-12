@@ -33,16 +33,10 @@ EnemyManager::EnemyManager(GameController* pGameController)
 
 EnemyManager::~EnemyManager()
 {
-    auto deleteGameObject = [](const GameObject* pGameObject) { delete pGameObject; };
-    std::ranges::for_each(m_Enemies, deleteGameObject);
-    std::ranges::for_each(m_Throwables, deleteGameObject);
-
-    delete m_pFlyingKnightSpawner;
-    delete m_pWoodyPigSpawner;
-    delete m_pZombieSpawner;
+    CleanUp();
 }
 
-void EnemyManager::Initialize()
+void EnemyManager::Initialize(bool fromCheckpoint)
 {
     InitCrows();
     InitFlyingKnights();
@@ -52,12 +46,29 @@ void EnemyManager::Initialize()
     InitUnicorn();
     InitWoodyPigs();
     InitZombies();
+    InitSpawners(fromCheckpoint);
+}
 
-    InitSpawners();
+void EnemyManager::CleanUp()
+{
+    auto deleteGameObject = [](const GameObject* pGameObject) { delete pGameObject; };
+    std::ranges::for_each(m_Enemies, deleteGameObject);
+    std::ranges::for_each(m_Throwables, deleteGameObject);
+    m_Enemies.clear();
+    m_Throwables.clear();
+    m_FlyingKnights.clear();
+    m_WoodyPigs.clear();
+    m_Zombies.clear();
+
+    delete m_pFlyingKnightSpawner;
+    delete m_pWoodyPigSpawner;
+    delete m_pZombieSpawner;
 }
 
 void EnemyManager::Reset(bool fromCheckpoint)
 {
+    CleanUp();
+    Initialize(fromCheckpoint);
 }
 
 void EnemyManager::DrawEnemies() const
@@ -136,7 +147,7 @@ void EnemyManager::InitMagician()
 
 void EnemyManager::InitRedArremer()
 {
-    RedArremer * pRedArremer{new RedArremer{Point2f{2929.0f, 65.0f}, m_pGameController}};
+    RedArremer* pRedArremer{new RedArremer{Point2f{2929.0f, 65.0f}, m_pGameController}};
     m_Enemies.push_back(pRedArremer);
 }
 
@@ -181,7 +192,7 @@ void EnemyManager::InitZombies()
     m_Zombies.insert(m_Zombies.end(), {pZombie1, pZombie2, pZombie3});
 }
 
-void EnemyManager::InitSpawners()
+void EnemyManager::InitSpawners(bool fromCheckpoint)
 {
     m_pFlyingKnightSpawner = new FlyingKnightSpawner{
         Rectf{0.0f, 0.0f, 0.0f, m_pGameController->m_ViewPort.height}, m_pGameController

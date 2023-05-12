@@ -16,7 +16,7 @@ public:
 
     virtual void Draw() const override;
     virtual void Update(float elapsedSec) override;
-    virtual void Reset() override;
+    virtual void Reset(bool fromCheckpoint = false) override;
     void DrawTextPlayerOneReady() const;
 
     Rectf GetBoundaries() const;

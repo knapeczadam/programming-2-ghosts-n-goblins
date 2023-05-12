@@ -64,8 +64,11 @@ public:
     void SetHP(int hp);
     int GetLives() const;
     void SetLives(int lives);
+    int GetMaxLives() const;
     Game::Label GetWeapon() const;
+    void SetWeapon(Game::Label weapon);
     int GetScore() const;
+    void SetScore(int score);
     void AddScore(int score);
     bool HandleEnemy(GameObject* other);
     bool HandleThrowable(GameObject* other);
@@ -93,10 +96,7 @@ private:
     
     void CheckForBoundaries(const Rectf& boundaries);
     
-public:
-    static Point2f GetSpawnPos();
 private:
-    static const Point2f m_SpawnPos;
     
     float m_HorVelocity;
     float m_VerVelocity;

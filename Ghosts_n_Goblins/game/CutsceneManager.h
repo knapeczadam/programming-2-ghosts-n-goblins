@@ -8,7 +8,7 @@ class CutsceneManager final : public IManager
 {
 public:
     explicit CutsceneManager(GameController* gameController);
-    virtual ~CutsceneManager() override = default;
+    virtual ~CutsceneManager() override;
     CutsceneManager(const CutsceneManager& other) = delete;
     CutsceneManager(CutsceneManager&& other) noexcept = delete;
     CutsceneManager& operator=(const CutsceneManager& other) = delete;
@@ -20,7 +20,9 @@ public:
     Game::Label GetState() const;
 
 protected:
-    virtual void Initialize() override;
+    virtual void Initialize(bool fromCheckpoint = false) override;
+    virtual void CleanUp() override;
+
 private:
     std::queue<std::pair<Game::Label, float>> m_Intervals;
     Game::Label m_State;
