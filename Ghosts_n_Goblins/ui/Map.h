@@ -17,6 +17,7 @@ public:
     virtual void Draw() const override;
     virtual void Update(float elapsedSec) override;
     virtual void Reset() override;
+    void DrawTextPlayerOneReady() const;
 
     Rectf GetBoundaries() const;
     GameObject* GetDummy() const;

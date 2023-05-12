@@ -30,7 +30,8 @@ public:
         ATTACKING_NORMAL,
         ATTACKING_CROUCHING,
         CLIMBING,
-        CLIMBING_TOP
+        CLIMBING_TOP,
+        DEAD
     };
 
 public:
@@ -62,6 +63,7 @@ public:
     int GetHP() const;
     void SetHP(int hp);
     int GetLives() const;
+    void SetLives(int lives);
     Game::Label GetWeapon() const;
     int GetScore() const;
     void AddScore(int score);
@@ -71,6 +73,9 @@ public:
     bool HandleLadder(GameObject* other);
     bool HandleCollisionBox(GameObject* other);
     State GetState() const;
+    void IncreaseLives();
+    void DecreaseLives();
+    void Die();
 
     void UpdateState();
 protected:

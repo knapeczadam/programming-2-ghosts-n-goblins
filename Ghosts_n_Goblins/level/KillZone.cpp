@@ -13,11 +13,6 @@ void KillZone::HandleCollision(GameObject* other)
 {
     if (not IsOverlapping(other)) return;
     other->SetActive(false);
-    StartTimer(5.0f);
-    if (IsTimerFinished())
-    {
-        // TODO: valami érdekes történik, amikor a platform utáni vizbe esik, nem teleportál vissza a kezdőpontra
-        other->SetPosition(Player::GetSpawnPos());
-        other->SetActive(true);
-    }
+    Player* pPlayer = dynamic_cast<Player*>(other);
+    pPlayer->SetHP(0);
 }

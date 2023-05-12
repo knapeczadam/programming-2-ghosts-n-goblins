@@ -56,7 +56,7 @@ void EnemyManager::Initialize()
     InitSpawners();
 }
 
-void EnemyManager::Reset()
+void EnemyManager::Reset(bool fromCheckpoint)
 {
 }
 

@@ -142,3 +142,8 @@ void InitialSaver::Reset()
     m_RowIdx = m_NrRows - 1;
     m_ColIdx = m_NrCols - 1;
 }
+
+bool InitialSaver::IsInitialSaved() const
+{
+    return m_Initial.length() == m_MaxLength;
+}

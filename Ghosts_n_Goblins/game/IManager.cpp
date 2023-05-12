@@ -8,6 +8,6 @@ IManager::IManager(GameController* pGameController)
 {
 }
 
-void IManager::Reset()
+void IManager::Reset(bool fromCheckpoint)
 {
 }

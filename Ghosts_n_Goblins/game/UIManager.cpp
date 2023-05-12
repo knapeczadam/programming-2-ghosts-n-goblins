@@ -51,10 +51,8 @@ void UIManager::Initialize()
     m_pRankingDrawer = new RankingDrawer{m_pGameController};
     m_pScoreManager = new ScoreManager{m_pGameController};
     m_pUI = new UI{Game::Label::U_UI, m_pGameController};
-    m_pScoreManager->LoadHighScores();
 }
 
-void UIManager::Reset()
+void UIManager::Reset(bool fromCheckpoint)
 {
-    IManager::Reset();
 }

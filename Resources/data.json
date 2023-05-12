@@ -189,6 +189,10 @@
       "path": "ui/text_bottom_row.png"
     },
     {
+      "label": "u_text_continue",
+      "path": "ui/text_continue.png"
+    },
+    {
       "label": "u_text_deposit",
       "path": "ui/text_deposit.png"
     },
@@ -774,7 +778,7 @@
     },
     {
       "label": "u_numbers",
-      "rows": 3,
+      "rows": 4,
       "columns": 11,
       "scale": 2
     },
@@ -782,7 +786,7 @@
       "label": "u_pin",
       "rows": 1,
       "columns": 2,
-      "frames_per_second": 2,
+      "frames_per_second": 4,
       "scale": 2
     },
     {
@@ -795,6 +799,10 @@
     },
     {
       "label": "u_text_bottom_row",
+      "scale": 2
+    },
+    {
+      "label": "u_text_continue",
       "scale": 2
     },
     {

@@ -19,7 +19,7 @@ public:
     EnemyManager& operator=(const EnemyManager& other) = delete;
     EnemyManager& operator=(EnemyManager&& other) noexcept = delete;
     
-    virtual void Reset() override;
+    virtual void Reset(bool fromCheckpoint = false) override;
     void DrawEnemies() const;
     void DrawThrowables() const;
     void Update(float elapsedSec);

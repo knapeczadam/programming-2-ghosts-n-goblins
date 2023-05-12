@@ -15,6 +15,8 @@ public:
     virtual void Update(float elapsedSec) override;
     virtual void Reset() override;
 
+    bool IsInitialSaved() const;
+
 private:
     void DrawAbc() const;
     auto DrawInitial() const -> void;

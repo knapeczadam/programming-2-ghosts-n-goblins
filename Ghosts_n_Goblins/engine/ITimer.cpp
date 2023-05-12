@@ -51,8 +51,36 @@ int ITimer::GetMinutes() const
     return m_pClock->GetRemainingTime() / 60;
 }
 
+/**
+ * \return Remaining time in seconds
+ */
 float ITimer::GetRemainingTime() const
 {
     if (not m_pClock) return std::numeric_limits<float>::max();
     return m_pClock->GetRemainingTime();
+}
+
+/**
+ * \param time in seconds
+ * \return Time struct ex: 1:59 -> {firstDigit: 9, secondDigit: 5, thirdDigit: 1}
+ */
+Time ITimer::GetRemainingTimeDigits(int time)
+{
+    StartTimer(time);
+    const int seconds{GetSeconds()};
+    const int minutes{GetMinutes()};
+
+    int firstDigit, secondDigit, thirdDigit;
+    thirdDigit = minutes;
+    if (seconds > 9)
+    {
+        secondDigit = seconds / 10;
+        firstDigit = seconds % 10;
+    }
+    else
+    {
+        secondDigit = 0;
+        firstDigit = seconds;
+    }
+    return Time{firstDigit, secondDigit, thirdDigit};
 }

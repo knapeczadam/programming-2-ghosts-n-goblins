@@ -7,12 +7,16 @@
 #include <fstream>
 #include <sstream>
 
+#include "game/PlayerManager.h"
+#include "characters/Player.h"
+
 ScoreManager::ScoreManager(GameController* pGameController)
     : UI{Game::Label::U_SCORE_MANAGER, pGameController}
     , m_Path{"highscores.txt"}
     , m_HighScore{0}
     , m_Scores{}
 {
+    LoadHighScores();
 }
 
 void ScoreManager::LoadHighScores()
@@ -38,9 +42,9 @@ void ScoreManager::SaveHighScores()
     std::fstream file{m_Path, std::ios::out};
     if (file)
     {
-        for (const auto& [name, score] : m_Scores)
+        for (const auto& [score, initial] : m_Scores)
         {
-            file << name << " " << score << '\n';
+            file << initial << " " << score << '\n';
         }
     }
 }
@@ -54,7 +58,8 @@ void ScoreManager::SetScore(int score, const std::string& initial)
 
 int ScoreManager::GetHighScore() const
 {
-    return m_HighScore;
+    Player* pPlayer{m_pGameController->m_pPlayerManager->GetPlayer()};
+    return m_HighScore > pPlayer->GetScore() ? m_HighScore : pPlayer->GetScore();
 }
 
 std::multimap<int, std::string, std::greater<>> ScoreManager::GetScores() const

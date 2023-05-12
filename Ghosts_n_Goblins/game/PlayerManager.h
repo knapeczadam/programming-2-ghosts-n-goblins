@@ -18,10 +18,11 @@ public:
     std::vector<GameObject*>& GetThrowables();
     Player* GetPlayer() const;
 
-    virtual void Reset() override;
+    virtual void Reset(bool fromCheckpoint = false) override;
     void DrawPlayer() const;
     void DrawThrowables() const;
     void Update(float elapsedSec);
+    void UpdateLives();
     void LateUpdate(float elapsedSec);
     
 protected:

@@ -514,6 +514,11 @@ int Player::GetLives() const
     return m_Lives;
 }
 
+void Player::SetLives(int lives)
+{
+    m_Lives = lives;
+}
+
 Game::Label Player::GetWeapon() const
 {
     return m_CurrWeapon;
@@ -635,6 +640,21 @@ bool Player::HandleCollisionBox(GameObject* other)
 Player::State Player::GetState() const
 {
     return m_State;
+}
+
+void Player::IncreaseLives()
+{
+    ++m_Lives;
+}
+
+void Player::DecreaseLives()
+{
+    --m_Lives;
+}
+
+void Player::Die()
+{
+    std::cout << "Player died" << std::endl;
 }
 
 void Player::HandleCollision(GameObject* other)

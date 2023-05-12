@@ -34,7 +34,7 @@ void CollectibleManager::Initialize()
     InitYashichi();
 }
 
-void CollectibleManager::Reset()
+void CollectibleManager::Reset(bool fromCheckpoint)
 {
 }
 

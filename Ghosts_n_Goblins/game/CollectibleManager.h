@@ -15,7 +15,7 @@ public:
     CollectibleManager& operator=(const CollectibleManager&) = delete;
     CollectibleManager& operator=(CollectibleManager&&) = delete;
 
-    virtual void Reset() override;
+    virtual void Reset(bool fromCheckpoint = false) override;
     void Draw() const;
     void Update(float elapsedSec);
     void LateUpdate(float elapsedSec);

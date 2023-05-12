@@ -59,7 +59,7 @@ void LevelManager::Initialize()
     InitCollisionBoxes();
 }
 
-void LevelManager::Reset()
+void LevelManager::Reset(bool fromCheckpoint)
 {
 }
 

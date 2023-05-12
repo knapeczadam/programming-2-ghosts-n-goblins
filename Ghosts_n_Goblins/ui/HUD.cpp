@@ -54,6 +54,13 @@ void HUD::SetThirdDigit(int digit)
     m_ThirdDigit = digit;
 }
 
+void HUD::SetDigits(const Time& time)
+{
+    m_FirstDigit = time.firstDigit;
+    m_SecondDigit = time.secondDigit;
+    m_ThirdDigit = time.thirdDigit;
+}
+
 void HUD::DrawLives() const
 {
     for (int idx{}; idx < m_pGameController->m_pPlayerManager->GetPlayer()->GetLives() - 1; ++idx)
@@ -66,11 +73,10 @@ void HUD::DrawLives() const
 void HUD::DrawRemainingTime() const
 {
     Point2f pos{80, m_pGameController->m_ViewPort.height - m_pNumbers->GetScaledClipHeight() * 4};
-    const float offset{m_pNumbers->GetScaledClipWidth()};
-    DrawNumber(pos, m_ThirdDigit, Color::SKY_BLUE);
+    DrawNumber(pos, m_FirstDigit, Color::SKY_BLUE);
     DrawNumber(pos, m_SecondDigit, Color::SKY_BLUE);
     DrawNumber(pos, -1, Color::SKY_BLUE);
-    DrawNumber(pos, m_FirstDigit, Color::SKY_BLUE);
+    DrawNumber(pos, m_ThirdDigit, Color::SKY_BLUE);
 }
 
 void HUD::DrawTextTime() const

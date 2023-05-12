@@ -19,15 +19,19 @@ UI::UI(Game::Label label, GameController* pGameController)
     , m_pNumbers{pGameController->m_pSpriteFactory->CreateSprite(Game::Label::U_NUMBERS)}
     , m_pTextBonus{pGameController->m_pSpriteFactory->CreateSprite(Game::Label::U_TEXT_BONUS)}
     , m_pTextBottomRow{pGameController->m_pSpriteFactory->CreateSprite(Game::Label::U_TEXT_BOTTOM_ROW)}
+    , m_pTextContinue{pGameController->m_pSpriteFactory->CreateSprite(Game::Label::U_TEXT_CONTINUE)}
     , m_pTextDeposit{pGameController->m_pSpriteFactory->CreateSprite(Game::Label::U_TEXT_DEPOSIT)}
     , m_pTextGameOver{pGameController->m_pSpriteFactory->CreateSprite(Game::Label::U_TEXT_GAME_OVER)}
+    , m_pTextGameOverPlayerOne(pGameController->m_pSpriteFactory->CreateSprite(Game::Label::U_TEXT_GAME_OVER_PLAYER_ONE))
     , m_pTextTitle{pGameController->m_pSpriteFactory->CreateSprite(Game::Label::U_TEXT_TITLE)}
     , m_pTextTopRow{pGameController->m_pSpriteFactory->CreateSprite(Game::Label::U_TEXT_TOP_ROW)}
 {
     m_pTextBonus->SetPosition(Point2f{80.0f, 112.0f});
     m_pTextBottomRow->SetPosition(Point2f{32.0f, 0.0f});
+    m_pTextContinue->SetPosition(Point2f{160.0f, 288.0f});
     m_pTextDeposit->SetPosition(Point2f{112.0f, 224.0f});
     m_pTextGameOver->SetPosition(Point2f{192.0f, 224.0f});
+    m_pTextGameOverPlayerOne->SetPosition(Point2f{96.0f, 240.0f});
     m_pTextTitle->SetPosition(Point2f{96.0f, 304.0f});
     m_pTextTopRow->SetPosition(Point2f{16.0f, 432.0f});
 }
@@ -89,6 +93,11 @@ void UI::DrawTextBottomRow() const
     m_pTextBottomRow->Draw();
 }
 
+void UI::DrawTextContinue() const
+{
+    m_pTextContinue->Draw();
+}
+
 void UI::DrawTextDeposit() const
 {
     m_pTextDeposit->Draw();
@@ -97,6 +106,11 @@ void UI::DrawTextDeposit() const
 void UI::DrawTextGameOver() const
 {
     m_pTextGameOver->Draw();
+}
+
+void UI::DrawTextGameOverPlayerOne() const
+{
+    m_pTextGameOverPlayerOne->Draw();
 }
 
 void UI::DrawTextTitle() const

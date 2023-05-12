@@ -10,7 +10,8 @@ public:
     {
         WHITE_TAN = 0,
         SKY_BLUE = 1,
-        DARK_TAN = 2
+        DARK_TAN = 2,
+        RED = 3,
     };
     
     explicit UI(Game::Label label, GameController* pGameController);
@@ -30,12 +31,12 @@ public:
     virtual void DrawHighScore() const final;
     virtual void DrawTextBonus() const final;
     virtual void DrawTextBottomRow() const final;
+    virtual void DrawTextContinue() const final;
     virtual void DrawTextDeposit() const final;
     virtual void DrawTextGameOver() const final;
+    virtual void DrawTextGameOverPlayerOne() const final;
     virtual void DrawTextTitle() const final;
     virtual void DrawTextTopRow() const final;
-
-protected:
     virtual void DrawNumber(Point2f& pos, int number, Color color) const final;
 
 protected:
@@ -49,8 +50,10 @@ private:
     Sprite* m_pNumbers;
     Sprite* m_pTextBonus;
     Sprite* m_pTextBottomRow;
+    Sprite* m_pTextContinue;
     Sprite* m_pTextDeposit;
     Sprite* m_pTextGameOver;
+    Sprite* m_pTextGameOverPlayerOne;
     Sprite* m_pTextTitle;
     Sprite* m_pTextTopRow;
 };

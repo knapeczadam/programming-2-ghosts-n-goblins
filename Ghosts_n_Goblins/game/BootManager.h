@@ -14,7 +14,7 @@ public:
     BootManager& operator=(const BootManager& other) = delete;
     BootManager& operator=(BootManager&& other) noexcept = delete;
 
-    virtual void Reset() override;
+    virtual void Reset(bool fromCheckpoint = false) override;
     void Draw() const;
     void Update(float elapsedSec);
 

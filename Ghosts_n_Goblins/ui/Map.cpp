@@ -14,7 +14,7 @@ Map::Map(GameController* pGameController)
       , m_pMap{pGameController->m_pSpriteFactory->CreateSprite(Game::Label::U_MAP)}
       , m_pTextPlayerOneReady{pGameController->m_pSpriteFactory->CreateSprite(Game::Label::U_TEXT_PLAYER_ONE_READY)}
       , pDummy{new GameObject{Game::Label::D_DUMMY, Rectf{0, 0, 30.0f, 30.0f}, false}}
-      , m_Speed{140}
+      , m_Speed{120}
       , m_PinPos1{58.0f, 66.0f}
       , m_PinPos2{122.0f, 66.0f}
       , m_TextPos{112.0f, 224.0f}
@@ -30,10 +30,8 @@ Map::~Map()
 
 void Map::Draw() const
 {
-    m_pGameController->m_pUIManager->m_pUI->DrawTextTopRow();
     m_pMap->Draw();
     m_pPin->Draw();
-    m_pTextPlayerOneReady->Draw();
 }
 
 void Map::Update(float elapsedSec)
@@ -50,6 +48,11 @@ void Map::Reset()
     pDummy->SetPosition(Point2f{});
     m_pPin->SetPosition(m_PinPos1);
     pDummy->SetPosition(Point2f{0, m_pGameController->m_ViewPort.height / 2});
+}
+
+void Map::DrawTextPlayerOneReady() const
+{
+    m_pTextPlayerOneReady->Draw();
 }
 
 Rectf Map::GetBoundaries() const

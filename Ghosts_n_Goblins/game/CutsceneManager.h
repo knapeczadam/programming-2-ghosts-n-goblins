@@ -16,7 +16,7 @@ public:
 
     void DrawIntro() const;
     void Update(float elapsedSec);
-    virtual void Reset() override;
+    virtual void Reset(bool fromCheckpoint = false) override;
     Game::Label GetState() const;
 
 protected:

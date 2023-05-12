@@ -162,8 +162,6 @@ public:
         
         // Ui
         U_ABC,
-        U_TEXT_BEST_RANKING,
-        U_TEXT_BONUS,
         U_CHARACTER_DRAWER,
         U_CREDIT_MANAGER,
         U_FRAME,
@@ -179,7 +177,10 @@ public:
         U_PIN,
         U_RANKING_DRAWER,
         U_SCORE_MANAGER,
+        U_TEXT_BEST_RANKING,
+        U_TEXT_BONUS,
         U_TEXT_BOTTOM_ROW,
+        U_TEXT_CONTINUE,
         U_TEXT_DEPOSIT,
         U_TEXT_GAME_OVER,
         U_TEXT_GAME_OVER_PLAYER_ONE,
@@ -268,6 +269,7 @@ public:
         BOOT,
         MENU,
         INTRO,
+        FROZEN,
         GAME,
         MAP,
         GAME_OVER,
@@ -300,7 +302,6 @@ private:
     void ClearBackground() const;
     
     void DrawContinue() const;
-    void DrawDebug() const;
     void DrawGame() const;
     void DrawGameOver() const;
     void DrawIntro() const;
@@ -323,11 +324,13 @@ private:
 
     void UpdateState();
     void LateUpdateGame(float elapsedSec);
-    void UpdateRemainingTime();
-    
+    void UpdateRemainingTime(int time);
+
+    void ResetGame(bool fromCheckpoint = false);
     void HandleCollisions();
     void Debug() const;
     void PrintInfo() const;
+    State GetState() const;
 
 private:
     json m_Data;

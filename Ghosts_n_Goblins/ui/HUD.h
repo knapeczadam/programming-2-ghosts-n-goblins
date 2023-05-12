@@ -16,6 +16,7 @@ public:
     void SetFirstDigit(int digit);
     void SetSecondDigit(int digit);
     void SetThirdDigit(int digit);
+    void SetDigits(const Time& time);
     void DrawTextTime() const;
     void DrawRemainingTime() const;
 private:

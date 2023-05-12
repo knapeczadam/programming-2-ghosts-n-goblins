@@ -9,8 +9,8 @@
 
 PlayerManager::PlayerManager(GameController* pGameController)
     : IManager{pGameController}
-    , m_pPlayer{nullptr}
-    , m_Throwables{} 
+      , m_pPlayer{nullptr}
+      , m_Throwables{}
 {
     m_pGameController->m_pPlayerManager = this;
     Initialize();
@@ -23,7 +23,7 @@ PlayerManager::~PlayerManager()
     delete m_pPlayer;
 }
 
-std::vector<GameObject*>& PlayerManager::GetThrowables() 
+std::vector<GameObject*>& PlayerManager::GetThrowables()
 {
     return m_Throwables;
 }
@@ -38,9 +38,23 @@ void PlayerManager::Initialize()
     m_pPlayer = new Player{Player::GetSpawnPos(), m_pGameController};
 }
 
-void PlayerManager::Reset()
+void PlayerManager::Reset(bool fromCheckpoint)
 {
     m_pPlayer->SetHP(2);
+    m_pPlayer->SetActive(true);
+    m_pPlayer->SetVisible(true);
+    m_pPlayer->SetPosition(Player::GetSpawnPos());
+    if (fromCheckpoint)
+    {
+        if (m_pPlayer->GetLives() == 0)
+        {
+            m_pPlayer->SetLives(3);
+        }
+    }
+    else
+    {
+        m_pPlayer->SetLives(3);
+    }
 }
 
 void PlayerManager::DrawPlayer() const
@@ -61,6 +75,16 @@ void PlayerManager::Update(float elapsedSec)
     static const auto update{[&](GameObject* pGameObject) { pGameObject->Update(elapsedSec); }};
     if (m_pPlayer->IsActive()) m_pPlayer->Update(elapsedSec);
     std::ranges::for_each(m_Throwables | std::ranges::views::filter(isActive), update);
+}
+
+void PlayerManager::UpdateLives()
+{
+    if (m_pPlayer->GetLives() == 0) return;
+    
+    if (m_pPlayer->GetHP() == 0)
+    {
+        m_pPlayer->SetLives(m_pPlayer->GetLives() - 1);
+    }
 }
 
 void PlayerManager::LateUpdate(float elapsedSec)

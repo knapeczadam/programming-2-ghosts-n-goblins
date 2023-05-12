@@ -35,6 +35,7 @@
 #include "Camera.h"
 #include "CameraManager.h"
 #include "CutsceneManager.h"
+#include "ui/InitialSaver.h"
 #include "ui/Map.h"
 
 
@@ -43,7 +44,7 @@ Game::Game(const Window& window)
       , m_Data{nullptr}
       , m_DataPath{"data.json"}
       , m_Labels{}
-      , m_State{State::MENU}
+      , m_State{State::GAME}
       , m_pBootManager{nullptr}
       , m_pCameraManager{nullptr}
       , m_pCutsceneManager{nullptr}
@@ -257,6 +258,7 @@ void Game::InitLabels()
     m_Labels["u_text_best_ranking"] = Label::U_TEXT_BEST_RANKING;
     m_Labels["u_text_bonus"] = Label::U_TEXT_BONUS;
     m_Labels["u_text_bottom_row"] = Label::U_TEXT_BOTTOM_ROW;
+    m_Labels["u_text_continue"] = Label::U_TEXT_CONTINUE;
     m_Labels["u_text_deposit"] = Label::U_TEXT_DEPOSIT;
     m_Labels["u_text_game_over"] = Label::U_TEXT_GAME_OVER;
     m_Labels["u_text_game_over_player_one"] = Label::U_TEXT_GAME_OVER_PLAYER_ONE;
@@ -340,7 +342,6 @@ void Game::ClearBackground() const
 
 void Game::Draw() const
 {
-    // CLEAR
     ClearBackground();
 
     switch (m_State)
@@ -354,14 +355,14 @@ void Game::Draw() const
     case State::INTRO:
         DrawIntro();
         break;
+    case State::FROZEN:
     case State::GAME:
+    case State::GAME_OVER:
+    case State::SAVE_SCORE:
         DrawGame();
         break;
     case State::MAP:
         DrawMap();
-        break;
-    case State::GAME_OVER:
-        DrawGameOver();
         break;
     case State::CONTINUE:
         DrawContinue();
@@ -371,9 +372,6 @@ void Game::Draw() const
         break;
     case State::OUTRO:
         DrawOutro();
-        break;
-    case State::SAVE_SCORE:
-        DrawSaveScore();
         break;
     }
 }
@@ -447,15 +445,50 @@ void Game::UpdateState()
         m_pCutsceneManager->Reset();
         m_State = State::GAME;
     }
-    else if (m_pPlayerManager->GetPlayer()->GetLives() == 0 and m_pPlayerManager->GetPlayer()->GetScore() < m_pUIManager
-        ->m_pScoreManager->GetHighScore())
+    else if (m_State == State::SAVE_SCORE)
     {
-        m_State = State::GAME_OVER;
+        if (m_pGameController->m_pUIManager->m_pInitialSaver->IsInitialSaved())
+        {
+            StartTimer(3);
+            if (IsTimerFinished())
+            {
+                m_State = State::CONTINUE;
+            }
+        }
     }
-    else if (m_pPlayerManager->GetPlayer()->GetLives() == 0 and m_pPlayerManager->GetPlayer()->GetScore() >=
-        m_pUIManager->m_pScoreManager->GetHighScore())
+    else if (m_State == State::GAME_OVER)
     {
-        m_State = State::SAVE_SCORE;
+        StartTimer(3);
+        if (IsTimerFinished())
+        {
+            if (m_pPlayerManager->GetPlayer()->GetScore() == m_pUIManager->m_pScoreManager->GetHighScore())
+            {
+                m_State = State::SAVE_SCORE;
+            }
+            else
+            {
+                m_State = State::CONTINUE;
+            }
+        }
+    }
+    else if (m_State == State::CONTINUE)
+    {
+        StartTimer(10);
+        if (m_pInputManager->IsPressed(Label::I_START))
+        {
+            ResetGame(true);
+            m_State = State::MAP;
+        }
+        else if (IsTimerFinished())
+        {
+            ResetGame();
+            m_State = State::MENU;
+        }
+    }
+    else if (m_pPlayerManager->GetPlayer()->GetLives() == 0)
+    {
+        ResetTimer();
+        m_State = State::GAME_OVER;
     }
     else if (m_State == State::MAP)
     {
@@ -467,20 +500,22 @@ void Game::UpdateState()
             m_State = State::GAME;
         }
     }
+    else if (m_State == State::FROZEN)
+    {
+        StartTimer(2);
+        if (IsTimerFinished())
+        {
+            ResetGame(true);
+            m_State = State::MAP;
+        }
+    }
     else if (m_pPlayerManager->GetPlayer()->GetLives() and m_pPlayerManager->GetPlayer()->GetHP() == 0)
     {
-        m_pPlayerManager->Reset();
-        m_pEnemyManager->Reset();
-        m_pLevelManager->Reset();
-        m_pCollectibleManager->Reset();
         ResetTimer();
-        m_State = State::MAP;
-        m_pCameraManager->GetCamera()->SetBoundaries(m_pUIManager->m_pMap->GetBoundaries());
-        
+        m_State = State::FROZEN;
     }
     else if (m_pPlayerManager->GetPlayer()->HasKey())
     {
-        
     }
 }
 
@@ -492,11 +527,8 @@ void Game::HandleCollisions()
     static const auto objectHandleCollision{[&](GameObject* pGameObject) { pGameObject->HandleCollision(pPlayer); }};
 
 
-    // kill-z continuous collision detection
-    m_pLevelManager->GetKillZone()->HandleCollision(pPlayer);
-
+    if (pPlayer->IsActive()) m_pLevelManager->GetKillZone()->HandleCollision(pPlayer);
     if (pPlayer->IsActive()) m_pLevelManager->GetLevel()->HandleCollision(pPlayer);
-    // m_pLevelManager->GetLevel()->HandleCollision(pPlayer);
 
     // Player on enemies
     std::ranges::for_each(m_pEnemyManager->GetEnemies() | std::views::filter(isActive), playerHandleCollision);
@@ -589,6 +621,15 @@ void Game::DrawGame() const
 
     m_pUIManager->m_pHUD->Draw();
 
+    if (m_State == State::GAME_OVER)
+    {
+        DrawGameOver();
+    }
+    else if (m_State == State::SAVE_SCORE)
+    {
+        DrawSaveScore();
+    }
+
 #if DRAW_CENTER_GUIDE
     utils::SetColor(Color4f{1.0f, 1.0f, 1.0f, 0.5f});
     utils::DrawLine(Point2f{GetViewPort().width / 2, 0}, Point2f{GetViewPort().width / 2, GetViewPort().height});
@@ -598,7 +639,7 @@ void Game::DrawGame() const
 
 void Game::DrawMenu() const
 {
-    m_pMenuManager->Draw();
+    m_pMenuManager->DrawMenu();
 }
 
 void Game::DrawIntro() const
@@ -608,22 +649,22 @@ void Game::DrawIntro() const
 
 void Game::DrawMap() const
 {
-    glPushMatrix();
-    m_pCameraManager->Transform(Label::D_DUMMY);
-    m_pUIManager->m_pMap->Draw();
-    glPopMatrix();
+    m_pMenuManager->DrawMap();
 }
 
 void Game::DrawGameOver() const
 {
+    m_pMenuManager->DrawGameOver();
 }
 
 void Game::DrawContinue() const
 {
+    m_pMenuManager->DrawContinue();
 }
 
 void Game::DrawRanking() const
 {
+    m_pMenuManager->DrawRanking();
 }
 
 void Game::DrawOutro() const
@@ -632,10 +673,7 @@ void Game::DrawOutro() const
 
 void Game::DrawSaveScore() const
 {
-}
-
-void Game::DrawDebug() const
-{
+    m_pMenuManager->DrawSaveScore();
 }
 
 void Game::UpdateBoot(float elapsedSec)
@@ -645,6 +683,8 @@ void Game::UpdateBoot(float elapsedSec)
 
 void Game::UpdateGame(float elapsedSec)
 {
+    m_pGameController->m_pCameraManager->GetCamera()->SetBoundaries(
+        m_pGameController->m_pLevelManager->GetLevel()->GetBoundaries());
     m_pLevelManager->Update(elapsedSec);
     m_pPlayerManager->Update(elapsedSec);
     m_pEnemyManager->SpawnEnemies();
@@ -658,12 +698,13 @@ void Game::UpdateGame(float elapsedSec)
 #endif
 
     HandleCollisions();
+    m_pPlayerManager->UpdateLives();
     m_pCameraManager->DoFrustumCulling();
 }
 
 void Game::UpdateMenu(float elapsedSec)
 {
-    m_pMenuManager->Update(elapsedSec);
+    m_pMenuManager->UpdateMenu(elapsedSec);
 }
 
 void Game::UpdateIntro(float elapsedSec)
@@ -673,19 +714,22 @@ void Game::UpdateIntro(float elapsedSec)
 
 void Game::UpdateMap(float elapsedSec)
 {
-    m_pUIManager->m_pMap->Update(elapsedSec);
+    m_pMenuManager->UpdateMap(elapsedSec);
 }
 
 void Game::UpdateGameOver(float elapsedSec)
 {
+    m_pMenuManager->UpdateGameOver(elapsedSec);
 }
 
 void Game::UpdateContinue(float elapsedSec)
 {
+    m_pMenuManager->UpdateContinue(elapsedSec);
 }
 
 void Game::UpdateRanking(float elapsedSec)
 {
+    m_pMenuManager->UpdateRanking(elapsedSec);
 }
 
 void Game::UpdateOutro(float elapsedSec)
@@ -694,57 +738,44 @@ void Game::UpdateOutro(float elapsedSec)
 
 void Game::UpdateSaveScore(float elapsedSec)
 {
+    m_pMenuManager->UpdateSaveScore(elapsedSec);
 }
 
 void Game::LateUpdateGame(float elapsedSec)
 {
-    switch (m_State)
-    {
-    case State::GAME:
-        m_pLevelManager->LateUpdate(elapsedSec);
-        m_pPlayerManager->LateUpdate(elapsedSec);
-        m_pEnemyManager->LateUpdate(elapsedSec);
-        m_pCollectibleManager->LateUpdate(elapsedSec);
-        m_pFXManager->LateUpdate(elapsedSec);
-        UpdateRemainingTime();
-        break;
-    }
+    m_pLevelManager->LateUpdate(elapsedSec);
+    m_pPlayerManager->LateUpdate(elapsedSec);
+    m_pEnemyManager->LateUpdate(elapsedSec);
+    m_pCollectibleManager->LateUpdate(elapsedSec);
+    m_pFXManager->LateUpdate(elapsedSec);
+    UpdateRemainingTime(121);
 #if TEST_OBJECT
     m_pTestObject->LateUpdate(elapsedSec);
 #endif
 }
 
-void Game::UpdateRemainingTime()
+void Game::UpdateRemainingTime(int time)
 {
-    StartTimer(121);
-    const int seconds{GetSeconds()};
-    const int minutes{GetMinutes()};
-
-    int firstDigit, secondDigit, thirdDigit;
-    firstDigit = minutes;
-    if (seconds > 9)
-    {
-        secondDigit = seconds / 10;
-        thirdDigit = seconds % 10;
-    }
-    else
-    {
-        secondDigit = 0;
-        thirdDigit = seconds;
-    }
+    m_pGameController->m_pUIManager->m_pHUD->SetDigits(GetRemainingTimeDigits(time));
     if (GetRemainingTime() <= 15.0f)
     {
         m_pGameController->m_pSoundManager->PlayStream(Game::Label::S_05_HURRY_UP, false);
     }
-    m_pGameController->m_pUIManager->m_pHUD->SetFirstDigit(firstDigit);
-    m_pGameController->m_pUIManager->m_pHUD->SetSecondDigit(secondDigit);
-    m_pGameController->m_pUIManager->m_pHUD->SetThirdDigit(thirdDigit);
-
     if (IsTimerFinished())
     {
         std::cout << "Time is up!\n";
-        // TODO: Game over
+        m_pPlayerManager->GetPlayer()->Die();
     }
+}
+
+void Game::ResetGame(bool fromCheckpoint)
+{
+    m_pPlayerManager->Reset(fromCheckpoint);
+    m_pEnemyManager->Reset(fromCheckpoint);
+    m_pLevelManager->Reset(fromCheckpoint);
+    m_pCollectibleManager->Reset(fromCheckpoint);
+    m_pMenuManager->Reset(fromCheckpoint);
+    ResetTimer();
 }
 
 void Game::PrintInfo() const
@@ -764,6 +795,11 @@ void Game::PrintInfo() const
     std::cout << " * Decrease volume: " << m_pInputManager->ToString(Label::I_DECREASE_VOLUME) << std::endl;
     std::cout << " * Debug: " << m_pInputManager->ToString(Label::I_DEBUG) << std::endl;
     std::cout << std::endl;
+}
+
+Game::State Game::GetState() const
+{
+    return m_State;;
 }
 
 void Game::Debug() const

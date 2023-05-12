@@ -2,6 +2,13 @@
 
 class Clock;
 
+struct Time
+{
+    int firstDigit;
+    int secondDigit;
+    int thirdDigit;
+};
+
 class ITimer
 {
 public:
@@ -19,6 +26,8 @@ protected:
     virtual int GetSeconds() const final;
     virtual int GetMinutes() const final;
     virtual float GetRemainingTime() const final;
+    virtual Time GetRemainingTimeDigits(int time) final;
+
 private:
     Clock* m_pClock;
 };

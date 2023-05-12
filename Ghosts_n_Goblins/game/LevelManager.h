@@ -26,7 +26,7 @@ public:
     Platform* GetPlatform() const;
     GameObject* GetKillZone() const;
 
-    virtual void Reset() override;
+    virtual void Reset(bool fromCheckpoint = false) override;
 
     void DrawCollisionBoxes() const;
     void DrawForeGround() const;

@@ -18,7 +18,7 @@ void CutsceneManager::Initialize()
     m_Intervals.push({Game::Label::N_01, 1.03f});
     m_Intervals.push({Game::Label::N_02, 1.02f});
     m_Intervals.push({Game::Label::N_03, 0.09f});
-    m_Intervals.push({Game::Label::N_04, 0.22});
+    m_Intervals.push({Game::Label::N_04, 0.22f});
     m_Intervals.push({Game::Label::N_05, 0.01f});
     m_Intervals.push({Game::Label::N_06, 0.4f});
     m_Intervals.push({Game::Label::N_05, 0.01f});
@@ -56,16 +56,16 @@ void CutsceneManager::Initialize()
     m_Intervals.push({Game::Label::N_21, 0.04f});
     m_Intervals.push({Game::Label::N_22, 0.0f});
     m_Intervals.push({Game::Label::N_23, 0.01f});
-    m_Intervals.push({Game::Label::N_24, 0.21});
-    m_Intervals.push({Game::Label::N_25, 0.25});
-    m_Intervals.push({Game::Label::N_26, 0.04});
-    m_Intervals.push({Game::Label::N_27, 0.03});
+    m_Intervals.push({Game::Label::N_24, 0.21f});
+    m_Intervals.push({Game::Label::N_25, 0.25f});
+    m_Intervals.push({Game::Label::N_26, 0.04f});
+    m_Intervals.push({Game::Label::N_27, 0.03f});
     m_Intervals.push({Game::Label::N_28, 0.04f});
     m_Intervals.push({Game::Label::N_29, 0.04f});
     m_Intervals.push({Game::Label::N_30, 0.03f});
     m_Intervals.push({Game::Label::N_31, 0.02f});
-    m_Intervals.push({Game::Label::N_32, 0.16});
-    m_Intervals.push({Game::Label::N_33, 0.19});
+    m_Intervals.push({Game::Label::N_32, 0.16f});
+    m_Intervals.push({Game::Label::N_33, 0.19f});
     m_Intervals.push({Game::Label::N_END, 0.0f});
 }
 
@@ -89,7 +89,7 @@ void CutsceneManager::Update(float elapsedSec)
     }
 }
 
-void CutsceneManager::Reset()
+void CutsceneManager::Reset(bool fromCheckpoint)
 {
     m_State = Game::Label::N_01;
 }

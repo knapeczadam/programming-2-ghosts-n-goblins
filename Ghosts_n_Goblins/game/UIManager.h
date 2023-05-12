@@ -20,7 +20,7 @@ public:
     UIManager& operator=(const UIManager&) = delete;
     UIManager& operator=(UIManager&&) = delete;
 
-    virtual void Reset() override;
+    virtual void Reset(bool fromCheckpoint = false) override;
 
 protected:
     virtual void Initialize() override;
