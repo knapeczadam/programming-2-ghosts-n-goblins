@@ -512,7 +512,7 @@
       "columns": 16,
       "frames_per_second": 10,
       "scale": 2,
-      "collision_width": 20
+      "collision_width": 18
     },
     {
       "label": "c_crow",

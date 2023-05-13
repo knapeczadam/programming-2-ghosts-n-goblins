@@ -94,7 +94,10 @@ void IEnemy::Spawn(float elapsedSec)
 {
 }
 
-// Enemy looks to the left by default
+/**
+ * \brief Enemy looks to the left by default
+ * \return true if enemy looks to the right
+ */
 bool IEnemy::IsFlipped() const
 {
     if (GetPosition<Point2f>().x < m_pGameController->m_pPlayerManager->GetPlayer()->GetPosition<Point2f>().x)

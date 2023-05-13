@@ -24,7 +24,6 @@ public:
     void DrawPlayer() const;
     void DrawThrowables() const;
     void Update(float elapsedSec);
-    void UpdateLives();
     void LateUpdate(float elapsedSec);
     
 protected:

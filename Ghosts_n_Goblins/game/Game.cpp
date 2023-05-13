@@ -100,7 +100,7 @@ void Game::Initialize()
     // CAMERA - has to be after level and player initialization
     m_pCameraManager = new CameraManager{m_pGameController};
 #if TEST_OBJECT
-    m_pTestObject = new Zombie{Point2f{500.f, 62.f}, m_pGameController};
+    m_pTestObject = new Zombie{Point2f{-32.f, 62.f}, m_pGameController};
     m_pTestObject->SetActive(false);
     m_pTestObject->SetVisible(false);
 #endif
@@ -513,8 +513,11 @@ void Game::UpdateState()
     }
     else if (m_pPlayerManager->GetPlayer()->GetLives() and m_pPlayerManager->GetPlayer()->GetHP() == 0)
     {
-        ResetTimer();
-        m_State = State::FROZEN;
+        if (m_pPlayerManager->GetPlayer()->GetState() == Player::State::DEAD and not m_pPlayerManager->GetPlayer()->IsActive())
+        {
+            ResetTimer();
+            m_State = State::FROZEN;
+        }
     }
     else if (m_pPlayerManager->GetPlayer()->HasKey())
     {
@@ -686,7 +689,7 @@ void Game::UpdateBoot(float elapsedSec)
 void Game::UpdateGame(float elapsedSec)
 {
     m_pGameController->m_pCameraManager->GetCamera()->SetBoundaries(
-        m_pGameController->m_pLevelManager->GetLevel()->GetBoundaries());
+    m_pGameController->m_pLevelManager->GetLevel()->GetBoundaries());
     m_pLevelManager->Update(elapsedSec);
     m_pPlayerManager->Update(elapsedSec);
     m_pEnemyManager->SpawnEnemies();
@@ -700,7 +703,6 @@ void Game::UpdateGame(float elapsedSec)
 #endif
 
     HandleCollisions();
-    m_pPlayerManager->UpdateLives();
     m_pCameraManager->DoFrustumCulling();
 }
 

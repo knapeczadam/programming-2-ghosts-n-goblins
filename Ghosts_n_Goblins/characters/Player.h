@@ -31,7 +31,10 @@ public:
         ATTACKING_CROUCHING,
         CLIMBING,
         CLIMBING_TOP,
-        DEAD
+        HIT,
+        DEAD,
+        TRANSFORMING,
+        FROG
     };
 
 public:
@@ -43,6 +46,7 @@ public:
     Player& operator=(Player&& other) noexcept = delete;
 
     virtual void Draw() const override;
+    void DrawArmor() const;
     void UpdateCooldown(float elapsedSec);
     void Throw();
     virtual void Update(float elapsedSec) override;
@@ -78,7 +82,9 @@ public:
     State GetState() const;
     void IncreaseLives();
     void DecreaseLives();
+    void Hit(float elapsedSec);
     void Die();
+    bool ImpactFromLeft(GameObject* other) const;
 
     void UpdateState();
 protected:
@@ -124,4 +130,7 @@ private:
     bool m_Climbing;
     bool m_OnLadder;
     bool m_OnGround;
+    bool m_ImpactFromLeft;
+    bool m_HitTriggered;
+    bool m_HitFlipped;
 };

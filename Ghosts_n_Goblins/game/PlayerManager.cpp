@@ -97,19 +97,10 @@ void PlayerManager::Update(float elapsedSec)
     std::ranges::for_each(m_Throwables | std::ranges::views::filter(isActive), update);
 }
 
-void PlayerManager::UpdateLives()
-{
-    if (m_pPlayer->GetLives() == 0) return;
-
-    if (m_pPlayer->GetHP() == 0)
-    {
-        m_pPlayer->SetLives(m_pPlayer->GetLives() - 1);
-    }
-}
-
 void PlayerManager::LateUpdate(float elapsedSec)
 {
+    static const auto isActive{[](const GameObject* pGameObject) { return pGameObject->IsActive(); }};
     static const auto lateUpdate{[&](GameObject* pGameObject) { pGameObject->LateUpdate(elapsedSec); }};
-    std::ranges::for_each(m_Throwables, lateUpdate);
-    m_pPlayer->LateUpdate(elapsedSec);
+    std::ranges::for_each(m_Throwables | std::ranges::views::filter(isActive) , lateUpdate);
+    if (m_pPlayer->IsActive()) m_pPlayer->LateUpdate(elapsedSec);
 }
