@@ -28,7 +28,7 @@ public:
     virtual bool IsVisible() const final;
     
     virtual void DrawPlayerScore() const final;
-    virtual void DrawHighScore() const final;
+    virtual void DrawTopScore() const final;
     virtual void DrawTextBonus() const final;
     virtual void DrawTextBonusKey() const final;
     virtual void DrawTextBottomRow() const final;

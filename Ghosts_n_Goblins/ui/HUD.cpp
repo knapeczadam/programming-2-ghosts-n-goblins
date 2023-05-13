@@ -31,7 +31,7 @@ void HUD::Draw() const
 {
     DrawLives();
     DrawPlayerScore();
-    DrawHighScore();
+    DrawTopScore();
     DrawTextTime();
     DrawRemainingTime();
     DrawTextTopRow();

@@ -36,8 +36,8 @@ void InputManager::InitControls()
     m_Controls[Game::Label::I_RIGHT] = {SDL_SCANCODE_RIGHT};
     m_Controls[Game::Label::I_JUMP] = {SDL_SCANCODE_X, SDL_SCANCODE_SPACE};
     m_Controls[Game::Label::I_ATTACK] = {SDL_SCANCODE_S};
-    m_Controls[Game::Label::I_SELECT] = {SDL_SCANCODE_LSHIFT};
-    m_Controls[Game::Label::I_START] = {SDL_SCANCODE_RETURN};
+    m_Controls[Game::Label::I_INSERT] = {SDL_SCANCODE_LSHIFT};
+    m_Controls[Game::Label::I_SELECT] = {SDL_SCANCODE_RETURN};
     m_Controls[Game::Label::I_SAVE] = {SDL_SCANCODE_F2};
     m_Controls[Game::Label::I_LOAD] = {SDL_SCANCODE_F5};
     m_Controls[Game::Label::I_INFO] = {SDL_SCANCODE_I};

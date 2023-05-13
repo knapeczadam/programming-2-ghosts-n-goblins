@@ -15,7 +15,9 @@
 
 #include <ranges>
 
+#include "EnemyManager.h"
 #include "level/colliders/BonusCollider.h"
+#include "level/colliders/BossCollider.h"
 #include "level/colliders/CheckpointCollider.h"
 #include "level/colliders/KeyCollider.h"
 
@@ -154,12 +156,49 @@ bool LevelManager::CheckpointReached()
     return m_CheckpointReached;
 }
 
+bool LevelManager::IsBossFight() const
+{
+    bool bossActive{false};
+    for (GameObject* enemy : m_pGameController->m_pEnemyManager->GetEnemies())
+    {
+        if (enemy->GetLabel() == Game::Label::C_UNICORN)
+        {
+            bossActive = enemy->IsActive();
+        }
+    }
+    
+    for (GameObject* collider : m_Colliders)
+    {
+        if (collider->GetLabel() == Game::Label::L_BOSS and not collider->IsActive())
+        {
+            return bossActive;
+        }
+    }
+    return false;
+}
+
+bool LevelManager::StageCleared() const
+{
+    for (GameObject* collider : m_Colliders)
+    {
+        if (collider->GetLabel() == Game::Label::L_KEY and not collider->IsActive())
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
 void LevelManager::InitColliders(bool fromCheckpoint)
 {
+    const float bonusStart{6940.0f};
+    const float bossStart{6364.0f};
+    const float keyStart{6575.0f};
     m_Colliders.insert(m_Colliders.end(), {
                                 new ArmorCollider{Rectf{2868.0f, 140.0f, 30.0f, 30.0f}, m_pGameController},
-                                new BonusCollider{Rectf{6940.0f, 0.0f, m_pGameController->m_pLevelManager->GetLevel()->GetBoundaries().width - 6940.0f, m_pGameController->m_ViewPort.height}, m_pGameController},
-                                new KeyCollider{Rectf{6575.0f, 0.0f, m_pGameController->m_pLevelManager->GetLevel()->GetBoundaries().width - 6575.0f, m_pGameController->m_ViewPort.height}, m_pGameController},
+                                new BonusCollider{Rectf{bonusStart, 0.0f, m_pGameController->m_pLevelManager->GetLevel()->GetBoundaries().width - bonusStart, m_pGameController->m_ViewPort.height}, m_pGameController},
+                                new BossCollider{Rectf{bossStart, 0.0f, m_pGameController->m_pLevelManager->GetLevel()->GetBoundaries().width - bossStart, m_pGameController->m_ViewPort.height}, m_pGameController},
+                                new KeyCollider{Rectf{keyStart, 0.0f, m_pGameController->m_pLevelManager->GetLevel()->GetBoundaries().width - keyStart, m_pGameController->m_ViewPort.height}, m_pGameController},
                                 new YashichiCollider{Rectf{5924.0f, 140.0f, 24.0f, 24.0f}, m_pGameController}
                             });
     GameObject* pCheckpoint{new CheckpointCollider{Rectf{3600.0f, 0.0f, 30.0f, m_pGameController->m_ViewPort.height}, m_pGameController}};

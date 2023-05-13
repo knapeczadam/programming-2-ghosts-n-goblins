@@ -61,7 +61,7 @@ void MenuManager::DrawMenu() const
         m_pBackground3->Draw();
         m_pGameController->m_pUIManager->m_pUI->DrawTextTopRow();
         m_pGameController->m_pUIManager->m_pScoreManager->DrawPlayerScore();
-        m_pGameController->m_pUIManager->m_pScoreManager->DrawHighScore();
+        m_pGameController->m_pUIManager->m_pScoreManager->DrawTopScore();
         m_pGameController->m_pUIManager->m_pUI->DrawTextTitle();
         m_pGameController->m_pUIManager->m_pUI->DrawTextDeposit();
         m_pGameController->m_pUIManager->m_pUI->DrawTextBottomRow();
@@ -71,7 +71,7 @@ void MenuManager::DrawMenu() const
         m_pBackground4->Draw();
         m_pGameController->m_pUIManager->m_pUI->DrawTextTopRow();
         m_pGameController->m_pUIManager->m_pScoreManager->DrawPlayerScore();
-        m_pGameController->m_pUIManager->m_pScoreManager->DrawHighScore();
+        m_pGameController->m_pUIManager->m_pScoreManager->DrawTopScore();
         m_pGameController->m_pUIManager->m_pRankingDrawer->Draw();
         m_pGameController->m_pUIManager->m_pUI->DrawTextBottomRow();
         m_pGameController->m_pUIManager->m_pCreditManager->DrawCredits();
@@ -80,7 +80,7 @@ void MenuManager::DrawMenu() const
         m_pBackground1->Draw();
         m_pGameController->m_pUIManager->m_pUI->DrawTextTopRow();
         m_pGameController->m_pUIManager->m_pScoreManager->DrawPlayerScore();
-        m_pGameController->m_pUIManager->m_pScoreManager->DrawHighScore();
+        m_pGameController->m_pUIManager->m_pScoreManager->DrawTopScore();
         m_pGameController->m_pUIManager->m_pUI->DrawTextTitle();
         m_pGameController->m_pUIManager->m_pUI->DrawTextBonus();
         m_pGameController->m_pUIManager->m_pUI->DrawTextBottomRow();
@@ -118,7 +118,7 @@ void MenuManager::DrawContinue() const
 {
     m_pGameController->m_pUIManager->m_pUI->DrawTextTopRow();
     m_pGameController->m_pUIManager->m_pScoreManager->DrawPlayerScore();
-    m_pGameController->m_pUIManager->m_pScoreManager->DrawHighScore();
+    m_pGameController->m_pUIManager->m_pScoreManager->DrawTopScore();
     m_pGameController->m_pUIManager->m_pUI->DrawTextContinue();
     Point2f pos{258.0f, 224.0f};
     m_pGameController->m_pUIManager->m_pUI->DrawNumber(pos, m_Time.firstDigit, UI::Color::RED);
@@ -139,7 +139,7 @@ void MenuManager::DrawMap() const
     m_pGameController->m_pUIManager->m_pUI->DrawTextTopRow();
     m_pGameController->m_pUIManager->m_pMap->DrawTextPlayerOneReady();
     m_pGameController->m_pUIManager->m_pScoreManager->DrawPlayerScore();
-    m_pGameController->m_pUIManager->m_pScoreManager->DrawHighScore();
+    m_pGameController->m_pUIManager->m_pScoreManager->DrawTopScore();
 }
 
 void MenuManager::UpdateMenu(float elapsedSec)

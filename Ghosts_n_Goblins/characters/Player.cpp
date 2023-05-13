@@ -25,6 +25,8 @@
 #include <iostream>
 #include <numeric>
 
+#include "collectibles/Key.h"
+
 Player::Player(const Point2f& pos, GameController* pGameController)
     : GameObject{Game::Label::C_ARTHUR, pos, true, pGameController}
       , m_HorVelocity{150.0f}
@@ -676,12 +678,16 @@ bool Player::HandleCollectible(GameObject* other)
         switch (other->GetLabel())
         {
         case Game::Label::O_KEY:
-            if (other->IsAwake())
+            // https://stackoverflow.com/questions/92396/why-cant-variables-be-declared-in-a-switch-statement
             {
-                m_Score += pCollectable->GetScore();
-                m_HasKey = true;
-                other->SetVisible(false);
-                other->SetActive(false);
+                Key* pKey{static_cast<Key*>(other)};
+                if (pKey->IsOnGround())
+                {
+                    m_Score += pCollectable->GetScore();
+                    m_HasKey = true;
+                    other->SetVisible(false);
+                    other->SetActive(false);
+                }
             }
             break;
         case Game::Label::O_ARMOR:
@@ -782,7 +788,8 @@ void Player::OnHit(float elapsedSec)
 
 void Player::Die()
 {
-    std::cout << "Player died" << std::endl;
+    m_HP = 0;
+    m_State = State::DEAD;
 }
 
 bool Player::ImpactFromLeft(GameObject* other) const

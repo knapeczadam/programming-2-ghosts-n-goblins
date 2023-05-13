@@ -74,7 +74,7 @@ void BootManager::Draw() const
     {
         m_pGameController->m_pUIManager->m_pUI->DrawTextTopRow();
         m_pGameController->m_pUIManager->m_pScoreManager->DrawPlayerScore();
-        m_pGameController->m_pUIManager->m_pScoreManager->DrawHighScore();
+        m_pGameController->m_pUIManager->m_pScoreManager->DrawTopScore();
         m_pGameController->m_pUIManager->m_pUI->DrawTextTitle();
         m_pGameController->m_pUIManager->m_pUI->DrawTextDeposit();
         m_pGameController->m_pUIManager->m_pUI->DrawTextBottomRow();
@@ -84,7 +84,7 @@ void BootManager::Draw() const
     {
         m_pGameController->m_pUIManager->m_pUI->DrawTextTopRow();
         m_pGameController->m_pUIManager->m_pScoreManager->DrawPlayerScore();
-        m_pGameController->m_pUIManager->m_pScoreManager->DrawHighScore();
+        m_pGameController->m_pUIManager->m_pScoreManager->DrawTopScore();
         m_pGameController->m_pUIManager->m_pRankingDrawer->Draw();
         m_pGameController->m_pUIManager->m_pUI->DrawTextBottomRow();
         m_pGameController->m_pUIManager->m_pCreditManager->DrawCredits();

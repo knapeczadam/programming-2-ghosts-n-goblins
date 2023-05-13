@@ -82,11 +82,11 @@ void UI::DrawPlayerScore() const
     m_pGameController->m_pUIManager->m_pScoreManager->DrawNumber(pos, playerScore, ScoreManager::Color::WHITE_TAN);
 }
 
-void UI::DrawHighScore() const
+void UI::DrawTopScore() const
 {
-    const int highScore{m_pGameController->m_pUIManager->m_pScoreManager->GetHighScore()};
+    const int topScore{m_pGameController->m_pUIManager->m_pScoreManager->GetTopScore()};
     Point2f pos{304.0f, m_pGameController->m_ViewPort.height - m_pNumbers->GetScaledClipHeight() * 2};
-    m_pGameController->m_pUIManager->m_pScoreManager->DrawNumber(pos, highScore, ScoreManager::Color::WHITE_TAN);
+    m_pGameController->m_pUIManager->m_pScoreManager->DrawNumber(pos, topScore, ScoreManager::Color::WHITE_TAN);
 }
 
 void UI::DrawTextBonus() const

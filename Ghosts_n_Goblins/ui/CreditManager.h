@@ -15,8 +15,11 @@ public:
     void DrawCredits() const;
     int GetCredits() const;
     virtual void Reset(bool fromCheckpoint = false) override;
+    bool CreditInserted() const;
+    void ActivateGame();
 
 private:
     int m_Credits;
     const int m_MaxCredits;
+    bool m_Inserted;
 };

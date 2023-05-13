@@ -10,7 +10,7 @@
 
 RankingDrawer::RankingDrawer(GameController* pGameController)
     : UI{Game::Label::U_RANKING_DRAWER, pGameController}
-    , m_pTextBestRanking{pGameController->m_pSpriteFactory->CreateSprite(Game::Label::U_TEXT_BEST_RANKING)}
+    , m_pTextBestRanking{pGameController->m_pSpriteFactory->CreateSprite(Game::Label::U_TEXT_RANKING)}
     , m_pAbc{pGameController->m_pSpriteFactory->CreateSprite(Game::Label::U_ABC)}
 {
     m_pTextBestRanking->SetPosition(Point2f{102.0f, 80.0f});

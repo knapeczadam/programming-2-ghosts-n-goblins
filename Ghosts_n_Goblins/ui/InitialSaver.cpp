@@ -4,6 +4,7 @@
 #include "InitialDrawer.h"
 #include "ScoreManager.h"
 #include "characters/Player.h"
+#include "engine/SoundManager.h"
 #include "engine/Sprite.h"
 #include "engine/SpriteFactory.h"
 #include "game/GameController.h"
@@ -68,10 +69,10 @@ void InitialSaver::FlickerCharacter() const
 
 void InitialSaver::OnEnter()
 {
-    if (m_pGameController->m_pInputManager->IsPressed(Game::Label::I_START) and not m_pGameController->m_pInputManager->
-        IsTriggered(Game::Label::I_START))
+    if (m_pGameController->m_pInputManager->IsPressed(Game::Label::I_SELECT) and not m_pGameController->m_pInputManager->
+        IsTriggered(Game::Label::I_SELECT))
     {
-        m_pGameController->m_pInputManager->SetTriggered(Game::Label::I_START, true);
+        m_pGameController->m_pInputManager->SetTriggered(Game::Label::I_SELECT, true);
         if (m_Initial.length() < m_MaxLength)
         {
             m_Initial += m_pGameController->m_pUIManager->m_pInitialDrawer->GetCharacter(m_RowIdx, m_ColIdx);
@@ -86,7 +87,15 @@ void InitialSaver::OnEnter()
 void InitialSaver::SaveInitial()
 {
     m_pGameController->m_pUIManager->m_pScoreManager->SetScore(m_pGameController->m_pPlayerManager->GetPlayer()->GetScore(), m_Initial);
-    m_pGameController->m_pUIManager->m_pScoreManager->SaveHighScores();
+    m_pGameController->m_pUIManager->m_pScoreManager->SaveRanking();
+    if (m_pGameController->m_pUIManager->m_pScoreManager->HasTopScore())
+    {
+       m_pGameController->m_pSoundManager->PlayStream(Game::Label::S_11_1ST_PLACE_ENTRY_END, false); 
+    }
+    else
+    {
+       m_pGameController->m_pSoundManager->PlayStream(Game::Label::S_13_BELOW_2ND_PLACE_ENTRY_END, false); 
+    }
 }
 
 void InitialSaver::Update(float elapsedSec)

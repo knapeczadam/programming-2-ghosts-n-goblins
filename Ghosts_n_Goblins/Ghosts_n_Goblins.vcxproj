@@ -1148,6 +1148,7 @@
       <AdditionalIncludeDirectories>;C:\dev\vcpkg\installed\x64-windows\include</AdditionalIncludeDirectories>
     </ClCompile>
     <ClCompile Include="level\colliders\BonusCollider.cpp" />
+    <ClCompile Include="level\colliders\BossCollider.cpp" />
     <ClCompile Include="level\colliders\CheckpointCollider.cpp">
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -2340,6 +2341,7 @@
     <ClInclude Include="game\UIManager.h" />
     <ClInclude Include="level\colliders\ArmorCollider.h" />
     <ClInclude Include="level\colliders\BonusCollider.h" />
+    <ClInclude Include="level\colliders\BossCollider.h" />
     <ClInclude Include="level\colliders\CheckpointCollider.h" />
     <ClInclude Include="level\colliders\ICollider.h" />
     <ClInclude Include="level\colliders\KeyCollider.h" />

@@ -18,14 +18,17 @@ public:
     ScoreManager& operator=(const ScoreManager& other) = delete;
     ScoreManager& operator=(ScoreManager&& other) noexcept = delete;
 
-    void LoadHighScores();
-    void SaveHighScores();
+    void LoadRanking();
+    void SaveRanking();
     void SetScore(int score, const std::string& initial);
-    int GetHighScore() const;
+    int GetTopScore() const;
+    int GetLowestScore() const;
+    bool HasTopScore() const;
+    bool HasBelowTopScore() const;
     std::multimap<int, std::string, std::greater<>> GetScores() const;
 
 private:
     const std::string m_Path;
-    int m_HighScore;
+    int m_TopScore;
     std::multimap<int, std::string, std::greater<>> m_Scores;
 };

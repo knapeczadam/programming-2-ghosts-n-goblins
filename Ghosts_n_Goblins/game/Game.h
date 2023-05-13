@@ -143,6 +143,7 @@ public:
         // Level
         L_ARMOR,
         L_BONUS,
+        L_BOSS,
         L_CHECKPOINT,
         L_DOOR,
         L_FOREGROUND,
@@ -182,7 +183,7 @@ public:
         U_PIN,
         U_RANKING_DRAWER,
         U_SCORE_MANAGER,
-        U_TEXT_BEST_RANKING,
+        U_TEXT_RANKING,
         U_TEXT_BONUS,
         U_TEXT_BONUS_KEY,
         U_TEXT_BOTTOM_ROW,
@@ -241,6 +242,7 @@ public:
         S_11_1ST_PLACE_ENTRY_END,
         S_12_BELOW_2ND_PLACE_NAME_REGISTRATION,
         S_13_BELOW_2ND_PLACE_ENTRY_END,
+        S_NONE,
 
         // --- DEBUG ---
         
@@ -257,8 +259,8 @@ public:
         I_DOWN,
         I_JUMP,
         I_ATTACK,
+        I_INSERT,
         I_SELECT,
-        I_START,
         I_SAVE,
         I_LOAD,
         I_INFO,
@@ -268,7 +270,7 @@ public:
         I_DECREASE_VOLUME,
         
         // MINIGAME
-        AVATAR
+        AVATAR,
     };
 
     enum class State
@@ -283,7 +285,12 @@ public:
         CONTINUE,
         RANKING,
         OUTRO,
-        SAVE_SCORE
+        SAVE_SCORE,
+        HURRY_UP,
+        CREDIT,
+        BOSS,
+        STAGE_CLEAR,
+        END
     };
 
 public:
@@ -333,6 +340,7 @@ private:
     void LateUpdateGame(float elapsedSec);
     void UpdateRemainingTime(int time);
 
+    void PlayStream();
     void ResetGame(bool fromCheckpoint = false);
     void HandleCollisions();
     void Debug() const;
@@ -360,6 +368,7 @@ private:
     SpriteFactory* m_pSpriteFactory;
     TextureManager* m_pTextureManager;
     UIManager* m_pUIManager;
+
 public:
     static std::random_device rd;
     static std::mt19937 mt;

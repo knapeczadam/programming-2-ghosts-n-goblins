@@ -2,6 +2,7 @@
 #include "KeyCollider.h"
 
 #include "characters/Player.h"
+#include "engine/SoundManager.h"
 #include "fx/FXManager.h"
 #include "game/CollectibleManager.h"
 #include "game/EnemyManager.h"
@@ -29,7 +30,7 @@ void KeyCollider::HandleCollision(GameObject* other)
         {
             pCollectible->SetActive(true);
             pCollectible->SetVisible(true);
-            m_pGameController->m_pFXManager->PlayEffect(Game::Label::F_PROJECTILE_BLOCK_ENEMY, pCollectible->GetPosition<Point2f>(), true);
+            pCollectible->SetAwake(true);
             m_Active = false;
         }
     }

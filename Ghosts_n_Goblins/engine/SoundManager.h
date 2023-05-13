@@ -17,7 +17,7 @@ public:
 
 public:
     void PlayEffect(Game::Label label) const;
-    void PlayStream(Game::Label label, bool repeat) const;
+    void PlayStream(Game::Label label, bool repeat);
     void StopStream() const;
     void StopAllEffects() const;
     void PauseStream() const;
@@ -29,7 +29,9 @@ public:
     void DecreaseStreamMasterVolume();
     void IncreaseEffectMasterVolume() const;
     void DecreaseEffectMasterVolume() const;
+    void SetMasterVolume(int volume) const;
     void SetEffectVolume(Game::Label label, int volume) const;
+    int GetVolume() const;
 
     SoundEffect* GetEffect(Game::Label label) const;
     SoundStream* GetStream(Game::Label label) const;
@@ -49,4 +51,5 @@ private:
     std::map<Game::Label, SoundStream*> m_Streams;
     std::vector<SoundEffect*> m_pEffects;
     std::vector<SoundStream*> m_pStreams;
+    Game::Label m_CurrentStream;
 };

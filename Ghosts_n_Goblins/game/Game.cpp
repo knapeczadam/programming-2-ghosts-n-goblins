@@ -3,40 +3,38 @@
 #include "Game.h"
 
 #include "BootManager.h"
+#include "Camera.h"
 #include "CameraManager.h"
 #include "CollectibleManager.h"
+#include "CutsceneManager.h"
 #include "EnemyManager.h"
 #include "InputManager.h"
 #include "LevelManager.h"
 #include "PlayerManager.h"
 #include "Texture.h"
 #include "UIManager.h"
+#include "utils.h"
 #include "characters/IEnemy.h"
 #include "characters/Player.h"
 #include "characters/Zombie.h"
 #include "engine/Clock.h"
+#include "engine/json.hpp"
 #include "engine/SoundManager.h"
 #include "engine/SpriteFactory.h"
 #include "engine/TextureManager.h"
-#include "engine/json.hpp"
 #include "fx/FXManager.h"
 #include "game/GameController.h"
 #include "game/Macros.h"
 #include "level/Level.h"
 #include "ui/CreditManager.h"
 #include "ui/HUD.h"
+#include "ui/InitialSaver.h"
 #include "ui/ScoreManager.h"
-#include "utils.h"
 
 #include <fstream>
 #include <iostream>
 #include <ranges>
 
-#include "Camera.h"
-#include "CameraManager.h"
-#include "CutsceneManager.h"
-#include "ui/InitialSaver.h"
-#include "ui/Map.h"
 
 std::random_device Game::rd;
 std::mt19937 Game::mt{rd()};
@@ -47,7 +45,7 @@ Game::Game(const Window& window)
       , m_Data{nullptr}
       , m_DataPath{"data.json"}
       , m_Labels{}
-      , m_State{State::GAME}
+      , m_State{State::BOOT}
       , m_pBootManager{nullptr}
       , m_pCameraManager{nullptr}
       , m_pCutsceneManager{nullptr}
@@ -259,7 +257,6 @@ void Game::InitLabels()
     m_Labels["u_menu_background_4"] = Label::U_MENU_BACKGROUND_4;
     m_Labels["u_numbers"] = Label::U_NUMBERS;
     m_Labels["u_pin"] = Label::U_PIN;
-    m_Labels["u_text_best_ranking"] = Label::U_TEXT_BEST_RANKING;
     m_Labels["u_text_bonus"] = Label::U_TEXT_BONUS;
     m_Labels["u_text_bonus_key"] = Label::U_TEXT_BONUS_KEY;
     m_Labels["u_text_bottom_row"] = Label::U_TEXT_BOTTOM_ROW;
@@ -270,6 +267,7 @@ void Game::InitLabels()
     m_Labels["u_text_initial"] = Label::U_TEXT_INITIAL;
     m_Labels["u_text_key"] = Label::U_TEXT_KEY;
     m_Labels["u_text_player_one_ready"] = Label::U_TEXT_PLAYER_ONE_READY;
+    m_Labels["u_text_ranking"] = Label::U_TEXT_RANKING;
     m_Labels["u_text_time"] = Label::U_TEXT_TIME;
     m_Labels["u_text_title"] = Label::U_TEXT_TITLE;
     m_Labels["u_text_top_row"] = Label::U_TEXT_TOP_ROW;
@@ -356,16 +354,22 @@ void Game::Draw() const
         m_pBootManager->Draw();
         break;
     case State::MENU:
+    case State::CREDIT:
         DrawMenu();
         break;
     case State::INTRO:
         DrawIntro();
         break;
-    case State::FROZEN:
+    case State::HURRY_UP:
     case State::GAME:
     case State::GAME_OVER:
-    case State::SAVE_SCORE:
+    case State::FROZEN:
+    case State::BOSS:
+    case State::STAGE_CLEAR:
         DrawGame();
+        break;
+    case State::SAVE_SCORE:
+        DrawSaveScore();
         break;
     case State::MAP:
         DrawMap();
@@ -380,6 +384,12 @@ void Game::Draw() const
         DrawOutro();
         break;
     }
+
+#if DRAW_CENTER_GUIDE
+    utils::SetColor(Color4f{1.0f, 1.0f, 1.0f, 0.5f});
+    utils::DrawLine(Point2f{GetViewPort().width / 2, 0}, Point2f{GetViewPort().width / 2, GetViewPort().height});
+    utils::DrawLine(Point2f{0, GetViewPort().height / 2}, Point2f{GetViewPort().width, GetViewPort().height / 2});
+#endif
 }
 
 void Game::Update(float elapsedSec)
@@ -392,12 +402,16 @@ void Game::Update(float elapsedSec)
         UpdateBoot(elapsedSec);
         break;
     case State::MENU:
+    case State::CREDIT:
         UpdateMenu(elapsedSec);
         break;
     case State::INTRO:
         UpdateIntro(elapsedSec);
         break;
+    case State::HURRY_UP:
     case State::GAME:
+    case State::BOSS:
+    case State::STAGE_CLEAR:
         UpdateGame(elapsedSec);
         break;
     case State::MAP:
@@ -421,13 +435,17 @@ void Game::Update(float elapsedSec)
     }
 
     UpdateState();
+    PlayStream();
 }
 
 void Game::LateUpdate(float elapsedSec)
 {
     switch (m_State)
     {
+    case State::HURRY_UP:
     case State::GAME:
+    case State::BOSS:
+    case State::STAGE_CLEAR:
         LateUpdateGame(elapsedSec);
         break;
     }
@@ -435,13 +453,137 @@ void Game::LateUpdate(float elapsedSec)
 
 void Game::UpdateState()
 {
+    switch (m_State)
+    {
+    case State::BOOT:
+        if (m_pBootManager->GetState() == Label::B_END)
+        {
+            m_pBootManager->Reset();
+            m_State = State::MENU;
+        }
+        break;
+    case State::MENU:
+        if (m_pUIManager->m_pCreditManager->GetCredits() and m_pGameController->m_pInputManager->IsPressed(
+            Label::I_SELECT))
+        {
+            m_State = State::INTRO;
+        }
+        else if (m_pUIManager->m_pCreditManager->GetCredits() and not m_pUIManager->m_pCreditManager->CreditInserted())
+        {
+            ResetTimer();
+            m_State = State::CREDIT;
+        }
+        break;
+    case State::CREDIT:
+        if (m_pGameController->m_pInputManager->IsPressed(Label::I_SELECT))
+        {
+            m_pUIManager->m_pCreditManager->ActivateGame();
+            m_State = State::INTRO;
+        }
+        StartTimer(4);
+        if (IsTimerFinished())
+        {
+            m_pUIManager->m_pCreditManager->ActivateGame();
+            m_State = State::MENU;
+        }
+        break;
+    case State::INTRO:
+        if (m_pCutsceneManager->GetState() == Label::N_END)
+        {
+            ResetGame();
+            m_State = State::GAME;
+        }
+        break;
+    case State::GAME:
+    case State::HURRY_UP:
+    case State::BOSS:
+        if (m_pPlayerManager->GetPlayer()->GetLives() == 0)
+        {
+            ResetTimer();
+            m_State = State::GAME_OVER;
+        }
+        else if (m_pPlayerManager->GetPlayer()->GetState() == Player::State::DEAD and not m_pPlayerManager->GetPlayer()
+            ->
+            IsActive())
+        {
+            ResetTimer();
+            m_State = State::FROZEN;
+        }
+        else if (m_pLevelManager->IsBossFight())
+        {
+            m_State = State::BOSS;
+        }
+        else if (m_pLevelManager->StageCleared())
+        {
+            m_State = State::STAGE_CLEAR;
+        }
+        break;
+    case State::MAP:
+        StartTimer(5);
+        if (IsTimerFinished())
+        {
+            ResetTimer();
+            m_State = State::GAME;
+        }
+        break;
+    case State::GAME_OVER:
+        StartTimer(7);
+        if (IsTimerFinished())
+        {
+            if (m_pGameController->m_pUIManager->m_pScoreManager->HasBelowTopScore())
+            {
+                m_State = State::SAVE_SCORE;
+            }
+            else
+            {
+                m_State = State::CONTINUE;
+            }
+        }
+        break;
+    case State::CONTINUE:
+        StartTimer(10);
+        if (m_pInputManager->IsPressed(Label::I_SELECT))
+        {
+            ResetGame(true);
+            m_State = State::MAP;
+        }
+        else if (IsTimerFinished())
+        {
+            ResetGame();
+            m_State = State::MENU;
+        }
+        break;
+    case State::RANKING:
+        break;
+    case State::OUTRO:
+        break;
+    case State::SAVE_SCORE:
+        if (m_pGameController->m_pUIManager->m_pInitialSaver->IsInitialSaved())
+        {
+            StartTimer(3);
+            if (IsTimerFinished())
+            {
+                m_State = State::CONTINUE;
+            }
+        }
+        break;
+    case State::FROZEN:
+        StartTimer(4);
+        if (IsTimerFinished())
+        {
+            ResetGame(true);
+            m_State = State::MAP;
+        }
+        break;
+    }
+    return;
     if (m_pBootManager->GetState() == Label::B_END)
     {
         m_pBootManager->Reset();
         m_State = State::MENU;
     }
     else if (m_pUIManager->m_pCreditManager->GetCredits() and m_pGameController->m_pInputManager->IsPressed(
-        Label::I_START))
+        Label::I_SELECT))
     {
         m_State = State::INTRO;
     }
@@ -466,7 +608,7 @@ void Game::UpdateState()
         StartTimer(3);
         if (IsTimerFinished())
         {
-            if (m_pPlayerManager->GetPlayer()->GetScore() == m_pUIManager->m_pScoreManager->GetHighScore())
+            if (m_pPlayerManager->GetPlayer()->GetScore() == m_pUIManager->m_pScoreManager->GetTopScore())
             {
                 m_State = State::SAVE_SCORE;
             }
@@ -479,7 +621,7 @@ void Game::UpdateState()
     else if (m_State == State::CONTINUE)
     {
         StartTimer(10);
-        if (m_pInputManager->IsPressed(Label::I_START))
+        if (m_pInputManager->IsPressed(Label::I_SELECT))
         {
             ResetGame(true);
             m_State = State::MAP;
@@ -515,7 +657,8 @@ void Game::UpdateState()
     }
     else if (m_pPlayerManager->GetPlayer()->GetLives() and m_pPlayerManager->GetPlayer()->GetHP() == 0)
     {
-        if (m_pPlayerManager->GetPlayer()->GetState() == Player::State::DEAD and not m_pPlayerManager->GetPlayer()->IsActive())
+        if (m_pPlayerManager->GetPlayer()->GetState() == Player::State::DEAD and not m_pPlayerManager->GetPlayer()->
+            IsActive())
         {
             ResetTimer();
             m_State = State::FROZEN;
@@ -590,7 +733,6 @@ void Game::ProcessKeyDownEvent(const SDL_KeyboardEvent& e)
     {
         m_pSoundManager->IncreaseEffectMasterVolume();
         m_pSoundManager->IncreaseStreamMasterVolume();
-        
     }
     if (m_pInputManager->IsPressed(Label::I_DECREASE_VOLUME))
     {
@@ -641,12 +783,6 @@ void Game::DrawGame() const
     {
         DrawSaveScore();
     }
-
-#if DRAW_CENTER_GUIDE
-    utils::SetColor(Color4f{1.0f, 1.0f, 1.0f, 0.5f});
-    utils::DrawLine(Point2f{GetViewPort().width / 2, 0}, Point2f{GetViewPort().width / 2, GetViewPort().height});
-    utils::DrawLine(Point2f{0, GetViewPort().height / 2}, Point2f{GetViewPort().width, GetViewPort().height / 2});
-#endif
 }
 
 void Game::DrawMenu() const
@@ -685,6 +821,16 @@ void Game::DrawOutro() const
 
 void Game::DrawSaveScore() const
 {
+    glPushMatrix();
+    m_pCameraManager->Transform(Label::C_ARTHUR);
+    m_pLevelManager->DrawLevel();
+    m_pLevelManager->DrawWaters();
+    m_pLevelManager->DrawForeGround();
+    glPopMatrix();
+
+    m_pUIManager->m_pUI->DrawTextTopRow();
+    m_pUIManager->m_pUI->DrawPlayerScore();
+    m_pUIManager->m_pUI->DrawTopScore();
     m_pMenuManager->DrawSaveScore();
 }
 
@@ -696,7 +842,7 @@ void Game::UpdateBoot(float elapsedSec)
 void Game::UpdateGame(float elapsedSec)
 {
     m_pGameController->m_pCameraManager->GetCamera()->SetBoundaries(
-    m_pGameController->m_pLevelManager->GetLevel()->GetBoundaries());
+        m_pGameController->m_pLevelManager->GetLevel()->GetBoundaries());
     m_pLevelManager->Update(elapsedSec);
     m_pPlayerManager->Update(elapsedSec);
     m_pEnemyManager->SpawnEnemies();
@@ -770,7 +916,7 @@ void Game::UpdateRemainingTime(int time)
     m_pGameController->m_pUIManager->m_pHUD->SetDigits(GetRemainingTimeDigits(time));
     if (GetRemainingTime() <= 15.0f)
     {
-        m_pGameController->m_pSoundManager->PlayStream(Game::Label::S_05_HURRY_UP, false);
+        m_State = State::HURRY_UP;
     }
     if (IsTimerFinished())
     {
@@ -779,8 +925,64 @@ void Game::UpdateRemainingTime(int time)
     }
 }
 
+void Game::PlayStream()
+{
+    switch (m_State)
+    {
+    case State::CREDIT:
+        m_pGameController->m_pSoundManager->PlayStream(Game::Label::S_01_CREDIT, false);
+        break;
+    case State::INTRO:
+        m_pSoundManager->PlayStream(Label::S_02_START_DEMO, false);
+        break;
+    case State::MAP:
+        m_pSoundManager->PlayStream(Label::S_03_STAGE_INTRODUCTION_MAP, false);
+        break;
+    case State::MENU:
+    case State::GAME:
+        m_pSoundManager->PlayStream(Label::S_04_GROUND_BGM, true);
+        break;
+    case State::HURRY_UP:
+        m_pGameController->m_pSoundManager->PlayStream(Label::S_05_HURRY_UP, false);
+        break;
+    case State::FROZEN:
+        m_pSoundManager->PlayStream(Game::Label::S_06_PLAYER_OUT, false);
+        break;
+    case State::GAME_OVER:
+        m_pSoundManager->PlayStream(Label::S_07_GAME_OVER, false);
+        break;
+    case State::BOSS:
+        m_pSoundManager->PlayStream(Label::S_08_BOSS, true);
+        break;
+    case State::STAGE_CLEAR:
+        m_pSoundManager->PlayStream(Label::S_09_STAGE_CLEAR, false);
+        break;
+    case State::SAVE_SCORE:
+        if (m_pGameController->m_pUIManager->m_pScoreManager->HasTopScore())
+        {
+            m_pSoundManager->PlayStream(Label::S_10_1ST_PLACE_NAME_REGISTRATION, false);
+        }
+        else
+        {
+            m_pSoundManager->PlayStream(Label::S_12_BELOW_2ND_PLACE_NAME_REGISTRATION, false);
+        }
+        break;
+    case State::END:
+        if (m_pGameController->m_pUIManager->m_pScoreManager->HasTopScore())
+        {
+            m_pSoundManager->PlayStream(Label::S_11_1ST_PLACE_ENTRY_END, false);
+        }
+        else
+        {
+            m_pSoundManager->PlayStream(Label::S_13_BELOW_2ND_PLACE_ENTRY_END, false);
+        }
+        break;
+    }
+}
+
 void Game::ResetGame(bool fromCheckpoint)
 {
+    m_pCutsceneManager->Reset();
     m_pCollectibleManager->Reset(fromCheckpoint);
     m_pEnemyManager->Reset(fromCheckpoint);
     m_pPlayerManager->Reset(fromCheckpoint);
@@ -793,8 +995,8 @@ void Game::ResetGame(bool fromCheckpoint)
 void Game::PrintInfo() const
 {
     std::cout << "--- Controls ---" << std::endl;
-    std::cout << " * Insert coin: " << m_pInputManager->ToString(Label::I_SELECT) << std::endl;
-    std::cout << " * Start: " << m_pInputManager->ToString(Label::I_START) << std::endl;
+    std::cout << " * Insert coin: " << m_pInputManager->ToString(Label::I_INSERT) << std::endl;
+    std::cout << " * Start/Select: " << m_pInputManager->ToString(Label::I_SELECT) << std::endl;
     std::cout << " * Up: " << m_pInputManager->ToString(Label::I_UP) << std::endl;
     std::cout << " * Down: " << m_pInputManager->ToString(Label::I_DOWN) << std::endl;
     std::cout << " * Left: " << m_pInputManager->ToString(Label::I_LEFT) << std::endl;
@@ -811,7 +1013,7 @@ void Game::PrintInfo() const
 
 Game::State Game::GetState() const
 {
-    return m_State;;
+    return m_State;
 }
 
 void Game::Debug() const
@@ -854,6 +1056,20 @@ void Game::Debug() const
         break;
     case State::SAVE_SCORE: std::cout << "SAVE_SCORE";
         break;
+    case State::END: std::cout << "END";
+        break;
+    case State::BOSS: std::cout << "BOSS";
+        break;
+    case State::STAGE_CLEAR: std::cout << "STAGE_CLEAR";
+        break;
+    case State::CREDIT: std::cout << "CREDIT";
+        break;
+    case State::FROZEN: std::cout << "FROZEN";
+        break;
+    case State::HURRY_UP: std::cout << "HURRY_UP";
+        break;
     }
-    std::cout << "\n\n";
+    std::cout << std::endl;
+    std::cout << " * Volume: " << m_pSoundManager->GetVolume() << std::endl;
+    std::cout << std::endl;
 }

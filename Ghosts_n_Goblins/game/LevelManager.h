@@ -39,6 +39,8 @@ public:
     void LateUpdate(float elapsedSec);
     virtual void Reset(bool fromCheckpoint = false) override;
     bool CheckpointReached();
+    bool IsBossFight() const;
+    bool StageCleared() const;
 
 protected:
     virtual void Initialize(bool fromCheckpoint = false) override;

@@ -177,8 +177,8 @@
       "path": "ui/pin.png"
     },
     {
-      "label": "u_text_best_ranking",
-      "path": "ui/text_best_ranking.png"
+      "label": "u_text_ranking",
+      "path": "ui/text_ranking.png"
     },
     {
       "label": "u_text_bonus",
@@ -798,7 +798,7 @@
       "scale": 2
     },
     {
-      "label": "u_text_best_ranking",
+      "label": "u_text_ranking",
       "scale": 2
     },
     {

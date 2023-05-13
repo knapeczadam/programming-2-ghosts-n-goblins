@@ -12,8 +12,6 @@ KillZone::KillZone(float width, float height)
 void KillZone::HandleCollision(GameObject* other)
 {
     if (not IsOverlapping(other)) return;
-    other->SetActive(false);
     Player* pPlayer = dynamic_cast<Player*>(other);
-    pPlayer->SetHP(0);
-    pPlayer->SetState(Player::State::DEAD);
+    pPlayer->Die();
 }

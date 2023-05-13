@@ -12,14 +12,14 @@
 
 ScoreManager::ScoreManager(GameController* pGameController)
     : UI{Game::Label::U_SCORE_MANAGER, pGameController}
-    , m_Path{"highscores.txt"}
-    , m_HighScore{0}
+    , m_Path{"ranking.txt"}
+    , m_TopScore{0}
     , m_Scores{}
 {
-    LoadHighScores();
+    LoadRanking();
 }
 
-void ScoreManager::LoadHighScores()
+void ScoreManager::LoadRanking()
 {
     std::fstream file{m_Path};
     if (file)
@@ -36,7 +36,7 @@ void ScoreManager::LoadHighScores()
     }
 }
 
-void ScoreManager::SaveHighScores()
+void ScoreManager::SaveRanking()
 {
     std::fstream file{m_Path, std::ios::out};
     if (file)
@@ -55,10 +55,27 @@ void ScoreManager::SetScore(int score, const std::string& initial)
 }
 
 
-int ScoreManager::GetHighScore() const
+int ScoreManager::GetTopScore() const
 {
     Player* pPlayer{m_pGameController->m_pPlayerManager->GetPlayer()};
     return m_Scores.begin()->first > pPlayer->GetScore() ? m_Scores.begin()->first : pPlayer->GetScore();
+}
+
+int ScoreManager::GetLowestScore() const
+{
+    return m_Scores.rbegin()->first;
+}
+
+bool ScoreManager::HasTopScore() const
+{
+    const int playerScore{m_pGameController->m_pPlayerManager->GetPlayer()->GetScore()};
+    return playerScore >= GetTopScore();
+}
+
+bool ScoreManager::HasBelowTopScore() const
+{
+    const int playerScore{m_pGameController->m_pPlayerManager->GetPlayer()->GetScore()};
+    return playerScore < GetTopScore() and playerScore >= GetLowestScore(); 
 }
 
 std::multimap<int, std::string, std::greater<>> ScoreManager::GetScores() const

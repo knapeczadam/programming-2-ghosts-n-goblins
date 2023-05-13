@@ -14,6 +14,7 @@ SoundManager::SoundManager(GameController* pGameController)
       , m_Streams{}
       , m_pEffects{}
       , m_pStreams{}
+        , m_CurrentStream{Game::Label::S_NONE}
 {
     m_pGameController->m_pSoundManager = this;
     Initialize();
@@ -27,6 +28,7 @@ SoundManager::~SoundManager()
 void SoundManager::Initialize(bool fromCheckpoint)
 {
     LoadSounds();
+    SetMasterVolume(1);
 }
 
 void SoundManager::CleanUp()
@@ -42,12 +44,19 @@ void SoundManager::PlayEffect(Game::Label label) const
     }
 }
 
-void SoundManager::PlayStream(Game::Label label, bool repeat) const
+void SoundManager::PlayStream(Game::Label label, bool repeat)
 {
     if (GetStream(label)->IsLoaded())
     {
-        if (SoundStream::IsPlaying()) return;
-        GetStream(label)->Play(repeat);
+        if (label != m_CurrentStream)
+        {
+            if (SoundStream::IsPlaying())
+            {
+                StopStream();
+            }
+            m_CurrentStream = label;
+            GetStream(label)->Play(repeat);
+        }
     }
 }
 
@@ -102,9 +111,23 @@ void SoundManager::DecreaseEffectMasterVolume() const
     }
 }
 
+void SoundManager::SetMasterVolume(int volume) const
+{
+    SoundStream::SetVolume(volume);
+    for (const auto& effect : m_Effects | std::views::values)
+    {
+        effect->SetVolume(volume);
+    }
+}
+
 void SoundManager::SetEffectVolume(Game::Label label, int volume) const
 {
     GetEffect(label)->SetVolume(volume);
+}
+
+int SoundManager::GetVolume() const
+{
+    return SoundStream::GetVolume();
 }
 
 SoundEffect* SoundManager::GetEffect(Game::Label label) const
