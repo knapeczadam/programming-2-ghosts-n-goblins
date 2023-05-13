@@ -11,6 +11,8 @@
 
 #include <ranges>
 
+#include "collectibles/Key.h"
+
 CollectibleManager::CollectibleManager(GameController* pGameController)
     : IManager{pGameController}
 {
@@ -27,6 +29,7 @@ void CollectibleManager::Initialize(bool fromCheckpoint)
 {
     InitArmor();
     InitCoins();
+    InitKey();
     InitMoneyBags();
     InitNecklace();
     InitPot();
@@ -77,6 +80,14 @@ void CollectibleManager::InitCoins()
                               new Coin{Point2f{1616.0f, 223.0f}, m_pGameController},
                               new Coin{Point2f{2158.0f, 223.0f}, m_pGameController}
                           });
+}
+
+void CollectibleManager::InitKey()
+{
+    GameObject* pKey = new Key{Point2f{6716.0f, 300.0f}, m_pGameController};
+    pKey->SetActive(false);
+    pKey->SetVisible(false);
+    m_Collectibles.push_back(pKey);
 }
 
 void CollectibleManager::InitMoneyBags()

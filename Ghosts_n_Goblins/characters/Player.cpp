@@ -15,7 +15,7 @@
 #include "game/LevelManager.h"
 #include "game/Macros.h"
 #include "game/PlayerManager.h"
-#include "level/CollisionBox.h"
+#include "level/colliders/ICollider.h"
 #include "level/IClimable.h"
 #include "level/Level.h"
 #include "throwables/Dagger.h"
@@ -56,6 +56,7 @@ Player::Player(const Point2f& pos, GameController* pGameController)
       , m_ImpactFromLeft{false}
       , m_HitTriggered{false}
       , m_HitFlipped{false}
+      , m_HasKey{false}
 {
 }
 
@@ -65,19 +66,19 @@ void Player::Draw() const
 
 #if DEBUG_RAYCAST
     const float epsilon{0.0f};
-    Point2f playerCenter{GetCollisionBoxCenter()};
+    Point2f playerCenter{GetColliderCenter()};
     // LEFT
     Point2f left;
-    left.x = GetCollisionBox().left - epsilon;
+    left.x = GetCollider().left - epsilon;
     left.y = playerCenter.y;
     // RIGHT
     Point2f right;
-    right.x = GetCollisionBox().left + GetCollisionBox().width + epsilon;
+    right.x = GetCollider().left + GetCollider().width + epsilon;
     right.y = playerCenter.y;
     // DOWN
     Point2f down;
     down.x = playerCenter.x;
-    down.y = GetCollisionBox().bottom - epsilon;
+    down.y = GetCollider().bottom - epsilon;
     utils::SetColor(Color4f{0, 1, 0, 1});
     utils::DrawLine(playerCenter, left);
     utils::SetColor(Color4f{1, 0, 0, 1});
@@ -188,7 +189,7 @@ void Player::Update(float elapsedSec)
     switch (m_State)
     {
     case State::HIT:
-        Hit(elapsedSec);
+        OnHit(elapsedSec);
         break;
     case State::DEAD:
         StartTimer(0.8f);
@@ -206,9 +207,9 @@ void Player::Update(float elapsedSec)
         Attack();
         UpdateCooldown(elapsedSec);
         UpdatePosition(elapsedSec);
-            break;
+        break;
     }
-    UpdateCollisionBox();
+    UpdateCollider();
 }
 
 void Player::LateUpdate(float elapsedSec)
@@ -256,10 +257,10 @@ void Player::Throw()
     {
         if (pWeapon->GetLabel() == m_CurrWeapon and not pWeapon->IsActive())
         {
-            Point2f pos{GetCollisionBoxCenter()};
+            Point2f pos{GetColliderCenter()};
             if (m_Flipped)
             {
-                pos.x -= pWeapon->GetCollisionBox().width;
+                pos.x -= pWeapon->GetCollider().width;
             }
             pWeapon->SetPosition(pos);
             pWeapon->SetFlipped(m_Flipped);
@@ -507,17 +508,17 @@ void Player::UpdateState()
 }
 
 // TODO: köze van a CheckForBoundaries függvényhez
-void Player::UpdateCollisionBox()
+void Player::UpdateCollider()
 {
     if (m_Crouching)
     {
-        SetCollisionBoxHeight(44.0f);
+        SetColliderHeight(44.0f);
     }
     else
     {
-        ResetCollisionBox();
+        ResetCollider();
     }
-    GameObject::UpdateCollisionBox();
+    GameObject::UpdateCollider();
 }
 
 bool Player::IsAttacking() const
@@ -535,10 +536,9 @@ void Player::CanClimb(bool canClimb)
     m_CanClimb = canClimb;
 }
 
-// TODO
 bool Player::HasKey() const
 {
-    return false;
+    return m_HasKey;
 }
 
 Vector2f Player::GetVelocity() const
@@ -673,20 +673,28 @@ bool Player::HandleCollectible(GameObject* other)
     {
         if (other->GetLabel() == Game::Label::O_POT) return false;
 
-        other->SetVisible(false);
-        other->SetActive(false);
         switch (other->GetLabel())
         {
         case Game::Label::O_KEY:
-            m_Score += pCollectable->GetScore();
+            if (other->IsAwake())
+            {
+                m_Score += pCollectable->GetScore();
+                m_HasKey = true;
+                other->SetVisible(false);
+                other->SetActive(false);
+            }
             break;
         case Game::Label::O_ARMOR:
+            other->SetVisible(false);
+            other->SetActive(false);
             ++m_HP;
             m_pGameController->m_pSoundManager->PlayEffect(Game::Label::E_ARMOR_PICKUP);
             break;
         default:
+            other->SetVisible(false);
+            other->SetActive(false);
             m_Score += pCollectable->GetScore();
-            m_pGameController->m_pFXManager->PlayEffect(Game::Label::F_SCORE, other->GetCollisionBoxCenter(), false,
+            m_pGameController->m_pFXManager->PlayEffect(Game::Label::F_SCORE, other->GetColliderCenter(), false,
                                                         other);
             m_pGameController->m_pSoundManager->PlayEffect(Game::Label::E_TREASURE_PICKUP);
             break;
@@ -707,10 +715,10 @@ bool Player::HandleLadder(GameObject* other)
     return false;
 }
 
-bool Player::HandleCollisionBox(GameObject* other)
+bool Player::HandleCollider(GameObject* other)
 {
-    CollisionBox* pBox{dynamic_cast<CollisionBox*>(other)};
-    if (pBox)
+    ICollider* pCollider{dynamic_cast<ICollider*>(other)};
+    if (pCollider)
     {
         return true;
     }
@@ -720,6 +728,11 @@ bool Player::HandleCollisionBox(GameObject* other)
 Player::State Player::GetState() const
 {
     return m_State;
+}
+
+void Player::SetState(State state)
+{
+    m_State = state;
 }
 
 void Player::IncreaseLives()
@@ -732,7 +745,7 @@ void Player::DecreaseLives()
     --m_Lives;
 }
 
-void Player::Hit(float elapsedSec)
+void Player::OnHit(float elapsedSec)
 {
     if (not m_HitTriggered)
     {
@@ -774,7 +787,7 @@ void Player::Die()
 
 bool Player::ImpactFromLeft(GameObject* other) const
 {
-    return other->GetCollisionBoxCenter().x < GetCollisionBoxCenter().x;
+    return other->GetColliderCenter().x < GetColliderCenter().x;
 }
 
 void Player::HandleCollision(GameObject* other)
@@ -785,19 +798,19 @@ void Player::HandleCollision(GameObject* other)
     if (HandleThrowable(other)) return;
     if (HandleCollectible(other)) return;
     if (HandleLadder(other)) return;
-    if (HandleCollisionBox(other)) return;
+    if (HandleCollider(other)) return;
 }
 
 void Player::CheckForBoundaries(const Rectf& boundaries)
 {
-    const float horizontalOffset{(m_Shape.width - m_pSprite->GetCollisionWidth()) / 2};
+    const float horizontalOffset{(m_Shape.width - m_pSprite->GetColliderWidth()) / 2};
     const float epsilon{1.0f};
-    if (m_CollisionBox.left < boundaries.left)
+    if (m_Collider.left < boundaries.left)
     {
         m_Shape.left = boundaries.left - horizontalOffset;
     }
-    else if (m_CollisionBox.left + m_CollisionBox.width > boundaries.left + boundaries.width)
+    else if (m_Collider.left + m_Collider.width > boundaries.left + boundaries.width)
     {
-        m_Shape.left = boundaries.left + boundaries.width - m_CollisionBox.width - horizontalOffset;
+        m_Shape.left = boundaries.left + boundaries.width - m_Collider.width - horizontalOffset;
     }
 }

@@ -1,18 +1,18 @@
 ﻿#include "pch.h"
-#include "ArmorCollisionBox.h"
+#include "ArmorCollider.h"
 
 #include "characters/Player.h"
 #include "collectibles/Pot.h"
 #include "game/CollectibleManager.h"
 #include "game/GameController.h"
 
-ArmorCollisionBox::ArmorCollisionBox(const Rectf& shape, GameController* pGameController)
-    : CollisionBox{Game::Label::L_ARMOR, shape,  pGameController}
+ArmorCollider::ArmorCollider(const Rectf& shape, GameController* pGameController)
+    : ICollider{Game::Label::L_ARMOR, shape,  pGameController}
     , m_PotPos{3068.0f, 144.0f}
 {
 }
 
-void ArmorCollisionBox::HandleCollision(GameObject* other)
+void ArmorCollider::HandleCollision(GameObject* other)
 {
     if (not IsOverlapping(other)) return;
     Player* pPlayer{static_cast<Player*>(other)};

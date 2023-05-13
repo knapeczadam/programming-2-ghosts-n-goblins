@@ -9,7 +9,7 @@ class GameObject : public ITimer
 {
 public:
     // CONSTRUCTORS & DESTRUCTOR
-    explicit GameObject();
+    explicit GameObject(GameController* pGameController);
     explicit GameObject(Game::Label label, GameController* pGameController);
     explicit GameObject(Game::Label label, const Rectf& shape, bool collisionEnabled = true, bool hasSprite = false, const Color4f& color = Color4f{0, 0, 0, 1.0f}, GameController* pGameController = nullptr);
     explicit GameObject(Game::Label label, const Point2f& pos,  bool collisionEnabled = true, GameController* pGameController = nullptr);
@@ -20,6 +20,7 @@ public:
     GameObject& operator=(GameObject&& other) noexcept = delete;
 
     virtual void Draw() const;
+    virtual void Awake(float elapsedSec);
     virtual void Update(float elapsedSec);
     virtual void LateUpdate(float elapsedSec);
     virtual void HandleCollision(GameObject* other);
@@ -48,23 +49,25 @@ public:
     virtual void SetActive(bool isActive) final;
     virtual bool IsVisible() const final;
     virtual void SetVisible(bool isVisible) final;
+    virtual bool IsAwake() const final;
+    virtual void SetAwake(bool awake) final;
     virtual Rectf GetShape() const final;
     virtual Point2f GetShapeCenter() const final;
-    virtual Rectf GetCollisionBox() const final;
-    virtual Point2f GetCollisionBoxCenter() const final;
+    virtual Rectf GetCollider() const final;
+    virtual Point2f GetColliderCenter() const final;
     virtual void SetBottom(float bottom) final;
     virtual void SetLeft(float left) final;
     virtual bool IsOverlapping(GameObject* other) const final;
     virtual void SetFlipped(bool flipped) final;
 protected:
-    virtual void InitCollisionBox() final;
-    virtual std::vector<Point2f> GetCollisionBoxVertices() const final;
-    virtual void SetCollisionBoxHeight(float height) final;
-    virtual void ResetCollisionBox() final;
+    virtual void InitCollider() final;
+    virtual std::vector<Point2f> GetColliderVertices() const final;
+    virtual void SetColliderHeight(float height) final;
+    virtual void ResetCollider() final;
     virtual Point2f GetContactPoint(const GameObject* other) const final;
 
 protected:
-    virtual void UpdateCollisionBox();
+    virtual void UpdateCollider();
 private:
     void InitShape();
     void InitShape(const Point2f& pos);
@@ -75,11 +78,14 @@ protected:
     GameController* m_pGameController;
     Sprite* m_pSprite;
     Rectf m_Shape;
-    Rectf m_CollisionBox;
-    Rectf m_OriginalCollisionBox;
+    Rectf m_Collider;
+    Rectf m_OriginalCollider;
     bool m_CollisionEnabled;
     bool m_Active;
     bool m_Visible;
+    bool m_Awake;
+    bool m_AwakeFired;
+    float m_AwakeDistance;
     bool m_Flipped;
-    Color4f m_CollisionBoxColor;
+    Color4f m_ColliderColor;
 };

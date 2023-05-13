@@ -27,9 +27,9 @@ void Level::Draw() const
     m_pSprite->Draw();
 #if DEBUG_LEVEL
     utils::SetColor(Color4f{1, 0, 1, 1});
-    for (const std::vector<Point2f>& collisionShapes : m_Vertices)
+    for (const std::vector<Point2f>& collider : m_Vertices)
     {
-        utils::DrawPolygon(collisionShapes);
+        utils::DrawPolygon(collider);
     }
 #endif
 }
@@ -56,19 +56,19 @@ void Level::HandleCollision(GameObject* other)
     utils::HitInfo hit;
 
     // DOWN
-    const Point2f playerCenter{other->GetCollisionBoxCenter()};
+    const Point2f playerCenter{other->GetColliderCenter()};
     Point2f down;
     down.x = playerCenter.x;
-    down.y = other->GetCollisionBox().bottom - epsilon;
+    down.y = other->GetCollider().bottom - epsilon;
 
     // RIGHT
     Point2f right;
-    right.x = other->GetCollisionBox().left + other->GetCollisionBox().width + epsilon;
+    right.x = other->GetCollider().left + other->GetCollider().width + epsilon;
     right.y = playerCenter.y;
 
     // LEFT
     Point2f left;
-    left.x = other->GetCollisionBox().left - epsilon;
+    left.x = other->GetCollider().left - epsilon;
     left.y = playerCenter.y;
     std::ranges::for_each(m_Vertices, [&](const std::vector<Point2f>& vertices)
     {
@@ -82,7 +82,7 @@ void Level::HandleCollision(GameObject* other)
         }
         if (utils::Raycast(vertices, playerCenter, right, hit))
         {
-            other->SetLeft(hit.intersectPoint.x - other->GetCollisionBox().width);
+            other->SetLeft(hit.intersectPoint.x - other->GetCollider().width);
             Player* pPlayer{static_cast<Player*>(other)};
             Vector2f playerVelocity{pPlayer->GetVelocity()};
             playerVelocity.x = 0.f;
@@ -114,10 +114,10 @@ bool Level::IsOnGround(GameObject* pGameObject) const
 {
     const float epsilon{0.0f};
     utils::HitInfo hit;
-    const Point2f p1{pGameObject->GetCollisionBoxCenter()};
+    const Point2f p1{pGameObject->GetColliderCenter()};
     Point2f p2;
     p2.x = p1.x;
-    p2.y = pGameObject->GetCollisionBox().bottom - epsilon;
+    p2.y = pGameObject->GetCollider().bottom - epsilon;
     bool isHit{};
     std::ranges::for_each(m_Vertices, [&](const std::vector<Point2f>& vertices)
     {
@@ -145,10 +145,10 @@ void Level::SetBoundaries(const Rectf& boundaries)
     m_Boundaries = boundaries;
 }
 
-bool Level::HasReachedEnd(const Rectf& collisionBox) const
+bool Level::HasReachedEnd(const Rectf& collider) const
 {
     const Point2f playerCenter{
-        collisionBox.left + collisionBox.width / 2.0f, collisionBox.bottom + collisionBox.height / 2.0f
+        collider.left + collider.width / 2.0f, collider.bottom + collider.height / 2.0f
     };
     const Point2f endSignCenter{};
     const float distance{utils::GetDistance(playerCenter, endSignCenter)};

@@ -12,6 +12,7 @@ Unicorn::Unicorn(const Point2f& pos, GameController* pGameController)
 {
     m_Score = 2000;
     m_HP = 10;
+    m_AwakeDistance = 200.0f;
 }
 
 void Unicorn::Draw() const
@@ -22,7 +23,7 @@ void Unicorn::Draw() const
 void Unicorn::Update(float elapsedSec)
 {
     IEnemy::Update(elapsedSec);
-    UpdateCollisionBox();
+    UpdateCollider();
 }
 
 void Unicorn::HandleCollision(GameObject* other)
@@ -38,8 +39,8 @@ void Unicorn::HandleCollision(GameObject* other)
         m_Active = false;
         m_Visible = false;
         m_pGameController->m_pPlayerManager->GetPlayer()->AddScore(m_Score);
-        m_pGameController->m_pFXManager->PlayEffect(Game::Label::F_FIRE_BOSS, GetCollisionBoxCenter(), other->IsFlipped());
-        m_pGameController->m_pFXManager->PlayEffect(Game::Label::F_SCORE, GetCollisionBoxCenter(), other->IsFlipped(), this);
+        m_pGameController->m_pFXManager->PlayEffect(Game::Label::F_FIRE_BOSS, GetColliderCenter(), other->IsFlipped());
+        m_pGameController->m_pFXManager->PlayEffect(Game::Label::F_SCORE, GetColliderCenter(), other->IsFlipped(), this);
         m_pGameController->m_pSoundManager->PlayEffect(Game::Label::E_BOSS_DEATH);
     }
 }

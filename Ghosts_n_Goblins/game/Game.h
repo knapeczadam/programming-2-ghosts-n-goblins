@@ -142,9 +142,11 @@ public:
 
         // Level
         L_ARMOR,
+        L_BONUS,
         L_CHECKPOINT,
         L_DOOR,
         L_FOREGROUND,
+        L_KEY,
         L_KILLZONE,
         L_LADDER,
         L_LEVEL,
@@ -182,12 +184,14 @@ public:
         U_SCORE_MANAGER,
         U_TEXT_BEST_RANKING,
         U_TEXT_BONUS,
+        U_TEXT_BONUS_KEY,
         U_TEXT_BOTTOM_ROW,
         U_TEXT_CONTINUE,
         U_TEXT_DEPOSIT,
         U_TEXT_GAME_OVER,
         U_TEXT_GAME_OVER_PLAYER_ONE,
         U_TEXT_INITIAL,
+        U_TEXT_KEY,
         U_TEXT_PLAYER_ONE_READY,
         U_TEXT_TIME,
         U_TEXT_TITLE,
@@ -264,7 +268,7 @@ public:
         I_DECREASE_VOLUME,
         
         // MINIGAME
-        AVATAR,
+        AVATAR
     };
 
     enum class State

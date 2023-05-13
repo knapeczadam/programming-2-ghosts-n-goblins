@@ -5,7 +5,9 @@
 #include "characters/Player.h"
 #include "engine/Sprite.h"
 #include "engine/SpriteFactory.h"
+#include "game/EnemyManager.h"
 #include "game/GameController.h"
+#include "game/LevelManager.h"
 #include "game/PlayerManager.h"
 #include "game/UIManager.h"
 
@@ -18,20 +20,24 @@ UI::UI(Game::Label label, GameController* pGameController)
     , m_BlinkingTime{0.0f}
     , m_pNumbers{pGameController->m_pSpriteFactory->CreateSprite(Game::Label::U_NUMBERS)}
     , m_pTextBonus{pGameController->m_pSpriteFactory->CreateSprite(Game::Label::U_TEXT_BONUS)}
+    , m_pTextBonusKey{pGameController->m_pSpriteFactory->CreateSprite(Game::Label::U_TEXT_BONUS_KEY)}
     , m_pTextBottomRow{pGameController->m_pSpriteFactory->CreateSprite(Game::Label::U_TEXT_BOTTOM_ROW)}
     , m_pTextContinue{pGameController->m_pSpriteFactory->CreateSprite(Game::Label::U_TEXT_CONTINUE)}
     , m_pTextDeposit{pGameController->m_pSpriteFactory->CreateSprite(Game::Label::U_TEXT_DEPOSIT)}
     , m_pTextGameOver{pGameController->m_pSpriteFactory->CreateSprite(Game::Label::U_TEXT_GAME_OVER)}
     , m_pTextGameOverPlayerOne(pGameController->m_pSpriteFactory->CreateSprite(Game::Label::U_TEXT_GAME_OVER_PLAYER_ONE))
+    , m_pTextKey{pGameController->m_pSpriteFactory->CreateSprite(Game::Label::U_TEXT_KEY)}
     , m_pTextTitle{pGameController->m_pSpriteFactory->CreateSprite(Game::Label::U_TEXT_TITLE)}
     , m_pTextTopRow{pGameController->m_pSpriteFactory->CreateSprite(Game::Label::U_TEXT_TOP_ROW)}
 {
     m_pTextBonus->SetPosition(Point2f{80.0f, 112.0f});
+    m_pTextBonusKey->SetPosition(Point2f{6941.0f, 120.0f});
     m_pTextBottomRow->SetPosition(Point2f{32.0f, 0.0f});
     m_pTextContinue->SetPosition(Point2f{160.0f, 288.0f});
     m_pTextDeposit->SetPosition(Point2f{112.0f, 224.0f});
     m_pTextGameOver->SetPosition(Point2f{192.0f, 224.0f});
     m_pTextGameOverPlayerOne->SetPosition(Point2f{96.0f, 240.0f});
+    m_pTextKey->SetPosition(Point2f{64.0f, 304.0f});
     m_pTextTitle->SetPosition(Point2f{96.0f, 304.0f});
     m_pTextTopRow->SetPosition(Point2f{16.0f, 432.0f});
 }
@@ -88,6 +94,17 @@ void UI::DrawTextBonus() const
     m_pTextBonus->Draw();
 }
 
+void UI::DrawTextBonusKey() const
+{
+    for (GameObject* collider : m_pGameController->m_pLevelManager->GetColliders())
+    {
+        if (collider->GetLabel() == Game::Label::L_BONUS and not collider->IsActive())
+        {
+            m_pTextBonusKey->Draw();
+        }
+    }
+}
+
 void UI::DrawTextBottomRow() const
 {
     m_pTextBottomRow->Draw();
@@ -111,6 +128,17 @@ void UI::DrawTextGameOver() const
 void UI::DrawTextGameOverPlayerOne() const
 {
     m_pTextGameOverPlayerOne->Draw();
+}
+
+void UI::DrawTextKey() const
+{
+    for (GameObject* enemy : m_pGameController->m_pEnemyManager->GetEnemies())
+    {
+        if (enemy->GetLabel() == Game::Label::C_UNICORN and not enemy->IsActive())
+        {
+            m_pTextKey->Draw();
+        }
+    }
 }
 
 void UI::DrawTextTitle() const

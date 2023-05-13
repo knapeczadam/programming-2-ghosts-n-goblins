@@ -33,10 +33,10 @@ Sprite::Sprite(Texture* pTexture)
       , m_OriginalClipHeight{0.0f}
       , m_CurrClipWidth{0.0f}
       , m_CurrClipHeight{0.0f}
-      , m_CollisionWidth{0.0f}
-      , m_CollisionHeight{0.0f}
-      , m_CollisionHorizontalOffset{0.0f}
-      , m_CollisionVerticalOffset{0.0f}
+      , m_ColliderWidth{0.0f}
+      , m_ColliderHeight{0.0f}
+      , m_ColliderHorizontalOffset{0.0f}
+      , m_ColliderVerticalOffset{0.0f}
 {
 }
 
@@ -339,50 +339,50 @@ void Sprite::SetClipHeight(float clipHeight)
     m_CurrClipHeight = clipHeight;
 }
 
-float Sprite::GetCollisionWidth() const
+float Sprite::GetColliderWidth() const
 {
-    if (m_CollisionWidth == 0.0f)
+    if (m_ColliderWidth == 0.0f)
     {
         return m_CurrClipWidth * m_Scale;
     }
-    return m_CollisionWidth * m_Scale;
+    return m_ColliderWidth * m_Scale;
 }
 
-void Sprite::SetCollisionWidth(float collisionWidth)
+void Sprite::SetColliderWidth(float colliderWidth)
 {
-    m_CollisionWidth = collisionWidth;
+    m_ColliderWidth = colliderWidth;
 }
 
-float Sprite::GetCollisionHeight() const
+float Sprite::GetColliderHeight() const
 {
-    if (m_CollisionHeight == 0.0f)
+    if (m_ColliderHeight == 0.0f)
     {
         return m_CurrClipHeight * m_Scale;
     }
-    return m_CollisionHeight * m_Scale;
+    return m_ColliderHeight * m_Scale;
 }
 
-void Sprite::SetCollisionHeight(float collisionHeight)
+void Sprite::SetColliderHeight(float colliderHeight)
 {
-    m_CollisionHeight = collisionHeight;
+    m_ColliderHeight = colliderHeight;
 }
 
-float Sprite::GetCollisionHorizontalOffset() const
+float Sprite::GetColliderHorizontalOffset() const
 {
-    return m_CollisionHorizontalOffset * m_Scale;
+    return m_ColliderHorizontalOffset * m_Scale;
 }
 
-void Sprite::SetCollisionHorizontalOffset(float collisionHorizontalOffset)
+void Sprite::SetColliderHorizontalOffset(float colliderHorizontalOffset)
 {
-    m_CollisionHorizontalOffset = collisionHorizontalOffset;;
+    m_ColliderHorizontalOffset = colliderHorizontalOffset;
 }
 
-float Sprite::GetCollisionVerticalOffset() const
+float Sprite::GetColliderVerticalOffset() const
 {
-    return m_CollisionVerticalOffset * m_Scale;
+    return m_ColliderVerticalOffset * m_Scale;
 }
 
-void Sprite::SetCollisionVerticalOffset(float collisionVerticalOffset)
+void Sprite::SetColliderVerticalOffset(float colliderVerticalOffset)
 {
-    m_CollisionVerticalOffset = collisionVerticalOffset;
+    m_ColliderVerticalOffset = colliderVerticalOffset;
 }

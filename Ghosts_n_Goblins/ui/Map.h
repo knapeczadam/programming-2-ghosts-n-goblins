@@ -30,5 +30,6 @@ private:
     const float m_Speed;
     const Point2f m_PinPos1;
     const Point2f m_PinPos2;
+    const Point2f m_PinPos3;
     const Point2f m_TextPos;
 };

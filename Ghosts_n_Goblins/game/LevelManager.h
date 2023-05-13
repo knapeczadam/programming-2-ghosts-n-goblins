@@ -17,7 +17,7 @@ public:
     LevelManager& operator=(const LevelManager&) = delete;
     LevelManager& operator=(LevelManager&&) = delete;
 
-    std::vector<GameObject*>& GetCollisionBoxes();
+    std::vector<GameObject*>& GetColliders();
     std::vector<GameObject*>& GetLadders();
     std::vector<GameObject*>& GetTombstones();
     std::vector<GameObject*>& GetWaters();
@@ -26,7 +26,7 @@ public:
     Platform* GetPlatform() const;
     GameObject* GetKillZone() const;
 
-    void DrawCollisionBoxes() const;
+    void DrawColliders() const;
     void DrawForeGround() const;
     void DrawKillZone() const;
     void DrawLadders() const;
@@ -45,13 +45,13 @@ protected:
     virtual void CleanUp() override;
 
 private:
-    void InitCollisionBoxes(bool fromCheckpoint);
+    void InitColliders(bool fromCheckpoint);
     void InitLadders();
     void InitTombstones();
     void InitWaters();
 
 private:
-    std::vector<GameObject*> m_CollisionBoxes;
+    std::vector<GameObject*> m_Colliders;
     std::vector<GameObject*> m_Ladders;
     std::vector<GameObject*> m_Tombstones;
     std::vector<GameObject*> m_Waters;

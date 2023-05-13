@@ -32,7 +32,7 @@ void Dagger::Update(float elapsedSec)
     {
         m_Shape.left += m_Speed * elapsedSec;
     }
-    UpdateCollisionBox();
+    UpdateCollider();
 }
 
 void Dagger::SetSprite() const

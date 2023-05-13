@@ -103,7 +103,7 @@ void FXManager::PlayEffect(Game::Label label, const Point2f& pos, bool flipped, 
         const IEnemy* pEnemy{dynamic_cast<IEnemy*>(other)};
         const ICollectible* pCollectible{dynamic_cast<ICollectible*>(other)};
         const int score{pEnemy ? pEnemy->GetScore() : pCollectible->GetScore()};
-        m_Effects.push_back(new Score{other->GetCollisionBoxCenter(), score, m_pGameController});
+        m_Effects.push_back(new Score{other->GetColliderCenter(), score, m_pGameController});
         break;
     }
 }

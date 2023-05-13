@@ -2,6 +2,7 @@
 #include "SoundManager.h"
 
 #include <iostream>
+#include <ranges>
 
 #include "game/GameController.h"
 
@@ -85,6 +86,22 @@ void SoundManager::SetStreamVolume(int volume) const
     SoundStream::SetVolume(volume);
 }
 
+void SoundManager::IncreaseEffectMasterVolume() const
+{
+    for (const auto& effect : m_Effects | std::views::values)
+    {
+        effect->SetVolume(effect->GetVolume() + 1);
+    }
+}
+
+void SoundManager::DecreaseEffectMasterVolume() const
+{
+    for (const auto& effect : m_Effects | std::views::values)
+    {
+        effect->SetVolume(effect->GetVolume() - 1);
+    }
+}
+
 void SoundManager::SetEffectVolume(Game::Label label, int volume) const
 {
     GetEffect(label)->SetVolume(volume);
@@ -100,12 +117,12 @@ SoundStream* SoundManager::GetStream(Game::Label label) const
     return m_Streams.at(label);
 }
 
-void SoundManager::IncreaseMasterVolume()
+void SoundManager::IncreaseStreamMasterVolume()
 {
     SoundStream::SetVolume(SoundStream::GetVolume() + 1);
 }
 
-void SoundManager::DecreaseMasterVolume()
+void SoundManager::DecreaseStreamMasterVolume()
 {
     SoundStream::SetVolume(SoundStream::GetVolume() - 1);
 }

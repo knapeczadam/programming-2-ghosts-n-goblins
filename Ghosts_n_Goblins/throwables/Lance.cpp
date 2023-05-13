@@ -32,7 +32,7 @@ void Lance::Update(float elapsedSec)
     {
         m_Shape.left += m_Speed * elapsedSec;
     }
-    UpdateCollisionBox();
+    UpdateCollider();
 }
 
 void Lance::SetSprite() const

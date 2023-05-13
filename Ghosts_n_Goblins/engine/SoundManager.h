@@ -25,14 +25,14 @@ public:
     void PauseAllEffects() const;
     void ResumeAllEffects() const;
     void SetStreamVolume(int volume) const;
+    void IncreaseStreamMasterVolume();
+    void DecreaseStreamMasterVolume();
+    void IncreaseEffectMasterVolume() const;
+    void DecreaseEffectMasterVolume() const;
     void SetEffectVolume(Game::Label label, int volume) const;
 
     SoundEffect* GetEffect(Game::Label label) const;
     SoundStream* GetStream(Game::Label label) const;
-
-public:
-    static void IncreaseMasterVolume();
-    static void DecreaseMasterVolume();
     
 protected:
     virtual void Initialize(bool fromCheckpoint = false) override;

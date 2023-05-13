@@ -185,6 +185,10 @@
       "path": "ui/text_bonus.png"
     },
     {
+      "label": "u_text_bonus_key",
+        "path": "ui/text_bonus_key.png"
+    },
+    {
       "label": "u_text_bottom_row",
       "path": "ui/text_bottom_row.png"
     },
@@ -207,6 +211,10 @@
     {
       "label": "u_text_initial",
       "path": "ui/text_initial.png"
+    },
+    {
+      "label": "u_text_key",
+        "path": "ui/text_key.png"
     },
     {
       "label": "u_text_player_one_ready",
@@ -512,7 +520,7 @@
       "columns": 16,
       "frames_per_second": 10,
       "scale": 2,
-      "collision_width": 18
+      "collider_width": 18
     },
     {
       "label": "c_crow",
@@ -531,8 +539,8 @@
       "sub_columns": 4,
       "frames_per_second": 10,
       "scale": 2,
-      "collision_width": 14,
-      "collision_height": 27
+      "collider_width": 14,
+      "collider_height": 27
     },
     {
       "label": "c_green_monster",
@@ -548,10 +556,10 @@
       "rows": 1,
       "columns": 2,
       "scale": 2,
-      "collision_width": 15,
-      "collision_height": 28,
-      "collision_horizontal_offset": -5,
-      "collision_vertical_offset": -1
+      "collider_width": 15,
+      "collider_height": 28,
+      "collider_horizontal_offset": -5,
+      "collider_vertical_offset": -1
     },
     {
       "label": "c_princess",
@@ -570,8 +578,8 @@
       "sub_columns": 5,
       "frames_per_second": 10,
       "scale": 2,
-      "collision_width": 23,
-      "collision_height": 27
+      "collider_width": 23,
+      "collider_height": 27
     },
     {
       "label": "c_satan",
@@ -590,10 +598,10 @@
       "sub_columns": 0,
       "frames_per_second": 5,
       "scale": 2,
-      "collision_width": 29,
-      "collision_height": 48,
-      "collision_horizontal_offset": 3,
-      "collision_vertical_offset": -4
+      "collider_width": 29,
+      "collider_height": 48,
+      "collider_horizontal_offset": 3,
+      "collider_vertical_offset": -4
     },
     {
       "label": "c_woody_pig",
@@ -612,9 +620,9 @@
       "sub_columns": 7,
       "frames_per_second": 7,
       "scale": 2,
-      "collision_width": 10,
-      "collision_height": 32,
-      "collision_horizontal_offset": 3
+      "collider_width": 10,
+      "collider_height": 32,
+      "collider_horizontal_offset": 3
     },
     {
       "label": "o_pot",
@@ -798,6 +806,10 @@
       "scale": 2
     },
     {
+      "label": "u_text_bonus_key",
+        "scale": 2
+    },
+    {
       "label": "u_text_bottom_row",
       "scale": 2
     },
@@ -823,6 +835,10 @@
     {
       "label": "u_text_initial",
       "scale": 2
+    },
+    {
+      "label": "u_text_key",
+        "scale": 2
     },
     {
       "label": "u_text_player_one_ready",

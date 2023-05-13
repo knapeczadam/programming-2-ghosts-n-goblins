@@ -40,5 +40,5 @@ private:
     const float m_SpawnTime;
     bool m_CanWalk;
     int m_Dir;
-    const float m_MidCollisionHeight;
+    const float m_MidColliderHeight;
 };

@@ -25,6 +25,7 @@ protected:
     virtual void CleanUp() override;
 private:
     void InitCoins();
+    void InitKey();
     void InitMoneyBags();
     void InitArmor();
     void InitPot();

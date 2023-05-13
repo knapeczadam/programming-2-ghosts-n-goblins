@@ -11,17 +11,12 @@ public:
     IEnemy& operator=(const IEnemy& other) = delete;
     IEnemy& operator=(IEnemy&& other) noexcept = delete;
     
-    virtual void Update(float elapsedSec) override;
-
-    virtual bool IsAwake() const final;
-    virtual void SetAwake(bool awake) final;
     virtual int GetScore() const final;
     virtual void Reset(const Point2f& pos = Point2f{0.0f, 62.0f});
     virtual void ResetHP() final;
     virtual bool IsFixedDirection() const final;
 
 protected:
-    virtual void Awake(float elapsedSec);
     virtual void Wait(float elapsedSec);
     virtual void Walk(float elapsedSec);
     virtual void Jump(float elapsedSec);
@@ -38,9 +33,6 @@ protected:
     int m_Score;
     int m_HP;
     int m_OriginalHP;
-    bool m_Awake;
-    bool m_AwakeFired;
-    float m_AwakeDistance;
     float m_HorVelocity;
     float m_VerVelocity;
     bool m_Ping;

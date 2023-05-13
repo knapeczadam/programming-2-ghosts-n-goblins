@@ -31,7 +31,7 @@ void Torch::Update(float elapsedSec)
     {
         m_Shape.left += m_Speed * elapsedSec;
     }
-    UpdateCollisionBox();
+    UpdateCollider();
 }
 
 void Torch::SetSprite() const

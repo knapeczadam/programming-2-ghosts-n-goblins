@@ -22,7 +22,7 @@ void FlyingKnight::Draw() const
 void FlyingKnight::Update(float elapsedSec)
 {
     IEnemy::Update(elapsedSec);
-    UpdateCollisionBox();
+    UpdateCollider();
 }
 
 void FlyingKnight::HandleCollision(GameObject* other)
@@ -44,7 +44,7 @@ void FlyingKnight::HandleCollision(GameObject* other)
         m_Active = false;
         m_Visible = false;
         m_pGameController->m_pPlayerManager->GetPlayer()->AddScore(m_Score);
-        m_pGameController->m_pFXManager->PlayEffect(Game::Label::F_FIRE_ENEMY, GetCollisionBoxCenter(),
+        m_pGameController->m_pFXManager->PlayEffect(Game::Label::F_FIRE_ENEMY, GetColliderCenter(),
                                                     other->IsFlipped());
         m_pGameController->m_pSoundManager->PlayEffect(Game::Label::E_ENEMY_DEATH);
     }

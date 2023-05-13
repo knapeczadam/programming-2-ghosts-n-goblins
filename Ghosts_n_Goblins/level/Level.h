@@ -20,7 +20,7 @@ public:
     bool IsOnGround(GameObject* pGameObject) const;
     Rectf GetBoundaries() const;
     void SetBoundaries(const Rectf& boundaries);
-    bool HasReachedEnd(const Rectf& collisionBox) const;
+    bool HasReachedEnd(const Rectf& collider) const;
 
 private:
     void SetVertices();

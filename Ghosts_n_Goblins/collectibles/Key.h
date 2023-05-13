@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include "ICollectible.h"
 #include "game/GameObject.h"
+#include "level/colliders/KeyCollider.h"
 
 /**
  * \brief 
@@ -18,4 +19,8 @@ public:
     Key(Key&& other) noexcept = delete;
     Key& operator=(const Key& other) = delete;
     Key& operator=(Key&& other) noexcept = delete;
+
+    virtual void Update(float elapsedSec) override;
+private:
+    float m_Speed;
 };

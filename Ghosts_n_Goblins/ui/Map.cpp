@@ -17,7 +17,8 @@ Map::Map(GameController* pGameController)
       , pDummy{new GameObject{Game::Label::D_DUMMY, Rectf{0, 0, 30.0f, 30.0f}, false}}
       , m_Speed{120}
       , m_PinPos1{58.0f, 66.0f}
-      , m_PinPos2{122.0f, 66.0f}
+      , m_PinPos2{148.0f, 66.0f}
+    ,   m_PinPos3{182.0f, 66.0f}
       , m_TextPos{112.0f, 224.0f}
 {
     m_pPin->SetPosition(m_PinPos1);

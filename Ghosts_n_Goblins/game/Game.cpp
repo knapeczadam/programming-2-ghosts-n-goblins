@@ -261,12 +261,14 @@ void Game::InitLabels()
     m_Labels["u_pin"] = Label::U_PIN;
     m_Labels["u_text_best_ranking"] = Label::U_TEXT_BEST_RANKING;
     m_Labels["u_text_bonus"] = Label::U_TEXT_BONUS;
+    m_Labels["u_text_bonus_key"] = Label::U_TEXT_BONUS_KEY;
     m_Labels["u_text_bottom_row"] = Label::U_TEXT_BOTTOM_ROW;
     m_Labels["u_text_continue"] = Label::U_TEXT_CONTINUE;
     m_Labels["u_text_deposit"] = Label::U_TEXT_DEPOSIT;
     m_Labels["u_text_game_over"] = Label::U_TEXT_GAME_OVER;
     m_Labels["u_text_game_over_player_one"] = Label::U_TEXT_GAME_OVER_PLAYER_ONE;
     m_Labels["u_text_initial"] = Label::U_TEXT_INITIAL;
+    m_Labels["u_text_key"] = Label::U_TEXT_KEY;
     m_Labels["u_text_player_one_ready"] = Label::U_TEXT_PLAYER_ONE_READY;
     m_Labels["u_text_time"] = Label::U_TEXT_TIME;
     m_Labels["u_text_title"] = Label::U_TEXT_TITLE;
@@ -561,7 +563,7 @@ void Game::HandleCollisions()
 
     std::ranges::for_each(m_pCollectibleManager->GetCollectibles() | std::views::filter(isActive),
                           playerHandleCollision);
-    std::ranges::for_each(m_pLevelManager->GetCollisionBoxes() | std::views::filter(isActive), objectHandleCollision);
+    std::ranges::for_each(m_pLevelManager->GetColliders() | std::views::filter(isActive), objectHandleCollision);
 
 #if TEST_OBJECT
     if (m_pTestObject->IsActive()) pPlayer->HandleCollision(m_pTestObject);
@@ -586,11 +588,14 @@ void Game::ProcessKeyDownEvent(const SDL_KeyboardEvent& e)
     }
     if (m_pInputManager->IsPressed(Label::I_INCREASE_VOLUME))
     {
-        SoundManager::IncreaseMasterVolume();
+        m_pSoundManager->IncreaseEffectMasterVolume();
+        m_pSoundManager->IncreaseStreamMasterVolume();
+        
     }
     if (m_pInputManager->IsPressed(Label::I_DECREASE_VOLUME))
     {
-        SoundManager::DecreaseMasterVolume();
+        m_pSoundManager->DecreaseEffectMasterVolume();
+        m_pSoundManager->DecreaseStreamMasterVolume();
     }
 }
 
@@ -616,15 +621,17 @@ void Game::DrawGame() const
 #if TEST_OBJECT
     if (m_pTestObject->IsVisible()) m_pTestObject->Draw();
 #endif
-#if DEBUG_COLLISION
+#if DEBUG_COLLIDER
     m_pLevelManager->DrawKillZone();
     m_pLevelManager->DrawTombstones();
     m_pLevelManager->DrawLadders();
-    m_pLevelManager->DrawCollisionBoxes();
+    m_pLevelManager->DrawColliders();
+    m_pUIManager->m_pUI->DrawTextBonusKey();
 #endif
     glPopMatrix();
 
     m_pUIManager->m_pHUD->Draw();
+    m_pUIManager->m_pUI->DrawTextKey();
 
     if (m_State == State::GAME_OVER)
     {
@@ -821,7 +828,7 @@ void Game::Debug() const
     std::cout << " * Score: " << pPlayer->GetScore() << std::endl;
     std::cout << " * Velocity: " << pPlayer->GetVelocity() << std::endl;
     std::cout << " * Shape: " << pPlayer->GetShape() << std::endl;
-    std::cout << " * Collision box: " << pPlayer->GetCollisionBox() << std::endl;
+    std::cout << " * Collision box: " << pPlayer->GetCollider() << std::endl;
     std::cout << std::endl;
     std::cout << " --- GAME ---" << std::endl;
     std::cout << " * Game state: ";

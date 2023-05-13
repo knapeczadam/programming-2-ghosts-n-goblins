@@ -64,7 +64,7 @@ void Platform::Update(float elapsedSec)
     m_AccuSec += elapsedSec;
     Move();
     m_pSprite->SetPosition(GetPosition<Point2f>());
-    UpdateCollisionBox();
+    UpdateCollider();
 }
 
 /*
@@ -72,10 +72,10 @@ Handles collision with this platform only when the actor is moving downwards.
  */
 void Platform::HandleCollision(GameObject* other)
 {
-    const Point2f p1{other->GetCollisionBoxCenter()};
-    const Point2f p2{p1.x, other->GetCollisionBox().bottom};
+    const Point2f p1{other->GetColliderCenter()};
+    const Point2f p2{p1.x, other->GetCollider().bottom};
     utils::HitInfo hit;
-    const bool isHit{utils::Raycast(GetCollisionBoxVertices(), p1, p2, hit)};
+    const bool isHit{utils::Raycast(GetColliderVertices(), p1, p2, hit)};
     if (isHit)
     {
         Player* pPlayer{static_cast<Player*>(other)};
@@ -112,10 +112,10 @@ bool Platform::IsOnGround(GameObject* pGameObject) const
 {
     const float epsilon{0.0f};
     utils::HitInfo hit;
-    const Point2f p1{pGameObject->GetCollisionBoxCenter()};
-    const Point2f p2{p1.x, pGameObject->GetCollisionBox().bottom - epsilon};
+    const Point2f p1{pGameObject->GetColliderCenter()};
+    const Point2f p2{p1.x, pGameObject->GetCollider().bottom - epsilon};
     Player* pPlayer{static_cast<Player*>(pGameObject)};
-    if (utils::Raycast(GetCollisionBoxVertices(), p1, p2, hit))
+    if (utils::Raycast(GetColliderVertices(), p1, p2, hit))
     {
         pPlayer->SetIsOnPlatform(true);
         return true;

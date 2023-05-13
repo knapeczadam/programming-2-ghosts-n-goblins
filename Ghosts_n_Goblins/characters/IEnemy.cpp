@@ -12,48 +12,11 @@ IEnemy::IEnemy(Game::Label label, const Point2f& pos, GameController* pGameContr
       , m_Score{0}
       , m_HP{1}
       , m_OriginalHP{m_HP}
-      , m_Awake{false}
-      , m_AwakeFired{false}
-      , m_AwakeDistance{200.0f}
       , m_HorVelocity{0.0f}
       , m_VerVelocity{0.0f}
       , m_Ping{true}
       , m_FixedDirection{false}
 {
-}
-
-void IEnemy::Update(float elapsedSec)
-{
-    if (not m_AwakeFired)
-    {
-        if (utils::GetDistance(GetShapeCenter(), m_pGameController->m_pPlayerManager->GetPlayer()->GetShapeCenter()) < m_AwakeDistance)
-        {
-            m_Awake = true;
-        }
-    }
-
-    if (m_Awake)
-    {
-        if (not m_AwakeFired)
-        {
-            Awake(elapsedSec);
-            m_AwakeFired = true;
-        }
-    }
-}
-
-bool IEnemy::IsAwake() const
-{
-    return m_Awake;
-}
-
-void IEnemy::SetAwake(bool awake)
-{
-    m_Awake = awake;
-    if (not m_Awake)
-    {
-        m_AwakeFired = false;
-    }
 }
 
 int IEnemy::GetScore() const
@@ -64,10 +27,6 @@ int IEnemy::GetScore() const
 void IEnemy::Reset(const Point2f& pos)
 {
     
-}
-
-void IEnemy::Awake(float elapsedSec)
-{
 }
 
 void IEnemy::Wait(float elapsedSec)
@@ -107,6 +66,10 @@ bool IEnemy::IsFlipped() const
     return false;
 }
 
+/**
+ * \brief Switches between Ping and Pong functions, works like a continuous switch
+ * \param interval time between switching
+ */
 void IEnemy::Switch(float interval)
 {
     StartTimer(interval);
@@ -142,6 +105,10 @@ bool IEnemy::IsFixedDirection() const
     return m_FixedDirection;
 }
 
+/**
+ * \brief angle between enemy and player
+ * \return angle in radians
+ */
 float IEnemy::GetAngle() const
 {
     const float dx{m_pGameController->m_pPlayerManager->GetPlayer()->GetPosition<Point2f>().x - GetPosition<Point2f>().x};

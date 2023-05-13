@@ -30,11 +30,13 @@ public:
     virtual void DrawPlayerScore() const final;
     virtual void DrawHighScore() const final;
     virtual void DrawTextBonus() const final;
+    virtual void DrawTextBonusKey() const final;
     virtual void DrawTextBottomRow() const final;
     virtual void DrawTextContinue() const final;
     virtual void DrawTextDeposit() const final;
     virtual void DrawTextGameOver() const final;
     virtual void DrawTextGameOverPlayerOne() const final;
+    virtual void DrawTextKey() const final;
     virtual void DrawTextTitle() const final;
     virtual void DrawTextTopRow() const final;
     virtual void DrawNumber(Point2f& pos, int number, Color color) const final;
@@ -49,11 +51,13 @@ protected:
 private:
     Sprite* m_pNumbers;
     Sprite* m_pTextBonus;
+    Sprite* m_pTextBonusKey;
     Sprite* m_pTextBottomRow;
     Sprite* m_pTextContinue;
     Sprite* m_pTextDeposit;
     Sprite* m_pTextGameOver;
     Sprite* m_pTextGameOverPlayerOne;
+    Sprite* m_pTextKey;
     Sprite* m_pTextTitle;
     Sprite* m_pTextTopRow;
 };

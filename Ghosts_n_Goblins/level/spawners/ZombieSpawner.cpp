@@ -29,7 +29,7 @@ void ZombieSpawner::Spawn()
             StartTimer(time(Game::mt));
             if (IsTimerFinished())
             {
-            const Point2f playerCenter{m_pGameController->m_pPlayerManager->GetPlayer()->GetCollisionBoxCenter()};
+            const Point2f playerCenter{m_pGameController->m_pPlayerManager->GetPlayer()->GetColliderCenter()};
                 const int flip{std::rand() % 2 - 1};
                 // const int offset{(std::rand() % (m_MaxRange - m_MinRange) + m_MinRange) * flip};
                 std::uniform_real_distribution<float> offset{m_MinRange, m_MaxRange};

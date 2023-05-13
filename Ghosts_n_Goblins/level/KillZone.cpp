@@ -15,4 +15,5 @@ void KillZone::HandleCollision(GameObject* other)
     other->SetActive(false);
     Player* pPlayer = dynamic_cast<Player*>(other);
     pPlayer->SetHP(0);
+    pPlayer->SetState(Player::State::DEAD);
 }

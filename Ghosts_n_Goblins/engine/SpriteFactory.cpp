@@ -72,22 +72,22 @@ Sprite* SpriteFactory::CreateSprite(Game::Label label)
             pSprite->SetClipWidth(clipWidth);
             const float clipHeight{sprite.contains("clip_height") ? static_cast<float>(sprite["clip_height"]) : 0.0f};
             pSprite->SetClipHeight(clipHeight);
-            const float collisionWidth{
-                sprite.contains("collision_width") ? static_cast<float>(sprite["collision_width"]) : 0.0f
+            const float colliderWidth{
+                sprite.contains("collider_width") ? static_cast<float>(sprite["collider_width"]) : 0.0f
             };
-            pSprite->SetCollisionWidth(collisionWidth);
-            const float collisionHeight{
-                sprite.contains("collision_height") ? static_cast<float>(sprite["collision_height"]) : 0.0f
+            pSprite->SetColliderWidth(colliderWidth);
+            const float colliderHeight{
+                sprite.contains("collider_height") ? static_cast<float>(sprite["collider_height"]) : 0.0f
             };
-            pSprite->SetCollisionHeight(collisionHeight);
-            const float collisionHorizontalOffset{
-                sprite.contains("collision_horizontal_offset") ? static_cast<float>(sprite["collision_horizontal_offset"]) : 0.0f
+            pSprite->SetColliderHeight(colliderHeight);
+            const float colliderHorizontalOffset{
+                sprite.contains("collider_horizontal_offset") ? static_cast<float>(sprite["collider_horizontal_offset"]) : 0.0f
             };
-            pSprite->SetCollisionHorizontalOffset(collisionHorizontalOffset);
-            const float collisionVerticalOffset{
-                sprite.contains("collision_vertical_offset") ? static_cast<float>(sprite["collision_vertical_offset"]) : 0.0f
+            pSprite->SetColliderHorizontalOffset(colliderHorizontalOffset);
+            const float colliderVerticalOffset{
+                sprite.contains("collider_vertical_offset") ? static_cast<float>(sprite["collider_vertical_offset"]) : 0.0f
             };
-            pSprite->SetCollisionVerticalOffset(collisionVerticalOffset);
+            pSprite->SetColliderVerticalOffset(colliderVerticalOffset);
 
             pSprite->Init();
 

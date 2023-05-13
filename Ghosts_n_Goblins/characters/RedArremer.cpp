@@ -12,6 +12,7 @@ RedArremer::RedArremer(const Point2f& pos, GameController* pGameController)
 {
     m_Score = 1000;
     m_HP = 3;
+    m_AwakeDistance = 200.0f;
 }
 
 void RedArremer::Draw() const
@@ -22,7 +23,7 @@ void RedArremer::Draw() const
 void RedArremer::Update(float elapsedSec)
 {
     IEnemy::Update(elapsedSec);
-    UpdateCollisionBox();
+    UpdateCollider();
 }
 
 void RedArremer::HandleCollision(GameObject* other)
@@ -37,8 +38,8 @@ void RedArremer::HandleCollision(GameObject* other)
         m_Active = false;
         m_Visible = false;
         m_pGameController->m_pPlayerManager->GetPlayer()->AddScore(m_Score);
-        m_pGameController->m_pFXManager->PlayEffect(Game::Label::F_FIRE_ENEMY, GetCollisionBoxCenter(), other->IsFlipped());
-        m_pGameController->m_pFXManager->PlayEffect(Game::Label::F_SCORE, GetCollisionBoxCenter(), false, this);
+        m_pGameController->m_pFXManager->PlayEffect(Game::Label::F_FIRE_ENEMY, GetColliderCenter(), other->IsFlipped());
+        m_pGameController->m_pFXManager->PlayEffect(Game::Label::F_SCORE, GetColliderCenter(), false, this);
         m_pGameController->m_pSoundManager->PlayEffect(Game::Label::E_ENEMY_DEATH);
     }
 }

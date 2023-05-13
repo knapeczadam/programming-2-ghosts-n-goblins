@@ -18,7 +18,7 @@ Zombie::Zombie(const Point2f& pos, GameController* pGameController)
       , m_SpawnTime{0.8f}
       , m_CanWalk{false}
       , m_Dir{}
-      , m_MidCollisionHeight{m_CollisionBox.height / 2.0f}
+      , m_MidColliderHeight{m_Collider.height / 2.0f}
 {
     m_Score = 200;
     m_HorVelocity = 50.0f;
@@ -46,7 +46,7 @@ void Zombie::Update(float elapsedSec)
     {
         Sleep(elapsedSec);
     }
-    UpdateCollisionBox();
+    UpdateCollider();
 }
 
 void Zombie::HandleCollision(GameObject* other)
@@ -81,7 +81,7 @@ void Zombie::Reset(const Point2f& pos)
     m_pSprite->SetSubCols(7);
     m_pSprite->SetCurrRowsCols();
     m_pSprite->UpdateSourceRect();
-    ResetCollisionBox();
+    ResetCollider();
 }
 
 void Zombie::Walk(float elapsedSec)
@@ -90,7 +90,7 @@ void Zombie::Walk(float elapsedSec)
     StartTimer(m_WalkingTime);
     if (IsTimerFinished())
     {
-        SetCollisionBoxHeight(m_MidCollisionHeight);
+        SetColliderHeight(m_MidColliderHeight);
         m_pSprite->ResetCurrFrame();
         m_pSprite->SetLeftOffsetCols(9);
         m_pSprite->SetSubCols(7);
@@ -105,7 +105,7 @@ void Zombie::Spawn(float elapsedSec)
     StartTimer(m_SpawnTime);
     if (IsTimerFinished())
     {
-        ResetCollisionBox();
+        ResetCollider();
         m_pSprite->SetLeftOffsetCols(7);
         m_pSprite->SetSubCols(2);
         m_pSprite->SetCurrRowsCols();
@@ -124,7 +124,7 @@ void Zombie::Awake(float elapsedSec)
     m_Dir = m_Flipped ? 1 : -1;
     m_pSprite->SetLeftOffsetCols(0);
     m_pSprite->ResetCurrFrame();
-    SetCollisionBoxHeight(m_MidCollisionHeight);
+    SetColliderHeight(m_MidColliderHeight);
 }
 
 void Zombie::Sleep(float elapsedSec)

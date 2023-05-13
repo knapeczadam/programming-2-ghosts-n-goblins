@@ -1,18 +1,18 @@
 ﻿#include "pch.h"
-#include "YashichiCollisionBox.h"
+#include "YashichiCollider.h"
 
 #include "characters/Player.h"
 #include "collectibles/Pot.h"
 #include "game/CollectibleManager.h"
 #include "game/GameController.h"
 
-YashichiCollisionBox::YashichiCollisionBox(const Rectf& shape, GameController* pGameController)
-    : CollisionBox(Game::Label::L_YASHICHI, shape, pGameController)
+YashichiCollider::YashichiCollider(const Rectf& shape, GameController* pGameController)
+    : ICollider(Game::Label::L_YASHICHI, shape, pGameController)
     , m_PotPos{ 6123.0f, 448.0f }
 {
 }
 
-void YashichiCollisionBox::HandleCollision(GameObject* other)
+void YashichiCollider::HandleCollision(GameObject* other)
 {
     if (not IsOverlapping(other)) return;
     Player* pPlayer{ static_cast<Player*>(other) };

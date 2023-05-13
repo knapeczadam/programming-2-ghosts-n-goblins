@@ -59,14 +59,14 @@ public:
     float GetClipHeight() const;
     float GetScaledClipHeight() const;
     void SetClipHeight(float clipHeight);
-    float GetCollisionWidth() const;
-    void SetCollisionWidth(float collisionWidth);
-    float GetCollisionHeight() const;
-    void SetCollisionHeight(float collisionHeight);
-    float GetCollisionHorizontalOffset() const;
-    void SetCollisionHorizontalOffset(float collisionHorizontalOffset);
-    float GetCollisionVerticalOffset() const;
-    void SetCollisionVerticalOffset(float collisionVerticalOffset);
+    float GetColliderWidth() const;
+    void SetColliderWidth(float colliderWidth);
+    float GetColliderHeight() const;
+    void SetColliderHeight(float colliderHeight);
+    float GetColliderHorizontalOffset() const;
+    void SetColliderHorizontalOffset(float colliderHorizontalOffset);
+    float GetColliderVerticalOffset() const;
+    void SetColliderVerticalOffset(float colliderVerticalOffset);
     
 
 private:
@@ -97,8 +97,8 @@ private:
     float m_OriginalClipHeight;
     float m_CurrClipWidth;
     float m_CurrClipHeight;
-    float m_CollisionWidth;
-    float m_CollisionHeight;
-    float m_CollisionHorizontalOffset;
-    float m_CollisionVerticalOffset;
+    float m_ColliderWidth;
+    float m_ColliderHeight;
+    float m_ColliderHorizontalOffset;
+    float m_ColliderVerticalOffset;
 };

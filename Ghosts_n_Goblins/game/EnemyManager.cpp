@@ -10,9 +10,9 @@
 #include "characters/Unicorn.h"
 #include "characters/WoodyPig.h"
 #include "characters/Zombie.h"
-#include "level/FlyingKnightSpawner.h"
-#include "level/WoodyPigSpawner.h"
-#include "level/ZombieSpawner.h"
+#include "level/spawners/FlyingKnightSpawner.h"
+#include "level/spawners/WoodyPigSpawner.h"
+#include "level/spawners/ZombieSpawner.h"
 
 #include <ranges>
 

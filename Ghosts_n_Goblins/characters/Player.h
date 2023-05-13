@@ -78,17 +78,18 @@ public:
     bool HandleThrowable(GameObject* other);
     bool HandleCollectible(GameObject* other);
     bool HandleLadder(GameObject* other);
-    bool HandleCollisionBox(GameObject* other);
+    bool HandleCollider(GameObject* other);
     State GetState() const;
+    void SetState(State state);
     void IncreaseLives();
     void DecreaseLives();
-    void Hit(float elapsedSec);
+    void OnHit(float elapsedSec);
     void Die();
     bool ImpactFromLeft(GameObject* other) const;
 
     void UpdateState();
 protected:
-    virtual void UpdateCollisionBox() override;
+    virtual void UpdateCollider() override;
 
 private:
     void UpdatePosition(float elapsedSec);
@@ -133,4 +134,5 @@ private:
     bool m_ImpactFromLeft;
     bool m_HitTriggered;
     bool m_HitFlipped;
+    bool m_HasKey;
 };

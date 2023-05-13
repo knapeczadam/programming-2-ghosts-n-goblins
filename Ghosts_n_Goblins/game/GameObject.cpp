@@ -9,19 +9,25 @@
 
 #include <iostream>
 
-GameObject::GameObject()
+#include "PlayerManager.h"
+#include "characters/Player.h"
+
+GameObject::GameObject(GameController* pGameController)
     : m_Label{Game::Label::D_DUMMY}
       , m_HasSprite{false}
-      , m_pGameController{nullptr}
+      , m_pGameController{pGameController}
       , m_pSprite{nullptr}
       , m_Shape{0.0f, 0.0f, 0.0f, 0.0f}
-      , m_CollisionBox{0.0f, 0.0f, 0.0f, 0.0f}
-      , m_OriginalCollisionBox{m_CollisionBox}
+      , m_Collider{0.0f, 0.0f, 0.0f, 0.0f}
+      , m_OriginalCollider{m_Collider}
       , m_CollisionEnabled{false}
       , m_Active{true}
       , m_Visible{true}
+        , m_Awake{false}
+      , m_AwakeFired{false}
+      , m_AwakeDistance{0.0f}
       , m_Flipped{false}
-      , m_CollisionBoxColor{0.5f, 0.5f, 0.5f, 1.0f}
+      , m_ColliderColor{0.5f, 0.5f, 0.5f, 1.0f}
 {
 }
 
@@ -33,18 +39,21 @@ GameObject::GameObject(Game::Label label, GameController* pGameController)
           m_HasSprite and m_pGameController ? m_pGameController->m_pSpriteFactory->CreateSprite(label) : nullptr
       }
       , m_Shape{0.0f, 0.0f, 0.0f, 0.0f}
-      , m_CollisionBox{0.0f, 0.0f, 0.0f, 0.0f}
-      , m_OriginalCollisionBox{m_CollisionBox}
+      , m_Collider{0.0f, 0.0f, 0.0f, 0.0f}
+      , m_OriginalCollider{m_Collider}
       , m_CollisionEnabled{false}
       , m_Active{true}
       , m_Visible{true}
+        , m_Awake{false}
+      , m_AwakeFired{false}
+      , m_AwakeDistance{0.0f}
       , m_Flipped{false}
-      , m_CollisionBoxColor{0.5f, 0.5f, 0.5f, 1.0f}
+      , m_ColliderColor{0.5f, 0.5f, 0.5f, 1.0f}
 {
     InitShape();
     if (m_CollisionEnabled)
     {
-        InitCollisionBox();
+        InitCollider();
     }
 }
 
@@ -58,13 +67,16 @@ GameObject::GameObject(Game::Label label, const Rectf& shape, bool collisionEnab
           m_HasSprite and m_pGameController ? m_pGameController->m_pSpriteFactory->CreateSprite(label) : nullptr
       }
       , m_Shape{shape}
-      , m_CollisionBox{shape}
-      , m_OriginalCollisionBox{m_CollisionBox}
+      , m_Collider{shape}
+      , m_OriginalCollider{m_Collider}
       , m_CollisionEnabled{collisionEnabled}
       , m_Active{true}
       , m_Visible{true}
+        , m_Awake{false}
+      , m_AwakeFired{false}
+      , m_AwakeDistance{0.0f}
       , m_Flipped{false}
-      , m_CollisionBoxColor{color}
+      , m_ColliderColor{color}
 {
 }
 
@@ -76,18 +88,21 @@ GameObject::GameObject(Game::Label label, const Point2f& pos, bool collisionEnab
           m_HasSprite and m_pGameController ? m_pGameController->m_pSpriteFactory->CreateSprite(label) : nullptr
       }
       , m_Shape{0.0f, 0.0f, 0.0f, 0.0f}
-      , m_CollisionBox{0.0f, 0.0f, 0.0f, 0.0f}
-      , m_OriginalCollisionBox{m_CollisionBox}
+      , m_Collider{0.0f, 0.0f, 0.0f, 0.0f}
+      , m_OriginalCollider{m_Collider}
       , m_CollisionEnabled{collisionEnabled}
       , m_Active{true}
       , m_Visible{true}
+        , m_Awake{false}
+      , m_AwakeFired{false}
+      , m_AwakeDistance{0.0f}
       , m_Flipped{false}
-      , m_CollisionBoxColor{0.5f, 0.5f, 0.5f, 1.0f}
+      , m_ColliderColor{0.5f, 0.5f, 0.5f, 1.0f}
 {
     InitShape(pos);
     if (m_CollisionEnabled)
     {
-        InitCollisionBox();
+        InitCollider();
     }
 }
 
@@ -104,20 +119,40 @@ void GameObject::Draw() const
             m_pSprite->Draw();
         }
     }
-#if DEBUG_COLLISION
+#if DEBUG_COLLIDER
     if (m_CollisionEnabled)
     {
-        utils::SetColor(m_CollisionBoxColor);
-        utils::DrawRect(m_CollisionBox);
+        utils::SetColor(m_ColliderColor);
+        utils::DrawRect(m_Collider);
     }
 #endif
+}
+
+void GameObject::Awake(float elapsedSec)
+{
 }
 
 void GameObject::Update(float elapsedSec)
 {
     if (m_CollisionEnabled)
     {
-        UpdateCollisionBox();
+        UpdateCollider();
+    }
+    if (not m_AwakeFired)
+    {
+        if (utils::GetDistance(GetShapeCenter(), m_pGameController->m_pPlayerManager->GetPlayer()->GetShapeCenter()) < m_AwakeDistance)
+        {
+            m_Awake = true;
+        }
+    }
+
+    if (m_Awake)
+    {
+        if (not m_AwakeFired)
+        {
+            Awake(elapsedSec);
+            m_AwakeFired = true;
+        }
     }
 }
 
@@ -185,9 +220,23 @@ void GameObject::SetVisible(bool isVisible)
     m_Visible = isVisible;
 }
 
+bool GameObject::IsAwake() const
+{
+    return m_Awake;
+}
+
+void GameObject::SetAwake(bool awake)
+{
+    m_Awake = awake;
+    if (not m_Awake)
+    {
+        m_AwakeFired = false;
+    }
+}
+
 bool GameObject::IsOverlapping(GameObject* other) const
 {
-    return utils::IsOverlapping(m_CollisionBox, other->GetCollisionBox());
+    return utils::IsOverlapping(m_Collider, other->GetCollider());
 }
 
 void GameObject::SetFlipped(bool flipped)
@@ -195,79 +244,79 @@ void GameObject::SetFlipped(bool flipped)
     m_Flipped = flipped;
 }
 
-Rectf GameObject::GetCollisionBox() const
+Rectf GameObject::GetCollider() const
 {
-    return m_CollisionBox;
+    return m_Collider;
 }
 
-Point2f GameObject::GetCollisionBoxCenter() const
+Point2f GameObject::GetColliderCenter() const
 {
     Point2f center;
-    center.x = m_CollisionBox.left + m_CollisionBox.width / 2;
-    center.y = m_CollisionBox.bottom + m_CollisionBox.height / 2;
+    center.x = m_Collider.left + m_Collider.width / 2;
+    center.y = m_Collider.bottom + m_Collider.height / 2;
     return center;
 }
 
-void GameObject::InitCollisionBox()
+void GameObject::InitCollider()
 {
-    m_CollisionBox.width = m_pSprite->GetCollisionWidth();
-    m_CollisionBox.height = m_pSprite->GetCollisionHeight();
-    const float horizontalOffset{(m_Shape.width - m_pSprite->GetCollisionWidth()) / 2};
-    const float verticalOffset{(m_Shape.height - m_pSprite->GetCollisionHeight()) / 2};
+    m_Collider.width = m_pSprite->GetColliderWidth();
+    m_Collider.height = m_pSprite->GetColliderHeight();
+    const float horizontalOffset{(m_Shape.width - m_pSprite->GetColliderWidth()) / 2};
+    const float verticalOffset{(m_Shape.height - m_pSprite->GetColliderHeight()) / 2};
     const int dir{m_Flipped ? -1 : 1};
-    m_CollisionBox.left = m_Shape.left + horizontalOffset + m_pSprite->GetCollisionHorizontalOffset() * dir;
-    m_CollisionBox.bottom = m_Shape.bottom + verticalOffset + m_pSprite->GetCollisionVerticalOffset() * dir;
-    m_OriginalCollisionBox = m_CollisionBox;
+    m_Collider.left = m_Shape.left + horizontalOffset + m_pSprite->GetColliderHorizontalOffset() * dir;
+    m_Collider.bottom = m_Shape.bottom + verticalOffset + m_pSprite->GetColliderVerticalOffset() * dir;
+    m_OriginalCollider = m_Collider;
 }
 
-void GameObject::UpdateCollisionBox()
+void GameObject::UpdateCollider()
 {
     if (m_pSprite)
     {
-        const float horizontalOffset{(m_Shape.width - m_pSprite->GetCollisionWidth()) / 2};
-        const float verticalOffset{(m_Shape.height - m_pSprite->GetCollisionHeight()) / 2};
+        const float horizontalOffset{(m_Shape.width - m_pSprite->GetColliderWidth()) / 2};
+        const float verticalOffset{(m_Shape.height - m_pSprite->GetColliderHeight()) / 2};
         const int dir{m_Flipped ? -1 : 1};
-        m_CollisionBox.left = m_Shape.left + horizontalOffset + m_pSprite->GetCollisionHorizontalOffset() * dir;
-        m_CollisionBox.bottom = m_Shape.bottom + verticalOffset + m_pSprite->GetCollisionVerticalOffset() * dir;
+        m_Collider.left = m_Shape.left + horizontalOffset + m_pSprite->GetColliderHorizontalOffset() * dir;
+        m_Collider.bottom = m_Shape.bottom + verticalOffset + m_pSprite->GetColliderVerticalOffset() * dir;
     }
     else
     {
-        m_CollisionBox = m_Shape;
+        m_Collider = m_Shape;
     }
 }
 
-std::vector<Point2f> GameObject::GetCollisionBoxVertices() const
+std::vector<Point2f> GameObject::GetColliderVertices() const
 {
     std::vector<Point2f> vertices{
-        Point2f{m_CollisionBox.left, m_CollisionBox.bottom},
-        Point2f{m_CollisionBox.left + m_CollisionBox.width, m_CollisionBox.bottom},
-        Point2f{m_CollisionBox.left + m_CollisionBox.width, m_CollisionBox.bottom + m_CollisionBox.height},
-        Point2f{m_CollisionBox.left, m_CollisionBox.bottom + m_CollisionBox.height}
+        Point2f{m_Collider.left, m_Collider.bottom},
+        Point2f{m_Collider.left + m_Collider.width, m_Collider.bottom},
+        Point2f{m_Collider.left + m_Collider.width, m_Collider.bottom + m_Collider.height},
+        Point2f{m_Collider.left, m_Collider.bottom + m_Collider.height}
     };
     return vertices;
 }
 
-void GameObject::SetCollisionBoxHeight(float height)
+void GameObject::SetColliderHeight(float height)
 {
-    m_CollisionBox.height = height;
+    m_Collider.height = height;
 }
 
-void GameObject::ResetCollisionBox()
+void GameObject::ResetCollider()
 {
-    m_CollisionBox = m_OriginalCollisionBox;
+    m_Collider = m_OriginalCollider;
 }
 
 Point2f GameObject::GetContactPoint(const GameObject* other) const
 {
     Point2f contactPoint;
-    contactPoint.y = other->GetCollisionBoxCenter().y;
+    contactPoint.y = other->GetColliderCenter().y;
     if (other->IsFlipped())
     {
-        contactPoint.x = other->GetCollisionBox().left;
+        contactPoint.x = other->GetCollider().left;
     }
     else
     {
-        contactPoint.x = other->GetCollisionBox().left + other->GetCollisionBox().width;
+        contactPoint.x = other->GetCollider().left + other->GetCollider().width;
     }
     return contactPoint;
 }
@@ -282,13 +331,13 @@ Point2f GameObject::GetShapeCenter() const
 
 void GameObject::SetBottom(float bottom)
 {
-    const float verticalOffset{(m_Shape.height - m_pSprite->GetCollisionHeight()) / 2};
+    const float verticalOffset{(m_Shape.height - m_pSprite->GetColliderHeight()) / 2};
     m_Shape.bottom = bottom - verticalOffset;
 }
 
 void GameObject::SetLeft(float left)
 {
-    const float horizontalOffset{(m_Shape.width - m_pSprite->GetCollisionWidth()) / 2};
+    const float horizontalOffset{(m_Shape.width - m_pSprite->GetColliderWidth()) / 2};
     m_Shape.left = left - horizontalOffset;
 }
 

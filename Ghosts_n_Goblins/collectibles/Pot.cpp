@@ -15,7 +15,7 @@ Pot::Pot(const Point2f& pos, GameController* pGameController)
 void Pot::Update(float elapsedSec)
 {
     m_Shape.bottom += m_Gravity * elapsedSec;
-    UpdateCollisionBox();
+    UpdateCollider();
     if (m_pGameController->m_pLevelManager->GetLevel()->IsOnGround(this))
     {
         m_Active = false;

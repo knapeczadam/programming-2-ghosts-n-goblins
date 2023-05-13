@@ -43,10 +43,10 @@ void Camera::SetBoundaries(const Rectf& boundaries)
 
 bool Camera::IsOutOfWindow(const GameObject* pGameObject) const
 {
-    const float left{pGameObject->GetCollisionBox().left};
-    const float right{pGameObject->GetCollisionBox().left + pGameObject->GetCollisionBox().width};
-    const float top{pGameObject->GetCollisionBox().bottom + pGameObject->GetCollisionBox().height};
-    const float bottom{pGameObject->GetCollisionBox().bottom};
+    const float left{pGameObject->GetCollider().left};
+    const float right{pGameObject->GetCollider().left + pGameObject->GetCollider().width};
+    const float top{pGameObject->GetCollider().bottom + pGameObject->GetCollider().height};
+    const float bottom{pGameObject->GetCollider().bottom};
 
     const bool horizontal{right + m_OutOfWindowOffset < m_Pos.x or left - m_OutOfWindowOffset > m_Pos.x + m_Width};
     const bool vertical{bottom > m_Height or top < 0.0f};
