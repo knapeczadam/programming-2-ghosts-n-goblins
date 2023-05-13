@@ -176,9 +176,9 @@ void EnemyManager::InitWoodyPigs()
 
 void EnemyManager::InitZombies()
 {
-    Zombie* pZombie1{new Zombie{Point2f{1000.0f, 62.0f}, m_pGameController}};
-    Zombie* pZombie2{new Zombie{Point2f{1000.0f, 62.0f}, m_pGameController}};
-    Zombie* pZombie3{new Zombie{Point2f{1000.0f, 62.0f}, m_pGameController}};
+    Zombie* pZombie1{new Zombie{Point2f{0.0f, 62.0f}, m_pGameController}};
+    Zombie* pZombie2{new Zombie{Point2f{0.0f, 62.0f}, m_pGameController}};
+    Zombie* pZombie3{new Zombie{Point2f{0.0f, 62.0f}, m_pGameController}};
 
     pZombie1->SetActive(false);
     pZombie2->SetActive(false);

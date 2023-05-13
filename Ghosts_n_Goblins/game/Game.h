@@ -1,6 +1,8 @@
 // Knapecz, Adam - 1DAE11
 #pragma once
 
+#include <random>
+
 #include "BaseGame.h"
 #include "engine/json.hpp"
 #include "engine/ITimer.h"
@@ -354,6 +356,9 @@ private:
     SpriteFactory* m_pSpriteFactory;
     TextureManager* m_pTextureManager;
     UIManager* m_pUIManager;
+public:
+    static std::random_device rd;
+    static std::mt19937 mt;
     
 #if TEST_OBJECT
     GameObject* m_pTestObject;

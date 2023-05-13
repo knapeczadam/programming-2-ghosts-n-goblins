@@ -38,13 +38,16 @@
 #include "ui/InitialSaver.h"
 #include "ui/Map.h"
 
+std::random_device Game::rd;
+std::mt19937 Game::mt{rd()};
+
 
 Game::Game(const Window& window)
     : BaseGame{window}
       , m_Data{nullptr}
       , m_DataPath{"data.json"}
       , m_Labels{}
-      , m_State{State::BOOT}
+      , m_State{State::GAME}
       , m_pBootManager{nullptr}
       , m_pCameraManager{nullptr}
       , m_pCutsceneManager{nullptr}
@@ -96,9 +99,10 @@ void Game::Initialize()
 
     // CAMERA - has to be after level and player initialization
     m_pCameraManager = new CameraManager{m_pGameController};
-    // InitCamera();
 #if TEST_OBJECT
-    m_pTestObject = new Zombie{Point2f{200.f, 62.f}, m_pGameController};
+    m_pTestObject = new Zombie{Point2f{500.f, 62.f}, m_pGameController};
+    m_pTestObject->SetActive(false);
+    m_pTestObject->SetVisible(false);
 #endif
 
     m_pGameController->Test();
@@ -685,7 +689,7 @@ void Game::UpdateGame(float elapsedSec)
         m_pGameController->m_pLevelManager->GetLevel()->GetBoundaries());
     m_pLevelManager->Update(elapsedSec);
     m_pPlayerManager->Update(elapsedSec);
-    // m_pEnemyManager->SpawnEnemies();
+    m_pEnemyManager->SpawnEnemies();
     m_pEnemyManager->Update(elapsedSec);
     m_pCollectibleManager->Update(elapsedSec);
     m_pFXManager->Update(elapsedSec);

@@ -550,8 +550,10 @@ void Player::AddScore(int score)
 bool Player::HandleEnemy(GameObject* other)
 {
     IEnemy* pEnemy{dynamic_cast<IEnemy*>(other)};
+    return true;
     if (pEnemy and m_HP > 0)
     {
+        if (pEnemy->GetLabel() == Game::Label::C_ZOMBIE and pEnemy->IsAwake()) return true;
         m_pGameController->m_pSoundManager->PlayEffect(Game::Label::E_ARTHUR_HIT);
         --m_HP;
         return true;

@@ -13,5 +13,6 @@ public:
 
     virtual void Spawn() override;
 private:
-    const int range;
+    const float m_MinRange;
+    const float m_MaxRange;
 };

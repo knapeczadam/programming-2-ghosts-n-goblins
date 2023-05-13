@@ -16,6 +16,7 @@ public:
     virtual bool IsAwake() const final;
     virtual void SetAwake(bool awake) final;
     virtual int GetScore() const final;
+    virtual void Reset(const Point2f& pos = Point2f{0.0f, 62.0f});
     virtual void ResetHP() final;
     virtual bool IsFixedDirection() const final;
 

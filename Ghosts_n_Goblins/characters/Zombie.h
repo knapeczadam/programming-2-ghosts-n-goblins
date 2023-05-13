@@ -24,6 +24,8 @@ public:
     virtual void Draw() const override;
     virtual void Update(float elapsedSec) override;
     virtual void HandleCollision(GameObject* other) override;
+    virtual void Reset(const Point2f& pos = Point2f{0.0f, 62.0f}) override;
+
 protected:
     virtual void Walk(float elapsedSec) override;
     virtual void Spawn(float elapsedSec) override;
@@ -38,4 +40,5 @@ private:
     const float m_SpawnTime;
     bool m_CanWalk;
     int m_Dir;
+    const float m_MidCollisionHeight;
 };

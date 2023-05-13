@@ -61,6 +61,11 @@ int IEnemy::GetScore() const
     return m_Score;
 }
 
+void IEnemy::Reset(const Point2f& pos)
+{
+    
+}
+
 void IEnemy::Awake(float elapsedSec)
 {
 }

@@ -1,6 +1,8 @@
 ﻿#include "pch.h"
 #include "Zombie.h"
 
+#include <iostream>
+
 #include "Player.h"
 #include "engine/SoundManager.h"
 #include "engine/Sprite.h"
@@ -16,6 +18,7 @@ Zombie::Zombie(const Point2f& pos, GameController* pGameController)
       , m_SpawnTime{0.8f}
       , m_CanWalk{false}
       , m_Dir{}
+      , m_MidCollisionHeight{m_CollisionBox.height / 2.0f}
 {
     m_Score = 200;
     m_HorVelocity = 50.0f;
@@ -63,12 +66,31 @@ void Zombie::HandleCollision(GameObject* other)
     }
 }
 
+void Zombie::Reset(const Point2f& pos)
+{
+    ResetTimer();
+    ResetHP();
+    m_Active = true;
+    m_Visible = true;
+    m_Awake = false;
+    m_AwakeFired = false;
+    m_CanWalk = false;
+    m_Shape.left = pos.x;
+    m_pSprite->ResetCurrFrame();
+    m_pSprite->SetLeftOffsetCols(0);
+    m_pSprite->SetSubCols(7);
+    m_pSprite->SetCurrRowsCols();
+    m_pSprite->UpdateSourceRect();
+    ResetCollisionBox();
+}
+
 void Zombie::Walk(float elapsedSec)
 {
     m_Shape.left += m_HorVelocity * elapsedSec * m_Dir;
     StartTimer(m_WalkingTime);
     if (IsTimerFinished())
     {
+        SetCollisionBoxHeight(m_MidCollisionHeight);
         m_pSprite->ResetCurrFrame();
         m_pSprite->SetLeftOffsetCols(9);
         m_pSprite->SetSubCols(7);
@@ -83,6 +105,7 @@ void Zombie::Spawn(float elapsedSec)
     StartTimer(m_SpawnTime);
     if (IsTimerFinished())
     {
+        ResetCollisionBox();
         m_pSprite->SetLeftOffsetCols(7);
         m_pSprite->SetSubCols(2);
         m_pSprite->SetCurrRowsCols();
@@ -101,6 +124,7 @@ void Zombie::Awake(float elapsedSec)
     m_Dir = m_Flipped ? 1 : -1;
     m_pSprite->SetLeftOffsetCols(0);
     m_pSprite->ResetCurrFrame();
+    SetCollisionBoxHeight(m_MidCollisionHeight);
 }
 
 void Zombie::Sleep(float elapsedSec)
@@ -109,7 +133,6 @@ void Zombie::Sleep(float elapsedSec)
     StartTimer(m_SpawnTime);
     if (IsTimerFinished())
     {
-        m_AwakeFired = false;
         m_Active = false;
         m_Visible = false;
     }
