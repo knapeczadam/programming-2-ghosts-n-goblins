@@ -92,7 +92,7 @@ void EnemyManager::Update(float elapsedSec)
     std::ranges::for_each(m_Enemies | std::views::filter(isActive), update);
     std::ranges::for_each(m_Throwables | std::views::filter(isActive), update);
 }
-
+// TODO check if enemy is active?
 void EnemyManager::LateUpdate(float elapsedSec)
 {
     static const auto lateUpdate{[&](GameObject* pGameObject) { pGameObject->LateUpdate(elapsedSec); }};

@@ -16,6 +16,7 @@ public:
     virtual void Reset(bool fromCheckpoint = false) override;
 
     bool IsInitialSaved() const;
+    bool IsScoreSaved() const;
 
 private:
     void DrawAbc() const;
@@ -39,5 +40,6 @@ private:
     int m_ColIdx;
     std::string m_Initial;
     const size_t m_MaxLength;
+    bool m_ScoreSaved;
 };
 

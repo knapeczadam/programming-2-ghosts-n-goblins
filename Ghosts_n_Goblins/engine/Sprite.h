@@ -67,6 +67,8 @@ public:
     void SetColliderHorizontalOffset(float colliderHorizontalOffset);
     float GetColliderVerticalOffset() const;
     void SetColliderVerticalOffset(float colliderVerticalOffset);
+    int GetIterCount() const;
+    bool IsLastFrame() const;
     
 
 private:
@@ -101,4 +103,5 @@ private:
     float m_ColliderHeight;
     float m_ColliderHorizontalOffset;
     float m_ColliderVerticalOffset;
+    int m_IterCount;
 };

@@ -146,11 +146,13 @@ public:
         L_BOSS,
         L_CHECKPOINT,
         L_DOOR,
+        L_END,
         L_FOREGROUND,
         L_KEY,
         L_KILLZONE,
         L_LADDER,
         L_LEVEL,
+        L_OPEN,
         L_PLATFORM,
         L_TOMBSTONE,
         L_WATER,
@@ -242,6 +244,7 @@ public:
         S_11_1ST_PLACE_ENTRY_END,
         S_12_BELOW_2ND_PLACE_NAME_REGISTRATION,
         S_13_BELOW_2ND_PLACE_ENTRY_END,
+        S_14_UNUSED_JINGLE,
         S_NONE,
 
         // --- DEBUG ---
@@ -290,7 +293,8 @@ public:
         CREDIT,
         BOSS,
         STAGE_CLEAR,
-        END
+        END,
+        SAVE_END
     };
 
 public:
@@ -314,8 +318,10 @@ private:
     void LoadData();
     
     void ClearBackground() const;
-    
+
+    void DrawBoot() const;
     void DrawContinue() const;
+    void DrawEnd() const;
     void DrawGame() const;
     void DrawGameOver() const;
     void DrawIntro() const;

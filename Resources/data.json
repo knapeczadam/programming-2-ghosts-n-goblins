@@ -186,7 +186,7 @@
     },
     {
       "label": "u_text_bonus_key",
-        "path": "ui/text_bonus_key.png"
+      "path": "ui/text_bonus_key.png"
     },
     {
       "label": "u_text_bottom_row",
@@ -214,7 +214,7 @@
     },
     {
       "label": "u_text_key",
-        "path": "ui/text_key.png"
+      "path": "ui/text_key.png"
     },
     {
       "label": "u_text_player_one_ready",
@@ -736,6 +736,13 @@
       "scale": 2
     },
     {
+      "label": "l_door",
+      "rows": 1,
+      "columns": 3,
+      "frames_per_second": 1,
+      "scale": 2
+    },
+    {
       "label": "l_level"
     },
     {
@@ -807,7 +814,7 @@
     },
     {
       "label": "u_text_bonus_key",
-        "scale": 2
+      "scale": 2
     },
     {
       "label": "u_text_bottom_row",
@@ -838,7 +845,7 @@
     },
     {
       "label": "u_text_key",
-        "scale": 2
+      "scale": 2
     },
     {
       "label": "u_text_player_one_ready",
@@ -1317,6 +1324,10 @@
     {
       "label": "s_13_below_2nd_place_entry_end",
       "path": "13_below_2nd_place_entry_end.mp3"
+    },
+    {
+      "label": "s_14_unused_jingle",
+      "path": "14_unused_jingle.mp3"
     }
   ]
 }

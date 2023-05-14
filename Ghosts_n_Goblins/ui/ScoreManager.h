@@ -25,6 +25,7 @@ public:
     int GetLowestScore() const;
     bool HasTopScore() const;
     bool HasBelowTopScore() const;
+    bool IsOnScoreboard() const;
     std::multimap<int, std::string, std::greater<>> GetScores() const;
 
 private:

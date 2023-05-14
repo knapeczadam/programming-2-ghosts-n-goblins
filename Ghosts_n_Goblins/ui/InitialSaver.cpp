@@ -26,6 +26,7 @@ InitialSaver::InitialSaver(GameController* pGameController)
       , m_ColIdx{m_NrCols - 1}
       , m_Initial{}
       , m_MaxLength{3}
+    , m_ScoreSaved{false}
 {
     m_Blinking = true;
     m_BlinkingTime = 0.4f;
@@ -84,18 +85,16 @@ void InitialSaver::OnEnter()
     }
 }
 
+bool InitialSaver::IsScoreSaved() const
+{
+    return m_ScoreSaved;
+}
+
 void InitialSaver::SaveInitial()
 {
     m_pGameController->m_pUIManager->m_pScoreManager->SetScore(m_pGameController->m_pPlayerManager->GetPlayer()->GetScore(), m_Initial);
     m_pGameController->m_pUIManager->m_pScoreManager->SaveRanking();
-    if (m_pGameController->m_pUIManager->m_pScoreManager->HasTopScore())
-    {
-       m_pGameController->m_pSoundManager->PlayStream(Game::Label::S_11_1ST_PLACE_ENTRY_END, false); 
-    }
-    else
-    {
-       m_pGameController->m_pSoundManager->PlayStream(Game::Label::S_13_BELOW_2ND_PLACE_ENTRY_END, false); 
-    }
+    m_ScoreSaved = true;
 }
 
 void InitialSaver::Update(float elapsedSec)
@@ -150,6 +149,7 @@ void InitialSaver::Reset(bool fromCheckpoint)
     m_Initial.clear();
     m_RowIdx = m_NrRows - 1;
     m_ColIdx = m_NrCols - 1;
+    m_ScoreSaved = false;
 }
 
 bool InitialSaver::IsInitialSaved() const

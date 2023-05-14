@@ -50,8 +50,8 @@ void ScoreManager::SaveRanking()
 
 void ScoreManager::SetScore(int score, const std::string& initial)
 {
-    m_Scores.insert({score, initial});
     m_Scores.erase(std::prev(m_Scores.end()));
+    m_Scores.insert({score, initial});
 }
 
 
@@ -76,6 +76,11 @@ bool ScoreManager::HasBelowTopScore() const
 {
     const int playerScore{m_pGameController->m_pPlayerManager->GetPlayer()->GetScore()};
     return playerScore < GetTopScore() and playerScore >= GetLowestScore(); 
+}
+
+bool ScoreManager::IsOnScoreboard() const
+{
+    return HasTopScore() or HasBelowTopScore();
 }
 
 std::multimap<int, std::string, std::greater<>> ScoreManager::GetScores() const

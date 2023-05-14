@@ -315,6 +315,7 @@ void Game::InitLabels()
     m_Labels["s_11_1st_place_entry_end"] = Label::S_11_1ST_PLACE_ENTRY_END;
     m_Labels["s_12_below_2nd_place_name_registration"] = Label::S_12_BELOW_2ND_PLACE_NAME_REGISTRATION;
     m_Labels["s_13_below_2nd_place_entry_end"] = Label::S_13_BELOW_2ND_PLACE_ENTRY_END;
+    m_Labels["s_14_unused_jingle"] = Label::S_14_UNUSED_JINGLE;
 
     // --- DEBUG --- 
     m_Labels["d_level_debug"] = Label::D_LEVEL_DEBUG;
@@ -344,6 +345,11 @@ void Game::ClearBackground() const
     glClear(GL_COLOR_BUFFER_BIT);
 }
 
+void Game::DrawBoot() const
+{
+    m_pBootManager->Draw();
+}
+
 void Game::Draw() const
 {
     ClearBackground();
@@ -351,7 +357,7 @@ void Game::Draw() const
     switch (m_State)
     {
     case State::BOOT:
-        m_pBootManager->Draw();
+        DrawBoot();
         break;
     case State::MENU:
     case State::CREDIT:
@@ -359,6 +365,9 @@ void Game::Draw() const
         break;
     case State::INTRO:
         DrawIntro();
+        break;
+    case State::END:
+        DrawEnd();
         break;
     case State::HURRY_UP:
     case State::GAME:
@@ -369,6 +378,7 @@ void Game::Draw() const
         DrawGame();
         break;
     case State::SAVE_SCORE:
+    case State::SAVE_END:
         DrawSaveScore();
         break;
     case State::MAP:
@@ -497,6 +507,7 @@ void Game::UpdateState()
     case State::GAME:
     case State::HURRY_UP:
     case State::BOSS:
+    case State::STAGE_CLEAR:
         if (m_pPlayerManager->GetPlayer()->GetLives() == 0)
         {
             ResetTimer();
@@ -513,6 +524,11 @@ void Game::UpdateState()
         {
             m_State = State::BOSS;
         }
+        else if (m_pLevelManager->EndReached())
+        {
+            ResetTimer();
+            m_State = State::END;
+        }
         else if (m_pLevelManager->StageCleared())
         {
             m_State = State::STAGE_CLEAR;
@@ -526,11 +542,12 @@ void Game::UpdateState()
             m_State = State::GAME;
         }
         break;
+    case State::END:
     case State::GAME_OVER:
         StartTimer(7);
         if (IsTimerFinished())
         {
-            if (m_pGameController->m_pUIManager->m_pScoreManager->HasBelowTopScore())
+            if (m_pGameController->m_pUIManager->m_pScoreManager->IsOnScoreboard())
             {
                 m_State = State::SAVE_SCORE;
             }
@@ -544,7 +561,7 @@ void Game::UpdateState()
         StartTimer(10);
         if (m_pInputManager->IsPressed(Label::I_SELECT))
         {
-            ResetGame(true);
+            ResetGame();
             m_State = State::MAP;
         }
         else if (IsTimerFinished())
@@ -560,11 +577,14 @@ void Game::UpdateState()
     case State::SAVE_SCORE:
         if (m_pGameController->m_pUIManager->m_pInitialSaver->IsInitialSaved())
         {
-            StartTimer(3);
-            if (IsTimerFinished())
-            {
-                m_State = State::CONTINUE;
-            }
+            m_State = State::SAVE_END;
+        }
+        break;
+    case State::SAVE_END:
+        StartTimer(8);
+        if (IsTimerFinished())
+        {
+            m_State = State::CONTINUE;
         }
         break;
     case State::FROZEN:
@@ -575,97 +595,6 @@ void Game::UpdateState()
             m_State = State::MAP;
         }
         break;
-    }
-    return;
-    if (m_pBootManager->GetState() == Label::B_END)
-    {
-        m_pBootManager->Reset();
-        m_State = State::MENU;
-    }
-    else if (m_pUIManager->m_pCreditManager->GetCredits() and m_pGameController->m_pInputManager->IsPressed(
-        Label::I_SELECT))
-    {
-        m_State = State::INTRO;
-    }
-    else if (m_pCutsceneManager->GetState() == Label::N_END)
-    {
-        m_pCutsceneManager->Reset();
-        m_State = State::GAME;
-    }
-    else if (m_State == State::SAVE_SCORE)
-    {
-        if (m_pGameController->m_pUIManager->m_pInitialSaver->IsInitialSaved())
-        {
-            StartTimer(3);
-            if (IsTimerFinished())
-            {
-                m_State = State::CONTINUE;
-            }
-        }
-    }
-    else if (m_State == State::GAME_OVER)
-    {
-        StartTimer(3);
-        if (IsTimerFinished())
-        {
-            if (m_pPlayerManager->GetPlayer()->GetScore() == m_pUIManager->m_pScoreManager->GetTopScore())
-            {
-                m_State = State::SAVE_SCORE;
-            }
-            else
-            {
-                m_State = State::CONTINUE;
-            }
-        }
-    }
-    else if (m_State == State::CONTINUE)
-    {
-        StartTimer(10);
-        if (m_pInputManager->IsPressed(Label::I_SELECT))
-        {
-            ResetGame(true);
-            m_State = State::MAP;
-        }
-        else if (IsTimerFinished())
-        {
-            ResetGame();
-            m_State = State::MENU;
-        }
-    }
-    else if (m_pPlayerManager->GetPlayer()->GetLives() == 0)
-    {
-        ResetTimer();
-        m_State = State::GAME_OVER;
-    }
-    else if (m_State == State::MAP)
-    {
-        StartTimer(5);
-        if (IsTimerFinished())
-        {
-            ResetTimer();
-            m_State = State::GAME;
-        }
-    }
-    else if (m_State == State::FROZEN)
-    {
-        StartTimer(2);
-        if (IsTimerFinished())
-        {
-            ResetGame(true);
-            m_State = State::MAP;
-        }
-    }
-    else if (m_pPlayerManager->GetPlayer()->GetLives() and m_pPlayerManager->GetPlayer()->GetHP() == 0)
-    {
-        if (m_pPlayerManager->GetPlayer()->GetState() == Player::State::DEAD and not m_pPlayerManager->GetPlayer()->
-            IsActive())
-        {
-            ResetTimer();
-            m_State = State::FROZEN;
-        }
-    }
-    else if (m_pPlayerManager->GetPlayer()->HasKey())
-    {
     }
 }
 
@@ -751,6 +680,7 @@ void Game::DrawGame() const
     glPushMatrix();
     m_pCameraManager->Transform(Label::C_ARTHUR);
     m_pLevelManager->DrawLevel();
+    m_pLevelManager->DrawDoor();
     m_pLevelManager->DrawPlatform();
     m_pEnemyManager->DrawEnemies();
     m_pPlayerManager->DrawThrowables();
@@ -779,10 +709,10 @@ void Game::DrawGame() const
     {
         DrawGameOver();
     }
-    else if (m_State == State::SAVE_SCORE)
-    {
-        DrawSaveScore();
-    }
+    // else if (m_State == State::SAVE_SCORE)
+    // {
+    //     DrawSaveScore();
+    // }
 }
 
 void Game::DrawMenu() const
@@ -810,6 +740,20 @@ void Game::DrawContinue() const
     m_pMenuManager->DrawContinue();
 }
 
+void Game::DrawEnd() const
+{
+    glPushMatrix();
+    m_pCameraManager->Transform(Label::C_ARTHUR);
+    m_pLevelManager->DrawLevel();
+    m_pLevelManager->DrawDoor();
+    m_pLevelManager->DrawForeGround();
+    glPopMatrix();
+
+    m_pUIManager->m_pUI->DrawTextTopRow();
+    m_pUIManager->m_pUI->DrawPlayerScore();
+    m_pUIManager->m_pUI->DrawTopScore();
+}
+
 void Game::DrawRanking() const
 {
     m_pMenuManager->DrawRanking();
@@ -824,6 +768,7 @@ void Game::DrawSaveScore() const
     glPushMatrix();
     m_pCameraManager->Transform(Label::C_ARTHUR);
     m_pLevelManager->DrawLevel();
+    m_pLevelManager->DrawDoor();
     m_pLevelManager->DrawWaters();
     m_pLevelManager->DrawForeGround();
     glPopMatrix();
@@ -962,20 +907,23 @@ void Game::PlayStream()
         {
             m_pSoundManager->PlayStream(Label::S_10_1ST_PLACE_NAME_REGISTRATION, false);
         }
-        else
+        else if (m_pGameController->m_pUIManager->m_pScoreManager->HasBelowTopScore())
         {
             m_pSoundManager->PlayStream(Label::S_12_BELOW_2ND_PLACE_NAME_REGISTRATION, false);
         }
         break;
-    case State::END:
+    case State::SAVE_END:
         if (m_pGameController->m_pUIManager->m_pScoreManager->HasTopScore())
         {
-            m_pSoundManager->PlayStream(Label::S_11_1ST_PLACE_ENTRY_END, false);
+           m_pGameController->m_pSoundManager->PlayStream(Game::Label::S_11_1ST_PLACE_ENTRY_END, false); 
         }
         else
         {
-            m_pSoundManager->PlayStream(Label::S_13_BELOW_2ND_PLACE_ENTRY_END, false);
+           m_pGameController->m_pSoundManager->PlayStream(Game::Label::S_13_BELOW_2ND_PLACE_ENTRY_END, false); 
         }
+        break;
+    case State::END:
+        m_pSoundManager->PlayStream(Label::S_14_UNUSED_JINGLE, false);
         break;
     }
 }
@@ -1055,6 +1003,8 @@ void Game::Debug() const
     case State::OUTRO: std::cout << "OUTRO";
         break;
     case State::SAVE_SCORE: std::cout << "SAVE_SCORE";
+        break;
+    case State::SAVE_END: std::cout << "SAVE_END";
         break;
     case State::END: std::cout << "END";
         break;

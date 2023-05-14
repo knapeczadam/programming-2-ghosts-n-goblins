@@ -16,9 +16,12 @@
 #include <ranges>
 
 #include "EnemyManager.h"
+#include "level/Door.h"
 #include "level/colliders/BonusCollider.h"
 #include "level/colliders/BossCollider.h"
 #include "level/colliders/CheckpointCollider.h"
+#include "level/colliders/DoorCollider.h"
+#include "level/colliders/EndCollider.h"
 #include "level/colliders/KeyCollider.h"
 
 LevelManager::LevelManager(GameController* pGameController)
@@ -55,6 +58,7 @@ void LevelManager::Initialize(bool fromCheckpoint)
     InitTombstones();
     InitWaters();
     InitColliders(fromCheckpoint);
+    InitDoor();
 }
 
 void LevelManager::CleanUp()
@@ -73,6 +77,7 @@ void LevelManager::CleanUp()
     delete m_pKillZone;
     delete m_pLevel;
     delete m_pPlatform;
+    delete m_pDoor;
 }
 
 void LevelManager::DrawColliders() const
@@ -119,12 +124,18 @@ void LevelManager::DrawWaters() const
     std::ranges::for_each(m_Waters, draw);
 }
 
+void LevelManager::DrawDoor() const
+{
+    m_pDoor->Draw();
+}
+
 void LevelManager::Update(float elapsedSec)
 {
     static const auto isActive{[](const GameObject* pGameObject) { return pGameObject->IsActive(); }};
     static const auto update{[&](GameObject* pGameObject) { pGameObject->Update(elapsedSec); }};
     m_pLevel->Update(elapsedSec);
     m_pPlatform->Update(elapsedSec);
+    m_pDoor->Update(elapsedSec);
     std::ranges::for_each(m_Colliders | std::views::filter(isActive), update);
     std::ranges::for_each(m_Ladders | std::views::filter(isActive), update);
     std::ranges::for_each(m_Tombstones | std::views::filter(isActive), update);
@@ -136,6 +147,7 @@ void LevelManager::LateUpdate(float elapsedSec)
 {
     static const auto lateUpdate{[&](GameObject* pGameObject) { pGameObject->LateUpdate(elapsedSec); }};
     std::ranges::for_each(m_Waters, lateUpdate);
+    if (m_pDoor->IsActive()) m_pDoor->LateUpdate(elapsedSec);
 }
 
 void LevelManager::Reset(bool fromCheckpoint)
@@ -189,15 +201,31 @@ bool LevelManager::StageCleared() const
     return false;
 }
 
+bool LevelManager::EndReached()
+{
+    for (GameObject* collider : m_Colliders)
+    {
+        if (collider->GetLabel() == Game::Label::L_END and not collider ->IsActive())
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
 void LevelManager::InitColliders(bool fromCheckpoint)
 {
     const float bonusStart{6940.0f};
     const float bossStart{6364.0f};
+    const float doorStart{6849.0f};
     const float keyStart{6575.0f};
+    const float endStart{6992.0f};
     m_Colliders.insert(m_Colliders.end(), {
                                 new ArmorCollider{Rectf{2868.0f, 140.0f, 30.0f, 30.0f}, m_pGameController},
                                 new BonusCollider{Rectf{bonusStart, 0.0f, m_pGameController->m_pLevelManager->GetLevel()->GetBoundaries().width - bonusStart, m_pGameController->m_ViewPort.height}, m_pGameController},
                                 new BossCollider{Rectf{bossStart, 0.0f, m_pGameController->m_pLevelManager->GetLevel()->GetBoundaries().width - bossStart, m_pGameController->m_ViewPort.height}, m_pGameController},
+                                new DoorCollider{Rectf{doorStart, 0.0f, 30.0f, m_pGameController->m_ViewPort.height}, m_pGameController},
+                                new EndCollider{Rectf{endStart, 0.0f, m_pGameController->m_pLevelManager->GetLevel()->GetBoundaries().width - endStart, m_pGameController->m_ViewPort.height}, m_pGameController},
                                 new KeyCollider{Rectf{keyStart, 0.0f, m_pGameController->m_pLevelManager->GetLevel()->GetBoundaries().width - keyStart, m_pGameController->m_ViewPort.height}, m_pGameController},
                                 new YashichiCollider{Rectf{5924.0f, 140.0f, 24.0f, 24.0f}, m_pGameController}
                             });
@@ -253,6 +281,12 @@ void LevelManager::InitWaters()
                     });
 }
 
+void LevelManager::InitDoor()
+{
+    m_pDoor = new Door{Point2f{6941.0f, 64.0f}, m_pGameController};
+    m_pDoor->SetActive(false);
+}
+
 std::vector<GameObject*>& LevelManager::GetColliders()
 {
     return m_Colliders;
@@ -276,6 +310,11 @@ std::vector<GameObject*>& LevelManager::GetWaters()
 Level* LevelManager::GetLevel() const
 {
     return m_pLevel;
+}
+
+GameObject* LevelManager::GetDoor()
+{
+   return m_pDoor; 
 }
 
 Platform* LevelManager::GetPlatform() const

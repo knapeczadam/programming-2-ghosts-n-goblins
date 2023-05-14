@@ -23,6 +23,7 @@ public:
     std::vector<GameObject*>& GetWaters();
 
     Level* GetLevel() const;
+    GameObject* GetDoor();
     Platform* GetPlatform() const;
     GameObject* GetKillZone() const;
 
@@ -34,6 +35,7 @@ public:
     void DrawPlatform() const;
     void DrawTombstones() const;
     void DrawWaters() const;
+    void DrawDoor() const;
 
     void Update(float elapsedSec);
     void LateUpdate(float elapsedSec);
@@ -41,6 +43,7 @@ public:
     bool CheckpointReached();
     bool IsBossFight() const;
     bool StageCleared() const;
+    bool EndReached();
 
 protected:
     virtual void Initialize(bool fromCheckpoint = false) override;
@@ -51,6 +54,7 @@ private:
     void InitLadders();
     void InitTombstones();
     void InitWaters();
+    void InitDoor();
 
 private:
     std::vector<GameObject*> m_Colliders;
@@ -62,5 +66,6 @@ private:
     GameObject* m_pKillZone;
     Level* m_pLevel;
     Platform* m_pPlatform;
+    GameObject* m_pDoor;
     bool m_CheckpointReached;
 };

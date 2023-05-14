@@ -37,6 +37,7 @@ Sprite::Sprite(Texture* pTexture)
       , m_ColliderHeight{0.0f}
       , m_ColliderHorizontalOffset{0.0f}
       , m_ColliderVerticalOffset{0.0f}
+        , m_IterCount{0}
 {
 }
 
@@ -76,6 +77,10 @@ void Sprite::Update(float elapsedSec)
     if (m_AccuSec > m_FrameTime)
     {
         ++m_CurrFrame %= (m_CurrRows * m_CurrCols);
+        if (m_CurrFrame == 0)
+        {
+            ++m_IterCount;
+        }
         m_AccuSec -= m_FrameTime;
         UpdateSourceRect();
     }
@@ -385,4 +390,14 @@ float Sprite::GetColliderVerticalOffset() const
 void Sprite::SetColliderVerticalOffset(float colliderVerticalOffset)
 {
     m_ColliderVerticalOffset = colliderVerticalOffset;
+}
+
+int Sprite::GetIterCount() const
+{
+    return m_IterCount;
+}
+
+bool Sprite::IsLastFrame() const
+{
+    return m_CurrFrame == m_CurrRows * m_CurrCols - 1;
 }

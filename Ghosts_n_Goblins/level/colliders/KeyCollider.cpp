@@ -11,6 +11,7 @@
 KeyCollider::KeyCollider(const Rectf& shape, GameController* pGameController)
     : ICollider{Game::Label::L_KEY, shape, pGameController}
 {
+    m_ColliderColor = Color4f{0.84f, 0.73f, 0.0f, 1.0f};
 }
 
 void KeyCollider::HandleCollision(GameObject* other)
