@@ -19,6 +19,7 @@ void DoorCollider::HandleCollision(GameObject* other)
     if (m_pGameController->m_pPlayerManager->GetPlayer()->HasKey())
     {
         m_pGameController->m_pLevelManager->GetDoor()->SetActive(true);
+        m_pGameController->m_pLevelManager->GetDoor()->SetVisible(true);
         m_pGameController->m_pSoundManager->PlayEffect(Game::Label::E_DOOR_OPEN);
         m_Active = false;
     }

@@ -126,7 +126,7 @@ void LevelManager::DrawWaters() const
 
 void LevelManager::DrawDoor() const
 {
-    m_pDoor->Draw();
+    if (m_pDoor->IsVisible()) m_pDoor->Draw();
 }
 
 void LevelManager::Update(float elapsedSec)
@@ -285,6 +285,7 @@ void LevelManager::InitDoor()
 {
     m_pDoor = new Door{Point2f{6941.0f, 64.0f}, m_pGameController};
     m_pDoor->SetActive(false);
+    m_pDoor->SetVisible(false);
 }
 
 std::vector<GameObject*>& LevelManager::GetColliders()

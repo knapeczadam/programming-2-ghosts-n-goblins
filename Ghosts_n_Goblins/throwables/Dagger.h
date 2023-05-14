@@ -21,11 +21,11 @@ public:
     Dagger& operator=(Dagger&& other) noexcept = delete;
 
     virtual void Update(float elapsedSec) override;
-	
+	virtual void Awake(float elapsedSec) override;
+
 private:
 	void SetSprite() const;
 
 private:
-	float m_Speed;
 	bool m_Collectible;
 };

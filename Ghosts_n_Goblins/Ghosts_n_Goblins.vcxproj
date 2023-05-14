@@ -2012,6 +2012,10 @@
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(IntDir)$(TargetName).pch</PrecompiledHeaderOutputFile>
     </ClCompile>
     <ClCompile Include="fx\ProjectileBlock.cpp" />
+    <ClCompile Include="throwables\IThrowable.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="ui\CreditManager.cpp" />
     <ClCompile Include="ui\InitialDrawer.cpp" />
     <ClCompile Include="ui\RankingDrawer.cpp" />

@@ -5,20 +5,22 @@
 
 Torch::Torch(const Point2f& pos, bool isFlipped, bool collectible, GameController* pGameController)
     : GameObject{Game::Label::T_TORCH, pos, true, pGameController}
-    , m_Speed{300.0f}
     , m_Collectible{collectible}
 {
+    m_Speed = 300.0f;
     m_Flipped = isFlipped;
+    m_AwakeDistance = std::numeric_limits<float>::max();
     if (not collectible)
     {
-        m_Shape.left = pos.x - m_pSprite->GetScaledClipWidth() / 2;
-        m_Shape.bottom = pos.y - m_pSprite->GetScaledClipHeight() / 2;
+        m_Shape.left = pos.x;
+        m_Shape.bottom = pos.y;
     }
     SetSprite();
 }
 
 void Torch::Update(float elapsedSec)
 {
+    GameObject::Update(elapsedSec);
     if (m_Collectible)
     {
         return;
@@ -31,7 +33,14 @@ void Torch::Update(float elapsedSec)
     {
         m_Shape.left += m_Speed * elapsedSec;
     }
-    UpdateCollider();
+}
+
+void Torch::Awake(float elapsedSec)
+{
+    if (not m_Collectible and m_Flipped)
+    {
+        m_Shape.left -= m_pSprite->GetScaledClipWidth();
+    }
 }
 
 void Torch::SetSprite() const

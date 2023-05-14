@@ -554,7 +554,10 @@
     {
       "label": "c_magician",
       "rows": 1,
-      "columns": 2,
+      "columns": 3,
+      "sub_rows": 1,
+      "sub_columns": 2,
+      "frames_per_second": 8,
       "scale": 2,
       "collider_width": 15,
       "collider_height": 28,

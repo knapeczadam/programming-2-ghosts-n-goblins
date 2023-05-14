@@ -12,8 +12,8 @@
 PlayerManager::PlayerManager(GameController* pGameController)
     : IManager{pGameController}
       , m_pPlayer{nullptr}
-      // , m_SpawnPos{164.0f, 64.0f}
-      , m_SpawnPos{6000.0f, 64.0f}
+      , m_SpawnPos{164.0f, 64.0f}
+      // , m_SpawnPos{6000.0f, 64.0f}
       , m_CheckpointPos{3820.0f, 64.0f}
       , m_Throwables{}
       , m_PrevLives{0}

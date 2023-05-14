@@ -18,6 +18,7 @@ public:
     ScoreManager& operator=(const ScoreManager& other) = delete;
     ScoreManager& operator=(ScoreManager&& other) noexcept = delete;
 
+    virtual void Update(float elapsedSec) override;
     void LoadRanking();
     void SaveRanking();
     void SetScore(int score, const std::string& initial);
@@ -32,4 +33,9 @@ private:
     const std::string m_Path;
     int m_TopScore;
     std::multimap<int, std::string, std::greater<>> m_Scores;
+    const int m_FirstBonusThreshold;
+    const int m_SecondBonusThreshold;
+    int m_ThirdBonusThreshold;
+    bool m_FirstBonus;
+    bool m_SecondBonus;
 };

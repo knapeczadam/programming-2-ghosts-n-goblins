@@ -59,6 +59,7 @@ public:
     virtual void SetLeft(float left) final;
     virtual bool IsOverlapping(GameObject* other) const final;
     virtual void SetFlipped(bool flipped) final;
+    virtual void Reset();
 protected:
     virtual void InitCollider() final;
     virtual std::vector<Point2f> GetColliderVertices() const final;

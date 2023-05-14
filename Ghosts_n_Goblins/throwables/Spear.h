@@ -5,10 +5,13 @@
 class Spear final : public GameObject, public IThrowable
 {
 public:
-    explicit Spear(const Point2f& pos, GameController* pGameController);
+    explicit Spear(const Point2f& pos, const Vector2f& direction, GameController* pGameController);
     virtual ~Spear() override = default;
     Spear(const Spear& other) = delete;
     Spear(Spear&& other) noexcept = delete;
     Spear& operator=(const Spear& other) = delete;
     Spear& operator=(Spear&& other) noexcept = delete;
+
+    virtual void Update(float elapsedSec) override;
+    virtual void Awake(float elapsedSec) override;
 };

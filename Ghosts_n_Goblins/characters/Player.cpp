@@ -198,7 +198,7 @@ void Player::Update(float elapsedSec)
         if (IsTimerFinished())
         {
             m_Active = false;
-            --m_Lives;
+            DecreaseLives();
         }
         break;
     case State::TRANSFORMING:
@@ -260,14 +260,9 @@ void Player::Throw()
         if (pWeapon->GetLabel() == m_CurrWeapon and not pWeapon->IsActive())
         {
             Point2f pos{GetColliderCenter()};
-            if (m_Flipped)
-            {
-                pos.x -= pWeapon->GetCollider().width;
-            }
             pWeapon->SetPosition(pos);
             pWeapon->SetFlipped(m_Flipped);
-            pWeapon->SetActive(true);
-            pWeapon->SetVisible(true);
+            pWeapon->Reset();
             return;
         }
     }
@@ -275,16 +270,16 @@ void Player::Throw()
     {
     case Game::Label::T_DAGGER:
         m_pGameController->m_pPlayerManager->GetThrowables().push_back(new Dagger{
-            GetShapeCenter(), m_Flipped, false, m_pGameController
+            GetColliderCenter(), m_Flipped, false, m_pGameController
         });
         break;
     case Game::Label::T_LANCE:
         m_pGameController->m_pPlayerManager->GetThrowables().push_back(
-            new Lance{GetShapeCenter(), m_Flipped, false, m_pGameController});
+            new Lance{GetColliderCenter(), m_Flipped, false, m_pGameController});
         break;
     case Game::Label::T_TORCH:
         m_pGameController->m_pPlayerManager->GetThrowables().push_back(
-            new Torch{GetShapeCenter(), m_Flipped, false, m_pGameController});
+            new Torch{GetColliderCenter(), m_Flipped, false, m_pGameController});
         break;
     }
 }
@@ -660,6 +655,7 @@ bool Player::HandleThrowable(GameObject* other)
             }
             break;
         case Game::Label::T_SPELL:
+            std::cout << "I'm a frog!\n";
             m_pGameController->m_pSoundManager->PlayEffect(Game::Label::E_ARTHUR_TRANSFORM);
             break;
         }
@@ -743,12 +739,18 @@ void Player::SetState(State state)
 
 void Player::IncreaseLives()
 {
-    ++m_Lives;
+    if (m_Lives < m_MaxLives)
+    {
+        ++m_Lives;
+    }
 }
 
 void Player::DecreaseLives()
 {
-    --m_Lives;
+    if (m_Lives > 0)
+    {
+        --m_Lives;
+    }
 }
 
 void Player::OnHit(float elapsedSec)

@@ -69,9 +69,8 @@ void GreenMonster::Shoot(float elapsedSec)
         {
             if (pThrowable->GetLabel() == Game::Label::T_EYEBALL and not pThrowable->IsActive())
             {
-                Eyeball* pEyeball{dynamic_cast<Eyeball*>(pThrowable)};
-                pEyeball->SetActive(true);
-                pEyeball->SetVisible(true);
+                Eyeball* pEyeball{static_cast<Eyeball*>(pThrowable)};
+                pEyeball->Reset();
                 pEyeball->SetPosition(GetShapeCenter());
                 pEyeball->SetDirection(direction.Normalized());
                 return;

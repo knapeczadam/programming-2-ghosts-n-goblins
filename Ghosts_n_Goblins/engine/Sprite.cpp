@@ -103,7 +103,7 @@ void Sprite::SetCurrRowsCols()
 
 void Sprite::CalculateFrameTime()
 {
-    if (m_FramesPerSec == 0)
+    if (m_FramesPerSec == 0.0f)
     {
         m_FrameTime = std::numeric_limits<float>::infinity();
         return;
@@ -395,6 +395,11 @@ void Sprite::SetColliderVerticalOffset(float colliderVerticalOffset)
 int Sprite::GetIterCount() const
 {
     return m_IterCount;
+}
+
+void Sprite::ResetIterCount()
+{
+    m_IterCount = 0;
 }
 
 bool Sprite::IsLastFrame() const

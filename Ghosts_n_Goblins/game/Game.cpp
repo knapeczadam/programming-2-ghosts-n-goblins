@@ -795,6 +795,7 @@ void Game::UpdateGame(float elapsedSec)
     m_pCollectibleManager->Update(elapsedSec);
     m_pFXManager->Update(elapsedSec);
     m_pUIManager->m_pHUD->Update(elapsedSec);
+    m_pUIManager->m_pScoreManager->Update(elapsedSec);
 
 #if TEST_OBJECT
     if (m_pTestObject->IsActive())m_pTestObject->Update(elapsedSec);

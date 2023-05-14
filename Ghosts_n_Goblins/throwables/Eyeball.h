@@ -13,9 +13,6 @@ public:
     Eyeball& operator=(Eyeball&& other) noexcept = delete;
 
     virtual void Update(float elapsedSec) override;
-    void SetDirection(const Vector2f& direction);
-
-private:
-    Vector2f m_Direction;
-    const float m_Speed;
+    virtual void Awake(float elapsedSec) override;
 };
+

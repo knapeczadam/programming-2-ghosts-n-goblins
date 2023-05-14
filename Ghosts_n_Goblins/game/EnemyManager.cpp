@@ -92,12 +92,12 @@ void EnemyManager::Update(float elapsedSec)
     std::ranges::for_each(m_Enemies | std::views::filter(isActive), update);
     std::ranges::for_each(m_Throwables | std::views::filter(isActive), update);
 }
-// TODO check if enemy is active?
 void EnemyManager::LateUpdate(float elapsedSec)
 {
+    static const auto isActive{[](const GameObject* pGameObject) { return pGameObject->IsActive(); }};
     static const auto lateUpdate{[&](GameObject* pGameObject) { pGameObject->LateUpdate(elapsedSec); }};
-    std::ranges::for_each(m_Enemies, lateUpdate);
-    std::ranges::for_each(m_Throwables, lateUpdate);
+    std::ranges::for_each(m_Enemies | std::views::filter(isActive), lateUpdate);
+    std::ranges::for_each(m_Throwables | std::views::filter(isActive),  lateUpdate);
 }
 
 void EnemyManager::InitCrows()
@@ -142,7 +142,10 @@ void EnemyManager::InitGreenMonsters()
 void EnemyManager::InitMagician()
 {
     Magician* pMagician{new Magician{Point2f{600.0f, 62.0f}, m_pGameController}};
+    pMagician->SetActive(false);
+    pMagician->SetVisible(false);
     m_Enemies.push_back(pMagician);
+    m_pMagician = pMagician;
 }
 
 void EnemyManager::InitRedArremer()
@@ -235,4 +238,9 @@ std::vector<GameObject*>& EnemyManager::GetWoodyPigs()
 std::vector<GameObject*>& EnemyManager::GetZombies()
 {
     return m_Zombies;
+}
+
+GameObject* EnemyManager::GetMagician() const
+{
+    return m_pMagician;
 }

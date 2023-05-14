@@ -22,8 +22,15 @@ public:
 
     virtual void Draw() const override;
     virtual void Update(float elapsedSec) override;
+    virtual void Awake(float elapsedSec) override;
     virtual void HandleCollision(GameObject* other) override;
+    virtual void Reset(const Point2f& pos = Point2f{}) override;
 
 protected:
     virtual void Shoot(float elapsedSec) override;
+private:
+    void Disappear();
+
+private:
+    bool m_CanShoot;
 };

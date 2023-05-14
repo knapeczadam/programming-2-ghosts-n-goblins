@@ -48,9 +48,6 @@
     <ClCompile Include="ui\HUD.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ui\Menu.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="pch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -117,9 +114,6 @@
     <ClCompile Include="collectibles\Pot.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="collectibles\Statue.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="collectibles\Coin.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -129,16 +123,10 @@
     <ClCompile Include="collectibles\MoneyBag.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="collectibles\Shield.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="collectibles\Yashichi.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="engine\ITimer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="game\CollisionBox.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="level\Door.cpp">
@@ -159,13 +147,124 @@
     <ClCompile Include="throwables\Spell.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="game\FXManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="game\GameController.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="fx\ProjectileBlock.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="collectibles\Armor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="collectibles\King.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="collectibles\Doll.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="fx\Fire.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="fx\FXManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="fx\ProjectileDeath.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="fx\Score.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="game\BootManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="game\CameraManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="game\CollectibleManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="game\CutsceneManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="game\EnemyManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="game\IManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="game\InputManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="game\LevelManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="game\MenuManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="game\PlayerManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="game\UIManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="level\colliders\ArmorCollider.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="level\colliders\BonusCollider.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="level\colliders\BossCollider.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="level\colliders\CheckpointCollider.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="level\colliders\DoorCollider.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="level\colliders\EndCollider.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="level\colliders\ICollider.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="level\colliders\KeyCollider.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="level\colliders\YashichiCollider.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="level\spawners\FlyingKnightSpawner.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="level\spawners\ISpawner.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="level\spawners\WoodyPigSpawner.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="level\spawners\ZombieSpawner.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="throwables\IThrowable.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ui\CreditManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ui\InitialDrawer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ui\RankingDrawer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ui\InitialSaver.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ui\Map.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ui\ScoreManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -201,9 +300,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ui\HUD.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ui\Menu.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="pch.h">
@@ -278,9 +374,6 @@
     <ClInclude Include="collectibles\Pot.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="collectibles\Statue.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="collectibles\Coin.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -290,16 +383,10 @@
     <ClInclude Include="collectibles\MoneyBag.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="collectibles\Shield.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="collectibles\Yashichi.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="engine\ITimer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="game\CollisionBox.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="level\Door.h">
@@ -323,13 +410,121 @@
     <ClInclude Include="throwables\Spell.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="game\FXManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="game\GameController.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="fx\ProjectileBlock.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="collectibles\Armor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="collectibles\King.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="collectibles\Doll.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="fx\Fire.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="fx\FXManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="fx\ProjectileDeath.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="fx\Score.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\BootManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\CameraManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\CollectibleManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\CutsceneManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\EnemyManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\IManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\InputManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\LevelManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\MenuManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\PlayerManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\UIManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="level\colliders\ArmorCollider.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="level\colliders\BonusCollider.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="level\colliders\BossCollider.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="level\colliders\CheckpointCollider.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="level\colliders\DoorCollider.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="level\colliders\EndCollider.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="level\colliders\ICollider.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="level\colliders\KeyCollider.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="level\colliders\YashichiCollider.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="level\spawners\FlyingKnightSpawner.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="level\spawners\ISpawner.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="level\spawners\WoodyPigSpawner.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="level\spawners\ZombieSpawner.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ui\CreditManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ui\InitialDrawer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ui\RankingDrawer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ui\InitialSaver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ui\Map.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ui\ScoreManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

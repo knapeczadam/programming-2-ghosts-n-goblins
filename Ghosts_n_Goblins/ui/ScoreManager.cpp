@@ -15,8 +15,34 @@ ScoreManager::ScoreManager(GameController* pGameController)
     , m_Path{"ranking.txt"}
     , m_TopScore{0}
     , m_Scores{}
+    , m_FirstBonusThreshold{20000}
+    , m_SecondBonusThreshold{70000}
+    , m_ThirdBonusThreshold{ 2 * m_SecondBonusThreshold}
+    , m_FirstBonus{false}
+    , m_SecondBonus{false}
 {
     LoadRanking();
+}
+
+void ScoreManager::Update(float elapsedSec)
+{
+    Player* pPlayer{m_pGameController->m_pPlayerManager->GetPlayer()};
+    const int score{pPlayer->GetScore()};
+    if (score >= m_FirstBonusThreshold and not m_FirstBonus)
+    {
+        pPlayer->IncreaseLives();
+        m_FirstBonus = true;
+    }
+    else if (score >= m_SecondBonusThreshold and not m_SecondBonus)
+    {
+        pPlayer->IncreaseLives();
+        m_SecondBonus = true;
+    }
+    else if (score >= m_ThirdBonusThreshold)
+    {
+       pPlayer->IncreaseLives();
+        m_ThirdBonusThreshold += m_SecondBonusThreshold;
+    }
 }
 
 void ScoreManager::LoadRanking()

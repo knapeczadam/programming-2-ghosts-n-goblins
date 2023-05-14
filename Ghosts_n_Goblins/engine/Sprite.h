@@ -68,6 +68,7 @@ public:
     float GetColliderVerticalOffset() const;
     void SetColliderVerticalOffset(float colliderVerticalOffset);
     int GetIterCount() const;
+    void ResetIterCount();
     bool IsLastFrame() const;
     
 

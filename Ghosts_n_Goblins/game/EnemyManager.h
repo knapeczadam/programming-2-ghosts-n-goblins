@@ -32,6 +32,7 @@ public:
     std::vector<GameObject*>& GetFlyingKnights();
     std::vector<GameObject*>& GetWoodyPigs();
     std::vector<GameObject*>& GetZombies();
+    GameObject* GetMagician() const;
 
 protected:
     virtual void Initialize(bool fromCheckpoint = false) override;
@@ -54,6 +55,7 @@ private:
     std::vector<GameObject*> m_FlyingKnights;
     std::vector<GameObject*> m_WoodyPigs;
     std::vector<GameObject*> m_Zombies;
+    GameObject* m_pMagician;
 
     FlyingKnightSpawner* m_pFlyingKnightSpawner;
     WoodyPigSpawner* m_pWoodyPigSpawner;

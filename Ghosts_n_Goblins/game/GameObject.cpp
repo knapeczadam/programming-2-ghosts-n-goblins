@@ -306,6 +306,14 @@ void GameObject::ResetCollider()
     m_Collider = m_OriginalCollider;
 }
 
+void GameObject::Reset()
+{
+    m_Active = true;
+    m_Visible = true;
+    m_Awake = false;
+    m_AwakeFired = false;
+}
+
 Point2f GameObject::GetContactPoint(const GameObject* other) const
 {
     Point2f contactPoint;
