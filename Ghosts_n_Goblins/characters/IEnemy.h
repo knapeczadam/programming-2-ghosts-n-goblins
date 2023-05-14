@@ -12,7 +12,7 @@ public:
     IEnemy& operator=(IEnemy&& other) noexcept = delete;
     
     virtual int GetScore() const final;
-    virtual void Reset(const Point2f& pos = Point2f{0.0f, 62.0f});
+    virtual void Reset() override;
     virtual void ResetHP() final;
     virtual bool IsFixedDirection() const final;
 

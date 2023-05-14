@@ -24,9 +24,10 @@ int IEnemy::GetScore() const
     return m_Score;
 }
 
-void IEnemy::Reset(const Point2f& pos)
+void IEnemy::Reset()
 {
-    
+    GameObject::Reset();
+    ResetHP();
 }
 
 void IEnemy::Wait(float elapsedSec)

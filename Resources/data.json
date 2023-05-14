@@ -880,13 +880,17 @@
       "rows": 1,
       "columns": 3,
       "frames_per_second": 10,
-      "scale": 2
+      "scale": 2,
+        "collider_height": 4
     },
     {
       "label": "t_eyeball",
       "rows": 1,
       "columns": 4,
-      "frames_per_second": 10
+      "frames_per_second": 10,
+      "scale": 2,
+      "collider_height": 7,
+      "collider_width": 7
     },
     {
       "label": "t_fireball_red_arremer",
@@ -907,18 +911,22 @@
       "rows": 1,
       "columns": 3,
       "frames_per_second": 10,
-      "scale": 2
+      "scale": 2,
+      "collider_height": 1
     },
     {
       "label": "t_spear",
-      "scale": 2
+      "scale": 2,
+        "collider_height": 3
     },
     {
       "label": "t_spell",
       "rows": 1,
       "columns": 2,
       "frames_per_second": 10,
-      "scale": 2
+      "scale": 2,
+      "collider_width": 23,
+      "collider_height": 23
     },
     {
       "label": "t_torch",

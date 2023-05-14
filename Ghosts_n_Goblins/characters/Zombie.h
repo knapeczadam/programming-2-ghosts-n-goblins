@@ -24,7 +24,7 @@ public:
     virtual void Draw() const override;
     virtual void Update(float elapsedSec) override;
     virtual void HandleCollision(GameObject* other) override;
-    virtual void Reset(const Point2f& pos = Point2f{0.0f, 62.0f}) override;
+    virtual void Reset() override;
 
 protected:
     virtual void Walk(float elapsedSec) override;

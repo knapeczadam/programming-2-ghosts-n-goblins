@@ -24,7 +24,7 @@ public:
     virtual void Update(float elapsedSec) override;
     virtual void Awake(float elapsedSec) override;
     virtual void HandleCollision(GameObject* other) override;
-    virtual void Reset(const Point2f& pos = Point2f{}) override;
+    virtual void Reset() override;
 
 protected:
     virtual void Shoot(float elapsedSec) override;

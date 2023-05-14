@@ -109,13 +109,12 @@ void Magician::HandleCollision(GameObject* other)
     }
 }
 
-void Magician::Reset(const Point2f& pos)
+void Magician::Reset()
 {
     m_Active = false;
     m_Visible = false;
     m_Awake = false;
     m_CanShoot = false;
-    m_HP = m_OriginalHP;
     m_pSprite->ResetIterCount();
     m_pSprite->ResetCurrFrame();
 }

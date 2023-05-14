@@ -4,8 +4,10 @@
 #include "Player.h"
 #include "engine/SoundManager.h"
 #include "fx/FXManager.h"
+#include "game/EnemyManager.h"
 #include "game/GameController.h"
 #include "game/PlayerManager.h"
+#include "throwables/Spear.h"
 
 WoodyPig::WoodyPig(const Point2f& pos, GameController* pGameController)
     : IEnemy{Game::Label::C_WOODY_PIG, pos, pGameController}
@@ -42,7 +44,24 @@ void WoodyPig::HandleCollision(GameObject* other)
 
 void WoodyPig::Shoot(float elapsedSec)
 {
-    IEnemy::Shoot(elapsedSec);
+    const int randInterval{std::rand() % 2 + 1}; 
+    StartTimer(randInterval);
+    if (IsTimerFinished())
+    {
+        const Vector2f direction{m_pGameController->m_pPlayerManager->GetPlayer()->GetShapeCenter() - GetShapeCenter()};
+        for (GameObject* pThrowable : m_pGameController->m_pEnemyManager->GetThrowables())
+        {
+            if (pThrowable->GetLabel() == Game::Label::T_SPEAR and not pThrowable->IsActive())
+            {
+                Spear* pSpear{static_cast<Spear*>(pThrowable)};
+                pSpear->Reset();
+                pSpear->SetPosition(GetShapeCenter());
+                pSpear->SetDirection(direction.Normalized());
+                return;
+            }
+        }
+        m_pGameController->m_pEnemyManager->GetThrowables().push_back(new Spear{GetShapeCenter(),direction.Normalized(), m_pGameController});
+    }
 }
 
 void WoodyPig::Fly(float elapsedSec)

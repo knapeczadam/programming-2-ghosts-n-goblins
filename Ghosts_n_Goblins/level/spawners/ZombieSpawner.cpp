@@ -35,7 +35,8 @@ void ZombieSpawner::Spawn()
                 std::uniform_real_distribution<float> offset{m_MinRange, m_MaxRange};
                 const Point2f pos{Point2f{playerCenter.x + offset(Game::mt) * flip, 62.0f}};
                 Zombie* pZombie{static_cast<Zombie*>(pEnemy)};
-                pZombie->Reset(pos);
+                pZombie->SetPosition(pos);
+                pZombie->Reset();
                 return;
             }
         }

@@ -66,16 +66,11 @@ void Zombie::HandleCollision(GameObject* other)
     }
 }
 
-void Zombie::Reset(const Point2f& pos)
+void Zombie::Reset()
 {
+    IEnemy::Reset();
     ResetTimer();
-    ResetHP();
-    m_Active = true;
-    m_Visible = true;
-    m_Awake = false;
-    m_AwakeFired = false;
     m_CanWalk = false;
-    m_Shape.left = pos.x;
     m_pSprite->ResetCurrFrame();
     m_pSprite->SetLeftOffsetCols(0);
     m_pSprite->SetSubCols(7);
