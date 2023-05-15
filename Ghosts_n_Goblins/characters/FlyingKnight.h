@@ -23,6 +23,15 @@ public:
    virtual void Draw() const override;
    virtual void Update(float elapsedSec) override;
    virtual void HandleCollision(GameObject* other) override;
+    void SetCycleOffset(float offset);
 protected:
    virtual void Fly(float elapsedSec) override;
+private:
+    void PlayEffect();
+private:
+    float m_Amplitude;
+    float m_CycleOffset;
+private:
+    static bool s_EffectPlaying;
+    static int s_IdPlayingEffect;
 };

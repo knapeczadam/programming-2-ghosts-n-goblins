@@ -9,7 +9,14 @@ ISpawner::ISpawner(const Rectf& boundaries, GameController* pGameController)
     : m_SpawnBoundaries{boundaries}
       , m_SpawnPos{0, 0}
       , m_pGameController{pGameController}
+    , m_BoundaryColor{1.0f, 1.0f, 1.0f, 1.0f}
 {
+}
+
+void ISpawner::Draw() const
+{
+    utils::SetColor(m_BoundaryColor);
+    utils::DrawRect(m_SpawnBoundaries);
 }
 
 bool ISpawner::IsPlayerBetweenBoundaries() const

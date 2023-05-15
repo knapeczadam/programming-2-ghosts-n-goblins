@@ -46,7 +46,7 @@ void Zombie::Update(float elapsedSec)
     {
         Sleep(elapsedSec);
     }
-    UpdateCollider();
+    UpdateCollider(); // do not delete this line TODO!
 }
 
 void Zombie::HandleCollision(GameObject* other)

@@ -25,7 +25,6 @@ void RedArremer::Draw() const
 void RedArremer::Update(float elapsedSec)
 {
     IEnemy::Update(elapsedSec);
-    UpdateCollider();
 }
 
 void RedArremer::HandleCollision(GameObject* other)

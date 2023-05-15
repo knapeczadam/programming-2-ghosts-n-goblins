@@ -322,6 +322,7 @@ private:
     void DrawBoot() const;
     void DrawContinue() const;
     void DrawEnd() const;
+    void DrawDebug() const;
     void DrawGame() const;
     void DrawGameOver() const;
     void DrawIntro() const;

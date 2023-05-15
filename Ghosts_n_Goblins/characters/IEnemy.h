@@ -15,6 +15,7 @@ public:
     virtual void Reset() override;
     virtual void ResetHP() final;
     virtual bool IsFixedDirection() const final;
+    virtual void SetSpawnPosition(const Point2f& position) final;
 
 protected:
     virtual void Wait(float elapsedSec);
@@ -28,8 +29,9 @@ protected:
     virtual void Switch(float interval);
     virtual void Ping();
     virtual void Pong();
+
 protected:
-    const Point2f m_SpawnPos;
+    Point2f m_SpawnPosition;
     int m_Score;
     int m_HP;
     int m_OriginalHP;

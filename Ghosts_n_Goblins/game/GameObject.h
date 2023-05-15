@@ -45,6 +45,7 @@ public:
 
     // FINAL METHODS
 public:
+    virtual int GetId() const final;
     virtual bool IsActive() const final;
     virtual void SetActive(bool isActive) final;
     virtual bool IsVisible() const final;
@@ -74,6 +75,7 @@ private:
     void InitShape(const Point2f& pos);
 
 protected:
+    const int m_Id;
     Game::Label m_Label;
     bool m_HasSprite;
     GameController* m_pGameController;
@@ -89,4 +91,7 @@ protected:
     float m_AwakeDistance;
     bool m_Flipped;
     Color4f m_ColliderColor;
+
+public:
+    static int s_IdCounter;
 };

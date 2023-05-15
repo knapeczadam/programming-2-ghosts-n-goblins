@@ -23,7 +23,6 @@ void WoodyPig::Draw() const
 void WoodyPig::Update(float elapsedSec)
 {
     IEnemy::Update(elapsedSec);
-    UpdateCollider();
 }
 
 void WoodyPig::HandleCollision(GameObject* other)

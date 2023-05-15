@@ -25,7 +25,6 @@ void Unicorn::Draw() const
 void Unicorn::Update(float elapsedSec)
 {
     IEnemy::Update(elapsedSec);
-    UpdateCollider();
 }
 
 void Unicorn::HandleCollision(GameObject* other)

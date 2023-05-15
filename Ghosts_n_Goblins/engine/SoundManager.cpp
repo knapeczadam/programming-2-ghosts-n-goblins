@@ -36,15 +36,16 @@ void SoundManager::CleanUp()
     DeleteSounds();
 }
 
-void SoundManager::PlayEffect(Game::Label label) const
+bool SoundManager::PlayEffect(Game::Label label) const
 {
     if (GetEffect(label)->IsLoaded())
     {
-        GetEffect(label)->Play(0);
+        return GetEffect(label)->Play(0);
     }
+    return false;
 }
 
-void SoundManager::PlayStream(Game::Label label, bool repeat)
+bool SoundManager::PlayStream(Game::Label label, bool repeat)
 {
     if (GetStream(label)->IsLoaded())
     {
@@ -55,9 +56,10 @@ void SoundManager::PlayStream(Game::Label label, bool repeat)
                 StopStream();
             }
             m_CurrentStream = label;
-            GetStream(label)->Play(repeat);
+            return GetStream(label)->Play(repeat);
         }
     }
+    return false;
 }
 
 void SoundManager::StopStream() const

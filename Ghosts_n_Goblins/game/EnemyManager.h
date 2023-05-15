@@ -8,6 +8,7 @@ class GameObject;
 class FlyingKnightSpawner;
 class WoodyPigSpawner;
 class ZombieSpawner;
+class ISpawner;
 
 class EnemyManager final : public IManager
 {
@@ -23,13 +24,16 @@ public:
     
     void DrawEnemies() const;
     void DrawThrowables() const;
+    void DrawSpawners() const;
     void Update(float elapsedSec);
     void LateUpdate(float elapsedSec);
     void SpawnEnemies();
 
+    std::vector<GameObject*>& GetCrows();
     std::vector<GameObject*>& GetEnemies();
-    std::vector<GameObject*>& GetThrowables();
     std::vector<GameObject*>& GetFlyingKnights();
+    std::vector<GameObject*>& GetGreenMonsters();
+    std::vector<GameObject*>& GetThrowables();
     std::vector<GameObject*>& GetWoodyPigs();
     std::vector<GameObject*>& GetZombies();
     GameObject* GetMagician() const;
@@ -50,9 +54,12 @@ private:
 
     void InitSpawners(bool fromCheckpoint);
 private:
+    std::vector<GameObject*> m_Crows;
     std::vector<GameObject*> m_Enemies;
+    std::vector<GameObject*> m_GreenMonsters;
     std::vector<GameObject*> m_Throwables;
     std::vector<GameObject*> m_FlyingKnights;
+    std::vector<ISpawner*> m_Spawners;
     std::vector<GameObject*> m_WoodyPigs;
     std::vector<GameObject*> m_Zombies;
     GameObject* m_pMagician;

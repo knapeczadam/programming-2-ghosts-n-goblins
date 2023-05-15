@@ -16,8 +16,8 @@ public:
 
 
 public:
-    void PlayEffect(Game::Label label) const;
-    void PlayStream(Game::Label label, bool repeat);
+    bool PlayEffect(Game::Label label) const;
+    bool PlayStream(Game::Label label, bool repeat);
     void StopStream() const;
     void StopAllEffects() const;
     void PauseStream() const;

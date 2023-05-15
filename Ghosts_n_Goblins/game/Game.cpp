@@ -45,7 +45,7 @@ Game::Game(const Window& window)
       , m_Data{nullptr}
       , m_DataPath{"data.json"}
       , m_Labels{}
-      , m_State{State::BOOT}
+      , m_State{State::GAME}
       , m_pBootManager{nullptr}
       , m_pCameraManager{nullptr}
       , m_pCutsceneManager{nullptr}
@@ -690,16 +690,7 @@ void Game::DrawGame() const
     m_pLevelManager->DrawForeGround();
     m_pFXManager->Draw();
     m_pEnemyManager->DrawThrowables();
-#if TEST_OBJECT
-    if (m_pTestObject->IsVisible()) m_pTestObject->Draw();
-#endif
-#if DEBUG_COLLIDER
-    m_pLevelManager->DrawKillZone();
-    m_pLevelManager->DrawTombstones();
-    m_pLevelManager->DrawLadders();
-    m_pLevelManager->DrawColliders();
-    m_pUIManager->m_pUI->DrawTextBonusKey();
-#endif
+    DrawDebug();
     glPopMatrix();
 
     m_pUIManager->m_pHUD->Draw();
@@ -709,10 +700,6 @@ void Game::DrawGame() const
     {
         DrawGameOver();
     }
-    // else if (m_State == State::SAVE_SCORE)
-    // {
-    //     DrawSaveScore();
-    // }
 }
 
 void Game::DrawMenu() const
@@ -752,6 +739,28 @@ void Game::DrawEnd() const
     m_pUIManager->m_pUI->DrawTextTopRow();
     m_pUIManager->m_pUI->DrawPlayerScore();
     m_pUIManager->m_pUI->DrawTopScore();
+}
+
+void Game::DrawDebug() const
+{
+#if TEST_OBJECT
+    if (m_pTestObject->IsVisible()) m_pTestObject->Draw();
+#endif
+#if DEBUG_KILLZONE
+    m_pLevelManager->DrawKillZone();
+#endif
+#if DEBUG_TOMBSTONE
+    m_pLevelManager->DrawTombstones();
+#endif
+#if DEBUG_LADDER 
+    m_pLevelManager->DrawLadders();
+#endif
+#if DEBUG_COLLIDER
+    m_pLevelManager->DrawColliders();
+#endif
+#if DEBUG_SPAWNER
+   m_pEnemyManager->DrawSpawners();
+#endif
 }
 
 void Game::DrawRanking() const
@@ -851,7 +860,7 @@ void Game::LateUpdateGame(float elapsedSec)
     m_pEnemyManager->LateUpdate(elapsedSec);
     m_pCollectibleManager->LateUpdate(elapsedSec);
     m_pFXManager->LateUpdate(elapsedSec);
-    UpdateRemainingTime(121);
+    UpdateRemainingTime(121); // TODO: hardcoded
 #if TEST_OBJECT
     m_pTestObject->LateUpdate(elapsedSec);
 #endif
@@ -860,7 +869,7 @@ void Game::LateUpdateGame(float elapsedSec)
 void Game::UpdateRemainingTime(int time)
 {
     m_pGameController->m_pUIManager->m_pHUD->SetDigits(GetRemainingTimeDigits(time));
-    if (GetRemainingTime() <= 15.0f)
+    if (GetRemainingTime() <= 15.0f) // TODO: hardcoded
     {
         m_State = State::HURRY_UP;
     }

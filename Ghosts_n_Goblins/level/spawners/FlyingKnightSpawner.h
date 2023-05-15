@@ -12,4 +12,11 @@ public:
     FlyingKnightSpawner& operator=(FlyingKnightSpawner&&) = delete;
 
     virtual void Spawn() override;
+private:
+    const float m_HorOffset;
+    const float m_VerOffset;
+    float m_CurrVerOffset;
+    const float m_Range;
+    int m_KnightCount;
+    const int m_MaxKnights;
 };

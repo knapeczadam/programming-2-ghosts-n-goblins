@@ -44,16 +44,18 @@ void CameraManager::CleanUp()
 void CameraManager::DoFrustumCulling()
 {
     static const auto isOutOfWindow{[&](const GameObject* pGameObject) { return m_pCamera->IsOutOfWindow(pGameObject);}};
-    static const auto isAwake{[](const IEnemy* pEnemy) { return pEnemy->IsAwake(); }};
-    static const auto sleep{[](IEnemy* pEnemy) { pEnemy->SetAwake(false); }};
-    static const auto isGreenMonster([](GameObject* pGameObject) { return pGameObject->GetLabel() == Game::Label::C_GREEN_MONSTER; });
+    static const auto isAwake{[](const GameObject* pEnemy) { return pEnemy->IsAwake(); }};
+    static const auto sleep{[](GameObject* pEnemy) { pEnemy->SetAwake(false); }};
     static const auto toEnemy{[](GameObject* pGameObject) { return static_cast<IEnemy*>(pGameObject); }};
     static const auto deactivate{[](GameObject* pGameObject){pGameObject->SetVisible(false); pGameObject->SetActive(false);}};
 
     std::ranges::for_each(m_pGameController->m_pPlayerManager->GetThrowables() | std::views::filter(isOutOfWindow), deactivate);
     std::ranges::for_each(m_pGameController->m_pEnemyManager->GetThrowables() | std::views::filter(isOutOfWindow), deactivate);
-    std::ranges::for_each(m_pGameController->m_pEnemyManager->GetEnemies() | std::views::filter(isGreenMonster) | std::views::filter(isOutOfWindow) | std::views::transform(toEnemy), sleep);
+    std::ranges::for_each(m_pGameController->m_pEnemyManager->GetGreenMonsters()  | std::views::filter(isOutOfWindow) | std::views::transform(toEnemy), sleep);
     std::ranges::for_each(m_pGameController->m_pEnemyManager->GetZombies() | std::views::filter(isOutOfWindow), deactivate);
+    std::ranges::for_each(m_pGameController->m_pEnemyManager->GetFlyingKnights() | std::views::filter(isOutOfWindow), deactivate);
+    std::ranges::for_each(m_pGameController->m_pEnemyManager->GetWoodyPigs() | std::views::filter(isOutOfWindow), deactivate);
+    std::ranges::for_each(m_pGameController->m_pEnemyManager->GetCrows() | std::views::filter(isAwake) |  std::views::filter(isOutOfWindow), deactivate);
 }
 
 void CameraManager::Transform(Game::Label label)

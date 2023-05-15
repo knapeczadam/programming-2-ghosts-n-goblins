@@ -14,7 +14,7 @@ Crow::Crow(const Point2f& pos, GameController* pGameController)
       , m_Amplitude{15.0f}
 {
     m_Score = 100;
-    m_AwakeDistance = 100.0f; // 256.0f
+    m_AwakeDistance = 240.0f; 
     m_HorVelocity = 100.0f;
     m_VerVelocity = 20.0f;
 }
@@ -85,7 +85,7 @@ void Crow::Fly(float elapsedSec)
         m_pSprite->SetTopOffsetRows(1);
         m_pSprite->SetCurrRowsCols();
         m_Shape.left += m_HorVelocity * elapsedSec * (m_Flipped ? 1.0f : -1.0f);
-        m_Shape.bottom = m_SpawnPos.y + std::sin(Clock::GetAccuTime() * m_VerVelocity) * m_Amplitude;
+        m_Shape.bottom = m_SpawnPosition.y + std::sin(Clock::GetAccuTime() * m_VerVelocity) * m_Amplitude;
     }
 }
 

@@ -12,8 +12,11 @@
 #include "PlayerManager.h"
 #include "characters/Player.h"
 
+int GameObject::s_IdCounter{0};
+
 GameObject::GameObject(GameController* pGameController)
-    : m_Label{Game::Label::D_DUMMY}
+    : m_Id{++s_IdCounter}
+        ,m_Label{Game::Label::D_DUMMY}
       , m_HasSprite{false}
       , m_pGameController{pGameController}
       , m_pSprite{nullptr}
@@ -32,7 +35,8 @@ GameObject::GameObject(GameController* pGameController)
 }
 
 GameObject::GameObject(Game::Label label, GameController* pGameController)
-    : m_Label{label}
+    : m_Id{++s_IdCounter}
+    , m_Label{label}
       , m_HasSprite{true}
       , m_pGameController{pGameController}
       , m_pSprite{
@@ -60,7 +64,8 @@ GameObject::GameObject(Game::Label label, GameController* pGameController)
 GameObject::GameObject(Game::Label label, const Rectf& shape, bool collisionEnabled, bool hasSprite,
                        const Color4f& color,
                        GameController* pGameController)
-    : m_Label{label}
+    : m_Id{++s_IdCounter}
+    , m_Label{label}
       , m_HasSprite{hasSprite}
       , m_pGameController{pGameController}
       , m_pSprite{
@@ -81,7 +86,8 @@ GameObject::GameObject(Game::Label label, const Rectf& shape, bool collisionEnab
 }
 
 GameObject::GameObject(Game::Label label, const Point2f& pos, bool collisionEnabled, GameController* pGameController)
-    : m_Label{label}
+    : m_Id{++s_IdCounter}
+    , m_Label{label}
       , m_HasSprite{true}
       , m_pGameController{pGameController}
       , m_pSprite{
@@ -193,6 +199,11 @@ void GameObject::SetSprite(Sprite* pSprite)
 bool GameObject::IsFlipped() const
 {
     return m_Flipped;
+}
+
+int GameObject::GetId() const
+{
+    return m_Id;
 }
 
 Rectf GameObject::GetShape() const

@@ -13,14 +13,18 @@
 #include "level/spawners/FlyingKnightSpawner.h"
 #include "level/spawners/WoodyPigSpawner.h"
 #include "level/spawners/ZombieSpawner.h"
+#include "level/spawners/ISpawner.h"
 
 #include <ranges>
 
 EnemyManager::EnemyManager(GameController* pGameController)
     : IManager(pGameController)
+      , m_Crows{}
       , m_Enemies{}
+      , m_GreenMonsters{}
       , m_Throwables{}
       , m_FlyingKnights{}
+    , m_Spawners{}
       , m_WoodyPigs{}
       , m_Zombies{}
       , m_pFlyingKnightSpawner{nullptr}
@@ -85,6 +89,12 @@ void EnemyManager::DrawThrowables() const
     std::ranges::for_each(m_Throwables | std::views::filter(isVisible), draw);
 }
 
+void EnemyManager::DrawSpawners() const
+{
+    static auto draw{[](const ISpawner* pSpawner) { pSpawner->Draw(); }};
+    std::ranges::for_each(m_Spawners, draw);
+}
+
 void EnemyManager::Update(float elapsedSec)
 {
     static const auto isActive{[](const GameObject* pGameObject) { return pGameObject->IsActive(); }};
@@ -92,30 +102,31 @@ void EnemyManager::Update(float elapsedSec)
     std::ranges::for_each(m_Enemies | std::views::filter(isActive), update);
     std::ranges::for_each(m_Throwables | std::views::filter(isActive), update);
 }
+
 void EnemyManager::LateUpdate(float elapsedSec)
 {
     static const auto isActive{[](const GameObject* pGameObject) { return pGameObject->IsActive(); }};
     static const auto lateUpdate{[&](GameObject* pGameObject) { pGameObject->LateUpdate(elapsedSec); }};
     std::ranges::for_each(m_Enemies | std::views::filter(isActive), lateUpdate);
-    std::ranges::for_each(m_Throwables | std::views::filter(isActive),  lateUpdate);
+    std::ranges::for_each(m_Throwables | std::views::filter(isActive), lateUpdate);
 }
 
 void EnemyManager::InitCrows()
 {
-    m_Enemies.insert(m_Enemies.end(), {
-                         new Crow{Point2f{1505.0f, 100.0f}, m_pGameController},
-                         new Crow{Point2f{2210.0f, 100.0f}, m_pGameController},
-                         new Crow{Point2f{2526.0f, 100.0f}, m_pGameController},
-                         new Crow{Point2f{3035.0f, 102.0f}, m_pGameController},
-                         new Crow{Point2f{1724.0f, 262.0f}, m_pGameController},
-                     });
+    GameObject* pCrow1{new Crow{Point2f{1505.0f, 100.0f}, m_pGameController}};
+    GameObject* pCrow2{new Crow{Point2f{2210.0f, 100.0f}, m_pGameController}};
+    GameObject* pCrow3{new Crow{Point2f{2526.0f, 100.0f}, m_pGameController}};
+    GameObject* pCrow4{new Crow{Point2f{3035.0f, 102.0f}, m_pGameController}};
+    GameObject* pCrow5{new Crow{Point2f{1724.0f, 262.0f}, m_pGameController}};
+    m_Enemies.insert(m_Enemies.end(), {pCrow1, pCrow2, pCrow3, pCrow4, pCrow5});
+    m_Crows.insert(m_Crows.end(), {pCrow1, pCrow2, pCrow3, pCrow4, pCrow5});
 }
 
 void EnemyManager::InitFlyingKnights()
 {
-    FlyingKnight* pFlyingKnight1{new FlyingKnight{Point2f{500.0f, 100.0f}, m_pGameController}};
-    FlyingKnight* pFlyingKnight2{new FlyingKnight{Point2f{500.0f, 100.0f}, m_pGameController}};
-    FlyingKnight* pFlyingKnight3{new FlyingKnight{Point2f{500.0f, 100.0f}, m_pGameController}};
+    GameObject* pFlyingKnight1{new FlyingKnight{Point2f{500.0f, 100.0f}, m_pGameController}};
+    GameObject* pFlyingKnight2{new FlyingKnight{Point2f{500.0f, 100.0f}, m_pGameController}};
+    GameObject* pFlyingKnight3{new FlyingKnight{Point2f{500.0f, 100.0f}, m_pGameController}};
 
     pFlyingKnight1->SetActive(false);
     pFlyingKnight2->SetActive(false);
@@ -131,17 +142,17 @@ void EnemyManager::InitFlyingKnights()
 
 void EnemyManager::InitGreenMonsters()
 {
-    m_Enemies.insert(m_Enemies.end(), {
-                         new GreenMonster{Point2f{4622.0f, 54.0f}, m_pGameController},
-                         new GreenMonster{Point2f{6190.0f, 54.0f}, m_pGameController},
-                         new GreenMonster{Point2f{1615.0f, 213.0f}, m_pGameController},
-                         new GreenMonster{Point2f{2191.0f, 213.0f}, m_pGameController},
-                     });
+    GameObject* pGreenMonster1{new GreenMonster{Point2f{4622.0f, 54.0f}, m_pGameController}};
+    GameObject* pGreenMonster2{new GreenMonster{Point2f{6190.0f, 54.0f}, m_pGameController}};
+    GameObject* pGreenMonster3{new GreenMonster{Point2f{1615.0f, 213.0f}, m_pGameController}};
+    GameObject* pGreenMonster4{new GreenMonster{Point2f{2191.0f, 213.0f}, m_pGameController}};
+    m_Enemies.insert(m_Enemies.end(), {pGreenMonster1, pGreenMonster2, pGreenMonster3, pGreenMonster4});
+    m_GreenMonsters.insert(m_GreenMonsters.end(), {pGreenMonster1, pGreenMonster2, pGreenMonster3, pGreenMonster4});
 }
 
 void EnemyManager::InitMagician()
 {
-    Magician* pMagician{new Magician{Point2f{600.0f, 62.0f}, m_pGameController}};
+    GameObject* pMagician{new Magician{Point2f{600.0f, 62.0f}, m_pGameController}};
     pMagician->SetActive(false);
     pMagician->SetVisible(false);
     m_Enemies.push_back(pMagician);
@@ -150,7 +161,7 @@ void EnemyManager::InitMagician()
 
 void EnemyManager::InitRedArremer()
 {
-    RedArremer* pRedArremer{new RedArremer{Point2f{2929.0f, 65.0f}, m_pGameController}};
+    GameObject* pRedArremer{new RedArremer{Point2f{2929.0f, 65.0f}, m_pGameController}};
     m_Enemies.push_back(pRedArremer);
 }
 
@@ -161,9 +172,9 @@ void EnemyManager::InitUnicorn()
 
 void EnemyManager::InitWoodyPigs()
 {
-    WoodyPig* pWoodyPig1{new WoodyPig{Point2f{1000.0f, 200.0f}, m_pGameController}};
-    WoodyPig* pWoodyPig2{new WoodyPig{Point2f{1000.0f, 200.0f}, m_pGameController}};
-    WoodyPig* pWoodyPig3{new WoodyPig{Point2f{1000.0f, 200.0f}, m_pGameController}};
+    GameObject* pWoodyPig1{new WoodyPig{Point2f{1000.0f, 200.0f}, m_pGameController}};
+    GameObject* pWoodyPig2{new WoodyPig{Point2f{1000.0f, 200.0f}, m_pGameController}};
+    GameObject* pWoodyPig3{new WoodyPig{Point2f{1000.0f, 200.0f}, m_pGameController}};
 
     pWoodyPig1->SetActive(false);
     pWoodyPig2->SetActive(false);
@@ -179,9 +190,9 @@ void EnemyManager::InitWoodyPigs()
 
 void EnemyManager::InitZombies()
 {
-    Zombie* pZombie1{new Zombie{Point2f{0.0f, 62.0f}, m_pGameController}};
-    Zombie* pZombie2{new Zombie{Point2f{0.0f, 62.0f}, m_pGameController}};
-    Zombie* pZombie3{new Zombie{Point2f{0.0f, 62.0f}, m_pGameController}};
+    GameObject* pZombie1{new Zombie{Point2f{0.0f, 62.0f}, m_pGameController}};
+    GameObject* pZombie2{new Zombie{Point2f{0.0f, 62.0f}, m_pGameController}};
+    GameObject* pZombie3{new Zombie{Point2f{0.0f, 62.0f}, m_pGameController}};
 
     pZombie1->SetActive(false);
     pZombie2->SetActive(false);
@@ -198,7 +209,7 @@ void EnemyManager::InitZombies()
 void EnemyManager::InitSpawners(bool fromCheckpoint)
 {
     m_pFlyingKnightSpawner = new FlyingKnightSpawner{
-        Rectf{0.0f, 0.0f, 0.0f, m_pGameController->m_ViewPort.height}, m_pGameController
+        Rectf{3800.0f, 0.0f, 600.0f, m_pGameController->m_ViewPort.height}, m_pGameController
     };
     m_pWoodyPigSpawner = new WoodyPigSpawner{
         Rectf{0.0f, 0.0f, 0.0f, m_pGameController->m_ViewPort.height}, m_pGameController
@@ -206,6 +217,7 @@ void EnemyManager::InitSpawners(bool fromCheckpoint)
     m_pZombieSpawner = new ZombieSpawner{
         Rectf{0.0f, 0.0f, 2485.0f, m_pGameController->m_ViewPort.height}, m_pGameController
     };
+    m_Spawners.insert(m_Spawners.end(), {m_pFlyingKnightSpawner, m_pWoodyPigSpawner, m_pZombieSpawner});
 }
 
 void EnemyManager::SpawnEnemies()
@@ -213,6 +225,11 @@ void EnemyManager::SpawnEnemies()
     m_pFlyingKnightSpawner->Spawn();
     m_pWoodyPigSpawner->Spawn();
     m_pZombieSpawner->Spawn();
+}
+
+std::vector<GameObject*>& EnemyManager::GetCrows()
+{
+    return m_Crows;
 }
 
 std::vector<GameObject*>& EnemyManager::GetEnemies()
@@ -228,6 +245,11 @@ std::vector<GameObject*>& EnemyManager::GetThrowables()
 std::vector<GameObject*>& EnemyManager::GetFlyingKnights()
 {
     return m_FlyingKnights;
+}
+
+std::vector<GameObject*>& EnemyManager::GetGreenMonsters()
+{
+    return m_GreenMonsters;
 }
 
 std::vector<GameObject*>& EnemyManager::GetWoodyPigs()
