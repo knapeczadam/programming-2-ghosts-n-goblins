@@ -15,6 +15,14 @@
  */
 class RedArremer final : public IEnemy
 {
+private:
+    enum class State
+    {
+        WAIT,
+        WALK,
+        SHOOT,
+        FLY
+    };
 public:
     explicit RedArremer(const Point2f& pos, GameController* pGameController);
    virtual ~RedArremer() override = default;

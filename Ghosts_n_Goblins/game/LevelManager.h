@@ -18,7 +18,6 @@ public:
     LevelManager& operator=(LevelManager&&) = delete;
 
     std::vector<GameObject*>& GetColliders();
-    std::vector<GameObject*>& GetLadders();
     std::vector<GameObject*>& GetTombstones();
     std::vector<GameObject*>& GetWaters();
 
@@ -30,7 +29,6 @@ public:
     void DrawColliders() const;
     void DrawForeGround() const;
     void DrawKillZone() const;
-    void DrawLadders() const;
     void DrawLevel() const;
     void DrawPlatform() const;
     void DrawTombstones() const;
@@ -55,10 +53,13 @@ private:
     void InitTombstones();
     void InitWaters();
     void InitDoor();
+    void InitKillZone();
 
+public:
+    static float GetHillHeight();
+    static float GetGroundHeight();
 private:
     std::vector<GameObject*> m_Colliders;
-    std::vector<GameObject*> m_Ladders;
     std::vector<GameObject*> m_Tombstones;
     std::vector<GameObject*> m_Waters;
 
@@ -68,4 +69,7 @@ private:
     Platform* m_pPlatform;
     GameObject* m_pDoor;
     bool m_CheckpointReached;
+private:
+    static float s_HillHeight;
+    static float s_GroundHeight;
 };

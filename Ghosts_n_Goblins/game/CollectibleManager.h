@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include <vector>
 
+#include "Game.h"
 #include "IManager.h"
 
 class GameObject;
@@ -33,4 +34,17 @@ private:
     void InitYashichi();
 private:
     std::vector<GameObject*> m_Collectibles;
+public:
+    static Game::Label GetNextContent();
+    static bool IsContentActive();
+    static void ActivateContent();
+    static void DeactivateContent();
+    static void SetContentId(int id);
+    static int GetContentId();
+private:
+    static Game::Label s_CurrContent;
+    static int s_ContentCount;
+    static int s_WeaponCount;
+    static bool s_ContentActive;
+    static int s_ContentId;
 };

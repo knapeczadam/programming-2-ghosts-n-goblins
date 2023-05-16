@@ -17,6 +17,8 @@
 
 #include <ranges>
 
+#include "LevelManager.h"
+
 EnemyManager::EnemyManager(GameController* pGameController)
     : IManager(pGameController)
       , m_Crows{}
@@ -152,7 +154,7 @@ void EnemyManager::InitGreenMonsters()
 
 void EnemyManager::InitMagician()
 {
-    GameObject* pMagician{new Magician{Point2f{600.0f, 62.0f}, m_pGameController}};
+    GameObject* pMagician{new Magician{Point2f{0.0f, 0.0f}, m_pGameController}};
     pMagician->SetActive(false);
     pMagician->SetVisible(false);
     m_Enemies.push_back(pMagician);
@@ -167,7 +169,7 @@ void EnemyManager::InitRedArremer()
 
 void EnemyManager::InitUnicorn()
 {
-    m_Enemies.push_back(new Unicorn{Point2f{6903.0f, 62.0f}, m_pGameController});
+    m_Enemies.push_back(new Unicorn{Point2f{6903.0f, LevelManager::GetGroundHeight()}, m_pGameController});
 }
 
 void EnemyManager::InitWoodyPigs()
@@ -190,9 +192,9 @@ void EnemyManager::InitWoodyPigs()
 
 void EnemyManager::InitZombies()
 {
-    GameObject* pZombie1{new Zombie{Point2f{0.0f, 62.0f}, m_pGameController}};
-    GameObject* pZombie2{new Zombie{Point2f{0.0f, 62.0f}, m_pGameController}};
-    GameObject* pZombie3{new Zombie{Point2f{0.0f, 62.0f}, m_pGameController}};
+    GameObject* pZombie1{new Zombie{Point2f{0.0f, 0.0f}, m_pGameController}};
+    GameObject* pZombie2{new Zombie{Point2f{0.0f, 0.0f}, m_pGameController}};
+    GameObject* pZombie3{new Zombie{Point2f{0.0f, 0.0f}, m_pGameController}};
 
     pZombie1->SetActive(false);
     pZombie2->SetActive(false);

@@ -17,6 +17,14 @@
  */
 class Unicorn final : public IEnemy
 {
+private:
+    enum class State
+    {
+        WAIT,
+        WALK,
+        JUMP,
+        SHOOT
+    };
 public:
     explicit Unicorn(const Point2f& pos, GameController* pGameController);
     virtual ~Unicorn() override = default;
@@ -28,6 +36,8 @@ public:
     virtual void Draw() const override;
     virtual void Update(float elapsedSec) override;
     virtual void HandleCollision(GameObject* other) override;
+    virtual void Awake(float elapsedSec) override;
+
 protected:
     virtual void Wait(float elapsedSec) override;
     virtual void Walk(float elapsedSec) override;

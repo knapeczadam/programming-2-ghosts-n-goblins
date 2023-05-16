@@ -40,6 +40,7 @@ public:
 public:
     explicit Player(const Point2f& pos,  GameController* pGameController);
     virtual ~Player() override = default;
+    bool IsOnHill() const;
     Player(const Player& other) = delete;
     Player(Player&& other) noexcept = delete;
     Player& operator=(const Player& other) = delete;
@@ -77,8 +78,6 @@ public:
     bool HandleEnemy(GameObject* other);
     bool HandleThrowable(GameObject* other);
     bool HandleCollectible(GameObject* other);
-    bool HandleLadder(GameObject* other);
-    bool HandleCollider(GameObject* other);
     State GetState() const;
     void SetState(State state);
     void IncreaseLives();
@@ -86,6 +85,8 @@ public:
     void OnHit(float elapsedSec);
     void Die();
     bool ImpactFromLeft(GameObject* other) const;
+    void SetOnLadder(bool onLadder);
+    bool IsClimbing() const;
 
     void UpdateState();
 protected:
@@ -135,4 +136,5 @@ private:
     bool m_HitTriggered;
     bool m_HitFlipped;
     bool m_HasKey;
+    bool m_OnHill;
 };

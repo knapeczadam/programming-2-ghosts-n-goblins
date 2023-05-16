@@ -7,6 +7,7 @@
 #include "characters/IEnemy.h"
 #include "characters/Zombie.h"
 #include "game/EnemyManager.h"
+#include "game/LevelManager.h"
 #include "game/PlayerManager.h"
 
 ZombieSpawner::ZombieSpawner(const Rectf& boundaries, GameController* pGameController)
@@ -29,11 +30,14 @@ void ZombieSpawner::Spawn()
             StartTimer(time(Game::mt));
             if (IsTimerFinished())
             {
-            const Point2f playerCenter{m_pGameController->m_pPlayerManager->GetPlayer()->GetColliderCenter()};
+                Player* pPlayer{m_pGameController->m_pPlayerManager->GetPlayer()};
+                const Point2f playerCenter{pPlayer->GetColliderCenter()};
                 const int flip{std::rand() % 2 - 1};
                 // const int offset{(std::rand() % (m_MaxRange - m_MinRange) + m_MinRange) * flip};
                 std::uniform_real_distribution<float> offset{m_MinRange, m_MaxRange};
-                const Point2f pos{Point2f{playerCenter.x + offset(Game::mt) * flip, 62.0f}};
+                Point2f pos;
+                pos.x = playerCenter.x + offset(Game::mt) * flip;
+                pos.y = pPlayer->IsOnHill() ? LevelManager::GetHillHeight() : LevelManager::GetGroundHeight();
                 pEnemy->SetPosition(pos);
                 pEnemy->Reset();
                 return;

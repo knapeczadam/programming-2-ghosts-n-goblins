@@ -46,6 +46,11 @@ void Unicorn::HandleCollision(GameObject* other)
     }
 }
 
+void Unicorn::Awake(float elapsedSec)
+{
+    
+}
+
 void Unicorn::Wait(float elapsedSec)
 {
     IEnemy::Wait(elapsedSec);

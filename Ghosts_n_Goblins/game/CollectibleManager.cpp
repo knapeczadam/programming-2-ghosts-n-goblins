@@ -13,6 +13,12 @@
 
 #include "collectibles/Key.h"
 
+Game::Label CollectibleManager::s_CurrContent{Game::Label::D_DUMMY};
+int CollectibleManager::s_ContentCount{0};
+int CollectibleManager::s_WeaponCount{0};
+bool CollectibleManager::s_ContentActive{false};
+int CollectibleManager::s_ContentId{0};
+
 CollectibleManager::CollectibleManager(GameController* pGameController)
     : IManager{pGameController}
 {
@@ -120,6 +126,69 @@ void CollectibleManager::InitYashichi()
     pYashichi->SetActive(false);
     pYashichi->SetVisible(false);
     m_Collectibles.push_back(pYashichi);
+}
+
+Game::Label CollectibleManager::GetNextContent()
+{
+    switch (s_ContentCount++ % 4)
+    {
+    case 0:
+        if (s_ContentCount % 16 == 0)
+        {
+            s_CurrContent = Game::Label::O_KING;
+        }
+        else
+        {
+            s_CurrContent = Game::Label::O_DOLL;
+        }
+        break;
+    case 1:
+        switch (s_WeaponCount++ % 3)
+        {
+        case 0:
+            s_CurrContent = Game::Label::T_TORCH;
+            break;
+        case 1:
+            s_CurrContent = Game::Label::T_DAGGER;
+            break;
+        case 2:
+            s_CurrContent = Game::Label::T_LANCE;
+            break;
+        }
+        break;
+    case 2:
+        s_CurrContent = Game::Label::O_DOLL;
+        break;
+    case 3:
+        s_CurrContent = Game::Label::O_NECKLACE;
+        break;
+    }
+    return s_CurrContent;
+}
+
+bool CollectibleManager::IsContentActive()
+{
+    return s_ContentActive;
+}
+
+void CollectibleManager::ActivateContent()
+{
+    s_ContentActive = true;
+}
+
+void CollectibleManager::DeactivateContent()
+{
+    s_ContentActive = false;
+}
+
+void CollectibleManager::SetContentId(int id)
+{
+    s_ContentId = id;
+}
+
+int CollectibleManager::GetContentId()
+{
+    return s_ContentId;
 }
 
 std::vector<GameObject*>& CollectibleManager::GetCollectibles()

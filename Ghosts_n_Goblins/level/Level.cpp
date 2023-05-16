@@ -45,12 +45,7 @@ Tip: use Raycast with a vertical ray (blue line) in the middle of the actor.
  */
 void Level::HandleCollision(GameObject* other)
 {
-    Player* pPlayer{dynamic_cast<Player*>(other)};
     m_pGameController->m_pLevelManager->GetPlatform()->HandleCollision(other);
-    // const bool canClimb{ std::any_of(m_pLadders.begin(), m_pLadders.end(), [&](GameObject* pLadder){return pLadder->IsOverlapping(other);})};
-    // pPlayer->CanClimb(canClimb);
-
-    //std::ranges::for_each(m_pLadders, [&](GameObject* pLadder){   pLadder->HandleCollision(other);});
 
     const float epsilon{0.0f};
     utils::HitInfo hit;

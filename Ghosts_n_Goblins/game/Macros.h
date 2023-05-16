@@ -14,7 +14,6 @@
 #if DEBUG_COLLISION
     #define DEBUG_KILLZONE 1
     #define DEBUG_TOMBSTONE 1
-    #define DEBUG_LADDER 1
     #define DEBUG_COLLIDER 1
     #define DEBUG_SPAWNER 1
 #endif

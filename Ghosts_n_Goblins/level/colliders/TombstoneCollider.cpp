@@ -1,20 +1,21 @@
 ﻿#include "pch.h"
-#include "Tombstone.h"
+#include "TombstoneCollider.h"
 
 #include "engine/SoundManager.h"
 #include "fx/FXManager.h"
 #include "game/EnemyManager.h"
 #include "game/GameController.h"
 
-Tombstone::Tombstone(const Rectf& shape, GameController* pGameController)
-    : GameObject{Game::Label::L_TOMBSTONE, shape, true, false, Color4f{0.0f, 0.0f, 1.0f, 0.5f}, pGameController}
+TombstoneCollider::TombstoneCollider(const Rectf& shape, GameController* pGameController)
+    : ICollider{Game::Label::L_TOMBSTONE, shape, pGameController}
       , m_HitCount{0}
       , m_MaxHitCount{15}
 {
     m_HasSprite = false;
+    m_ColliderColor = Color4f{1.0f, 1.0f, 0.0f, 0.8f};
 }
 
-void Tombstone::HandleCollision(GameObject* other)
+void TombstoneCollider::HandleCollision(GameObject* other)
 {
     if (not IsOverlapping(other)) return;
     m_HitCount++;

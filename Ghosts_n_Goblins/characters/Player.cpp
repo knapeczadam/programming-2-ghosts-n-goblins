@@ -15,8 +15,6 @@
 #include "game/LevelManager.h"
 #include "game/Macros.h"
 #include "game/PlayerManager.h"
-#include "level/colliders/ICollider.h"
-#include "level/IClimable.h"
 #include "level/Level.h"
 #include "throwables/Dagger.h"
 #include "throwables/Lance.h"
@@ -59,7 +57,13 @@ Player::Player(const Point2f& pos, GameController* pGameController)
       , m_HitTriggered{false}
       , m_HitFlipped{false}
       , m_HasKey{false}
+      , m_OnHill{false}
 {
+}
+
+bool Player::IsOnHill() const
+{
+    return m_OnHill;
 }
 
 void Player::Draw() const
@@ -292,6 +296,7 @@ void Player::Throw()
  */
 void Player::Attack()
 {
+    if (m_OnLadder) return;
     if (not m_Attacking and m_pGameController->m_pInputManager->IsPressed(Game::Label::I_ATTACK) and not
         m_pGameController->m_pInputManager->IsTriggered(Game::Label::I_ATTACK))
     {
@@ -307,28 +312,21 @@ void Player::Attack()
 
 void Player::UpdatePosition(float elapsedSec)
 {
-    if (m_pGameController->m_pLevelManager->GetLevel()->IsOnGround(this))
+    m_OnGround = m_pGameController->m_pLevelManager->GetLevel()->IsOnGround(this);
+    if (m_OnGround)
     {
         Move();
-        m_OnGround = true;
+        m_OnLadder = false;
+        m_Climbing = false;
     }
-    else
+    if (m_OnGround and m_CanClimb or m_OnLadder)
     {
-        m_OnGround = false;
+        Climb();
     }
-
-
-    // if (m_CanClimb)
-    // {
-    //     Climb(pState);
-    //     if (m_OnLadder)
-    //     {
-    //         m_State = State::climbing;
-    //     }
-    // }
-
-    ApplyGravity(elapsedSec);
-
+    if (not m_OnLadder)
+    {
+        ApplyGravity(elapsedSec);
+    }
     if (m_OnPlatform)
     {
         SyncWithPlatform(elapsedSec);
@@ -336,7 +334,10 @@ void Player::UpdatePosition(float elapsedSec)
     else
     {
         m_OffsetSnapshot = Vector2f{0, 0};
-        m_Shape.left += m_Velocity.x * elapsedSec; // TODO: in else statement?
+        if (not m_Climbing)
+        {
+            m_Shape.left += m_Velocity.x * elapsedSec; // TODO: in else statement?
+        }
     }
     m_Shape.bottom += m_Velocity.y * elapsedSec;
 
@@ -411,18 +412,20 @@ void Player::Crouch()
 
 void Player::Climb()
 {
-    if (m_pGameController->m_pInputManager->IsPressed(Game::Label::I_UP))
+    if (not m_OnHill and m_pGameController->m_pInputManager->IsPressed(Game::Label::I_UP))
     {
         m_Velocity.y = m_VerVelocity;
-        m_State = State::CLIMBING;
+        m_Climbing = true;
     }
     else if (m_pGameController->m_pInputManager->IsPressed(Game::Label::I_DOWN))
     {
-        if (not m_OnGround)
-        {
-            m_Velocity.y = -m_VerVelocity;
-            m_State = State::CLIMBING;
-        }
+        m_Velocity.y = -m_VerVelocity;
+        m_Climbing = true;
+    }
+    else
+    {
+        m_Velocity.y = 0.0f;
+        m_Climbing = false;
     }
 }
 
@@ -498,6 +501,13 @@ void Player::UpdateState()
             m_State = State::ATTACKING_NORMAL;
         }
     }
+    m_OnHill = m_Collider.bottom >= LevelManager::GetHillHeight();
+
+    if (m_OnHill)
+    {
+        m_OnLadder = false;
+    }
+
     if (m_OnLadder)
     {
         m_State = State::CLIMBING;
@@ -706,27 +716,6 @@ bool Player::HandleCollectible(GameObject* other)
     return false;
 }
 
-bool Player::HandleLadder(GameObject* other)
-{
-    IClimable* pClimable{dynamic_cast<IClimable*>(other)};
-    if (pClimable)
-    {
-        m_OnLadder = true;
-        return true;
-    }
-    return false;
-}
-
-bool Player::HandleCollider(GameObject* other)
-{
-    ICollider* pCollider{dynamic_cast<ICollider*>(other)};
-    if (pCollider)
-    {
-        return true;
-    }
-    return false;
-}
-
 Player::State Player::GetState() const
 {
     return m_State;
@@ -799,6 +788,16 @@ bool Player::ImpactFromLeft(GameObject* other) const
     return other->GetColliderCenter().x < GetColliderCenter().x;
 }
 
+void Player::SetOnLadder(bool onLadder)
+{
+    m_OnLadder = onLadder;
+}
+
+bool Player::IsClimbing() const
+{
+    return m_Climbing;
+}
+
 void Player::HandleCollision(GameObject* other)
 {
     if (not IsOverlapping(other)) return;
@@ -806,8 +805,6 @@ void Player::HandleCollision(GameObject* other)
     if (HandleEnemy(other)) return;
     if (HandleThrowable(other)) return;
     if (HandleCollectible(other)) return;
-    if (HandleLadder(other)) return;
-    if (HandleCollider(other)) return;
 }
 
 void Player::CheckForBoundaries(const Rectf& boundaries)

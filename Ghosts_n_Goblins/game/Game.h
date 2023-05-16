@@ -151,6 +151,8 @@ public:
         L_KEY,
         L_KILLZONE,
         L_LADDER,
+        L_LADDER_ACTIVATOR,
+        L_LADDER_DEACTIVATOR,
         L_LEVEL,
         L_OPEN,
         L_PLATFORM,
@@ -273,7 +275,7 @@ public:
         I_DECREASE_VOLUME,
         
         // MINIGAME
-        AVATAR,
+        AVATAR
     };
 
     enum class State
@@ -344,6 +346,17 @@ private:
     void UpdateSaveScore(float elapsedSec);
 
     void UpdateState();
+    void UpdateBootState();
+    void UpdateCreditState();
+    void UpdateMenuState();
+    void UpdateIntroState();
+    void UpdateGameState();
+    void UpdateMapState();
+    void UpdateContinueState();
+    void UpdateGameOverState();
+    void UpdateSaveScoreState();
+    void UpdateSaveEndState();
+    void UpdateFrozenState();
     void LateUpdateGame(float elapsedSec);
     void UpdateRemainingTime(int time);
 

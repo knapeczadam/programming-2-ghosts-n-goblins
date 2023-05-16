@@ -39,7 +39,21 @@
 std::random_device Game::rd;
 std::mt19937 Game::mt{rd()};
 
-
+/*
+ * TODO:
+ * shield damage
+ * frog
+ * ladder
+ * zombies on the platform
+ * narrowing level
+ * pot system
+ * torch projectile with fire
+ * red arremer
+ * white arremer
+ * boss
+ * woody pig
+ * additional boot, intro sequences
+ */
 Game::Game(const Window& window)
     : BaseGame{window}
       , m_Data{nullptr}
@@ -90,9 +104,9 @@ void Game::Initialize()
     m_pCollectibleManager = new CollectibleManager{m_pGameController};
     m_pCutsceneManager = new CutsceneManager{m_pGameController};
     m_pEnemyManager = new EnemyManager{m_pGameController};
+    m_pPlayerManager = new PlayerManager{m_pGameController};
     m_pLevelManager = new LevelManager{m_pGameController};
     m_pMenuManager = new MenuManager{m_pGameController};
-    m_pPlayerManager = new PlayerManager{m_pGameController};
     m_pUIManager = new UIManager{m_pGameController};
 
     // CAMERA - has to be after level and player initialization
@@ -461,139 +475,194 @@ void Game::LateUpdate(float elapsedSec)
     }
 }
 
+void Game::UpdateBootState()
+{
+    if (m_pBootManager->GetState() == Label::B_END)
+    {
+        m_pBootManager->Reset();
+        m_State = State::MENU;
+    }
+}
+
+void Game::UpdateCreditState()
+{
+    if (m_pGameController->m_pInputManager->IsPressed(Label::I_SELECT))
+    {
+        m_pUIManager->m_pCreditManager->ActivateGame();
+        m_State = State::INTRO;
+    }
+    StartTimer(4);
+    if (IsTimerFinished())
+    {
+        m_pUIManager->m_pCreditManager->ActivateGame();
+        m_State = State::MENU;
+    }
+}
+
+void Game::UpdateMenuState()
+{
+    if (m_pUIManager->m_pCreditManager->GetCredits() and m_pGameController->m_pInputManager->IsPressed(
+        Label::I_SELECT))
+    {
+        m_State = State::INTRO;
+    }
+    else if (m_pUIManager->m_pCreditManager->GetCredits() and not m_pUIManager->m_pCreditManager->CreditInserted())
+    {
+        ResetTimer();
+        m_State = State::CREDIT;
+    }
+}
+
+void Game::UpdateIntroState()
+{
+    if (m_pCutsceneManager->GetState() == Label::N_END)
+    {
+        ResetGame();
+        m_State = State::GAME;
+    }
+}
+
+void Game::UpdateGameState()
+{
+    if (m_pPlayerManager->GetPlayer()->GetLives() == 0)
+    {
+        ResetTimer();
+        m_State = State::GAME_OVER;
+    }
+    else if (m_pPlayerManager->GetPlayer()->GetState() == Player::State::DEAD and not m_pPlayerManager->GetPlayer()
+        ->
+        IsActive())
+    {
+        ResetTimer();
+        m_State = State::FROZEN;
+    }
+    else if (m_pLevelManager->IsBossFight())
+    {
+        m_State = State::BOSS;
+    }
+    else if (m_pLevelManager->EndReached())
+    {
+        ResetTimer();
+        m_State = State::END;
+    }
+    else if (m_pLevelManager->StageCleared())
+    {
+        m_State = State::STAGE_CLEAR;
+    }
+}
+
+void Game::UpdateMapState()
+{
+    StartTimer(5);
+    if (IsTimerFinished())
+    {
+        ResetTimer();
+        m_State = State::GAME;
+    }
+}
+
+void Game::UpdateContinueState()
+{
+    StartTimer(10);
+    if (m_pInputManager->IsPressed(Label::I_SELECT))
+    {
+        ResetGame();
+        m_State = State::MAP;
+    }
+    else if (IsTimerFinished())
+    {
+        ResetGame();
+        m_State = State::MENU;
+    }
+}
+
+void Game::UpdateGameOverState()
+{
+    StartTimer(7);
+    if (IsTimerFinished())
+    {
+        if (m_pGameController->m_pUIManager->m_pScoreManager->IsOnScoreboard())
+        {
+            m_State = State::SAVE_SCORE;
+        }
+        else
+        {
+            m_State = State::CONTINUE;
+        }
+    }
+}
+
+void Game::UpdateSaveScoreState()
+{
+    if (m_pGameController->m_pUIManager->m_pInitialSaver->IsInitialSaved())
+    {
+        m_State = State::SAVE_END;
+    }
+}
+
+void Game::UpdateSaveEndState()
+{
+    StartTimer(8);
+    if (IsTimerFinished())
+    {
+        m_State = State::CONTINUE;
+    }
+}
+
+void Game::UpdateFrozenState()
+{
+    StartTimer(4);
+    if (IsTimerFinished())
+    {
+        ResetGame(true);
+        m_State = State::MAP;
+    }
+}
+
 void Game::UpdateState()
 {
     switch (m_State)
     {
     case State::BOOT:
-        if (m_pBootManager->GetState() == Label::B_END)
-        {
-            m_pBootManager->Reset();
-            m_State = State::MENU;
-        }
+        UpdateBootState();
         break;
     case State::MENU:
-        if (m_pUIManager->m_pCreditManager->GetCredits() and m_pGameController->m_pInputManager->IsPressed(
-            Label::I_SELECT))
-        {
-            m_State = State::INTRO;
-        }
-        else if (m_pUIManager->m_pCreditManager->GetCredits() and not m_pUIManager->m_pCreditManager->CreditInserted())
-        {
-            ResetTimer();
-            m_State = State::CREDIT;
-        }
+        UpdateMenuState();
         break;
     case State::CREDIT:
-        if (m_pGameController->m_pInputManager->IsPressed(Label::I_SELECT))
-        {
-            m_pUIManager->m_pCreditManager->ActivateGame();
-            m_State = State::INTRO;
-        }
-        StartTimer(4);
-        if (IsTimerFinished())
-        {
-            m_pUIManager->m_pCreditManager->ActivateGame();
-            m_State = State::MENU;
-        }
+        UpdateCreditState();
         break;
     case State::INTRO:
-        if (m_pCutsceneManager->GetState() == Label::N_END)
-        {
-            ResetGame();
-            m_State = State::GAME;
-        }
+        UpdateIntroState();
         break;
     case State::GAME:
     case State::HURRY_UP:
     case State::BOSS:
     case State::STAGE_CLEAR:
-        if (m_pPlayerManager->GetPlayer()->GetLives() == 0)
-        {
-            ResetTimer();
-            m_State = State::GAME_OVER;
-        }
-        else if (m_pPlayerManager->GetPlayer()->GetState() == Player::State::DEAD and not m_pPlayerManager->GetPlayer()
-            ->
-            IsActive())
-        {
-            ResetTimer();
-            m_State = State::FROZEN;
-        }
-        else if (m_pLevelManager->IsBossFight())
-        {
-            m_State = State::BOSS;
-        }
-        else if (m_pLevelManager->EndReached())
-        {
-            ResetTimer();
-            m_State = State::END;
-        }
-        else if (m_pLevelManager->StageCleared())
-        {
-            m_State = State::STAGE_CLEAR;
-        }
+        UpdateGameState();
         break;
     case State::MAP:
-        StartTimer(5);
-        if (IsTimerFinished())
-        {
-            ResetTimer();
-            m_State = State::GAME;
-        }
+        UpdateMapState();
         break;
     case State::END:
     case State::GAME_OVER:
-        StartTimer(7);
-        if (IsTimerFinished())
-        {
-            if (m_pGameController->m_pUIManager->m_pScoreManager->IsOnScoreboard())
-            {
-                m_State = State::SAVE_SCORE;
-            }
-            else
-            {
-                m_State = State::CONTINUE;
-            }
-        }
+        UpdateGameOverState();
         break;
     case State::CONTINUE:
-        StartTimer(10);
-        if (m_pInputManager->IsPressed(Label::I_SELECT))
-        {
-            ResetGame();
-            m_State = State::MAP;
-        }
-        else if (IsTimerFinished())
-        {
-            ResetGame();
-            m_State = State::MENU;
-        }
+        UpdateContinueState();
         break;
     case State::RANKING:
         break;
     case State::OUTRO:
         break;
     case State::SAVE_SCORE:
-        if (m_pGameController->m_pUIManager->m_pInitialSaver->IsInitialSaved())
-        {
-            m_State = State::SAVE_END;
-        }
+        UpdateSaveScoreState();
         break;
     case State::SAVE_END:
-        StartTimer(8);
-        if (IsTimerFinished())
-        {
-            m_State = State::CONTINUE;
-        }
+        UpdateSaveEndState();
         break;
     case State::FROZEN:
-        StartTimer(4);
-        if (IsTimerFinished())
-        {
-            ResetGame(true);
-            m_State = State::MAP;
-        }
+        UpdateFrozenState();
         break;
     }
 }
@@ -752,14 +821,11 @@ void Game::DrawDebug() const
 #if DEBUG_TOMBSTONE
     m_pLevelManager->DrawTombstones();
 #endif
-#if DEBUG_LADDER 
-    m_pLevelManager->DrawLadders();
-#endif
 #if DEBUG_COLLIDER
     m_pLevelManager->DrawColliders();
 #endif
 #if DEBUG_SPAWNER
-   m_pEnemyManager->DrawSpawners();
+    m_pEnemyManager->DrawSpawners();
 #endif
 }
 
@@ -796,7 +862,7 @@ void Game::UpdateBoot(float elapsedSec)
 void Game::UpdateGame(float elapsedSec)
 {
     m_pGameController->m_pCameraManager->GetCamera()->SetBoundaries(
-        m_pGameController->m_pLevelManager->GetLevel()->GetBoundaries());
+    m_pGameController->m_pLevelManager->GetLevel()->GetBoundaries());
     m_pLevelManager->Update(elapsedSec);
     m_pPlayerManager->Update(elapsedSec);
     m_pEnemyManager->SpawnEnemies();
@@ -925,11 +991,11 @@ void Game::PlayStream()
     case State::SAVE_END:
         if (m_pGameController->m_pUIManager->m_pScoreManager->HasTopScore())
         {
-           m_pGameController->m_pSoundManager->PlayStream(Game::Label::S_11_1ST_PLACE_ENTRY_END, false); 
+            m_pGameController->m_pSoundManager->PlayStream(Game::Label::S_11_1ST_PLACE_ENTRY_END, false);
         }
         else
         {
-           m_pGameController->m_pSoundManager->PlayStream(Game::Label::S_13_BELOW_2ND_PLACE_ENTRY_END, false); 
+            m_pGameController->m_pSoundManager->PlayStream(Game::Label::S_13_BELOW_2ND_PLACE_ENTRY_END, false);
         }
         break;
     case State::END:

@@ -5,17 +5,19 @@
 #include "Texture.h"
 #include "engine/TextureManager.h"
 #include "level/colliders/ArmorCollider.h"
-#include "level/KillZone.h"
-#include "level/Ladder.h"
+#include "level/colliders/KillZone.h"
+#include "level/colliders/LadderActivator.h"
 #include "level/Level.h"
 #include "level/Platform.h"
-#include "level/Tombstone.h"
+#include "level/colliders/TombstoneCollider.h"
 #include "level/Water.h"
 #include "level/colliders/YashichiCollider.h"
 
 #include <ranges>
 
 #include "EnemyManager.h"
+#include "PlayerManager.h"
+#include "characters/Player.h"
 #include "level/Door.h"
 #include "level/colliders/BonusCollider.h"
 #include "level/colliders/BossCollider.h"
@@ -23,11 +25,15 @@
 #include "level/colliders/DoorCollider.h"
 #include "level/colliders/EndCollider.h"
 #include "level/colliders/KeyCollider.h"
+#include "level/colliders/LadderCollider.h"
+#include "level/colliders/LadderDeactivator.h"
+
+float LevelManager::s_GroundHeight{62.0f};
+float LevelManager::s_HillHeight{220.0f};
 
 LevelManager::LevelManager(GameController* pGameController)
     : IManager{pGameController}
       , m_Colliders{}
-      , m_Ladders{}
       , m_Tombstones{}
       , m_Waters{}
       , m_pForeground{nullptr}
@@ -49,11 +55,9 @@ void LevelManager::Initialize(bool fromCheckpoint)
 {
     m_pPlatform = new Platform{Point2f{3295.0f, 28.0f}, m_pGameController};
     m_pForeground = new GameObject{Game::Label::L_FOREGROUND, m_pGameController};
-    m_pKillZone = new KillZone{
-        m_pGameController->m_pTextureManager->GetTexture(Game::Label::L_LEVEL)->GetWidth(), 10.0f
-    };
     m_pLevel = new Level{m_pGameController};
 
+    InitKillZone();
     InitLadders();
     InitTombstones();
     InitWaters();
@@ -65,16 +69,13 @@ void LevelManager::CleanUp()
 {
     auto deleteGameObject = [](const GameObject* pGameObject) { delete pGameObject; };
     std::ranges::for_each(m_Colliders, deleteGameObject);
-    std::ranges::for_each(m_Ladders, deleteGameObject);
     std::ranges::for_each(m_Tombstones, deleteGameObject);
     std::ranges::for_each(m_Waters, deleteGameObject);
     m_Colliders.clear();
-    m_Ladders.clear();
     m_Tombstones.clear();
     m_Waters.clear();
 
     delete m_pForeground;
-    delete m_pKillZone;
     delete m_pLevel;
     delete m_pPlatform;
     delete m_pDoor;
@@ -94,12 +95,6 @@ void LevelManager::DrawForeGround() const
 void LevelManager::DrawKillZone() const
 {
     m_pKillZone->Draw();
-}
-
-void LevelManager::DrawLadders() const
-{
-    static auto draw{[](const GameObject* pGameObject) { pGameObject->Draw(); }};
-    std::ranges::for_each(m_Ladders , draw);
 }
 
 void LevelManager::DrawLevel() const
@@ -137,7 +132,6 @@ void LevelManager::Update(float elapsedSec)
     m_pPlatform->Update(elapsedSec);
     m_pDoor->Update(elapsedSec);
     std::ranges::for_each(m_Colliders | std::views::filter(isActive), update);
-    std::ranges::for_each(m_Ladders | std::views::filter(isActive), update);
     std::ranges::for_each(m_Tombstones | std::views::filter(isActive), update);
     std::ranges::for_each(m_Waters | std::views::filter(isActive), update);
     
@@ -239,34 +233,52 @@ void LevelManager::InitColliders(bool fromCheckpoint)
 
 void LevelManager::InitLadders()
 {
-    m_Ladders.insert(m_Ladders.end(), {
-                         new Ladder{Rectf{1424.0f, 62.0f, 32.0f, 158.0f}, m_pGameController},
-                         new Ladder{Rectf{1808.0f, 62.0f, 32.0f, 158.0f}, m_pGameController},
-                         new Ladder{Rectf{2128.0f, 62.0f, 32.0f, 158.0f}, m_pGameController},
+    const float offset{m_pGameController->m_pPlayerManager->GetPlayer()->GetCollider().width - 1} ;
+    const float x1{1438.0f};
+    const float x2{1822.0f};
+    const float x3{2142.0f};
+    m_Colliders.insert(m_Colliders.end(), {
+                         new LadderActivator{Rectf{x1, 0.0f, 2.0f, m_pGameController->m_ViewPort.height}, m_pGameController},
+                         new LadderActivator{Rectf{x2, 0.0f, 2.0f, m_pGameController->m_ViewPort.height}, m_pGameController},
+                         new LadderActivator{Rectf{x3, 0.0f, 2.0f, m_pGameController->m_ViewPort.height}, m_pGameController}
                      });
+
+    m_Colliders.insert(m_Colliders.end(), {
+                         new LadderDeactivator{Rectf{x1 - offset, 0.0f, 2.0f, m_pGameController->m_ViewPort.height}, m_pGameController},
+                         new LadderDeactivator{Rectf{x1 + offset, 0.0f, 2.0f, m_pGameController->m_ViewPort.height}, m_pGameController},
+                         new LadderDeactivator{Rectf{x2 - offset, 0.0f, 2.0f, m_pGameController->m_ViewPort.height}, m_pGameController},
+                         new LadderDeactivator{Rectf{x2 + offset, 0.0f, 2.0f, m_pGameController->m_ViewPort.height}, m_pGameController},
+                         new LadderDeactivator{Rectf{x3 - offset, 0.0f, 2.0f, m_pGameController->m_ViewPort.height}, m_pGameController},
+                         new LadderDeactivator{Rectf{x3 + offset, 0.0f, 2.0f, m_pGameController->m_ViewPort.height}, m_pGameController}
+    });
+    m_Colliders.insert(m_Colliders.end(), {
+        new LadderCollider{Rectf{x1, 126.0f, 4.0f, 96.0f}, m_pGameController},
+        new LadderCollider{Rectf{x2, 126.0f, 4.0f, 96.0f}, m_pGameController},
+        new LadderCollider{Rectf{x3, 126.0f, 4.0f, 96.0f}, m_pGameController}
+    });
 }
 
 void LevelManager::InitTombstones()
 {
     // BOTTOM
     m_Tombstones.insert(m_Tombstones.end(), {
-                            new Tombstone{Rectf{83.0f, 66.0f, 30.0f, 30.0f}, m_pGameController},
-                            new Tombstone{Rectf{499.0f, 66.0f, 30.0f, 30.0f}, m_pGameController},
-                            new Tombstone{Rectf{817.0f, 66.0f, 30.0f, 30.0f}, m_pGameController},
-                            new Tombstone{Rectf{1044.0f, 66.0f, 30.0f, 30.0f}, m_pGameController},
-                            new Tombstone{Rectf{1490.0f, 66.0f, 30.0f, 30.0f}, m_pGameController},
-                            new Tombstone{Rectf{1903.0f, 66.0f, 30.0f, 30.0f}, m_pGameController},
-                            new Tombstone{Rectf{2191.0f, 66.0f, 30.0f, 30.0f}, m_pGameController},
-                            new Tombstone{Rectf{2516.0f, 66.0f, 30.0f, 30.0f}, m_pGameController},
-                            new Tombstone{Rectf{3028.0f, 66.0f, 30.0f, 30.0f}, m_pGameController},
+                            new TombstoneCollider{Rectf{83.0f, 66.0f, 30.0f, 30.0f}, m_pGameController},
+                            new TombstoneCollider{Rectf{499.0f, 66.0f, 30.0f, 30.0f}, m_pGameController},
+                            new TombstoneCollider{Rectf{817.0f, 66.0f, 30.0f, 30.0f}, m_pGameController},
+                            new TombstoneCollider{Rectf{1044.0f, 66.0f, 30.0f, 30.0f}, m_pGameController},
+                            new TombstoneCollider{Rectf{1490.0f, 66.0f, 30.0f, 30.0f}, m_pGameController},
+                            new TombstoneCollider{Rectf{1903.0f, 66.0f, 30.0f, 30.0f}, m_pGameController},
+                            new TombstoneCollider{Rectf{2191.0f, 66.0f, 30.0f, 30.0f}, m_pGameController},
+                            new TombstoneCollider{Rectf{2516.0f, 66.0f, 30.0f, 30.0f}, m_pGameController},
+                            new TombstoneCollider{Rectf{3028.0f, 66.0f, 30.0f, 30.0f}, m_pGameController},
 
                         });
 
     // TOP
     m_Tombstones.insert(m_Tombstones.end(), {
-                            new Tombstone{Rectf{1519.0f, 221.0f, 30.0f, 30.0f}, m_pGameController},
-                            new Tombstone{Rectf{1716.0f, 221.0f, 30.0f, 30.0f}, m_pGameController},
-                            new Tombstone{Rectf{1909.0f, 221.0f, 30.0f, 30.0f}, m_pGameController},
+                            new TombstoneCollider{Rectf{1519.0f, 221.0f, 30.0f, 30.0f}, m_pGameController},
+                            new TombstoneCollider{Rectf{1716.0f, 221.0f, 30.0f, 30.0f}, m_pGameController},
+                            new TombstoneCollider{Rectf{1909.0f, 221.0f, 30.0f, 30.0f}, m_pGameController},
                         });
 }
 
@@ -288,14 +300,25 @@ void LevelManager::InitDoor()
     m_pDoor->SetVisible(false);
 }
 
+void LevelManager::InitKillZone()
+{
+    m_pKillZone = new KillZone{Rectf{0.0f, 0.0f,m_pGameController->m_pTextureManager->GetTexture(Game::Label::L_LEVEL)->GetWidth(), 10.0f}, m_pGameController};
+    m_Colliders.push_back(m_pKillZone);
+}
+
+float LevelManager::GetHillHeight()
+{
+    return s_HillHeight;
+}
+
+float LevelManager::GetGroundHeight()
+{
+    return s_GroundHeight;
+}
+
 std::vector<GameObject*>& LevelManager::GetColliders()
 {
     return m_Colliders;
-}
-
-std::vector<GameObject*>& LevelManager::GetLadders()
-{
-    return m_Ladders;
 }
 
 std::vector<GameObject*>& LevelManager::GetTombstones()

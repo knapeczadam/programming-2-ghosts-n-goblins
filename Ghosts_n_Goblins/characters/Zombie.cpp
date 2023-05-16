@@ -79,6 +79,7 @@ void Zombie::Reset()
     ResetCollider();
 }
 
+// TODO: walk till the end of the platform
 void Zombie::Walk(float elapsedSec)
 {
     m_Shape.left += m_HorVelocity * elapsedSec * m_Dir;
