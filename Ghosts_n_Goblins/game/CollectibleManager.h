@@ -18,12 +18,19 @@ public:
 
     void Draw() const;
     void Update(float elapsedSec);
+    virtual void Reset(bool fromCheckpoint = false) override;
     void LateUpdate(float elapsedSec);
     std::vector<GameObject*>& GetCollectibles();
+    
+    Game::Label GetNextContent();
+    bool IsContentActive();
+    void ActivateContent();
+    void DeactivateContent();
 
 protected:
     virtual void Initialize(bool fromCheckpoint = false) override;
     virtual void CleanUp() override;
+    void UpdatePot();
 private:
     void InitCoins();
     void InitKey();
@@ -31,20 +38,16 @@ private:
     void InitArmor();
     void InitPot();
     void InitNecklace();
+    void InitDoll();
+    void InitKing();
     void InitYashichi();
+    void InitWeapons();
+    void AssignPot(GameObject* pEnemy);
 private:
     std::vector<GameObject*> m_Collectibles;
-public:
-    static Game::Label GetNextContent();
-    static bool IsContentActive();
-    static void ActivateContent();
-    static void DeactivateContent();
-    static void SetContentId(int id);
-    static int GetContentId();
-private:
-    static Game::Label s_CurrContent;
-    static int s_ContentCount;
-    static int s_WeaponCount;
-    static bool s_ContentActive;
-    static int s_ContentId;
+    GameObject* m_pPot;
+    Game::Label m_CurrContent;
+    int m_ContentCount;
+    int m_WeaponCount;
+    bool m_ContentActive;
 };

@@ -4,7 +4,7 @@
 #include "engine/Sprite.h"
 
 Torch::Torch(const Point2f& pos, bool isFlipped, bool collectible, GameController* pGameController)
-    : GameObject{Game::Label::T_TORCH, pos, true, pGameController}
+    : GameObject{collectible ? Game::Label::O_TORCH : Game::Label::T_TORCH, pos, true, pGameController}
     , m_Collectible{collectible}
 {
     m_Speed = 300.0f;
@@ -15,7 +15,6 @@ Torch::Torch(const Point2f& pos, bool isFlipped, bool collectible, GameControlle
         m_Shape.left = pos.x;
         m_Shape.bottom = pos.y;
     }
-    SetSprite();
 }
 
 void Torch::Update(float elapsedSec)
@@ -41,19 +40,4 @@ void Torch::Awake(float elapsedSec)
     {
         m_Shape.left -= m_pSprite->GetScaledClipWidth();
     }
-}
-
-void Torch::SetSprite() const
-{
-    if (m_Collectible)
-    {
-        m_pSprite->SetSubRows(1);
-        m_pSprite->SetSubCols(3);
-    }
-    else
-    {
-        m_pSprite->SetSubRows(1);
-        m_pSprite->SetSubCols(1);
-    }
-    m_pSprite->SetCurrRowsCols();
 }

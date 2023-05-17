@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "IEnemy.h"
+#include "IPotter.h"
 
 /**
  * \brief 
@@ -10,7 +11,7 @@
  * They are worth 100 points, and they can carry pots with them.
  * <a href="https://strategywiki.org/wiki/Ghosts_%27n_Goblins/Enemies#Flying_Knights">StrategyWiki</a>
  */
-class FlyingKnight final : public IEnemy
+class FlyingKnight final : public IEnemy, public IPotter
 {
 public:
     explicit FlyingKnight(const Point2f& pos, GameController* pGameController);

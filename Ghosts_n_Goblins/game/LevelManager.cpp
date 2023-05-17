@@ -27,6 +27,7 @@
 #include "level/colliders/KeyCollider.h"
 #include "level/colliders/LadderCollider.h"
 #include "level/colliders/LadderDeactivator.h"
+#include "level/colliders/PotDeactivator.h"
 
 float LevelManager::s_GroundHeight{62.0f};
 float LevelManager::s_HillHeight{220.0f};
@@ -221,6 +222,9 @@ void LevelManager::InitColliders(bool fromCheckpoint)
                                 new DoorCollider{Rectf{doorStart, 0.0f, 30.0f, m_pGameController->m_ViewPort.height}, m_pGameController},
                                 new EndCollider{Rectf{endStart, 0.0f, m_pGameController->m_pLevelManager->GetLevel()->GetBoundaries().width - endStart, m_pGameController->m_ViewPort.height}, m_pGameController},
                                 new KeyCollider{Rectf{keyStart, 0.0f, m_pGameController->m_pLevelManager->GetLevel()->GetBoundaries().width - keyStart, m_pGameController->m_ViewPort.height}, m_pGameController},
+                                new PotDeactivator{Rectf{2490.0f, 0.0f, 30.0f, m_pGameController->m_ViewPort.height}, m_pGameController},
+                                new PotDeactivator{Rectf{4405.0f, 0.0f, 30.0f, m_pGameController->m_ViewPort.height}, m_pGameController},
+                                // new PotDeactivator{Rectf{4405.0f, 0.0f, 30.0f, m_pGameController->m_ViewPort.height}, m_pGameController}, TODO
                                 new YashichiCollider{Rectf{5924.0f, 140.0f, 24.0f, 24.0f}, m_pGameController}
                             });
     GameObject* pCheckpoint{new CheckpointCollider{Rectf{3600.0f, 0.0f, 30.0f, m_pGameController->m_ViewPort.height}, m_pGameController}};

@@ -31,7 +31,9 @@ void FlyingKnight::Draw() const
 void FlyingKnight::Update(float elapsedSec)
 {
     IEnemy::Update(elapsedSec);
+    IPotter::Update(elapsedSec);
     Fly(elapsedSec);
+    ShowPot();
 }
 
 void FlyingKnight::HandleCollision(GameObject* other)
@@ -39,6 +41,7 @@ void FlyingKnight::HandleCollision(GameObject* other)
     if (not IsOverlapping(other)) return;
     if (other->IsFlipped())
     {
+        ActivatePot();
         --m_HP;
     }
     else

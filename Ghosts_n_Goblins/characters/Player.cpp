@@ -24,6 +24,7 @@
 #include <numeric>
 
 #include "collectibles/Key.h"
+#include "game/CollectibleManager.h"
 
 Player::Player(const Point2f& pos, GameController* pGameController)
     : GameObject{Game::Label::C_ARTHUR, pos, true, pGameController}
@@ -643,14 +644,17 @@ bool Player::HandleThrowable(GameObject* other)
         case Game::Label::T_DAGGER:
             m_CurrWeapon = Game::Label::T_DAGGER;
             m_pGameController->m_pSoundManager->PlayEffect(Game::Label::E_WEAPON_PICKUP);
+            m_pGameController->m_pCollectibleManager->DeactivateContent();
             break;
         case Game::Label::T_LANCE:
             m_CurrWeapon = Game::Label::T_LANCE;
             m_pGameController->m_pSoundManager->PlayEffect(Game::Label::E_WEAPON_PICKUP);
+            m_pGameController->m_pCollectibleManager->DeactivateContent();
             break;
-        case Game::Label::T_TORCH:
+        case Game::Label::O_TORCH:
             m_CurrWeapon = Game::Label::T_TORCH;
             m_pGameController->m_pSoundManager->PlayEffect(Game::Label::E_WEAPON_PICKUP);
+            m_pGameController->m_pCollectibleManager->DeactivateContent();
             break;
         case Game::Label::T_EYEBALL:
         case Game::Label::T_SPEAR:
@@ -702,6 +706,10 @@ bool Player::HandleCollectible(GameObject* other)
             ++m_HP;
             m_pGameController->m_pSoundManager->PlayEffect(Game::Label::E_ARMOR_PICKUP);
             break;
+        case Game::Label::O_DOLL:
+        case Game::Label::O_KING:
+        case Game::Label::O_NECKLACE:
+            m_pGameController->m_pCollectibleManager->DeactivateContent();
         default:
             other->SetVisible(false);
             other->SetActive(false);

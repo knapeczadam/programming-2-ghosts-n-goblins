@@ -8,7 +8,7 @@ Dagger::Dagger(const Point2f& pos, bool isFlipped, bool collectible, GameControl
     : GameObject{Game::Label::T_DAGGER, pos, true, pGameController}
       , m_Collectible{collectible}
 {
-    m_Speed = 300.0f;
+    m_Speed = 330.0f;
     m_Flipped = isFlipped;
     m_AwakeDistance = std::numeric_limits<float>::max();
     if (not m_Collectible)

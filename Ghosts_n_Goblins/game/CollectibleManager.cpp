@@ -11,16 +11,24 @@
 
 #include <ranges>
 
+#include "EnemyManager.h"
+#include "characters/IPotter.h"
+#include "collectibles/Doll.h"
 #include "collectibles/Key.h"
-
-Game::Label CollectibleManager::s_CurrContent{Game::Label::D_DUMMY};
-int CollectibleManager::s_ContentCount{0};
-int CollectibleManager::s_WeaponCount{0};
-bool CollectibleManager::s_ContentActive{false};
-int CollectibleManager::s_ContentId{0};
+#include "collectibles/King.h"
+#include "level/spawners/ISpawner.h"
+#include "throwables/Dagger.h"
+#include "throwables/Lance.h"
+#include "throwables/Torch.h"
 
 CollectibleManager::CollectibleManager(GameController* pGameController)
     : IManager{pGameController}
+      , m_Collectibles{}
+      , m_pPot{nullptr}
+      , m_CurrContent{Game::Label::D_DUMMY}
+      , m_ContentCount{0}
+      , m_WeaponCount{0}
+      , m_ContentActive{false}
 {
     pGameController->m_pCollectibleManager = this;
     Initialize();
@@ -34,12 +42,15 @@ CollectibleManager::~CollectibleManager()
 void CollectibleManager::Initialize(bool fromCheckpoint)
 {
     InitArmor();
+    InitDoll();
     InitCoins();
     InitKey();
+    InitKing();
     InitMoneyBags();
     InitNecklace();
     InitPot();
     InitYashichi();
+    InitWeapons();
 }
 
 void CollectibleManager::CleanUp()
@@ -47,6 +58,31 @@ void CollectibleManager::CleanUp()
     auto deleteGameObject = [](const GameObject* pGameObject) { delete pGameObject; };
     std::ranges::for_each(m_Collectibles, deleteGameObject);
     m_Collectibles.clear();
+}
+
+void CollectibleManager::UpdatePot()
+{
+    if (m_pGameController->m_pEnemyManager->GetZombieSpawner()->IsPlayerBetweenBoundaries())
+    {
+        for (GameObject* pZombie : m_pGameController->m_pEnemyManager->GetZombies())
+        {
+            AssignPot(pZombie);
+        }
+    }
+    else if (m_pGameController->m_pEnemyManager->GetFlyingKnightSpawner()->IsPlayerBetweenBoundaries())
+    {
+        for (GameObject* pFlyingKnight : m_pGameController->m_pEnemyManager->GetFlyingKnights())
+        {
+            AssignPot(pFlyingKnight);
+        }
+    }
+    else if (m_pGameController->m_pEnemyManager->GetWoodyPigSpawner()->IsPlayerBetweenBoundaries())
+    {
+        for (GameObject* pWoodyPog : m_pGameController->m_pEnemyManager->GetWoodyPigs())
+        {
+            AssignPot(pWoodyPog);
+        }
+    }
 }
 
 void CollectibleManager::Draw() const
@@ -61,6 +97,17 @@ void CollectibleManager::Update(float elapsedSec)
     static const auto isActive{[](const GameObject* pGameObject) { return pGameObject->IsActive(); }};
     static const auto update{[&](GameObject* pGameObject) { pGameObject->Update(elapsedSec); }};
     std::ranges::for_each(m_Collectibles | std::views::filter(isActive), update);
+    UpdatePot();
+}
+
+void CollectibleManager::Reset(bool fromCheckpoint)
+{
+    if ( not fromCheckpoint)
+    {
+        m_ContentCount = 0;
+        m_WeaponCount = 0;
+    }
+    m_ContentActive = false;
 }
 
 void CollectibleManager::LateUpdate(float elapsedSec)
@@ -112,11 +159,28 @@ void CollectibleManager::InitNecklace()
     m_Collectibles.push_back(pNecklace);
 }
 
+void CollectibleManager::InitDoll()
+{
+    GameObject* pDoll = new Doll{Point2f{0.0f, 0.0f}, m_pGameController};
+    pDoll->SetActive(false);
+    pDoll->SetVisible(false);
+    m_Collectibles.push_back(pDoll);
+}
+
+void CollectibleManager::InitKing()
+{
+    GameObject* pKing = new King{Point2f{0.0f, 0.0f}, m_pGameController};
+    pKing->SetActive(false);
+    pKing->SetVisible(false);
+    m_Collectibles.push_back(pKing);
+}
+
 void CollectibleManager::InitPot()
 {
     GameObject* pPot = new Pot{Point2f{0.0f, 0.0f}, m_pGameController};
     pPot->SetActive(false);
     pPot->SetVisible(false);
+    m_pPot = pPot;
     m_Collectibles.push_back(pPot);
 }
 
@@ -128,67 +192,92 @@ void CollectibleManager::InitYashichi()
     m_Collectibles.push_back(pYashichi);
 }
 
+void CollectibleManager::InitWeapons()
+{
+    GameObject* pDagger = new Dagger{Point2f{0.0f, 0.0f}, false, true, m_pGameController};
+    pDagger->SetActive(false);
+    pDagger->SetVisible(false);
+    m_Collectibles.push_back(pDagger);
+
+    GameObject* pLance = new Lance{Point2f{0.0f, 0.0f}, false, true, m_pGameController};
+    pLance->SetActive(false);
+    pLance->SetVisible(false);
+    m_Collectibles.push_back(pLance);
+
+    GameObject* pTorch = new Torch{Point2f{0.0f, 0.0f}, false, true, m_pGameController};
+    pTorch->SetActive(false);
+    pTorch->SetVisible(false);
+    m_Collectibles.push_back(pTorch);
+}
+
+void CollectibleManager::AssignPot(GameObject* pEnemy)
+{
+    if (IsContentActive()) return;
+   StartTimer(8.0f);
+    if (IsTimerFinished())
+    {
+        IPotter* pPotter = dynamic_cast<IPotter*>(pEnemy);
+        if (pPotter)
+        {
+            pPotter->SetPot(m_pPot);
+            Pot* pPot = static_cast<Pot*>(m_pPot);
+            pPot->SetContent(GetNextContent());
+            m_ContentActive = true;
+        }
+    }
+}
+
 Game::Label CollectibleManager::GetNextContent()
 {
-    switch (s_ContentCount++ % 4)
+    switch (m_ContentCount++ % 4)
     {
     case 0:
-        if (s_ContentCount % 16 == 0)
+        if (m_ContentCount % 17 == 0)
         {
-            s_CurrContent = Game::Label::O_KING;
+            m_CurrContent = Game::Label::O_KING;
         }
         else
         {
-            s_CurrContent = Game::Label::O_DOLL;
+            m_CurrContent = Game::Label::O_DOLL;
         }
         break;
     case 1:
-        switch (s_WeaponCount++ % 3)
+        switch (m_WeaponCount++ % 3)
         {
         case 0:
-            s_CurrContent = Game::Label::T_TORCH;
+            m_CurrContent = Game::Label::O_TORCH;
             break;
         case 1:
-            s_CurrContent = Game::Label::T_DAGGER;
+            m_CurrContent = Game::Label::T_DAGGER;
             break;
         case 2:
-            s_CurrContent = Game::Label::T_LANCE;
+            m_CurrContent = Game::Label::T_LANCE;
             break;
         }
         break;
     case 2:
-        s_CurrContent = Game::Label::O_DOLL;
+        m_CurrContent = Game::Label::O_DOLL;
         break;
     case 3:
-        s_CurrContent = Game::Label::O_NECKLACE;
+        m_CurrContent = Game::Label::O_NECKLACE;
         break;
     }
-    return s_CurrContent;
+    return m_CurrContent;
 }
 
 bool CollectibleManager::IsContentActive()
 {
-    return s_ContentActive;
+    return m_ContentActive;
 }
 
 void CollectibleManager::ActivateContent()
 {
-    s_ContentActive = true;
+    m_ContentActive = true;
 }
 
 void CollectibleManager::DeactivateContent()
 {
-    s_ContentActive = false;
-}
-
-void CollectibleManager::SetContentId(int id)
-{
-    s_ContentId = id;
-}
-
-int CollectibleManager::GetContentId()
-{
-    return s_ContentId;
+    m_ContentActive = false;
 }
 
 std::vector<GameObject*>& CollectibleManager::GetCollectibles()

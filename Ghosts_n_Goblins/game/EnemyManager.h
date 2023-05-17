@@ -4,10 +4,6 @@
 #include <vector>
 
 class GameObject;
-
-class FlyingKnightSpawner;
-class WoodyPigSpawner;
-class ZombieSpawner;
 class ISpawner;
 
 class EnemyManager final : public IManager
@@ -36,6 +32,10 @@ public:
     std::vector<GameObject*>& GetThrowables();
     std::vector<GameObject*>& GetWoodyPigs();
     std::vector<GameObject*>& GetZombies();
+    ISpawner* GetFlyingKnightSpawner() const;
+    ISpawner* GetWoodyPigSpawner() const;
+    ISpawner* GetZombieSpawner() const;
+    
     GameObject* GetMagician() const;
 
 protected:
@@ -64,7 +64,7 @@ private:
     std::vector<GameObject*> m_Zombies;
     GameObject* m_pMagician;
 
-    FlyingKnightSpawner* m_pFlyingKnightSpawner;
-    WoodyPigSpawner* m_pWoodyPigSpawner;
-    ZombieSpawner* m_pZombieSpawner;
+    ISpawner* m_pFlyingKnightSpawner;
+    ISpawner* m_pWoodyPigSpawner;
+    ISpawner* m_pZombieSpawner;
 };

@@ -128,6 +128,7 @@ public:
         O_MONEY_BAG,
         O_NECKLACE,
         O_POT,
+        O_TORCH,
         O_YASHICHI,
 
         // Fx
@@ -156,6 +157,7 @@ public:
         L_LEVEL,
         L_OPEN,
         L_PLATFORM,
+        L_POT,
         L_TOMBSTONE,
         L_WATER,
         L_YASHICHI,
@@ -275,7 +277,7 @@ public:
         I_DECREASE_VOLUME,
         
         // MINIGAME
-        AVATAR
+        AVATAR,
     };
 
     enum class State

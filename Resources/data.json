@@ -49,6 +49,10 @@
       "path": "collectibles/pot.png"
     },
     {
+      "label": "o_torch",
+      "path": "collectibles/torch.png"
+    },
+    {
       "label": "o_doll",
       "path": "collectibles/doll.png"
     },
@@ -632,6 +636,13 @@
       "scale": 2
     },
     {
+      "label": "o_torch",
+      "rows": 1,
+      "columns": 3,
+      "frames_per_second": 10,
+      "scale": 2
+    },
+    {
       "label": "o_doll",
       "rows": 1,
       "columns": 3,
@@ -881,7 +892,7 @@
       "columns": 3,
       "frames_per_second": 10,
       "scale": 2,
-        "collider_height": 4
+      "collider_height": 4
     },
     {
       "label": "t_eyeball",
@@ -917,7 +928,7 @@
     {
       "label": "t_spear",
       "scale": 2,
-        "collider_height": 3
+      "collider_height": 3
     },
     {
       "label": "t_spell",
@@ -931,7 +942,7 @@
     {
       "label": "t_torch",
       "rows": 1,
-      "columns": 3,
+      "columns": 4,
       "frames_per_second": 10,
       "scale": 2
     },

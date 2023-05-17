@@ -15,11 +15,8 @@ public:
 
     virtual void Spawn() = 0;
     virtual void Draw() const final;
-    
-protected:
     virtual bool IsPlayerBetweenBoundaries() const final;
-
-
+    
 protected:
     Rectf m_SpawnBoundaries;
     Point2f m_SpawnPos;

@@ -61,6 +61,7 @@ public:
     virtual bool IsOverlapping(GameObject* other) const final;
     virtual void SetFlipped(bool flipped) final;
     virtual void Reset();
+    virtual void UpdateCollider();
 protected:
     virtual void InitCollider() final;
     virtual std::vector<Point2f> GetColliderVertices() const final;
@@ -68,8 +69,6 @@ protected:
     virtual void ResetCollider() final;
     virtual Point2f GetContactPoint(const GameObject* other) const final;
 
-protected:
-    virtual void UpdateCollider();
 private:
     void InitShape();
     void InitShape(const Point2f& pos);

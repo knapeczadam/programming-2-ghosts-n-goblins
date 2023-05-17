@@ -231,6 +231,7 @@ void Game::InitLabels()
     m_Labels["o_money_bag"] = Label::O_MONEY_BAG;
     m_Labels["o_necklace"] = Label::O_NECKLACE;
     m_Labels["o_pot"] = Label::O_POT;
+    m_Labels["o_torch"] = Label::O_TORCH;
     m_Labels["o_yashichi"] = Label::O_YASHICHI;
 
     // Fx
@@ -1013,6 +1014,7 @@ void Game::ResetGame(bool fromCheckpoint)
     m_pLevelManager->Reset(fromCheckpoint);
     m_pMenuManager->Reset(fromCheckpoint);
     m_pCameraManager->Reset(fromCheckpoint);
+    m_pCollectibleManager->Reset(fromCheckpoint);
     ResetTimer();
 }
 

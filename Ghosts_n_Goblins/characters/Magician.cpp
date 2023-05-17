@@ -22,6 +22,7 @@ void Magician::Draw() const
     GameObject::Draw();
 }
 
+// TODO: sometimes it stuck in the second frame 
 void Magician::Update(float elapsedSec)
 {
     if (m_Awake)
@@ -111,6 +112,8 @@ void Magician::HandleCollision(GameObject* other)
 
 void Magician::Reset()
 {
+    ResetHP();
+    ResetTimer();
     m_Active = false;
     m_Visible = false;
     m_Awake = false;

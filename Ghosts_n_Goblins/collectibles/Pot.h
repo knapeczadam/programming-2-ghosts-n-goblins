@@ -29,8 +29,9 @@ public:
 
     virtual void Update(float elapsedSec) override;
     void Fall(Game::Label contentLabel, const Point2f& pos);
+    void SetContent(Game::Label content);
 
 private:
-    Game::Label m_ContentLabel;
+    Game::Label m_Content;
     const float m_Gravity{ -200.f };
 };

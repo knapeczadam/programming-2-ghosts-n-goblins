@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "IEnemy.h"
+#include "IPotter.h"
 
 /**
  * \brief
@@ -15,7 +16,7 @@
  * In the Famicom/NES-based versions of the game, Unicorns are invulnerable to the Shield/Cross.
  * <a href="https://strategywiki.org/wiki/Ghosts_%27n_Goblins/Enemies#Unicorn">StrategyWiki</a>
  */
-class Unicorn final : public IEnemy
+class Unicorn final : public IEnemy, IPotter
 {
 private:
     enum class State

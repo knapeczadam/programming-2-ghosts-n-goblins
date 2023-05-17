@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "IEnemy.h"
+#include "IPotter.h"
 #include "game/GameObject.h"
 
 /**
@@ -11,7 +12,7 @@
  * You will encounter them on Stage 3 in addition to the first stage.
  * <a href="https://strategywiki.org/wiki/Ghosts_%27n_Goblins/Enemies#Zombies">StrategyWiki</a>
  */
-class Zombie final : public IEnemy
+class Zombie final : public IEnemy, public IPotter
 {
 public:
     explicit Zombie(const Point2f& pos, GameController* pGameController);

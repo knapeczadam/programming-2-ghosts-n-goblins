@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "IEnemy.h"
+#include "IPotter.h"
 
 /**
  * \brief 
@@ -11,7 +12,7 @@
  * Be especially careful when they are just above the height of your head.
  * <a href="https://strategywiki.org/wiki/Ghosts_%27n_Goblins/Enemies#Woody_Pigs">StrategyWiki</a>
  */
-class WoodyPig final : public IEnemy
+class WoodyPig final : public IEnemy, public IPotter
 {
 public:
     explicit WoodyPig(const Point2f& pos, GameController* pGameController);

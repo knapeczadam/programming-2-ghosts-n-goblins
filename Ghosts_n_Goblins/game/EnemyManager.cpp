@@ -264,6 +264,21 @@ std::vector<GameObject*>& EnemyManager::GetZombies()
     return m_Zombies;
 }
 
+ISpawner* EnemyManager::GetFlyingKnightSpawner() const
+{
+    return m_pFlyingKnightSpawner;
+}
+
+ISpawner* EnemyManager::GetWoodyPigSpawner() const
+{
+    return m_pWoodyPigSpawner;
+}
+
+ISpawner* EnemyManager::GetZombieSpawner() const
+{
+    return m_pZombieSpawner;
+}
+
 GameObject* EnemyManager::GetMagician() const
 {
     return m_pMagician;

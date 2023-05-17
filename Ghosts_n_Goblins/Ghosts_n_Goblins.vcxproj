@@ -154,6 +154,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="characters\IPotter.cpp" />
     <ClCompile Include="characters\Unicorn.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">pch.h</PrecompiledHeaderFile>
@@ -1523,6 +1524,7 @@
       <AdditionalIncludeDirectories>;C:\dev\vcpkg\installed\x64-windows\include</AdditionalIncludeDirectories>
     </ClCompile>
     <ClCompile Include="level\colliders\LadderDeactivator.cpp" />
+    <ClCompile Include="level\colliders\PotDeactivator.cpp" />
     <ClCompile Include="level\colliders\TombstoneCollider.cpp">
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -2496,6 +2498,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="characters\IPotter.h" />
     <ClInclude Include="characters\Unicorn.h" />
     <ClInclude Include="characters\Crow.h" />
     <ClInclude Include="characters\FlyingKnight.h" />
@@ -2555,6 +2558,7 @@
     <ClInclude Include="level\colliders\LadderCollider.h" />
     <ClInclude Include="level\colliders\LadderActivator.h" />
     <ClInclude Include="level\colliders\LadderDeactivator.h" />
+    <ClInclude Include="level\colliders\PotDeactivator.h" />
     <ClInclude Include="level\colliders\TombstoneCollider.h" />
     <ClInclude Include="level\colliders\YashichiCollider.h" />
     <ClInclude Include="level\Door.h" />

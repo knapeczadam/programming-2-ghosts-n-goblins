@@ -7,6 +7,7 @@
 #include "engine/SoundManager.h"
 #include "engine/Sprite.h"
 #include "fx/FXManager.h"
+#include "game/CollectibleManager.h"
 #include "game/GameController.h"
 #include "game/PlayerManager.h"
 
@@ -33,6 +34,7 @@ void Zombie::Draw() const
 
 void Zombie::Update(float elapsedSec)
 {
+    IPotter::Update(elapsedSec);
     IEnemy::Update(elapsedSec);
     if (m_Awake)
     {
@@ -40,10 +42,12 @@ void Zombie::Update(float elapsedSec)
     }
     else if (m_CanWalk)
     {
+        ShowPot();
         Walk(elapsedSec);
     }
     else
     {
+        HidePot();
         Sleep(elapsedSec);
     }
     UpdateCollider(); // do not delete this line TODO!
@@ -57,6 +61,7 @@ void Zombie::HandleCollision(GameObject* other)
     other->SetVisible(false);
     if (m_HP == 0)
     {
+        ActivatePot();
         m_Active = false;
         m_Visible = false;
         m_pGameController->m_pPlayerManager->GetPlayer()->AddScore(m_Score);
