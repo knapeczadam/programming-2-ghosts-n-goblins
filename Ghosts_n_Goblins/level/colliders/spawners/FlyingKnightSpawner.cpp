@@ -10,9 +10,8 @@
 #include "game/GameObject.h"
 #include "game/PlayerManager.h"
 
-FlyingKnightSpawner::FlyingKnightSpawner(const Rectf& boundaries,
-                                         GameController* pGameController)
-        : ISpawner{boundaries, pGameController}
+FlyingKnightSpawner::FlyingKnightSpawner(const Rectf& shape, GameController* pGameController)
+        : ISpawner{Game::Label::L_FLYING_KNIGHT,  shape, pGameController}
     , m_HorOffset{290.0f}
     , m_VerOffset{224.0f}
     , m_CurrVerOffset{}

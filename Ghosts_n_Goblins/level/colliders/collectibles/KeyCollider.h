@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include "ICollider.h"
+#include "level/colliders/ICollider.h"
 
 class KeyCollider final : public ICollider
 {

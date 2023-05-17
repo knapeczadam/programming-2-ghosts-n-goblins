@@ -4,14 +4,12 @@
 #include "GameController.h"
 #include "Texture.h"
 #include "engine/TextureManager.h"
-#include "level/colliders/ArmorCollider.h"
 #include "level/colliders/KillZone.h"
 #include "level/colliders/LadderActivator.h"
 #include "level/Level.h"
 #include "level/Platform.h"
 #include "level/colliders/TombstoneCollider.h"
 #include "level/Water.h"
-#include "level/colliders/YashichiCollider.h"
 
 #include <ranges>
 
@@ -24,10 +22,15 @@
 #include "level/colliders/CheckpointCollider.h"
 #include "level/colliders/DoorCollider.h"
 #include "level/colliders/EndCollider.h"
-#include "level/colliders/KeyCollider.h"
 #include "level/colliders/LadderCollider.h"
 #include "level/colliders/LadderDeactivator.h"
 #include "level/colliders/PotDeactivator.h"
+#include "level/colliders/collectibles/ArmorCollider.h"
+#include "level/colliders/collectibles/KeyCollider.h"
+#include "level/colliders/collectibles/YashichiCollider.h"
+#include "level/colliders/spawners/FlyingKnightSpawner.h"
+#include "level/colliders/spawners/WoodyPigSpawner.h"
+#include "level/colliders/spawners/ZombieSpawner.h"
 
 float LevelManager::s_GroundHeight{62.0f};
 float LevelManager::s_HillHeight{220.0f};
@@ -41,6 +44,7 @@ LevelManager::LevelManager(GameController* pGameController)
       , m_pKillZone{nullptr}
       , m_pLevel{nullptr}
       , m_pPlatform{nullptr}
+    , m_pDoor{nullptr}
     , m_CheckpointReached{false}
 {
     m_pGameController->m_pLevelManager = this;
@@ -64,6 +68,7 @@ void LevelManager::Initialize(bool fromCheckpoint)
     InitWaters();
     InitColliders(fromCheckpoint);
     InitDoor();
+    InitSpawners(fromCheckpoint);
 }
 
 void LevelManager::CleanUp()
@@ -310,6 +315,20 @@ void LevelManager::InitKillZone()
     m_Colliders.push_back(m_pKillZone);
 }
 
+void LevelManager::InitSpawners(bool fromCheckpoint)
+{
+    m_pFlyingKnightSpawner = new FlyingKnightSpawner{
+        Rectf{3800.0f, 0.0f, 600.0f, m_pGameController->m_ViewPort.height}, m_pGameController
+    };
+    m_pWoodyPigSpawner = new WoodyPigSpawner{
+        Rectf{0.0f, 0.0f, 0.0f, m_pGameController->m_ViewPort.height}, m_pGameController
+    };
+    m_pZombieSpawner = new ZombieSpawner{
+        Rectf{0.0f, 0.0f, 2485.0f, m_pGameController->m_ViewPort.height}, m_pGameController
+    };
+    m_Colliders.insert(m_Colliders.end(),{m_pFlyingKnightSpawner, m_pWoodyPigSpawner, m_pZombieSpawner});
+}
+
 float LevelManager::GetHillHeight()
 {
     return s_HillHeight;
@@ -333,6 +352,21 @@ std::vector<GameObject*>& LevelManager::GetTombstones()
 std::vector<GameObject*>& LevelManager::GetWaters()
 {
     return m_Waters;
+}
+
+ISpawner* LevelManager::GetFlyingKnightSpawner() const
+{
+    return static_cast<ISpawner*>(m_pFlyingKnightSpawner);
+}
+
+ISpawner* LevelManager::GetWoodyPigSpawner() const
+{
+    return static_cast<ISpawner*>(m_pWoodyPigSpawner);
+}
+
+ISpawner* LevelManager::GetZombieSpawner() const
+{
+    return static_cast<ISpawner*>(m_pZombieSpawner);
 }
 
 Level* LevelManager::GetLevel() const

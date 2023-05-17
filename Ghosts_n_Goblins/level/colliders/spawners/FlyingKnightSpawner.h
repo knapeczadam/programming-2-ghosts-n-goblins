@@ -1,10 +1,11 @@
 ﻿#pragma once
 #include "ISpawner.h"
+#include "level/colliders/ICollider.h"
 
-class FlyingKnightSpawner : public ISpawner
+class FlyingKnightSpawner :  public ISpawner
 {
 public:
-    FlyingKnightSpawner(const Rectf& boundaries, GameController* pGameController);
+    FlyingKnightSpawner(const Rectf& shape, GameController* pGameController);
     virtual ~FlyingKnightSpawner() override = default;
     FlyingKnightSpawner(const FlyingKnightSpawner&) = delete;
     FlyingKnightSpawner(FlyingKnightSpawner&&) = delete;

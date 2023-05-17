@@ -6,6 +6,7 @@
 class GameObject;
 class Level;
 class Platform;
+class ISpawner;
 
 class LevelManager final : public IManager
 {
@@ -20,6 +21,9 @@ public:
     std::vector<GameObject*>& GetColliders();
     std::vector<GameObject*>& GetTombstones();
     std::vector<GameObject*>& GetWaters();
+    ISpawner* GetFlyingKnightSpawner() const;
+    ISpawner* GetWoodyPigSpawner() const;
+    ISpawner* GetZombieSpawner() const;
 
     Level* GetLevel() const;
     GameObject* GetDoor();
@@ -54,6 +58,7 @@ private:
     void InitWaters();
     void InitDoor();
     void InitKillZone();
+    void InitSpawners(bool fromCheckpoint);
 
 public:
     static float GetHillHeight();
@@ -62,6 +67,10 @@ private:
     std::vector<GameObject*> m_Colliders;
     std::vector<GameObject*> m_Tombstones;
     std::vector<GameObject*> m_Waters;
+    
+    GameObject* m_pFlyingKnightSpawner;
+    GameObject* m_pWoodyPigSpawner;
+    GameObject* m_pZombieSpawner;
 
     GameObject* m_pForeground;
     GameObject* m_pKillZone;

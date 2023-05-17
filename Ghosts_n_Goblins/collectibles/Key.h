@@ -1,7 +1,6 @@
 ﻿#pragma once
 #include "ICollectible.h"
 #include "game/GameObject.h"
-#include "level/colliders/KeyCollider.h"
 
 /**
  * \brief 

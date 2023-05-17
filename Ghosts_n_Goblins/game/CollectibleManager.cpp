@@ -12,11 +12,12 @@
 #include <ranges>
 
 #include "EnemyManager.h"
+#include "LevelManager.h"
 #include "characters/IPotter.h"
 #include "collectibles/Doll.h"
 #include "collectibles/Key.h"
 #include "collectibles/King.h"
-#include "level/spawners/ISpawner.h"
+#include "level/colliders/spawners/ISpawner.h"
 #include "throwables/Dagger.h"
 #include "throwables/Lance.h"
 #include "throwables/Torch.h"
@@ -62,21 +63,21 @@ void CollectibleManager::CleanUp()
 
 void CollectibleManager::UpdatePot()
 {
-    if (m_pGameController->m_pEnemyManager->GetZombieSpawner()->IsPlayerBetweenBoundaries())
+    if (m_pGameController->m_pLevelManager->GetZombieSpawner()->IsPlayerBetweenBoundaries())
     {
         for (GameObject* pZombie : m_pGameController->m_pEnemyManager->GetZombies())
         {
             AssignPot(pZombie);
         }
     }
-    else if (m_pGameController->m_pEnemyManager->GetFlyingKnightSpawner()->IsPlayerBetweenBoundaries())
+    else if (m_pGameController->m_pLevelManager->GetFlyingKnightSpawner()->IsPlayerBetweenBoundaries())
     {
         for (GameObject* pFlyingKnight : m_pGameController->m_pEnemyManager->GetFlyingKnights())
         {
             AssignPot(pFlyingKnight);
         }
     }
-    else if (m_pGameController->m_pEnemyManager->GetWoodyPigSpawner()->IsPlayerBetweenBoundaries())
+    else if (m_pGameController->m_pLevelManager->GetWoodyPigSpawner()->IsPlayerBetweenBoundaries())
     {
         for (GameObject* pWoodyPog : m_pGameController->m_pEnemyManager->GetWoodyPigs())
         {
@@ -108,6 +109,8 @@ void CollectibleManager::Reset(bool fromCheckpoint)
         m_WeaponCount = 0;
     }
     m_ContentActive = false;
+    CleanUp();
+    Initialize(fromCheckpoint);
 }
 
 void CollectibleManager::LateUpdate(float elapsedSec)

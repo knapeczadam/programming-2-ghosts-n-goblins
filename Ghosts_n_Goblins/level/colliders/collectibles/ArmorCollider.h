@@ -1,6 +1,6 @@
 ﻿#pragma once
-#include "ICollider.h"
 #include "game/GameController.h"
+#include "level/colliders/ICollider.h"
 
 class ArmorCollider final: public ICollider
 {

@@ -1,25 +1,19 @@
 ﻿#pragma once
 #include "engine/ITimer.h"
+#include "level/colliders/ICollider.h"
 
 class GameController;
 
-class ISpawner : public ITimer
+class ISpawner : public ICollider
 {
 public:
-    ISpawner(const Rectf& boundaries, GameController* pGameController);
-    virtual ~ISpawner() = default;
+    explicit ISpawner(Game::Label label, const Rectf& shape, GameController* pGameController);
+    virtual ~ISpawner() override = default;
     ISpawner(const ISpawner&) = delete;
     ISpawner(ISpawner&&) = delete;
     ISpawner& operator=(const ISpawner&) = delete;
     ISpawner& operator=(ISpawner&&) = delete;
 
     virtual void Spawn() = 0;
-    virtual void Draw() const final;
     virtual bool IsPlayerBetweenBoundaries() const final;
-    
-protected:
-    Rectf m_SpawnBoundaries;
-    Point2f m_SpawnPos;
-    GameController* m_pGameController;
-    Color4f m_BoundaryColor;
 };

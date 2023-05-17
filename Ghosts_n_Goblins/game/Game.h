@@ -161,6 +161,9 @@ public:
         L_TOMBSTONE,
         L_WATER,
         L_YASHICHI,
+        L_FLYING_KNIGHT,
+        L_WOODY_PIG,
+        L_ZOMBIE,
 
         // Throwables
         T_DAGGER,
@@ -277,7 +280,7 @@ public:
         I_DECREASE_VOLUME,
         
         // MINIGAME
-        AVATAR,
+        AVATAR
     };
 
     enum class State

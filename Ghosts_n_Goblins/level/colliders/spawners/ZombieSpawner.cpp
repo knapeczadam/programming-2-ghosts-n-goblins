@@ -4,14 +4,12 @@
 #include "game/GameObject.h"
 #include "game/GameController.h"
 #include "characters/Player.h"
-#include "characters/IEnemy.h"
-#include "characters/Zombie.h"
 #include "game/EnemyManager.h"
 #include "game/LevelManager.h"
 #include "game/PlayerManager.h"
 
-ZombieSpawner::ZombieSpawner(const Rectf& boundaries, GameController* pGameController)
-    : ISpawner{boundaries, pGameController}
+ZombieSpawner::ZombieSpawner(const Rectf& shape, GameController* pGameController)
+    : ISpawner{Game::Label::L_ZOMBIE, shape, pGameController}
       , m_MinRange{66.0f}
       , m_MaxRange{208.0f}
 {

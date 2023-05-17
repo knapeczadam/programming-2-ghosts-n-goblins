@@ -8,8 +8,8 @@
 #include "game/GameObject.h"
 #include "game/PlayerManager.h"
 
-WoodyPigSpawner::WoodyPigSpawner(const Rectf& boundaries, GameController* pGameController)
-    : ISpawner{boundaries,  pGameController}
+WoodyPigSpawner::WoodyPigSpawner(const Rectf& shape, GameController* pGameController)
+    : ISpawner{Game::Label::L_WOODY_PIG, shape,  pGameController}
 {
 }
 

@@ -10,14 +10,13 @@
 #include "characters/Unicorn.h"
 #include "characters/WoodyPig.h"
 #include "characters/Zombie.h"
-#include "level/spawners/FlyingKnightSpawner.h"
-#include "level/spawners/WoodyPigSpawner.h"
-#include "level/spawners/ZombieSpawner.h"
-#include "level/spawners/ISpawner.h"
 
 #include <ranges>
 
 #include "LevelManager.h"
+#include "level/colliders/spawners/FlyingKnightSpawner.h"
+#include "level/colliders/spawners/WoodyPigSpawner.h"
+#include "level/colliders/spawners/ZombieSpawner.h"
 
 EnemyManager::EnemyManager(GameController* pGameController)
     : IManager(pGameController)
@@ -26,12 +25,8 @@ EnemyManager::EnemyManager(GameController* pGameController)
       , m_GreenMonsters{}
       , m_Throwables{}
       , m_FlyingKnights{}
-    , m_Spawners{}
       , m_WoodyPigs{}
       , m_Zombies{}
-      , m_pFlyingKnightSpawner{nullptr}
-      , m_pWoodyPigSpawner{nullptr}
-      , m_pZombieSpawner{nullptr}
 {
     m_pGameController->m_pEnemyManager = this;
     Initialize();
@@ -52,7 +47,6 @@ void EnemyManager::Initialize(bool fromCheckpoint)
     InitUnicorn();
     InitWoodyPigs();
     InitZombies();
-    InitSpawners(fromCheckpoint);
 }
 
 void EnemyManager::CleanUp()
@@ -65,10 +59,6 @@ void EnemyManager::CleanUp()
     m_FlyingKnights.clear();
     m_WoodyPigs.clear();
     m_Zombies.clear();
-
-    delete m_pFlyingKnightSpawner;
-    delete m_pWoodyPigSpawner;
-    delete m_pZombieSpawner;
 }
 
 void EnemyManager::Reset(bool fromCheckpoint)
@@ -89,12 +79,6 @@ void EnemyManager::DrawThrowables() const
     static auto draw{[](const GameObject* pGameObject) { pGameObject->Draw(); }};
     static auto isVisible{[](const GameObject* pGameObject) { return pGameObject->IsVisible(); }};
     std::ranges::for_each(m_Throwables | std::views::filter(isVisible), draw);
-}
-
-void EnemyManager::DrawSpawners() const
-{
-    static auto draw{[](const ISpawner* pSpawner) { pSpawner->Draw(); }};
-    std::ranges::for_each(m_Spawners, draw);
 }
 
 void EnemyManager::Update(float elapsedSec)
@@ -208,25 +192,11 @@ void EnemyManager::InitZombies()
     m_Zombies.insert(m_Zombies.end(), {pZombie1, pZombie2, pZombie3});
 }
 
-void EnemyManager::InitSpawners(bool fromCheckpoint)
-{
-    m_pFlyingKnightSpawner = new FlyingKnightSpawner{
-        Rectf{3800.0f, 0.0f, 600.0f, m_pGameController->m_ViewPort.height}, m_pGameController
-    };
-    m_pWoodyPigSpawner = new WoodyPigSpawner{
-        Rectf{0.0f, 0.0f, 0.0f, m_pGameController->m_ViewPort.height}, m_pGameController
-    };
-    m_pZombieSpawner = new ZombieSpawner{
-        Rectf{0.0f, 0.0f, 2485.0f, m_pGameController->m_ViewPort.height}, m_pGameController
-    };
-    m_Spawners.insert(m_Spawners.end(), {m_pFlyingKnightSpawner, m_pWoodyPigSpawner, m_pZombieSpawner});
-}
-
 void EnemyManager::SpawnEnemies()
 {
-    m_pFlyingKnightSpawner->Spawn();
-    m_pWoodyPigSpawner->Spawn();
-    m_pZombieSpawner->Spawn();
+    m_pGameController->m_pLevelManager->GetFlyingKnightSpawner()->Spawn();
+    m_pGameController->m_pLevelManager->GetWoodyPigSpawner()->Spawn();
+    m_pGameController->m_pLevelManager->GetZombieSpawner()->Spawn();
 }
 
 std::vector<GameObject*>& EnemyManager::GetCrows()
@@ -262,21 +232,6 @@ std::vector<GameObject*>& EnemyManager::GetWoodyPigs()
 std::vector<GameObject*>& EnemyManager::GetZombies()
 {
     return m_Zombies;
-}
-
-ISpawner* EnemyManager::GetFlyingKnightSpawner() const
-{
-    return m_pFlyingKnightSpawner;
-}
-
-ISpawner* EnemyManager::GetWoodyPigSpawner() const
-{
-    return m_pWoodyPigSpawner;
-}
-
-ISpawner* EnemyManager::GetZombieSpawner() const
-{
-    return m_pZombieSpawner;
 }
 
 GameObject* EnemyManager::GetMagician() const

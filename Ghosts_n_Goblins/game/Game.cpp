@@ -59,7 +59,7 @@ Game::Game(const Window& window)
       , m_Data{nullptr}
       , m_DataPath{"data.json"}
       , m_Labels{}
-      , m_State{State::GAME}
+      , m_State{State::BOOT}
       , m_pBootManager{nullptr}
       , m_pCameraManager{nullptr}
       , m_pCutsceneManager{nullptr}
@@ -824,9 +824,6 @@ void Game::DrawDebug() const
 #endif
 #if DEBUG_COLLIDER
     m_pLevelManager->DrawColliders();
-#endif
-#if DEBUG_SPAWNER
-    m_pEnemyManager->DrawSpawners();
 #endif
 }
 

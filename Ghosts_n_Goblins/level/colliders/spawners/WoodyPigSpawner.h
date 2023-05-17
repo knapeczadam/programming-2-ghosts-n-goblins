@@ -1,10 +1,11 @@
 ﻿#pragma once
 #include "ISpawner.h"
+#include "level/colliders/ICollider.h"
 
-class WoodyPigSpawner final : public ISpawner
+class WoodyPigSpawner final :  public ISpawner
 {
 public:
-    explicit WoodyPigSpawner(const Rectf& boundaries, GameController* pGameController);
+    explicit WoodyPigSpawner(const Rectf& shape, GameController* pGameController);
     virtual ~WoodyPigSpawner() override = default;
     WoodyPigSpawner(const WoodyPigSpawner&) = delete;
     WoodyPigSpawner(WoodyPigSpawner&&) = delete;
