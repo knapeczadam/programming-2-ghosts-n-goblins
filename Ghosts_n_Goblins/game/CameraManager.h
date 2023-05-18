@@ -15,12 +15,18 @@ public:
     CameraManager& operator=(CameraManager&& other) noexcept = delete;
 
     void DoFrustumCulling();
+    void ShrinkBoundaries();
     void Transform(Game::Label label);
     Camera* GetCamera() const;
+    virtual void Update(float elapsedSec) override;
+    virtual void Reset(bool fromCheckpoint) override;
 
 protected:
     virtual void Initialize(bool fromCheckpoint = false) override;
     virtual void CleanUp() override;
 private:
     Camera* m_pCamera;
+    float m_ShrinkSteps;
+    int m_ShrinkStepsCounter;
+    bool m_InitBoundaries;
 };

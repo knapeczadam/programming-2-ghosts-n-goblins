@@ -18,6 +18,7 @@ public:
     
     void Draw() const;
     void Transform(const GameObject* pGameObject);
+    Rectf GetBoundaries() const;
     void SetBoundaries(const Rectf& boundaries);
     bool IsOutOfWindow(const GameObject* pGameObject) const;
 

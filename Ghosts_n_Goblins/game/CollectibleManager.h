@@ -17,7 +17,7 @@ public:
     CollectibleManager& operator=(CollectibleManager&&) = delete;
 
     void Draw() const;
-    void Update(float elapsedSec);
+    virtual void Update(float elapsedSec) override;
     virtual void Reset(bool fromCheckpoint = false) override;
     void LateUpdate(float elapsedSec);
     std::vector<GameObject*>& GetCollectibles();

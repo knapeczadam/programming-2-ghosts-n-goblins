@@ -39,7 +39,7 @@ public:
     void DrawWaters() const;
     void DrawDoor() const;
 
-    void Update(float elapsedSec);
+    virtual void Update(float elapsedSec) override;
     void LateUpdate(float elapsedSec);
     virtual void Reset(bool fromCheckpoint = false) override;
     bool CheckpointReached();

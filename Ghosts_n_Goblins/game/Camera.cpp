@@ -36,6 +36,11 @@ void Camera::Transform(const GameObject* pGameObject)
     glTranslatef(-m_Pos.x, -m_Pos.y, 0.0f);
 }
 
+Rectf Camera::GetBoundaries() const
+{
+    return m_Boundaries;
+}
+
 void Camera::SetBoundaries(const Rectf& boundaries)
 {
     m_Boundaries = boundaries;

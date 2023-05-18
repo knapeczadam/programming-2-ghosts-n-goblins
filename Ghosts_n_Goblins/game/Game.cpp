@@ -859,8 +859,7 @@ void Game::UpdateBoot(float elapsedSec)
 
 void Game::UpdateGame(float elapsedSec)
 {
-    m_pGameController->m_pCameraManager->GetCamera()->SetBoundaries(
-    m_pGameController->m_pLevelManager->GetLevel()->GetBoundaries());
+    m_pCameraManager->Update(elapsedSec);
     m_pLevelManager->Update(elapsedSec);
     m_pPlayerManager->Update(elapsedSec);
     m_pEnemyManager->SpawnEnemies();

@@ -20,6 +20,9 @@ class IEnemy;
 CameraManager::CameraManager(GameController* pGameController)
     : IManager{pGameController}
       , m_pCamera{nullptr}
+    , m_ShrinkSteps{750.0f}
+    , m_ShrinkStepsCounter{1}
+    , m_InitBoundaries{false}
 {
     pGameController->m_pCameraManager = this;
     Initialize();
@@ -58,6 +61,18 @@ void CameraManager::DoFrustumCulling()
     std::ranges::for_each(m_pGameController->m_pEnemyManager->GetCrows() | std::views::filter(isAwake) |  std::views::filter(isOutOfWindow), deactivate);
 }
 
+void CameraManager::ShrinkBoundaries()
+{
+    const float playerX{m_pGameController->m_pPlayerManager->GetPlayer()->GetPosition<Point2f>().x};
+    const float offset{256.0f};
+    if (playerX - offset >= m_ShrinkSteps * m_ShrinkStepsCounter)
+    {
+        Rectf boundaries{m_pCamera->GetBoundaries()};
+        boundaries.left = m_ShrinkSteps * m_ShrinkStepsCounter++;
+       m_pCamera->SetBoundaries(boundaries); 
+    }
+}
+
 void CameraManager::Transform(Game::Label label)
 {
     switch (label)
@@ -74,4 +89,27 @@ void CameraManager::Transform(Game::Label label)
 Camera* CameraManager::GetCamera() const
 {
     return m_pCamera;
+}
+
+void CameraManager::Update(float elapsedSec)
+{
+    if (not m_InitBoundaries)
+    {
+        m_pCamera->SetBoundaries(m_pGameController->m_pLevelManager->GetLevel()->GetBoundaries());
+        m_InitBoundaries = true;
+    }
+    StartTimer(1.0f);
+    if (IsTimerFinished())
+    {
+        ShrinkBoundaries();
+    }
+}
+
+void CameraManager::Reset(bool fromCheckpoint)
+{
+    m_InitBoundaries = false;
+    m_ShrinkStepsCounter = 1;
+    CleanUp();
+    Initialize();
+    ResetTimer();
 }

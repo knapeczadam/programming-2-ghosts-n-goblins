@@ -23,7 +23,7 @@ public:
     virtual void Reset(bool fromCheckpoint = false) override;
     void DrawPlayer() const;
     void DrawThrowables() const;
-    void Update(float elapsedSec);
+    virtual void Update(float elapsedSec) override;
     void LateUpdate(float elapsedSec);
     
 protected:

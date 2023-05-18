@@ -8,6 +8,11 @@ IManager::IManager(GameController* pGameController)
 {
 }
 
+void IManager::Update(float elapsedSec)
+{
+    
+}
+
 void IManager::Reset(bool fromCheckpoint)
 {
     CleanUp();

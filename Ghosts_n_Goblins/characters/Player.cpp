@@ -24,6 +24,8 @@
 #include <numeric>
 
 #include "collectibles/Key.h"
+#include "game/Camera.h"
+#include "game/CameraManager.h"
 #include "game/CollectibleManager.h"
 
 Player::Player(const Point2f& pos, GameController* pGameController)
@@ -342,7 +344,7 @@ void Player::UpdatePosition(float elapsedSec)
     }
     m_Shape.bottom += m_Velocity.y * elapsedSec;
 
-    CheckForBoundaries(m_pGameController->m_pLevelManager->GetLevel()->GetBoundaries());
+    CheckBoundaries(m_pGameController->m_pCameraManager->GetCamera()->GetBoundaries());
 }
 
 void Player::Move()
@@ -815,7 +817,7 @@ void Player::HandleCollision(GameObject* other)
     if (HandleCollectible(other)) return;
 }
 
-void Player::CheckForBoundaries(const Rectf& boundaries)
+void Player::CheckBoundaries(const Rectf& boundaries)
 {
     const float horizontalOffset{(m_Shape.width - m_pSprite->GetColliderWidth()) / 2};
     const float epsilon{1.0f};

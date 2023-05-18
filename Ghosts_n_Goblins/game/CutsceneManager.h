@@ -15,7 +15,7 @@ public:
     CutsceneManager& operator=(CutsceneManager&& other) noexcept = delete;
 
     void DrawIntro() const;
-    void Update(float elapsedSec);
+    virtual void Update(float elapsedSec) override;
     virtual void Reset(bool fromCheckpoint = false) override;
     Game::Label GetState() const;
 

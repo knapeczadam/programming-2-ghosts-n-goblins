@@ -102,7 +102,7 @@ private:
     void Climb();
     void ApplyGravity(float elapsedSec);
     
-    void CheckForBoundaries(const Rectf& boundaries);
+    void CheckBoundaries(const Rectf& boundaries);
     
 private:
     
