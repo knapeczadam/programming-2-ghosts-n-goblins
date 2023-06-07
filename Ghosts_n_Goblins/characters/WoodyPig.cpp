@@ -43,7 +43,7 @@ void WoodyPig::HandleCollision(GameObject* other)
 
 void WoodyPig::Shoot(float elapsedSec)
 {
-    const int randInterval{std::rand() % 2 + 1}; 
+    const int randInterval{std::rand() % 2 + 1};
     StartTimer(randInterval);
     if (IsTimerFinished())
     {

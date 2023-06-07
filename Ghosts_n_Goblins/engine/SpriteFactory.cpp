@@ -9,7 +9,7 @@
 
 SpriteFactory::SpriteFactory(GameController* pGameController)
     : m_pGameController{pGameController}
-      , m_pSprites{}
+    , m_pSprites{}
 {
     pGameController->m_pSpriteFactory = this;
 }

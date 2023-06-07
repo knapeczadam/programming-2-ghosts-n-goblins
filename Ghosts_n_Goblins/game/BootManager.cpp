@@ -12,8 +12,8 @@
 
 BootManager::BootManager(GameController* pGameController)
     : IManager{pGameController}
-      , m_Intervals{}
-      , m_State{Game::Label::B_01}
+    , m_Intervals{}
+    , m_State{Game::Label::B_01}
 {
     pGameController->m_pBootManager = this;
     Initialize();

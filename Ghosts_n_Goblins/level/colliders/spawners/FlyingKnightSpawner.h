@@ -2,7 +2,7 @@
 #include "ISpawner.h"
 #include "level/colliders/ICollider.h"
 
-class FlyingKnightSpawner :  public ISpawner
+class FlyingKnightSpawner : public ISpawner
 {
 public:
     FlyingKnightSpawner(const Rectf& shape, GameController* pGameController);
@@ -13,6 +13,7 @@ public:
     FlyingKnightSpawner& operator=(FlyingKnightSpawner&&) = delete;
 
     virtual void Spawn() override;
+
 private:
     const float m_HorOffset;
     const float m_VerOffset;

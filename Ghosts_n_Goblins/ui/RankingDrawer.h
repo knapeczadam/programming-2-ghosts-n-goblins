@@ -18,6 +18,7 @@ public:
 private:
     void DrawPlayers() const;
     void DrawScores() const;
+
 private:
     Sprite* m_pTextBestRanking;
     Sprite* m_pAbc;

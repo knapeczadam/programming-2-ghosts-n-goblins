@@ -13,14 +13,14 @@
 
 HUD::HUD(GameController* pGameController)
     : UI{Game::Label::U_HUD, pGameController}
-      , m_pFrame{pGameController->m_pSpriteFactory->CreateSprite(Game::Label::U_FRAME)}
-      , m_pLife{pGameController->m_pSpriteFactory->CreateSprite(Game::Label::U_LIFE)}
-      , m_pNumbers(pGameController->m_pSpriteFactory->CreateSprite(Game::Label::U_NUMBERS))
-      , m_pTextTime(pGameController->m_pSpriteFactory->CreateSprite(Game::Label::U_TEXT_TIME))
-      , m_pWeapons(pGameController->m_pSpriteFactory->CreateSprite(Game::Label::U_WEAPONS))
-      , m_FirstDigit{}
-      , m_SecondDigit{}
-      , m_ThirdDigit{}
+    , m_pFrame{pGameController->m_pSpriteFactory->CreateSprite(Game::Label::U_FRAME)}
+    , m_pLife{pGameController->m_pSpriteFactory->CreateSprite(Game::Label::U_LIFE)}
+    , m_pNumbers(pGameController->m_pSpriteFactory->CreateSprite(Game::Label::U_NUMBERS))
+    , m_pTextTime(pGameController->m_pSpriteFactory->CreateSprite(Game::Label::U_TEXT_TIME))
+    , m_pWeapons(pGameController->m_pSpriteFactory->CreateSprite(Game::Label::U_WEAPONS))
+    , m_FirstDigit{}
+    , m_SecondDigit{}
+    , m_ThirdDigit{}
 
 {
     m_pFrame->SetPosition(Point2f{m_pGameController->m_ViewPort.width / 2 - m_pFrame->GetScaledClipWidth() / 2, 0.0f});

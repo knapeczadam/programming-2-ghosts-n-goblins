@@ -13,10 +13,10 @@ public:
     Level(Level&& other) noexcept = delete;
     Level& operator=(const Level& other) = delete;
     Level& operator=(Level&& other) noexcept = delete;
-    
+
     virtual void Draw() const override;
     virtual void HandleCollision(GameObject* other) override;
-    
+
     bool IsOnGround(GameObject* pGameObject) const;
     Rectf GetBoundaries() const;
     void SetBoundaries(const Rectf& boundaries);

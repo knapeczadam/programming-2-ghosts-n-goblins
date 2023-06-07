@@ -57,7 +57,7 @@ void RedArremer::Walk(float elapsedSec)
 
 void RedArremer::Shoot(float elapsedSec)
 {
-    const int randInterval{std::rand() % 2 + 1}; 
+    const int randInterval{std::rand() % 2 + 1};
     StartTimer(randInterval);
     if (IsTimerFinished())
     {

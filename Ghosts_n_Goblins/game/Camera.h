@@ -15,7 +15,7 @@ public:
     Camera(Camera&& other) noexcept = delete;
     Camera& operator=(const Camera& other) = delete;
     Camera& operator=(Camera&& other) noexcept = delete;
-    
+
     void Draw() const;
     void Transform(const GameObject* pGameObject);
     Rectf GetBoundaries() const;

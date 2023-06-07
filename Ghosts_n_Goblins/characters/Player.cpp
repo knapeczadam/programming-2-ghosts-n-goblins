@@ -5,11 +5,14 @@
 #include "IEnemy.h"
 #include "Matrix2x3.h"
 #include "Texture.h"
-#include "utils.h"
 #include "collectibles/ICollectible.h"
+#include "collectibles/Key.h"
 #include "engine/SoundManager.h"
 #include "engine/Sprite.h"
 #include "fx/FXManager.h"
+#include "game/Camera.h"
+#include "game/CameraManager.h"
+#include "game/CollectibleManager.h"
 #include "game/GameController.h"
 #include "game/InputManager.h"
 #include "game/LevelManager.h"
@@ -19,48 +22,45 @@
 #include "throwables/Dagger.h"
 #include "throwables/Lance.h"
 #include "throwables/Torch.h"
+#include "utils.h"
 
 #include <iostream>
 #include <numeric>
 
-#include "collectibles/Key.h"
-#include "game/Camera.h"
-#include "game/CameraManager.h"
-#include "game/CollectibleManager.h"
 
 Player::Player(const Point2f& pos, GameController* pGameController)
     : GameObject{Game::Label::C_ARTHUR, pos, true, pGameController}
-      , m_HorVelocity{150.0f}
-      , m_VerVelocity{100.0f}
-      , m_JumpVelocity{500.0f}
-      , m_Velocity{0.0f, 0.0f}
-      , m_Acceleration{0.0f, -1391.0f} // -981.0f
-      , m_State{State::IDLE}
-      , m_Crouching{false}
-      , m_ShortAccuCooldown{0.0f}
-      , m_LongAccuCooldown{0.0f}
-      , m_ShortCooldownTime{0.25f}
-      , m_LongCooldownTime{0.30f}
-      , m_Attacking{false}
-      , m_CurrWeapon{Game::Label::T_LANCE}
-      , m_Overheated{false}
-      , m_OnPlatform{false}
-      , m_OffsetSnapshot{0.0f, 0.0f}
-      , m_CanJump{true}
-      , m_MaxHP{2}
-      , m_HP{m_MaxHP}
-      , m_MaxLives{7}
-      , m_Lives{3}
-      , m_Score{0}
-      , m_CanClimb{false}
-      , m_Climbing{false}
-      , m_OnLadder{false}
-      , m_OnGround{false}
-      , m_ImpactFromLeft{false}
-      , m_HitTriggered{false}
-      , m_HitFlipped{false}
-      , m_HasKey{false}
-      , m_OnHill{false}
+    , m_HorVelocity{150.0f}
+    , m_VerVelocity{100.0f}
+    , m_JumpVelocity{500.0f}
+    , m_Velocity{0.0f, 0.0f}
+    , m_Acceleration{0.0f, -1391.0f} // -981.0f
+    , m_State{State::IDLE}
+    , m_Crouching{false}
+    , m_ShortAccuCooldown{0.0f}
+    , m_LongAccuCooldown{0.0f}
+    , m_ShortCooldownTime{0.25f}
+    , m_LongCooldownTime{0.30f}
+    , m_Attacking{false}
+    , m_CurrWeapon{Game::Label::T_LANCE}
+    , m_Overheated{false}
+    , m_OnPlatform{false}
+    , m_OffsetSnapshot{0.0f, 0.0f}
+    , m_CanJump{true}
+    , m_MaxHP{2}
+    , m_HP{m_MaxHP}
+    , m_MaxLives{7}
+    , m_Lives{3}
+    , m_Score{0}
+    , m_CanClimb{false}
+    , m_Climbing{false}
+    , m_OnLadder{false}
+    , m_OnGround{false}
+    , m_ImpactFromLeft{false}
+    , m_HitTriggered{false}
+    , m_HitFlipped{false}
+    , m_HasKey{false}
+    , m_OnHill{false}
 {
 }
 

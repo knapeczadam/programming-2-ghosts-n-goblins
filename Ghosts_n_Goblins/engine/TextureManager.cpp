@@ -4,15 +4,14 @@
 #include "Texture.h"
 #include "game/GameController.h"
 
-#include <fstream>
 #include <iostream>
 
 
 TextureManager::TextureManager(GameController* pGameController)
     : IManager(pGameController)
-      , m_Textures{}
-      , m_pTextures{}
-      , m_Path{"images/"}
+    , m_Textures{}
+    , m_pTextures{}
+    , m_Path{"images/"}
 {
     pGameController->m_pTextureManager = this;
     Initialize();

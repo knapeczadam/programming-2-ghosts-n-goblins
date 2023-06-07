@@ -48,7 +48,6 @@ void Unicorn::HandleCollision(GameObject* other)
 
 void Unicorn::Awake(float elapsedSec)
 {
-    
 }
 
 void Unicorn::Wait(float elapsedSec)
@@ -69,7 +68,7 @@ void Unicorn::Jump(float elapsedSec)
 
 void Unicorn::Shoot(float elapsedSec)
 {
-    const int randInterval{std::rand() % 2 + 1}; 
+    const int randInterval{std::rand() % 2 + 1};
     StartTimer(randInterval);
     if (IsTimerFinished())
     {
@@ -85,7 +84,9 @@ void Unicorn::Shoot(float elapsedSec)
                 return;
             }
         }
-        m_pGameController->m_pEnemyManager->GetThrowables().push_back(new Fireball{Game::Label::T_FIREBALL_UNICORN, GetShapeCenter(),direction.Normalized(), m_pGameController});
+        m_pGameController->m_pEnemyManager->GetThrowables().push_back(
+            new Fireball{Game::Label::T_FIREBALL_UNICORN, GetShapeCenter(), direction.Normalized(), m_pGameController}
+            );
     }
     m_pGameController->m_pSoundManager->PlayEffect(Game::Label::F_FIRE_BOSS);
 }

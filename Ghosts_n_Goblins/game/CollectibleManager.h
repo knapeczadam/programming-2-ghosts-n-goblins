@@ -21,7 +21,7 @@ public:
     virtual void Reset(bool fromCheckpoint = false) override;
     void LateUpdate(float elapsedSec);
     std::vector<GameObject*>& GetCollectibles();
-    
+
     Game::Label GetNextContent();
     bool IsContentActive();
     void ActivateContent();
@@ -31,6 +31,7 @@ protected:
     virtual void Initialize(bool fromCheckpoint = false) override;
     virtual void CleanUp() override;
     void UpdatePot();
+
 private:
     void InitCoins();
     void InitKey();
@@ -43,6 +44,7 @@ private:
     void InitYashichi();
     void InitWeapons();
     void AssignPot(GameObject* pEnemy);
+
 private:
     std::vector<GameObject*> m_Collectibles;
     GameObject* m_pPot;

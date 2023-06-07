@@ -19,7 +19,7 @@ class IEnemy;
 
 CameraManager::CameraManager(GameController* pGameController)
     : IManager{pGameController}
-      , m_pCamera{nullptr}
+    , m_pCamera{nullptr}
     , m_ShrinkSteps{750.0f}
     , m_ShrinkStepsCounter{1}
     , m_InitBoundaries{false}
@@ -54,7 +54,7 @@ void CameraManager::DoFrustumCulling()
 
     std::ranges::for_each(m_pGameController->m_pPlayerManager->GetThrowables() | std::views::filter(isOutOfWindow), deactivate);
     std::ranges::for_each(m_pGameController->m_pEnemyManager->GetThrowables() | std::views::filter(isOutOfWindow), deactivate);
-    std::ranges::for_each(m_pGameController->m_pEnemyManager->GetGreenMonsters()  | std::views::filter(isOutOfWindow) | std::views::transform(toEnemy), sleep);
+    std::ranges::for_each(m_pGameController->m_pEnemyManager->GetGreenMonsters() | std::views::filter(isOutOfWindow) | std::views::transform(toEnemy), sleep);
     std::ranges::for_each(m_pGameController->m_pEnemyManager->GetZombies() | std::views::filter(isOutOfWindow), deactivate);
     std::ranges::for_each(m_pGameController->m_pEnemyManager->GetFlyingKnights() | std::views::filter(isOutOfWindow), deactivate);
     std::ranges::for_each(m_pGameController->m_pEnemyManager->GetWoodyPigs() | std::views::filter(isOutOfWindow), deactivate);
@@ -69,7 +69,7 @@ void CameraManager::ShrinkBoundaries()
     {
         Rectf boundaries{m_pCamera->GetBoundaries()};
         boundaries.left = m_ShrinkSteps * m_ShrinkStepsCounter++;
-       m_pCamera->SetBoundaries(boundaries); 
+        m_pCamera->SetBoundaries(boundaries);
     }
 }
 

@@ -10,34 +10,34 @@
 
 Sprite::Sprite(Texture* pTexture)
     : m_pTexture{pTexture}
-      , m_LeftOffsetPx{0.0f}
-      , m_TopOffsetPx{0.0f}
-      , m_LeftOffsetCols{0}
-      , m_TopOffsetRows{0}
-      , m_Width{pTexture->GetWidth()}
-      , m_Height{pTexture->GetHeight()}
-      , m_Rows{0}
-      , m_Cols{0}
-      , m_SubRows{0}
-      , m_SubCols{0}
-      , m_CurrRows{0}
-      , m_CurrCols{0}
-      , m_FramesPerSec{0}
-      , m_FrameTime{0.0f}
-      , m_Scale{0.0f}
-      , m_AccuSec{0.0f}
-      , m_CurrFrame{0}
-      , m_SrcRect{0.0f, 0.0f, 0.0f, 0.0f}
-      , m_DstRect{0.0f, 0.0f, 0.0f, 0.0f}
-      , m_OriginalClipWidth{0.0f}
-      , m_OriginalClipHeight{0.0f}
-      , m_CurrClipWidth{0.0f}
-      , m_CurrClipHeight{0.0f}
-      , m_ColliderWidth{0.0f}
-      , m_ColliderHeight{0.0f}
-      , m_ColliderHorizontalOffset{0.0f}
-      , m_ColliderVerticalOffset{0.0f}
-        , m_IterCount{0}
+    , m_LeftOffsetPx{0.0f}
+    , m_TopOffsetPx{0.0f}
+    , m_LeftOffsetCols{0}
+    , m_TopOffsetRows{0}
+    , m_Width{pTexture->GetWidth()}
+    , m_Height{pTexture->GetHeight()}
+    , m_Rows{0}
+    , m_Cols{0}
+    , m_SubRows{0}
+    , m_SubCols{0}
+    , m_CurrRows{0}
+    , m_CurrCols{0}
+    , m_FramesPerSec{0}
+    , m_FrameTime{0.0f}
+    , m_Scale{0.0f}
+    , m_AccuSec{0.0f}
+    , m_CurrFrame{0}
+    , m_SrcRect{0.0f, 0.0f, 0.0f, 0.0f}
+    , m_DstRect{0.0f, 0.0f, 0.0f, 0.0f}
+    , m_OriginalClipWidth{0.0f}
+    , m_OriginalClipHeight{0.0f}
+    , m_CurrClipWidth{0.0f}
+    , m_CurrClipHeight{0.0f}
+    , m_ColliderWidth{0.0f}
+    , m_ColliderHeight{0.0f}
+    , m_ColliderHorizontalOffset{0.0f}
+    , m_ColliderVerticalOffset{0.0f}
+    , m_IterCount{0}
 {
 }
 

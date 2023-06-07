@@ -10,7 +10,7 @@ public:
     IEnemy(IEnemy&& other) noexcept = delete;
     IEnemy& operator=(const IEnemy& other) = delete;
     IEnemy& operator=(IEnemy&& other) noexcept = delete;
-    
+
     virtual int GetScore() const final;
     virtual void Reset() override;
     virtual void ResetHP() final;

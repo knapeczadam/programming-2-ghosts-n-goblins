@@ -31,6 +31,7 @@ void InitialDrawer::DrawInitial(Point2f pos, const std::string& initial, Color c
         pos.x += offset;
     }
 }
+
 void InitialDrawer::InitLookup()
 {
     m_Characters.insert(m_Characters.end(), {
@@ -70,4 +71,3 @@ char InitialDrawer::GetCharacter(int rowIdx, int colIdx) const
 {
     return m_Characters[rowIdx * m_NrCols + colIdx];
 }
-

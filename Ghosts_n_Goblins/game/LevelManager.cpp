@@ -37,13 +37,16 @@ float LevelManager::s_HillHeight{220.0f};
 
 LevelManager::LevelManager(GameController* pGameController)
     : IManager{pGameController}
-      , m_Colliders{}
-      , m_Tombstones{}
-      , m_Waters{}
-      , m_pForeground{nullptr}
-      , m_pKillZone{nullptr}
-      , m_pLevel{nullptr}
-      , m_pPlatform{nullptr}
+    , m_Colliders{}
+    , m_Tombstones{}
+    , m_Waters{}
+    , m_pFlyingKnightSpawner{nullptr}
+    , m_pWoodyPigSpawner{nullptr}
+    , m_pZombieSpawner{nullptr}
+    , m_pForeground{nullptr}
+    , m_pKillZone{nullptr}
+    , m_pLevel{nullptr}
+    , m_pPlatform{nullptr}
     , m_pDoor{nullptr}
     , m_CheckpointReached{false}
 {
@@ -140,7 +143,6 @@ void LevelManager::Update(float elapsedSec)
     std::ranges::for_each(m_Colliders | std::views::filter(isActive), update);
     std::ranges::for_each(m_Tombstones | std::views::filter(isActive), update);
     std::ranges::for_each(m_Waters | std::views::filter(isActive), update);
-    
 }
 
 void LevelManager::LateUpdate(float elapsedSec)
@@ -178,7 +180,7 @@ bool LevelManager::IsBossFight() const
             bossActive = enemy->IsActive();
         }
     }
-    
+
     for (GameObject* collider : m_Colliders)
     {
         if (collider->GetLabel() == Game::Label::L_BOSS and not collider->IsActive())
@@ -205,7 +207,7 @@ bool LevelManager::EndReached()
 {
     for (GameObject* collider : m_Colliders)
     {
-        if (collider->GetLabel() == Game::Label::L_END and not collider ->IsActive())
+        if (collider->GetLabel() == Game::Label::L_END and not collider->IsActive())
         {
             return true;
         }
@@ -220,19 +222,21 @@ void LevelManager::InitColliders(bool fromCheckpoint)
     const float doorStart{6849.0f};
     const float keyStart{6575.0f};
     const float endStart{6992.0f};
+    const float levelWidth{m_pGameController->m_pLevelManager->GetLevel()->GetBoundaries().width};
+    const float viewPortHeight{m_pGameController->m_ViewPort.height};
     m_Colliders.insert(m_Colliders.end(), {
                                 new ArmorCollider{Rectf{2868.0f, 140.0f, 30.0f, 30.0f}, m_pGameController},
-                                new BonusCollider{Rectf{bonusStart, 0.0f, m_pGameController->m_pLevelManager->GetLevel()->GetBoundaries().width - bonusStart, m_pGameController->m_ViewPort.height}, m_pGameController},
-                                new BossCollider{Rectf{bossStart, 0.0f, m_pGameController->m_pLevelManager->GetLevel()->GetBoundaries().width - bossStart, m_pGameController->m_ViewPort.height}, m_pGameController},
-                                new DoorCollider{Rectf{doorStart, 0.0f, 30.0f, m_pGameController->m_ViewPort.height}, m_pGameController},
-                                new EndCollider{Rectf{endStart, 0.0f, m_pGameController->m_pLevelManager->GetLevel()->GetBoundaries().width - endStart, m_pGameController->m_ViewPort.height}, m_pGameController},
-                                new KeyCollider{Rectf{keyStart, 0.0f, m_pGameController->m_pLevelManager->GetLevel()->GetBoundaries().width - keyStart, m_pGameController->m_ViewPort.height}, m_pGameController},
-                                new PotDeactivator{Rectf{2490.0f, 0.0f, 30.0f, m_pGameController->m_ViewPort.height}, m_pGameController},
-                                new PotDeactivator{Rectf{4405.0f, 0.0f, 30.0f, m_pGameController->m_ViewPort.height}, m_pGameController},
+                                new BonusCollider{Rectf{bonusStart, 0.0f, levelWidth - bonusStart, viewPortHeight}, m_pGameController},
+                                new BossCollider{Rectf{bossStart, 0.0f, levelWidth - bossStart, viewPortHeight}, m_pGameController},
+                                new DoorCollider{Rectf{doorStart, 0.0f, 30.0f, viewPortHeight}, m_pGameController},
+                                new EndCollider{Rectf{endStart, 0.0f, levelWidth - endStart, viewPortHeight}, m_pGameController},
+                                new KeyCollider{Rectf{keyStart, 0.0f, levelWidth - keyStart, viewPortHeight}, m_pGameController},
+                                new PotDeactivator{Rectf{2490.0f, 0.0f, 30.0f, viewPortHeight}, m_pGameController},
+                                new PotDeactivator{Rectf{4405.0f, 0.0f, 30.0f, viewPortHeight}, m_pGameController},
                                 // new PotDeactivator{Rectf{4405.0f, 0.0f, 30.0f, m_pGameController->m_ViewPort.height}, m_pGameController}, TODO
                                 new YashichiCollider{Rectf{5924.0f, 140.0f, 24.0f, 24.0f}, m_pGameController}
                             });
-    GameObject* pCheckpoint{new CheckpointCollider{Rectf{3600.0f, 0.0f, 30.0f, m_pGameController->m_ViewPort.height}, m_pGameController}};
+    GameObject* pCheckpoint{new CheckpointCollider{Rectf{3600.0f, 0.0f, 30.0f, viewPortHeight}, m_pGameController}};
     if (fromCheckpoint)
     {
         pCheckpoint->SetActive(not m_CheckpointReached);
@@ -242,29 +246,30 @@ void LevelManager::InitColliders(bool fromCheckpoint)
 
 void LevelManager::InitLadders()
 {
-    const float offset{m_pGameController->m_pPlayerManager->GetPlayer()->GetCollider().width - 1} ;
+    const float offset{m_pGameController->m_pPlayerManager->GetPlayer()->GetCollider().width - 1};
     const float x1{1438.0f};
     const float x2{1822.0f};
     const float x3{2142.0f};
+    const float viewPortHeight{m_pGameController->m_ViewPort.height};
     m_Colliders.insert(m_Colliders.end(), {
-                         new LadderActivator{Rectf{x1, 0.0f, 2.0f, m_pGameController->m_ViewPort.height}, m_pGameController},
-                         new LadderActivator{Rectf{x2, 0.0f, 2.0f, m_pGameController->m_ViewPort.height}, m_pGameController},
-                         new LadderActivator{Rectf{x3, 0.0f, 2.0f, m_pGameController->m_ViewPort.height}, m_pGameController}
+                         new LadderActivator{Rectf{x1, 0.0f, 2.0f, viewPortHeight}, m_pGameController},
+                         new LadderActivator{Rectf{x2, 0.0f, 2.0f, viewPortHeight}, m_pGameController},
+                         new LadderActivator{Rectf{x3, 0.0f, 2.0f, viewPortHeight}, m_pGameController}
                      });
 
     m_Colliders.insert(m_Colliders.end(), {
-                         new LadderDeactivator{Rectf{x1 - offset, 0.0f, 2.0f, m_pGameController->m_ViewPort.height}, m_pGameController},
-                         new LadderDeactivator{Rectf{x1 + offset, 0.0f, 2.0f, m_pGameController->m_ViewPort.height}, m_pGameController},
-                         new LadderDeactivator{Rectf{x2 - offset, 0.0f, 2.0f, m_pGameController->m_ViewPort.height}, m_pGameController},
-                         new LadderDeactivator{Rectf{x2 + offset, 0.0f, 2.0f, m_pGameController->m_ViewPort.height}, m_pGameController},
-                         new LadderDeactivator{Rectf{x3 - offset, 0.0f, 2.0f, m_pGameController->m_ViewPort.height}, m_pGameController},
-                         new LadderDeactivator{Rectf{x3 + offset, 0.0f, 2.0f, m_pGameController->m_ViewPort.height}, m_pGameController}
+                         new LadderDeactivator{Rectf{x1 - offset, 0.0f, 2.0f, viewPortHeight}, m_pGameController},
+                         new LadderDeactivator{Rectf{x1 + offset, 0.0f, 2.0f, viewPortHeight}, m_pGameController},
+                         new LadderDeactivator{Rectf{x2 - offset, 0.0f, 2.0f, viewPortHeight}, m_pGameController},
+                         new LadderDeactivator{Rectf{x2 + offset, 0.0f, 2.0f, viewPortHeight}, m_pGameController},
+                         new LadderDeactivator{Rectf{x3 - offset, 0.0f, 2.0f, viewPortHeight}, m_pGameController},
+                         new LadderDeactivator{Rectf{x3 + offset, 0.0f, 2.0f, viewPortHeight}, m_pGameController}
     });
     m_Colliders.insert(m_Colliders.end(), {
-        new LadderCollider{Rectf{x1, 126.0f, 4.0f, 96.0f}, m_pGameController},
-        new LadderCollider{Rectf{x2, 126.0f, 4.0f, 96.0f}, m_pGameController},
-        new LadderCollider{Rectf{x3, 126.0f, 4.0f, 96.0f}, m_pGameController}
-    });
+                           new LadderCollider{Rectf{x1, 126.0f, 4.0f, 96.0f}, m_pGameController},
+                           new LadderCollider{Rectf{x2, 126.0f, 4.0f, 96.0f}, m_pGameController},
+                           new LadderCollider{Rectf{x3, 126.0f, 4.0f, 96.0f}, m_pGameController}
+                       });
 }
 
 void LevelManager::InitTombstones()
@@ -317,16 +322,11 @@ void LevelManager::InitKillZone()
 
 void LevelManager::InitSpawners(bool fromCheckpoint)
 {
-    m_pFlyingKnightSpawner = new FlyingKnightSpawner{
-        Rectf{3800.0f, 0.0f, 600.0f, m_pGameController->m_ViewPort.height}, m_pGameController
-    };
-    m_pWoodyPigSpawner = new WoodyPigSpawner{
-        Rectf{0.0f, 0.0f, 0.0f, m_pGameController->m_ViewPort.height}, m_pGameController
-    };
-    m_pZombieSpawner = new ZombieSpawner{
-        Rectf{0.0f, 0.0f, 2485.0f, m_pGameController->m_ViewPort.height}, m_pGameController
-    };
-    m_Colliders.insert(m_Colliders.end(),{m_pFlyingKnightSpawner, m_pWoodyPigSpawner, m_pZombieSpawner});
+    const float viewPortHeight{m_pGameController->m_ViewPort.height};
+    m_pFlyingKnightSpawner = new FlyingKnightSpawner{Rectf{3800.0f, 0.0f, 600.0f, viewPortHeight}, m_pGameController};
+    m_pWoodyPigSpawner = new WoodyPigSpawner{Rectf{0.0f, 0.0f, 0.0f, viewPortHeight}, m_pGameController};
+    m_pZombieSpawner = new ZombieSpawner{Rectf{0.0f, 0.0f, 2485.0f, viewPortHeight}, m_pGameController};
+    m_Colliders.insert(m_Colliders.end(), {m_pFlyingKnightSpawner, m_pWoodyPigSpawner, m_pZombieSpawner});
 }
 
 float LevelManager::GetHillHeight()
@@ -376,7 +376,7 @@ Level* LevelManager::GetLevel() const
 
 GameObject* LevelManager::GetDoor()
 {
-   return m_pDoor; 
+    return m_pDoor;
 }
 
 Platform* LevelManager::GetPlatform() const

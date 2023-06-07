@@ -3,8 +3,6 @@
 
 #include "Vector2f.h"
 #include "game/GameObject.h"
-#include "throwables/IThrowable.h"
-
 
 /**
  * \par Arthur 
@@ -38,7 +36,7 @@ public:
     };
 
 public:
-    explicit Player(const Point2f& pos,  GameController* pGameController);
+    explicit Player(const Point2f& pos, GameController* pGameController);
     virtual ~Player() override = default;
     bool IsOnHill() const;
     Player(const Player& other) = delete;
@@ -89,23 +87,23 @@ public:
     bool IsClimbing() const;
 
     void UpdateState();
+
 protected:
     virtual void UpdateCollider() override;
 
 private:
     void UpdatePosition(float elapsedSec);
-    
+
     void Move();
     void MoveHorizontal();
     void Jump();
     void Crouch();
     void Climb();
     void ApplyGravity(float elapsedSec);
-    
+
     void CheckBoundaries(const Rectf& boundaries);
-    
+
 private:
-    
     float m_HorVelocity;
     float m_VerVelocity;
     float m_JumpVelocity;

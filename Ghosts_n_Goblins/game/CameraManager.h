@@ -24,6 +24,7 @@ public:
 protected:
     virtual void Initialize(bool fromCheckpoint = false) override;
     virtual void CleanUp() override;
+
 private:
     Camera* m_pCamera;
     float m_ShrinkSteps;

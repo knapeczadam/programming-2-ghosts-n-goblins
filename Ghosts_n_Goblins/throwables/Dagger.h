@@ -13,7 +13,7 @@
 class Dagger final : public GameObject, public IThrowable, public ICollectible
 {
 public:
-	explicit Dagger(const Point2f& pos, bool isFlipped, bool collectible, GameController* pGameController);
+    explicit Dagger(const Point2f& pos, bool isFlipped, bool collectible, GameController* pGameController);
     virtual ~Dagger() override = default;
     Dagger(const Dagger& other) = delete;
     Dagger(Dagger&& other) noexcept = delete;
@@ -21,11 +21,11 @@ public:
     Dagger& operator=(Dagger&& other) noexcept = delete;
 
     virtual void Update(float elapsedSec) override;
-	virtual void Awake(float elapsedSec) override;
+    virtual void Awake(float elapsedSec) override;
 
 private:
-	void SetSprite() const;
+    void SetSprite() const;
 
 private:
-	bool m_Collectible;
+    bool m_Collectible;
 };

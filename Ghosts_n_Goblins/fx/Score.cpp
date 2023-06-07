@@ -5,8 +5,8 @@
 
 Score::Score(const Point2f& pos, int score, GameController* pGameController)
     : GameObject(Game::Label::F_SCORE, pos, false, pGameController)
-      , m_Score{score}
-      , m_Shown{false}
+    , m_Score{score}
+    , m_Shown{false}
 {
     m_Shape.left = pos.x - m_pSprite->GetScaledClipWidth() / 2;
     m_Shape.bottom = pos.y - m_pSprite->GetScaledClipHeight() / 2;
@@ -40,7 +40,7 @@ void Score::Update(float elapsedSec)
 void Score::SetScore(int score)
 {
     m_Score = score;
-    
+
     switch (m_Score)
     {
     case 200:

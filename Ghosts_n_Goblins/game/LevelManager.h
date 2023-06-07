@@ -63,11 +63,12 @@ private:
 public:
     static float GetHillHeight();
     static float GetGroundHeight();
+
 private:
     std::vector<GameObject*> m_Colliders;
     std::vector<GameObject*> m_Tombstones;
     std::vector<GameObject*> m_Waters;
-    
+
     GameObject* m_pFlyingKnightSpawner;
     GameObject* m_pWoodyPigSpawner;
     GameObject* m_pZombieSpawner;
@@ -78,6 +79,7 @@ private:
     Platform* m_pPlatform;
     GameObject* m_pDoor;
     bool m_CheckpointReached;
+
 private:
     static float s_HillHeight;
     static float s_GroundHeight;

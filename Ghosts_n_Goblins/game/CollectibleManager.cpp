@@ -24,12 +24,12 @@
 
 CollectibleManager::CollectibleManager(GameController* pGameController)
     : IManager{pGameController}
-      , m_Collectibles{}
-      , m_pPot{nullptr}
-      , m_CurrContent{Game::Label::D_DUMMY}
-      , m_ContentCount{0}
-      , m_WeaponCount{0}
-      , m_ContentActive{false}
+    , m_Collectibles{}
+    , m_pPot{nullptr}
+    , m_CurrContent{Game::Label::D_DUMMY}
+    , m_ContentCount{0}
+    , m_WeaponCount{0}
+    , m_ContentActive{false}
 {
     pGameController->m_pCollectibleManager = this;
     Initialize();
@@ -103,7 +103,7 @@ void CollectibleManager::Update(float elapsedSec)
 
 void CollectibleManager::Reset(bool fromCheckpoint)
 {
-    if ( not fromCheckpoint)
+    if (not fromCheckpoint)
     {
         m_ContentCount = 0;
         m_WeaponCount = 0;
@@ -216,7 +216,7 @@ void CollectibleManager::InitWeapons()
 void CollectibleManager::AssignPot(GameObject* pEnemy)
 {
     if (IsContentActive()) return;
-   StartTimer(8.0f);
+    StartTimer(8.0f);
     if (IsTimerFinished())
     {
         IPotter* pPotter = dynamic_cast<IPotter*>(pEnemy);

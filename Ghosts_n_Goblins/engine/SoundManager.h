@@ -1,8 +1,9 @@
 ﻿#pragma once
-#include "SoundEffect.h"
-#include "SoundStream.h"
 #include "game/Game.h"
 #include "game/IManager.h"
+
+class SoundEffect;
+class SoundStream;
 
 class SoundManager final : public IManager
 {
@@ -13,7 +14,6 @@ public:
     SoundManager(SoundManager&& other) noexcept = delete;
     SoundManager& operator=(const SoundManager& other) = delete;
     SoundManager& operator=(SoundManager&& other) noexcept = delete;
-
 
 public:
     bool PlayEffect(Game::Label label) const;
@@ -35,7 +35,7 @@ public:
 
     SoundEffect* GetEffect(Game::Label label) const;
     SoundStream* GetStream(Game::Label label) const;
-    
+
 protected:
     virtual void Initialize(bool fromCheckpoint = false) override;
     virtual void CleanUp() override;

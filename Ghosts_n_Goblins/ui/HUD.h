@@ -19,11 +19,12 @@ public:
     void SetDigits(const Time& time);
     void DrawTextTime() const;
     void DrawRemainingTime() const;
+
 private:
     void DrawLives() const;
     void DrawWeapon() const;
     void DrawFrame() const;
-    
+
 private:
     Sprite* m_pFrame;
     Sprite* m_pLife;

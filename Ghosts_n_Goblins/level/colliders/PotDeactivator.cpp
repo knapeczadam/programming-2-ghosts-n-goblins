@@ -5,7 +5,7 @@
 #include "game/GameController.h"
 
 PotDeactivator::PotDeactivator(const Rectf& boundaries, GameController* pGameController)
-    : ICollider{Game::Label::L_POT,  boundaries, pGameController }
+    : ICollider{Game::Label::L_POT, boundaries, pGameController}
 {
 }
 

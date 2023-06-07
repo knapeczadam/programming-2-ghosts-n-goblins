@@ -7,19 +7,18 @@
 #include "game/GameController.h"
 #include "engine/Sprite.h"
 #include "game/LevelManager.h"
-#include "game/UIManager.h"
 
 Map::Map(GameController* pGameController)
     : UI{Game::Label::U_MAP, pGameController}
-      , m_pPin{pGameController->m_pSpriteFactory->CreateSprite(Game::Label::U_PIN)}
-      , m_pMap{pGameController->m_pSpriteFactory->CreateSprite(Game::Label::U_MAP)}
-      , m_pTextPlayerOneReady{pGameController->m_pSpriteFactory->CreateSprite(Game::Label::U_TEXT_PLAYER_ONE_READY)}
-      , pDummy{new GameObject{Game::Label::D_DUMMY, Rectf{0, 0, 30.0f, 30.0f}, false}}
-      , m_Speed{120}
-      , m_PinPos1{58.0f, 66.0f}
-      , m_PinPos2{148.0f, 66.0f}
-    ,   m_PinPos3{182.0f, 66.0f}
-      , m_TextPos{112.0f, 224.0f}
+    , m_pPin{pGameController->m_pSpriteFactory->CreateSprite(Game::Label::U_PIN)}
+    , m_pMap{pGameController->m_pSpriteFactory->CreateSprite(Game::Label::U_MAP)}
+    , m_pTextPlayerOneReady{pGameController->m_pSpriteFactory->CreateSprite(Game::Label::U_TEXT_PLAYER_ONE_READY)}
+    , pDummy{new GameObject{Game::Label::D_DUMMY, Rectf{0, 0, 30.0f, 30.0f}, false}}
+    , m_Speed{120}
+    , m_PinPos1{58.0f, 66.0f}
+    , m_PinPos2{148.0f, 66.0f}
+    , m_PinPos3{182.0f, 66.0f}
+    , m_TextPos{112.0f, 224.0f}
 {
     m_pPin->SetPosition(m_PinPos1);
     m_pTextPlayerOneReady->SetPosition(m_TextPos);
@@ -40,7 +39,7 @@ void Map::Update(float elapsedSec)
 {
     m_pPin->Update(elapsedSec);
     m_pTextPlayerOneReady->Update(elapsedSec);
-    
+
     const float x = pDummy->GetPosition<Point2f>().x + m_Speed * elapsedSec;
     pDummy->SetPosition(Point2f{x, 0});
 }

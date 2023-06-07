@@ -14,9 +14,9 @@ public:
     EnemyManager(EnemyManager&& other) noexcept = delete;
     EnemyManager& operator=(const EnemyManager& other) = delete;
     EnemyManager& operator=(EnemyManager&& other) noexcept = delete;
-    
+
     virtual void Reset(bool fromCheckpoint = false) override;
-    
+
     void DrawEnemies() const;
     void DrawThrowables() const;
     virtual void Update(float elapsedSec) override;
@@ -30,7 +30,7 @@ public:
     std::vector<GameObject*>& GetThrowables();
     std::vector<GameObject*>& GetWoodyPigs();
     std::vector<GameObject*>& GetZombies();
-    
+
     GameObject* GetMagician() const;
 
 protected:

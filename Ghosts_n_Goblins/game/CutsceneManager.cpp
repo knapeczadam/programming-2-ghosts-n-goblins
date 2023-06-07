@@ -35,7 +35,7 @@ void CutsceneManager::Initialize(bool fromCheckpoint)
     m_Intervals.push({Game::Label::N_05, 0.03f});
     m_Intervals.push({Game::Label::N_06, 0.01f});
     m_Intervals.push({Game::Label::N_05, 0.02f});
-    
+
     m_Intervals.push({Game::Label::N_07, 0.07f}); // starts flying
     m_Intervals.push({Game::Label::N_08, 0.05f});
     m_Intervals.push({Game::Label::N_09, 0.05f});

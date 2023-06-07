@@ -14,18 +14,18 @@
 
 InitialSaver::InitialSaver(GameController* pGameController)
     : UI{Game::Label::U_MENU, pGameController}
-      , m_pBlueChar{pGameController->m_pSpriteFactory->CreateSprite(Game::Label::U_ABC)}
-      , m_pRedChar{pGameController->m_pSpriteFactory->CreateSprite(Game::Label::U_ABC)}
-      , m_pTextInitial{pGameController->m_pSpriteFactory->CreateSprite(Game::Label::U_TEXT_INITIAL)}
-      , m_BlueCharPos{56.0f, 234.0f}
-      , m_RedCharPos{56.0f, 362.0f}
-      , m_TextInitialPos{132.0f, 64.0f}
-      , m_NrRows{5}
-      , m_NrCols{13}
-      , m_RowIdx{m_NrRows - 1}
-      , m_ColIdx{m_NrCols - 1}
-      , m_Initial{}
-      , m_MaxLength{3}
+    , m_pBlueChar{pGameController->m_pSpriteFactory->CreateSprite(Game::Label::U_ABC)}
+    , m_pRedChar{pGameController->m_pSpriteFactory->CreateSprite(Game::Label::U_ABC)}
+    , m_pTextInitial{pGameController->m_pSpriteFactory->CreateSprite(Game::Label::U_TEXT_INITIAL)}
+    , m_BlueCharPos{56.0f, 234.0f}
+    , m_RedCharPos{56.0f, 362.0f}
+    , m_TextInitialPos{132.0f, 64.0f}
+    , m_NrRows{5}
+    , m_NrCols{13}
+    , m_RowIdx{m_NrRows - 1}
+    , m_ColIdx{m_NrCols - 1}
+    , m_Initial{}
+    , m_MaxLength{3}
     , m_ScoreSaved{false}
 {
     m_Blinking = true;
@@ -54,7 +54,8 @@ void InitialSaver::DrawAbc() const
 
 void InitialSaver::DrawInitial() const
 {
-    m_pGameController->m_pUIManager->m_pInitialDrawer->DrawInitial(Point2f{256.0f, 64.0f}, m_Initial, InitialDrawer::Color::RED);
+    m_pGameController->m_pUIManager->m_pInitialDrawer->DrawInitial(Point2f{256.0f, 64.0f}, m_Initial,
+                                                                   InitialDrawer::Color::RED);
 }
 
 void InitialSaver::FlickerCharacter() const
@@ -70,7 +71,8 @@ void InitialSaver::FlickerCharacter() const
 
 void InitialSaver::OnEnter()
 {
-    if (m_pGameController->m_pInputManager->IsPressed(Game::Label::I_SELECT) and not m_pGameController->m_pInputManager->
+    if (m_pGameController->m_pInputManager->IsPressed(Game::Label::I_SELECT) and not m_pGameController->m_pInputManager
+        ->
         IsTriggered(Game::Label::I_SELECT))
     {
         m_pGameController->m_pInputManager->SetTriggered(Game::Label::I_SELECT, true);
@@ -92,7 +94,8 @@ bool InitialSaver::IsScoreSaved() const
 
 void InitialSaver::SaveInitial()
 {
-    m_pGameController->m_pUIManager->m_pScoreManager->SetScore(m_pGameController->m_pPlayerManager->GetPlayer()->GetScore(), m_Initial);
+    m_pGameController->m_pUIManager->m_pScoreManager->SetScore(
+        m_pGameController->m_pPlayerManager->GetPlayer()->GetScore(), m_Initial);
     m_pGameController->m_pUIManager->m_pScoreManager->SaveRanking();
     m_ScoreSaved = true;
 }

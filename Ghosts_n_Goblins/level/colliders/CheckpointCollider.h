@@ -12,6 +12,7 @@ public:
     CheckpointCollider& operator=(CheckpointCollider&& other) noexcept = delete;
 
     virtual void HandleCollision(GameObject* other) override;
+
 private:
     const Point2f m_Pos;
 };

@@ -14,6 +14,7 @@ public:
 
     GameObject* GetPot() const;
     void SetPot(GameObject* pPot);
+
 protected:
     virtual void Update(float elapsedSec);
     void ActivatePot();
@@ -22,5 +23,4 @@ protected:
 
 protected:
     GameObject* m_pPot;
-    
 };

@@ -8,7 +8,7 @@
 #include "game/GameController.h"
 #include "game/PlayerManager.h"
 
- bool FlyingKnight::s_EffectPlaying{false};
+bool FlyingKnight::s_EffectPlaying{false};
 int FlyingKnight::s_IdPlayingEffect{-1};
 
 FlyingKnight::FlyingKnight(const Point2f& pos, GameController* pGameController)
@@ -20,7 +20,6 @@ FlyingKnight::FlyingKnight(const Point2f& pos, GameController* pGameController)
     m_FixedDirection = true;
     m_HorVelocity = 120.0f;
     m_VerVelocity = 2.0f;
-    
 }
 
 void FlyingKnight::Draw() const
@@ -46,7 +45,7 @@ void FlyingKnight::HandleCollision(GameObject* other)
     }
     else
     {
-       m_pGameController->m_pFXManager->PlayEffect(Game::Label::F_PROJECTILE_BLOCK_ENEMY, GetContactPoint(other), false); 
+        m_pGameController->m_pFXManager->PlayEffect(Game::Label::F_PROJECTILE_BLOCK_ENEMY, GetContactPoint(other), false); 
         m_pGameController->m_pSoundManager->PlayEffect(Game::Label::E_PROJECTILE_BLOCK);
     }
     other->SetActive(false);
@@ -78,7 +77,7 @@ void FlyingKnight::PlayEffect()
 {
     if (not s_EffectPlaying)
     {
-       s_IdPlayingEffect = m_Id;
+        s_IdPlayingEffect = m_Id;
         s_EffectPlaying = true;
     }
     if (s_IdPlayingEffect == m_Id)

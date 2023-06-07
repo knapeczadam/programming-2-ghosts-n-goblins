@@ -1,20 +1,22 @@
 ﻿#include "pch.h"
 #include "SoundManager.h"
 
+#include "game/GameController.h"
+#include "SoundEffect.h"
+#include "SoundStream.h"
+
 #include <iostream>
 #include <ranges>
 
-#include "game/GameController.h"
-
 SoundManager::SoundManager(GameController* pGameController)
     : IManager(pGameController)
-      , m_EffectPath{"sounds/effects/"}
-      , m_StreamPath{"sounds/streams/"}
-      , m_Effects{}
-      , m_Streams{}
-      , m_pEffects{}
-      , m_pStreams{}
-        , m_CurrentStream{Game::Label::S_NONE}
+    , m_EffectPath{"sounds/effects/"}
+    , m_StreamPath{"sounds/streams/"}
+    , m_Effects{}
+    , m_Streams{}
+    , m_pEffects{}
+    , m_pStreams{}
+    , m_CurrentStream{Game::Label::S_NONE}
 {
     m_pGameController->m_pSoundManager = this;
     Initialize();

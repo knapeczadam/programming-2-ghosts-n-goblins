@@ -4,8 +4,6 @@
 
 #include <cassert>
 
-#include "MenuManager.h"
-
 class BootManager;
 class CameraManager;
 class CollectibleManager;
@@ -22,12 +20,8 @@ class UIManager;
 class GameController final
 {
 public:
-    explicit GameController(
-        std::map<std::string, Game::Label>& labels,
-        json& data,
-        const Rectf& viewPort
-        );
-    
+    explicit GameController(std::map<std::string, Game::Label>& labels, json& data, const Rectf& viewPort);
+
     ~GameController() = default;
     GameController(const GameController& other) = delete;
     GameController(GameController&& other) noexcept = delete;

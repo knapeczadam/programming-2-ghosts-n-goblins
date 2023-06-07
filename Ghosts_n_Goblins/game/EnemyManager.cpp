@@ -14,19 +14,17 @@
 #include <ranges>
 
 #include "LevelManager.h"
-#include "level/colliders/spawners/FlyingKnightSpawner.h"
-#include "level/colliders/spawners/WoodyPigSpawner.h"
 #include "level/colliders/spawners/ZombieSpawner.h"
 
 EnemyManager::EnemyManager(GameController* pGameController)
     : IManager(pGameController)
-      , m_Crows{}
-      , m_Enemies{}
-      , m_GreenMonsters{}
-      , m_Throwables{}
-      , m_FlyingKnights{}
-      , m_WoodyPigs{}
-      , m_Zombies{}
+    , m_Crows{}
+    , m_Enemies{}
+    , m_GreenMonsters{}
+    , m_Throwables{}
+    , m_FlyingKnights{}
+    , m_WoodyPigs{}
+    , m_Zombies{}
 {
     m_pGameController->m_pEnemyManager = this;
     Initialize();

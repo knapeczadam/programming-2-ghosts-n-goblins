@@ -2,7 +2,7 @@
 #include "ISpawner.h"
 #include "level/colliders/ICollider.h"
 
-class WoodyPigSpawner final :  public ISpawner
+class WoodyPigSpawner final : public ISpawner
 {
 public:
     explicit WoodyPigSpawner(const Rectf& shape, GameController* pGameController);

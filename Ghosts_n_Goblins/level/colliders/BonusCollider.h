@@ -12,6 +12,7 @@ public:
     BonusCollider& operator=(BonusCollider&& other) noexcept = delete;
 
     virtual void HandleCollision(GameObject* other) override;
+
 private:
     const int m_Bonus;
 };

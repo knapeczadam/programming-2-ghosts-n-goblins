@@ -62,6 +62,7 @@ public:
     virtual void SetFlipped(bool flipped) final;
     virtual void Reset();
     virtual void UpdateCollider();
+
 protected:
     virtual void InitCollider() final;
     virtual std::vector<Point2f> GetColliderVertices() const final;

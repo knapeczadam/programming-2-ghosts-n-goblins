@@ -3,7 +3,6 @@
 #include "Game.h"
 
 #include "BootManager.h"
-#include "Camera.h"
 #include "CameraManager.h"
 #include "CollectibleManager.h"
 #include "CutsceneManager.h"
@@ -35,6 +34,8 @@
 #include <iostream>
 #include <ranges>
 
+#include "MenuManager.h"
+
 
 std::random_device Game::rd;
 std::mt19937 Game::mt{rd()};
@@ -56,27 +57,27 @@ std::mt19937 Game::mt{rd()};
  */
 Game::Game(const Window& window)
     : BaseGame{window}
-      , m_Data{nullptr}
-      , m_DataPath{"data.json"}
-      , m_Labels{}
-      , m_State{State::BOOT}
-      , m_pBootManager{nullptr}
-      , m_pCameraManager{nullptr}
-      , m_pCutsceneManager{nullptr}
-      , m_pCollectibleManager{nullptr}
-      , m_pEnemyManager{nullptr}
-      , m_pFXManager{nullptr}
-      , m_pGameController{nullptr}
-      , m_pInputManager{nullptr}
-      , m_pLevelManager{nullptr}
-      , m_pMenuManager{nullptr}
-      , m_pPlayerManager{nullptr}
-      , m_pSoundManager{nullptr}
-      , m_pSpriteFactory{nullptr}
-      , m_pTextureManager{nullptr}
-      , m_pUIManager{nullptr}
+    , m_Data{nullptr}
+    , m_DataPath{"data.json"}
+    , m_Labels{}
+    , m_State{State::BOOT}
+    , m_pBootManager{nullptr}
+    , m_pCameraManager{nullptr}
+    , m_pCutsceneManager{nullptr}
+    , m_pCollectibleManager{nullptr}
+    , m_pEnemyManager{nullptr}
+    , m_pFXManager{nullptr}
+    , m_pGameController{nullptr}
+    , m_pInputManager{nullptr}
+    , m_pLevelManager{nullptr}
+    , m_pMenuManager{nullptr}
+    , m_pPlayerManager{nullptr}
+    , m_pSoundManager{nullptr}
+    , m_pSpriteFactory{nullptr}
+    , m_pTextureManager{nullptr}
+    , m_pUIManager{nullptr}
 #if TEST_OBJECT
-      , m_pTestObject{nullptr}
+    , m_pTestObject{nullptr}
 #endif
 {
     Initialize();

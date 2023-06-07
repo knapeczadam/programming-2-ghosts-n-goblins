@@ -13,6 +13,7 @@ public:
 
     virtual void Update(float elapsedSec) override;
     virtual void SetScore(int score) final;
+
 private:
     virtual float SetTimme() const final;
 

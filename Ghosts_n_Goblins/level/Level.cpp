@@ -13,8 +13,8 @@
 
 Level::Level(GameController* pGameController)
     : GameObject{Game::Label::L_LEVEL, pGameController}
-      , m_Vertices{}
-      , m_Boundaries{0, 0, m_pSprite->GetWidth(), m_pSprite->GetHeight()}
+    , m_Vertices{}
+    , m_Boundaries{0, 0, m_pSprite->GetWidth(), m_pSprite->GetHeight()}
 {
     SetVertices();
 }

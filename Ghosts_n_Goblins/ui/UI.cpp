@@ -48,13 +48,12 @@ void UI::Draw() const
 
 void UI::Reset(bool fromCheckpoint)
 {
-    
 }
 
 void UI::Update(float elapsedSec)
 {
     m_pTextGameOver->Update(elapsedSec);
-    
+
     if (m_BlinkingTime > 0.0f)
     {
         StartTimer(m_BlinkingTime);
@@ -183,5 +182,4 @@ void UI::DrawNumber(Point2f& pos, int number, Color color) const
         m_pNumbers->Draw();
         pos.x -= offset;
     }
-    
 }

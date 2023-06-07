@@ -15,15 +15,16 @@
 class Torch final : public GameObject, public IThrowable, public ICollectible
 {
 public:
-	Torch(const Point2f& pos, bool isFlipped, bool collectible, GameController* pGameController);
-	virtual ~Torch() override = default;
-	Torch(const Torch& other) = delete;
-	Torch(Torch&& other) noexcept = delete;
-	Torch& operator=(const Torch& other) = delete;
-	Torch& operator=(Torch&& other) noexcept = delete;
+    Torch(const Point2f& pos, bool isFlipped, bool collectible, GameController* pGameController);
+    virtual ~Torch() override = default;
+    Torch(const Torch& other) = delete;
+    Torch(Torch&& other) noexcept = delete;
+    Torch& operator=(const Torch& other) = delete;
+    Torch& operator=(Torch&& other) noexcept = delete;
 
-	virtual void Update(float elapsedSec) override;
-	virtual void Awake(float elapsedSec) override;
+    virtual void Update(float elapsedSec) override;
+    virtual void Awake(float elapsedSec) override;
+
 private:
-	bool m_Collectible;
+    bool m_Collectible;
 };

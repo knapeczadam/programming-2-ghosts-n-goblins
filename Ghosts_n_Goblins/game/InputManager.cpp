@@ -43,7 +43,7 @@ void InputManager::InitControls()
     m_Controls[Game::Label::I_INFO] = {SDL_SCANCODE_I};
     m_Controls[Game::Label::I_DEBUG] = {SDL_SCANCODE_D};
     m_Controls[Game::Label::I_QUIT] = {SDL_SCANCODE_ESCAPE};
-    m_Controls[Game::Label::I_INCREASE_VOLUME] = {SDL_SCANCODE_O} ;
+    m_Controls[Game::Label::I_INCREASE_VOLUME] = {SDL_SCANCODE_O};
     m_Controls[Game::Label::I_DECREASE_VOLUME] = {SDL_SCANCODE_L};
 
     for (const auto& control : m_Controls)
@@ -164,7 +164,7 @@ std::string InputManager::ToString(Game::Label control) const
     {
         if (idx)
         {
-            tos += ", ";    
+            tos += ", ";
         }
         tos += m_ScancodeToString.at(scancode);
         ++idx;

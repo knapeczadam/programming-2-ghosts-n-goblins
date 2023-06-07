@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include "game/GameObject.h"
 
-class ICollider :  public GameObject
+class ICollider : public GameObject
 {
 public:
     explicit ICollider(Game::Label label, const Rectf& shape, GameController* pGameController);

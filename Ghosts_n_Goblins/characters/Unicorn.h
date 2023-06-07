@@ -26,6 +26,7 @@ private:
         JUMP,
         SHOOT
     };
+
 public:
     explicit Unicorn(const Point2f& pos, GameController* pGameController);
     virtual ~Unicorn() override = default;
@@ -33,7 +34,7 @@ public:
     Unicorn(Unicorn&& other) noexcept = delete;
     Unicorn& operator=(const Unicorn& other) = delete;
     Unicorn& operator=(Unicorn&& other) noexcept = delete;
-    
+
     virtual void Draw() const override;
     virtual void Update(float elapsedSec) override;
     virtual void HandleCollision(GameObject* other) override;

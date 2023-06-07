@@ -28,5 +28,4 @@ void ArmorCollider::HandleCollision(GameObject* other)
             }
         }
     }
-    
 }

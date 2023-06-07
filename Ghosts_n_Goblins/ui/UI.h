@@ -13,7 +13,7 @@ public:
         DARK_TAN = 2,
         RED = 3,
     };
-    
+
     explicit UI(Game::Label label, GameController* pGameController);
     virtual ~UI() override = default;
     UI(const UI& other) = delete;
@@ -26,7 +26,7 @@ public:
     virtual void Update(float elapsedSec);
     virtual bool IsActive() const final;
     virtual bool IsVisible() const final;
-    
+
     virtual void DrawPlayerScore() const final;
     virtual void DrawTopScore() const final;
     virtual void DrawTextBonus() const final;
@@ -48,6 +48,7 @@ protected:
     bool m_Visible;
     bool m_Blinking;
     float m_BlinkingTime;
+
 private:
     Sprite* m_pNumbers;
     Sprite* m_pTextBonus;

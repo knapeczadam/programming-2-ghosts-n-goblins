@@ -1,8 +1,7 @@
 ﻿#pragma once
-#include "game/GameController.h"
 #include "level/colliders/ICollider.h"
 
-class ArmorCollider final: public ICollider
+class ArmorCollider final : public ICollider
 {
 public:
     explicit ArmorCollider(const Rectf& shape, GameController* pGameController);
@@ -13,6 +12,7 @@ public:
     ArmorCollider& operator=(ArmorCollider&& other) noexcept = delete;
 
     virtual void HandleCollision(GameObject* other) override;
+
 private:
     const Point2f m_PotPos;
 };

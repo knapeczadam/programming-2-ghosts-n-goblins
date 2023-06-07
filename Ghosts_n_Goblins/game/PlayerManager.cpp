@@ -11,14 +11,14 @@
 
 PlayerManager::PlayerManager(GameController* pGameController)
     : IManager{pGameController}
-      , m_pPlayer{nullptr}
-      , m_SpawnPos{164.0f, 64.0f}
-      // , m_SpawnPos{3700.0f, 64.0f}
-      , m_CheckpointPos{3820.0f, 64.0f}
-      , m_Throwables{}
-      , m_PrevLives{0}
-      , m_PrevScore{0}
-      , m_PrevWeapon{Game::Label::T_LANCE}
+    , m_pPlayer{nullptr}
+    , m_SpawnPos{164.0f, 64.0f}
+    // , m_SpawnPos{3700.0f, 64.0f}
+    , m_CheckpointPos{3820.0f, 64.0f}
+    , m_Throwables{}
+    , m_PrevLives{0}
+    , m_PrevScore{0}
+    , m_PrevWeapon{Game::Label::T_LANCE}
 {
     m_pGameController->m_pPlayerManager = this;
     Initialize();
@@ -102,6 +102,6 @@ void PlayerManager::LateUpdate(float elapsedSec)
 {
     static const auto isActive{[](const GameObject* pGameObject) { return pGameObject->IsActive(); }};
     static const auto lateUpdate{[&](GameObject* pGameObject) { pGameObject->LateUpdate(elapsedSec); }};
-    std::ranges::for_each(m_Throwables | std::ranges::views::filter(isActive) , lateUpdate);
+    std::ranges::for_each(m_Throwables | std::ranges::views::filter(isActive), lateUpdate);
     if (m_pPlayer->IsActive()) m_pPlayer->LateUpdate(elapsedSec);
 }

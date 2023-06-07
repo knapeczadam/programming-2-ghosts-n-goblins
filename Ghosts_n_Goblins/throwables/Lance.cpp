@@ -6,7 +6,7 @@
 
 Lance::Lance(const Point2f& pos, bool isFlipped, bool collectible, GameController* pGameController)
     : GameObject{Game::Label::T_LANCE, pos, true, pGameController}
-      , m_Collectible{collectible}
+    , m_Collectible{collectible}
 {
     m_Speed = 300.0f;
     m_Flipped = isFlipped;

@@ -40,7 +40,7 @@ public:
     enum class Label
     {
         // --- IMAGES ---
-        
+
         // Boot
         B_BLACK,
         B_01,
@@ -105,7 +105,7 @@ public:
         N_32,
         N_33,
         N_END,
-        
+
         // Characters
         C_ARTHUR,
         C_CROW,
@@ -174,7 +174,7 @@ public:
         T_SPEAR,
         T_SPELL,
         T_TORCH,
-        
+
         // Ui
         U_ABC,
         U_CHARACTER_DRAWER,
@@ -210,7 +210,7 @@ public:
         U_WEAPONS,
 
         // --- SOUNDS ---
-        
+
         // Effects
         E_ARMOR_PICKUP,
         E_ARTHUR_HIT,
@@ -255,14 +255,14 @@ public:
         S_NONE,
 
         // --- DEBUG ---
-        
+
         D_DUMMY,
         D_FALLBACK,
         D_LEVEL_DEBUG,
         D_MISSING,
 
         // --- INPUT ---
-        
+
         I_LEFT,
         I_RIGHT,
         I_UP,
@@ -278,7 +278,7 @@ public:
         I_QUIT,
         I_INCREASE_VOLUME,
         I_DECREASE_VOLUME,
-        
+
         // MINIGAME
         AVATAR
     };
@@ -323,7 +323,7 @@ private:
     void Initialize();
     void InitLabels();
     void LoadData();
-    
+
     void ClearBackground() const;
 
     void DrawBoot() const;
@@ -338,7 +338,7 @@ private:
     void DrawOutro() const;
     void DrawRanking() const;
     void DrawSaveScore() const;
-    
+
     void UpdateBoot(float elapsedSec);
     void UpdateContinue(float elapsedSec);
     void UpdateGame(float elapsedSec);
@@ -377,7 +377,7 @@ private:
     const std::string m_DataPath;
     std::map<std::string, Label> m_Labels;
     State m_State;
-    
+
     BootManager* m_pBootManager;
     CameraManager* m_pCameraManager;
     CutsceneManager* m_pCutsceneManager;
@@ -397,7 +397,7 @@ private:
 public:
     static std::random_device rd;
     static std::mt19937 mt;
-    
+
 #if TEST_OBJECT
     GameObject* m_pTestObject;
 #endif

@@ -13,7 +13,7 @@ public:
     IManager& operator=(const IManager& other) = delete;
     IManager& operator=(IManager&& other) = delete;
 
-    virtual void Update(float elapsedSec) ;
+    virtual void Update(float elapsedSec);
     virtual void Reset(bool fromCheckpoint = false);
 
 protected:

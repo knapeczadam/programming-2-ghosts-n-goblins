@@ -2,14 +2,13 @@
 #include "WoodyPigSpawner.h"
 
 #include "characters/IEnemy.h"
-#include "characters/Player.h"
 #include "game/EnemyManager.h"
 #include "game/GameController.h"
 #include "game/GameObject.h"
 #include "game/PlayerManager.h"
 
 WoodyPigSpawner::WoodyPigSpawner(const Rectf& shape, GameController* pGameController)
-    : ISpawner{Game::Label::L_WOODY_PIG, shape,  pGameController}
+    : ISpawner{Game::Label::L_WOODY_PIG, shape, pGameController}
 {
 }
 

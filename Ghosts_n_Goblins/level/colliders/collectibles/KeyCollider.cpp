@@ -3,7 +3,6 @@
 
 #include "characters/Player.h"
 #include "engine/SoundManager.h"
-#include "fx/FXManager.h"
 #include "game/CollectibleManager.h"
 #include "game/EnemyManager.h"
 #include "game/GameController.h"
@@ -20,10 +19,10 @@ void KeyCollider::HandleCollision(GameObject* other)
     {
         if (pEnemy->GetLabel() == Game::Label::C_UNICORN and pEnemy->IsActive())
         {
-           return; 
+            return;
         }
     }
-    
+
     if (not IsOverlapping(other)) return;
     for (GameObject* pCollectible : m_pGameController->m_pCollectibleManager->GetCollectibles())
     {

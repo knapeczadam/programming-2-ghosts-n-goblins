@@ -22,7 +22,7 @@ void IPotter::Update(float elapsedSec)
 {
     if (m_pPot)
     {
-        GameObject* pEnemy {dynamic_cast<GameObject*>(this)};
+        GameObject* pEnemy{dynamic_cast<GameObject*>(this)};
         m_pPot->SetPosition(pEnemy->GetPosition<Point2f>());
         m_pPot->UpdateCollider();
     }

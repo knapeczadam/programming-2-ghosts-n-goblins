@@ -8,14 +8,14 @@
 
 IEnemy::IEnemy(Game::Label label, const Point2f& pos, GameController* pGameController)
     : GameObject{label, pos, true, pGameController}
-      , m_SpawnPosition{pos}
-      , m_Score{0}
-      , m_HP{1}
-      , m_OriginalHP{m_HP}
-      , m_HorVelocity{0.0f}
-      , m_VerVelocity{0.0f}
-      , m_Ping{true}
-      , m_FixedDirection{false}
+    , m_SpawnPosition{pos}
+    , m_Score{0}
+    , m_HP{1}
+    , m_OriginalHP{m_HP}
+    , m_HorVelocity{0.0f}
+    , m_VerVelocity{0.0f}
+    , m_Ping{true}
+    , m_FixedDirection{false}
 {
 }
 
@@ -98,7 +98,7 @@ void IEnemy::Pong()
 
 void IEnemy::SetSpawnPosition(const Point2f& position)
 {
-    m_SpawnPosition = position;    
+    m_SpawnPosition = position;
 }
 
 void IEnemy::ResetHP()

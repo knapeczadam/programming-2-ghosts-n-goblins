@@ -1,25 +1,22 @@
 ﻿#include "pch.h"
 #include "Zombie.h"
 
-#include <iostream>
-
 #include "Player.h"
 #include "engine/SoundManager.h"
 #include "engine/Sprite.h"
 #include "fx/FXManager.h"
-#include "game/CollectibleManager.h"
 #include "game/GameController.h"
 #include "game/PlayerManager.h"
 
 Zombie::Zombie(const Point2f& pos, GameController* pGameController)
     : IEnemy{Game::Label::C_ZOMBIE, pos, pGameController}
-      , m_MinWalingTime{2.0f}
-      , m_MaxWalingTime{8.0f}
-      , m_WalkingTime{0.66f}
-      , m_SpawnTime{0.8f}
-      , m_CanWalk{false}
-      , m_Dir{}
-      , m_MidColliderHeight{m_Collider.height / 2.0f}
+    , m_MinWalingTime{2.0f}
+    , m_MaxWalingTime{8.0f}
+    , m_WalkingTime{0.66f}
+    , m_SpawnTime{0.8f}
+    , m_CanWalk{false}
+    , m_Dir{}
+    , m_MidColliderHeight{m_Collider.height / 2.0f}
 {
     m_Score = 200;
     m_HorVelocity = 50.0f;

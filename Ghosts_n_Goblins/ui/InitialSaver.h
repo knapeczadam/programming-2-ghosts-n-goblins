@@ -23,10 +23,10 @@ private:
     auto DrawInitial() const -> void;
     void FlickerCharacter() const;
     void OnEnter();
-    
+
 private:
     void SaveInitial();
-    
+
 private:
     Sprite* m_pBlueChar;
     Sprite* m_pRedChar;
@@ -42,4 +42,3 @@ private:
     const size_t m_MaxLength;
     bool m_ScoreSaved;
 };
-

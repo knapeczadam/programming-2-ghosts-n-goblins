@@ -16,43 +16,41 @@ int GameObject::s_IdCounter{0};
 
 GameObject::GameObject(GameController* pGameController)
     : m_Id{++s_IdCounter}
-        ,m_Label{Game::Label::D_DUMMY}
-      , m_HasSprite{false}
-      , m_pGameController{pGameController}
-      , m_pSprite{nullptr}
-      , m_Shape{0.0f, 0.0f, 0.0f, 0.0f}
-      , m_Collider{0.0f, 0.0f, 0.0f, 0.0f}
-      , m_OriginalCollider{m_Collider}
-      , m_CollisionEnabled{false}
-      , m_Active{true}
-      , m_Visible{true}
-        , m_Awake{false}
-      , m_AwakeFired{false}
-      , m_AwakeDistance{0.0f}
-      , m_Flipped{false}
-      , m_ColliderColor{0.5f, 0.5f, 0.5f, 1.0f}
+    , m_Label{Game::Label::D_DUMMY}
+    , m_HasSprite{false}
+    , m_pGameController{pGameController}
+    , m_pSprite{nullptr}
+    , m_Shape{0.0f, 0.0f, 0.0f, 0.0f}
+    , m_Collider{0.0f, 0.0f, 0.0f, 0.0f}
+    , m_OriginalCollider{m_Collider}
+    , m_CollisionEnabled{false}
+    , m_Active{true}
+    , m_Visible{true}
+    , m_Awake{false}
+    , m_AwakeFired{false}
+    , m_AwakeDistance{0.0f}
+    , m_Flipped{false}
+    , m_ColliderColor{0.5f, 0.5f, 0.5f, 1.0f}
 {
 }
 
 GameObject::GameObject(Game::Label label, GameController* pGameController)
     : m_Id{++s_IdCounter}
     , m_Label{label}
-      , m_HasSprite{true}
-      , m_pGameController{pGameController}
-      , m_pSprite{
-          m_HasSprite and m_pGameController ? m_pGameController->m_pSpriteFactory->CreateSprite(label) : nullptr
-      }
-      , m_Shape{0.0f, 0.0f, 0.0f, 0.0f}
-      , m_Collider{0.0f, 0.0f, 0.0f, 0.0f}
-      , m_OriginalCollider{m_Collider}
-      , m_CollisionEnabled{false}
-      , m_Active{true}
-      , m_Visible{true}
-        , m_Awake{false}
-      , m_AwakeFired{false}
-      , m_AwakeDistance{0.0f}
-      , m_Flipped{false}
-      , m_ColliderColor{0.5f, 0.5f, 0.5f, 1.0f}
+    , m_HasSprite{true}
+    , m_pGameController{pGameController}
+    , m_pSprite{m_HasSprite and m_pGameController ? m_pGameController->m_pSpriteFactory->CreateSprite(label) : nullptr}
+    , m_Shape{0.0f, 0.0f, 0.0f, 0.0f}
+    , m_Collider{0.0f, 0.0f, 0.0f, 0.0f}
+    , m_OriginalCollider{m_Collider}
+    , m_CollisionEnabled{false}
+    , m_Active{true}
+    , m_Visible{true}
+    , m_Awake{false}
+    , m_AwakeFired{false}
+    , m_AwakeDistance{0.0f}
+    , m_Flipped{false}
+    , m_ColliderColor{0.5f, 0.5f, 0.5f, 1.0f}
 {
     InitShape();
     if (m_CollisionEnabled)
@@ -61,49 +59,43 @@ GameObject::GameObject(Game::Label label, GameController* pGameController)
     }
 }
 
-GameObject::GameObject(Game::Label label, const Rectf& shape, bool collisionEnabled, bool hasSprite,
-                       const Color4f& color,
-                       GameController* pGameController)
+GameObject::GameObject(Game::Label label, const Rectf& shape, bool collisionEnabled, bool hasSprite, const Color4f& color, GameController* pGameController)
     : m_Id{++s_IdCounter}
     , m_Label{label}
-      , m_HasSprite{hasSprite}
-      , m_pGameController{pGameController}
-      , m_pSprite{
-          m_HasSprite and m_pGameController ? m_pGameController->m_pSpriteFactory->CreateSprite(label) : nullptr
-      }
-      , m_Shape{shape}
-      , m_Collider{shape}
-      , m_OriginalCollider{m_Collider}
-      , m_CollisionEnabled{collisionEnabled}
-      , m_Active{true}
-      , m_Visible{true}
-        , m_Awake{false}
-      , m_AwakeFired{false}
-      , m_AwakeDistance{0.0f}
-      , m_Flipped{false}
-      , m_ColliderColor{color}
+    , m_HasSprite{hasSprite}
+    , m_pGameController{pGameController}
+    , m_pSprite{m_HasSprite and m_pGameController ? m_pGameController->m_pSpriteFactory->CreateSprite(label) : nullptr}
+    , m_Shape{shape}
+    , m_Collider{shape}
+    , m_OriginalCollider{m_Collider}
+    , m_CollisionEnabled{collisionEnabled}
+    , m_Active{true}
+    , m_Visible{true}
+    , m_Awake{false}
+    , m_AwakeFired{false}
+    , m_AwakeDistance{0.0f}
+    , m_Flipped{false}
+    , m_ColliderColor{color}
 {
 }
 
 GameObject::GameObject(Game::Label label, const Point2f& pos, bool collisionEnabled, GameController* pGameController)
     : m_Id{++s_IdCounter}
     , m_Label{label}
-      , m_HasSprite{true}
-      , m_pGameController{pGameController}
-      , m_pSprite{
-          m_HasSprite and m_pGameController ? m_pGameController->m_pSpriteFactory->CreateSprite(label) : nullptr
-      }
-      , m_Shape{0.0f, 0.0f, 0.0f, 0.0f}
-      , m_Collider{0.0f, 0.0f, 0.0f, 0.0f}
-      , m_OriginalCollider{m_Collider}
-      , m_CollisionEnabled{collisionEnabled}
-      , m_Active{true}
-      , m_Visible{true}
-        , m_Awake{false}
-      , m_AwakeFired{false}
-      , m_AwakeDistance{0.0f}
-      , m_Flipped{false}
-      , m_ColliderColor{0.5f, 0.5f, 0.5f, 1.0f}
+    , m_HasSprite{true}
+    , m_pGameController{pGameController}
+    , m_pSprite{m_HasSprite and m_pGameController ? m_pGameController->m_pSpriteFactory->CreateSprite(label) : nullptr}
+    , m_Shape{0.0f, 0.0f, 0.0f, 0.0f}
+    , m_Collider{0.0f, 0.0f, 0.0f, 0.0f}
+    , m_OriginalCollider{m_Collider}
+    , m_CollisionEnabled{collisionEnabled}
+    , m_Active{true}
+    , m_Visible{true}
+    , m_Awake{false}
+    , m_AwakeFired{false}
+    , m_AwakeDistance{0.0f}
+    , m_Flipped{false}
+    , m_ColliderColor{0.5f, 0.5f, 0.5f, 1.0f}
 {
     InitShape(pos);
     if (m_CollisionEnabled)
@@ -146,7 +138,8 @@ void GameObject::Update(float elapsedSec)
     }
     if (not m_AwakeFired)
     {
-        if (utils::GetDistance(GetShapeCenter(), m_pGameController->m_pPlayerManager->GetPlayer()->GetShapeCenter()) < m_AwakeDistance)
+        if (utils::GetDistance(GetShapeCenter(), m_pGameController->m_pPlayerManager->GetPlayer()->GetShapeCenter()) <
+            m_AwakeDistance)
         {
             m_Awake = true;
         }

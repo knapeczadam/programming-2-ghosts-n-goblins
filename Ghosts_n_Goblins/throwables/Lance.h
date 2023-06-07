@@ -15,17 +15,19 @@
 class Lance final : public GameObject, public IThrowable, public ICollectible
 {
 public:
-	explicit Lance(const Point2f& pos, bool isFlipped, bool collectible, GameController* pGameController);
-	virtual ~Lance() override = default;
-	Lance(const Lance& other) = delete;
-	Lance(Lance&& other) noexcept = delete;
-	Lance& operator=(const Lance& other) = delete;
-	Lance& operator=(Lance&& other) noexcept = delete;
+    explicit Lance(const Point2f& pos, bool isFlipped, bool collectible, GameController* pGameController);
+    virtual ~Lance() override = default;
+    Lance(const Lance& other) = delete;
+    Lance(Lance&& other) noexcept = delete;
+    Lance& operator=(const Lance& other) = delete;
+    Lance& operator=(Lance&& other) noexcept = delete;
 
-	virtual void Update(float elapsedSec) override;
-	virtual void Awake(float elapsedSec) override;
+    virtual void Update(float elapsedSec) override;
+    virtual void Awake(float elapsedSec) override;
+
 private:
-	void SetSprite() const;
+    void SetSprite() const;
+
 private:
-	bool m_Collectible;
+    bool m_Collectible;
 };

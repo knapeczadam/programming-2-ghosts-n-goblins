@@ -40,7 +40,7 @@ void ScoreManager::Update(float elapsedSec)
     }
     else if (score >= m_ThirdBonusThreshold)
     {
-       pPlayer->IncreaseLives();
+        pPlayer->IncreaseLives();
         m_ThirdBonusThreshold += m_SecondBonusThreshold;
     }
 }
@@ -101,7 +101,7 @@ bool ScoreManager::HasTopScore() const
 bool ScoreManager::HasBelowTopScore() const
 {
     const int playerScore{m_pGameController->m_pPlayerManager->GetPlayer()->GetScore()};
-    return playerScore < GetTopScore() and playerScore >= GetLowestScore(); 
+    return playerScore < GetTopScore() and playerScore >= GetLowestScore();
 }
 
 bool ScoreManager::IsOnScoreboard() const

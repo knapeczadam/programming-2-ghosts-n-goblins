@@ -28,14 +28,15 @@ public:
     void UpdateMenu(float elapsedSec);
     void UpdateRanking(float elapsedSec);
     void UpdateSaveScore(float elapsedSec);
-    
+
     virtual void Reset(bool fromCheckpoint = false) override;
 
 protected:
     virtual void Initialize(bool fromCheckpoint = false) override;
     virtual void CleanUp() override;
+
 private:
-    const int m_MaxIdx; 
+    const int m_MaxIdx;
     int m_Idx;
     std::vector<float> m_Intervals;
     bool m_CreditInserted;

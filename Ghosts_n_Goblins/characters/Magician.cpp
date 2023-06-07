@@ -27,7 +27,7 @@ void Magician::Update(float elapsedSec)
 {
     if (m_Awake)
     {
-        Awake(elapsedSec);    
+        Awake(elapsedSec);
     }
     else if (m_CanShoot)
     {
@@ -66,7 +66,7 @@ void Magician::Shoot(float elapsedSec)
         m_pSprite->SetCurrRowsCols();
         m_pSprite->ResetCurrFrame();
         m_pSprite->ResetIterCount();
-        
+
         const Vector2f direction{m_pGameController->m_pPlayerManager->GetPlayer()->GetShapeCenter() - GetShapeCenter()};
         for (GameObject* pThrowable : m_pGameController->m_pEnemyManager->GetThrowables())
         {
@@ -103,8 +103,7 @@ void Magician::HandleCollision(GameObject* other)
     {
         Reset();
         m_pGameController->m_pPlayerManager->GetPlayer()->AddScore(m_Score);
-        m_pGameController->m_pFXManager->PlayEffect(Game::Label::F_PROJECTILE_DEATH, GetContactPoint(other),
-                                                    other->IsFlipped());
+        m_pGameController->m_pFXManager->PlayEffect(Game::Label::F_PROJECTILE_DEATH, GetContactPoint(other), other->IsFlipped());
         m_pGameController->m_pFXManager->PlayEffect(Game::Label::F_SCORE, GetContactPoint(other), false, this);
         m_pGameController->m_pSoundManager->PlayEffect(Game::Label::E_ENEMY_DEATH);
     }

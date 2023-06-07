@@ -8,14 +8,14 @@
 
 YashichiCollider::YashichiCollider(const Rectf& shape, GameController* pGameController)
     : ICollider(Game::Label::L_YASHICHI, shape, pGameController)
-    , m_PotPos{ 6123.0f, 448.0f }
+      , m_PotPos{6123.0f, 448.0f}
 {
 }
 
 void YashichiCollider::HandleCollision(GameObject* other)
 {
     if (not IsOverlapping(other)) return;
-    Player* pPlayer{ static_cast<Player*>(other) };
+    Player* pPlayer{static_cast<Player*>(other)};
     if (pPlayer->GetState() == Player::State::JUMPING_STANDING)
     {
         m_Active = false;

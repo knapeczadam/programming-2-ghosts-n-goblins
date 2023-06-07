@@ -36,7 +36,7 @@ void RankingDrawer::DrawPlayers() const
 
 void RankingDrawer::DrawScores() const
 {
-    float y {368.0f};
+    float y{368.0f};
     const float offset{32.0f};
     for (const auto& result : m_pGameController->m_pUIManager->m_pScoreManager->GetScores())
     {

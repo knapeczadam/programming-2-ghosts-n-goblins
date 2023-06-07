@@ -22,6 +22,7 @@ public:
     virtual void Draw() const override;
     virtual void Update(float elapsedSec) override;
     virtual void HandleCollision(GameObject* other) override;
+
 protected:
     virtual void Wait(float elapsedSec) override;
     virtual void Shoot(float elapsedSec) override;

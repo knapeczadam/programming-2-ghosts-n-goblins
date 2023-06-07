@@ -7,13 +7,13 @@
 class Platform final : public GameObject
 {
 public:
-    explicit Platform(const Point2f& pos,GameController* pGameController);
+    explicit Platform(const Point2f& pos, GameController* pGameController);
     virtual ~Platform() override = default;
     Platform(const Platform& other) = delete;
     Platform(Platform&& other) noexcept = delete;
     Platform& operator=(const Platform& other) = delete;
     Platform& operator=(Platform&& other) noexcept = delete;
-    
+
     void Move();
     virtual void Update(float elapsedSec) override;
     virtual void HandleCollision(GameObject* other) override;
@@ -29,5 +29,4 @@ private:
     float m_CurrAmplitude;
     bool m_Shortened;
     bool m_Flip;
-    
 };

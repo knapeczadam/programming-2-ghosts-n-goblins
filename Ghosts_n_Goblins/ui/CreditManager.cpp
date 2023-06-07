@@ -3,8 +3,6 @@
 
 #include "ScoreManager.h"
 #include "engine/SoundManager.h"
-#include "engine/Sprite.h"
-#include "engine/SpriteFactory.h"
 #include "game/GameController.h"
 #include "game/InputManager.h"
 
@@ -18,7 +16,8 @@ CreditManager::CreditManager(GameController* pGameController)
 
 void CreditManager::Update(float elapsedSec)
 {
-    if (m_pGameController->m_pInputManager->IsPressed(Game::Label::I_INSERT) and not m_pGameController->m_pInputManager->IsTriggered(Game::Label::I_INSERT))
+    if (m_pGameController->m_pInputManager->IsPressed(Game::Label::I_INSERT) and not m_pGameController->m_pInputManager
+        ->IsTriggered(Game::Label::I_INSERT))
     {
         m_pGameController->m_pInputManager->SetTriggered(Game::Label::I_INSERT, true);
         if (m_Credits < m_MaxCredits)

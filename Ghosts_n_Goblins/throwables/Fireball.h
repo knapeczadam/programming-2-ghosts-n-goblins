@@ -5,7 +5,8 @@
 class Fireball final : public GameObject, public IThrowable
 {
 public:
-    explicit Fireball(Game::Label label, const Point2f& pos, const Vector2f& direction, GameController* pGameController);
+    explicit Fireball(Game::Label label, const Point2f& pos, const Vector2f& direction,
+                      GameController* pGameController);
     virtual ~Fireball() override = default;
     Fireball(const Fireball& other) = delete;
     Fireball(Fireball&& other) noexcept = delete;

@@ -4,7 +4,7 @@
 #include "characters/Player.h"
 
 LadderCollider::LadderCollider(const Rectf& shape, GameController* pGameController)
-    : ICollider{ Game::Label::L_LADDER, shape, pGameController }
+    : ICollider{Game::Label::L_LADDER, shape, pGameController}
 {
 }
 
@@ -16,5 +16,4 @@ void LadderCollider::HandleCollision(GameObject* other)
     {
         pPlayer->SetOnLadder(true);
     }
-    
 }

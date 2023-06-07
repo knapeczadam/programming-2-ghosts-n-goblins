@@ -16,15 +16,15 @@
 
 MenuManager::MenuManager(GameController* pGameController)
     : IManager{pGameController}
-      , m_MaxIdx{3}
-      , m_Idx{0}
-      , m_Intervals{}
-      , m_CreditInserted{false}
-      , m_pBackground1{pGameController->m_pSpriteFactory->CreateSprite(Game::Label::U_MENU_BACKGROUND_1)}
-      , m_pBackground2{pGameController->m_pSpriteFactory->CreateSprite(Game::Label::U_MENU_BACKGROUND_2)}
-      , m_pBackground3{pGameController->m_pSpriteFactory->CreateSprite(Game::Label::U_MENU_BACKGROUND_3)}
-      , m_pBackground4{pGameController->m_pSpriteFactory->CreateSprite(Game::Label::U_MENU_BACKGROUND_4)}
-      , m_Time{}
+    , m_MaxIdx{3}
+    , m_Idx{0}
+    , m_Intervals{}
+    , m_CreditInserted{false}
+    , m_pBackground1{pGameController->m_pSpriteFactory->CreateSprite(Game::Label::U_MENU_BACKGROUND_1)}
+    , m_pBackground2{pGameController->m_pSpriteFactory->CreateSprite(Game::Label::U_MENU_BACKGROUND_2)}
+    , m_pBackground3{pGameController->m_pSpriteFactory->CreateSprite(Game::Label::U_MENU_BACKGROUND_3)}
+    , m_pBackground4{pGameController->m_pSpriteFactory->CreateSprite(Game::Label::U_MENU_BACKGROUND_4)}
+    , m_Time{}
 {
     pGameController->m_pMenuManager = this;
     Initialize();
@@ -105,12 +105,13 @@ void MenuManager::UpdateContinue(float elapsedSec)
 }
 
 void MenuManager::UpdateGameOver(float elapsedSec)
-{ 
+{
 }
 
 void MenuManager::UpdateMap(float elapsedSec)
 {
-    m_pGameController->m_pCameraManager->GetCamera()->SetBoundaries(m_pGameController->m_pUIManager->m_pMap->GetBoundaries());
+    m_pGameController->m_pCameraManager->GetCamera()->SetBoundaries(
+        m_pGameController->m_pUIManager->m_pMap->GetBoundaries());
     m_pGameController->m_pUIManager->m_pMap->Update(elapsedSec);
 }
 
@@ -177,7 +178,7 @@ void MenuManager::UpdateRanking(float elapsedSec)
 
 void MenuManager::UpdateSaveScore(float elapsedSec)
 {
-   m_pGameController->m_pUIManager->m_pInitialSaver->Update(elapsedSec); 
+    m_pGameController->m_pUIManager->m_pInitialSaver->Update(elapsedSec);
 }
 
 void MenuManager::Reset(bool fromCheckpoint)

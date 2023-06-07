@@ -70,7 +70,6 @@ public:
     int GetIterCount() const;
     void ResetIterCount();
     bool IsLastFrame() const;
-    
 
 private:
     // SPRITE PROPERTIES

@@ -1,7 +1,6 @@
 ﻿#pragma once
 #include "IEnemy.h"
 #include "IPotter.h"
-#include "game/GameObject.h"
 
 /**
  * \brief 
@@ -31,6 +30,7 @@ protected:
     virtual void Walk(float elapsedSec) override;
     virtual void Spawn(float elapsedSec) override;
     virtual void Awake(float elapsedSec) override;
+
 private:
     void Sleep(float elapsedSec);
 

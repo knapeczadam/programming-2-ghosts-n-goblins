@@ -15,4 +15,3 @@ public:
     virtual void Update(float elapsedSec) override;
     virtual void Awake(float elapsedSec) override;
 };
-

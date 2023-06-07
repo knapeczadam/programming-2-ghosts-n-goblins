@@ -23,20 +23,22 @@ private:
         SHOOT,
         FLY
     };
+
 public:
     explicit RedArremer(const Point2f& pos, GameController* pGameController);
-   virtual ~RedArremer() override = default;
-   RedArremer(const RedArremer& other) = delete;
-   RedArremer(RedArremer&& other) noexcept = delete;
-   RedArremer& operator=(const RedArremer& other) = delete;
-   RedArremer& operator=(RedArremer&& other) noexcept = delete;
+    virtual ~RedArremer() override = default;
+    RedArremer(const RedArremer& other) = delete;
+    RedArremer(RedArremer&& other) noexcept = delete;
+    RedArremer& operator=(const RedArremer& other) = delete;
+    RedArremer& operator=(RedArremer&& other) noexcept = delete;
 
-   virtual void Draw() const override;
-   virtual void Update(float elapsedSec) override;
-   virtual void HandleCollision(GameObject* other) override;
+    virtual void Draw() const override;
+    virtual void Update(float elapsedSec) override;
+    virtual void HandleCollision(GameObject* other) override;
+
 protected:
-   virtual void Wait(float elapsedSec) override;
-   virtual void Walk(float elapsedSec) override;
-   virtual void Shoot(float elapsedSec) override;
-   virtual void Fly(float elapsedSec) override;
+    virtual void Wait(float elapsedSec) override;
+    virtual void Walk(float elapsedSec) override;
+    virtual void Shoot(float elapsedSec) override;
+    virtual void Fly(float elapsedSec) override;
 };

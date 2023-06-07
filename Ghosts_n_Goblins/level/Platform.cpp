@@ -8,16 +8,16 @@
 #include "engine/SoundManager.h"
 #include "engine/Sprite.h"
 
-Platform::Platform(const Point2f& pos,GameController* pGameController)
+Platform::Platform(const Point2f& pos, GameController* pGameController)
     : GameObject{Game::Label::L_PLATFORM, pos, true, pGameController}
-      , m_AccuSec{0.0f}
-      , m_OriginalPos{pos}
-      , m_Speed{2.0f}
-      , m_MaxAmplitude{221.0f}
-      , m_ShortAmplitude{100.0f}
-      , m_CurrAmplitude{m_MaxAmplitude}
-      , m_Shortened{false}
-      , m_Flip{true}
+    , m_AccuSec{0.0f}
+    , m_OriginalPos{pos}
+    , m_Speed{2.0f}
+    , m_MaxAmplitude{221.0f}
+    , m_ShortAmplitude{100.0f}
+    , m_CurrAmplitude{m_MaxAmplitude}
+    , m_Shortened{false}
+    , m_Flip{true}
 {
 }
 
@@ -28,7 +28,7 @@ void Platform::Move()
     const float epsilon{0.001f};
     const bool leftReached{std::abs(m_Shape.left - m_OriginalPos.x) < epsilon};
     const bool rightReached{std::abs(m_Shape.left - (m_OriginalPos.x + m_MaxAmplitude)) < epsilon};
-    const bool midReached{std::abs(m_Shape.left - (m_OriginalPos.x + m_MaxAmplitude -  m_ShortAmplitude)) < epsilon};
+    const bool midReached{std::abs(m_Shape.left - (m_OriginalPos.x + m_MaxAmplitude - m_ShortAmplitude)) < epsilon};
     if (m_Shortened)
     {
         m_Shape.left = m_OriginalPos.x + (m_MaxAmplitude - m_ShortAmplitude) + normalizedWave * m_CurrAmplitude;

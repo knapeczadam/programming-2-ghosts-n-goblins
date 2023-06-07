@@ -10,8 +10,8 @@
 
 ZombieSpawner::ZombieSpawner(const Rectf& shape, GameController* pGameController)
     : ISpawner{Game::Label::L_ZOMBIE, shape, pGameController}
-      , m_MinRange{66.0f}
-      , m_MaxRange{208.0f}
+    , m_MinRange{66.0f}
+    , m_MaxRange{208.0f}
 {
 }
 

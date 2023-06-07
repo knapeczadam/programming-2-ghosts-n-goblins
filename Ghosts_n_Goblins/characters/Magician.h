@@ -28,6 +28,7 @@ public:
 
 protected:
     virtual void Shoot(float elapsedSec) override;
+
 private:
     void Disappear();
 

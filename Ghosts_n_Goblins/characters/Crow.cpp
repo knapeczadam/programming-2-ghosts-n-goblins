@@ -11,10 +11,10 @@
 
 Crow::Crow(const Point2f& pos, GameController* pGameController)
     : IEnemy{Game::Label::C_CROW, pos, pGameController}
-      , m_Amplitude{15.0f}
+    , m_Amplitude{15.0f}
 {
     m_Score = 100;
-    m_AwakeDistance = 240.0f; 
+    m_AwakeDistance = 240.0f;
     m_HorVelocity = 100.0f;
     m_VerVelocity = 20.0f;
 }
@@ -72,7 +72,7 @@ void Crow::Wait(float elapsedSec)
 
     const int randInterval{std::rand() % 2 + 1};
     Switch(randInterval);
-    
+
     m_pSprite->CalculateFrameTime();
     m_pSprite->SetCurrRowsCols();
     m_pSprite->UpdateSourceRect();

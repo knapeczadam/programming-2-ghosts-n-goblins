@@ -13,6 +13,7 @@ public:
     TombstoneCollider& operator=(TombstoneCollider&& other) noexcept = delete;
 
     virtual void HandleCollision(GameObject* other) override;
+
 private:
     int m_HitCount;
     const int m_MaxHitCount;

@@ -16,7 +16,7 @@
  * <br>
  * Every fourth time this cycle initiates itself, the first doll encountered will always be the 10,000 point King doll.
  * <a href="https://strategywiki.org/wiki/Ghosts_%27n_Goblins/How_to_play#Items">StrategyWiki</a>
- */ 
+ */
 class Pot final : public GameObject, public ICollectible
 {
 public:
@@ -33,5 +33,5 @@ public:
 
 private:
     Game::Label m_Content;
-    const float m_Gravity{ -200.f };
+    const float m_Gravity{-200.f};
 };

@@ -12,7 +12,6 @@ Key::Key(const Point2f& pos, GameController* pGameController)
     , m_OnGround{false}
 {
     m_Score = 1000;
-    
 }
 
 void Key::Update(float elapsedSec)

@@ -10,6 +10,7 @@ public:
         RED = 5,
         TAN = 10
     };
+
     explicit InitialDrawer(GameController* pGameController);
     virtual ~InitialDrawer() override = default;
     InitialDrawer(const InitialDrawer& other) = delete;

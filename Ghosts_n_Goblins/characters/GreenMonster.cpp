@@ -10,11 +10,10 @@
 #include "throwables/Eyeball.h"
 
 GreenMonster::GreenMonster(const Point2f& pos, GameController* pGameController)
-    : IEnemy{Game::Label::C_GREEN_MONSTER,  pos, pGameController}
+    : IEnemy{Game::Label::C_GREEN_MONSTER, pos, pGameController}
 {
     m_Score = 100;
     m_AwakeDistance = 200.0f;
-    
 }
 
 void GreenMonster::Draw() const
@@ -31,7 +30,7 @@ void GreenMonster::Update(float elapsedSec)
     }
     else
     {
-       Shoot(elapsedSec);
+        Shoot(elapsedSec);
         m_Flipped = IsFlipped();
     }
 }
@@ -60,7 +59,7 @@ void GreenMonster::Wait(float elapsedSec)
 
 void GreenMonster::Shoot(float elapsedSec)
 {
-    const int randInterval{std::rand() % 2 + 1}; 
+    const int randInterval{std::rand() % 2 + 1};
     StartTimer(randInterval);
     if (IsTimerFinished())
     {
@@ -78,5 +77,4 @@ void GreenMonster::Shoot(float elapsedSec)
         }
         m_pGameController->m_pEnemyManager->GetThrowables().push_back(new Eyeball{GetShapeCenter(),direction.Normalized(), m_pGameController});
     }
-    
 }

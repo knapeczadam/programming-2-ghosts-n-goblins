@@ -5,7 +5,7 @@
 class ZombieSpawner final : public ISpawner
 {
 public:
-    explicit  ZombieSpawner(const Rectf& shape,  GameController* pGameController);
+    explicit ZombieSpawner(const Rectf& shape, GameController* pGameController);
     virtual ~ZombieSpawner() override = default;
     ZombieSpawner(const ZombieSpawner&) = delete;
     ZombieSpawner(ZombieSpawner&&) = delete;
@@ -13,6 +13,7 @@ public:
     ZombieSpawner& operator=(ZombieSpawner&&) = delete;
 
     virtual void Spawn() override;
+
 private:
     const float m_MinRange;
     const float m_MaxRange;

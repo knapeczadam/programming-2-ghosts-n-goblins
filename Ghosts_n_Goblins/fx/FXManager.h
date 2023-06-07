@@ -27,6 +27,7 @@ protected:
 
 public:
     void PlayEffect(Game::Label label, const Point2f& pos, bool flipped, GameObject* other = nullptr);
+
 private:
     std::vector<GameObject*> m_Effects;
 };

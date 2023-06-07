@@ -1,8 +1,9 @@
 ﻿#pragma once
-#include <vector>
 
 #include "Game.h"
 #include "IManager.h"
+
+#include <vector>
 
 class GameObject;
 class Player;
@@ -25,7 +26,7 @@ public:
     void DrawThrowables() const;
     virtual void Update(float elapsedSec) override;
     void LateUpdate(float elapsedSec);
-    
+
 protected:
     virtual void Initialize(bool fromCheckpoint = false) override;
     virtual void CleanUp() override;
