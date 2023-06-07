@@ -340,10 +340,12 @@ void Game::InitLabels()
     m_Labels["avatar"] = Label::AVATAR;
 }
 
-/*
+/**
+ * \brief
  * Load data from the data.json file located in the Resource folder
- * Only works with version 3.8.0 of nlohmann::json : https://github.com/nlohmann/json/tree/v3.8.0
+ * Only works with version 3.8.0 of nlohmann::json.
  * Closing the file is done automatically by the destructor of the ifstream object
+ * <a href="https://github.com/nlohmann/json/tree/v3.8.0">JSON for Modern C++</a>
  */
 void Game::LoadData()
 {

@@ -90,12 +90,6 @@
     <ClCompile Include="engine\Clock.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="level\KillZone.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="level\Tombstone.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="ui\UI.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -130,9 +124,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="level\Door.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="level\Ladder.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="throwables\Eyeball.cpp">
@@ -207,9 +198,6 @@
     <ClCompile Include="game\UIManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="level\colliders\ArmorCollider.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="level\colliders\BonusCollider.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -226,24 +214,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="level\colliders\ICollider.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="level\colliders\KeyCollider.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="level\colliders\YashichiCollider.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="level\spawners\FlyingKnightSpawner.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="level\spawners\ISpawner.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="level\spawners\WoodyPigSpawner.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="level\spawners\ZombieSpawner.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="throwables\IThrowable.cpp">
@@ -265,6 +235,48 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ui\ScoreManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="characters\IPotter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="level\colliders\collectibles\ArmorCollider.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="level\colliders\collectibles\KeyCollider.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="level\colliders\collectibles\YashichiCollider.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="level\colliders\KillZone.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="level\colliders\LadderCollider.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="level\colliders\LadderActivator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="level\colliders\LadderDeactivator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="level\colliders\PotDeactivator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="level\colliders\spawners\FlyingKnightSpawner.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="level\colliders\spawners\ISpawner.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="level\colliders\spawners\WoodyPigSpawner.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="level\colliders\spawners\ZombieSpawner.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="level\colliders\TombstoneCollider.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -353,12 +365,6 @@
     <ClInclude Include="engine\Clock.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="level\KillZone.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="level\Tombstone.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ui\UI.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -390,12 +396,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="level\Door.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="level\IClimable.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="level\Ladder.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="throwables\Eyeball.h">
@@ -470,9 +470,6 @@
     <ClInclude Include="game\UIManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="level\colliders\ArmorCollider.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="level\colliders\BonusCollider.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -491,24 +488,6 @@
     <ClInclude Include="level\colliders\ICollider.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="level\colliders\KeyCollider.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="level\colliders\YashichiCollider.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="level\spawners\FlyingKnightSpawner.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="level\spawners\ISpawner.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="level\spawners\WoodyPigSpawner.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="level\spawners\ZombieSpawner.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ui\CreditManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -525,6 +504,48 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ui\ScoreManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="characters\IPotter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="level\colliders\collectibles\ArmorCollider.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="level\colliders\collectibles\KeyCollider.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="level\colliders\collectibles\YashichiCollider.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="level\colliders\KillZone.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="level\colliders\LadderCollider.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="level\colliders\LadderActivator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="level\colliders\LadderDeactivator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="level\colliders\PotDeactivator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="level\colliders\spawners\FlyingKnightSpawner.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="level\colliders\spawners\ISpawner.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="level\colliders\spawners\WoodyPigSpawner.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="level\colliders\spawners\ZombieSpawner.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="level\colliders\TombstoneCollider.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
