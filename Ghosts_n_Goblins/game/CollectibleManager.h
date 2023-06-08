@@ -18,6 +18,7 @@ public:
 
     void Draw() const;
     virtual void Update(float elapsedSec) override;
+    void UpdateColliders();
     virtual void Reset(bool fromCheckpoint = false) override;
     void LateUpdate(float elapsedSec);
     std::vector<GameObject*>& GetCollectibles();

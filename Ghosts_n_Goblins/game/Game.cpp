@@ -60,7 +60,7 @@ Game::Game(const Window& window)
     , m_Data{nullptr}
     , m_DataPath{"data.json"}
     , m_Labels{}
-    , m_State{State::BOOT}
+    , m_State{State::GAME}
     , m_pBootManager{nullptr}
     , m_pCameraManager{nullptr}
     , m_pCutsceneManager{nullptr}
@@ -706,6 +706,17 @@ void Game::HandleCollisions()
         }
     }
 
+    for (GameObject* fx : m_pFXManager->GetEffects())
+    {
+        if (fx->IsActive() and fx->GetLabel() == Label::F_FIRE_TORCH)
+        {
+            for (GameObject* enemy : m_pEnemyManager->GetEnemies())
+            {
+                if (enemy->IsActive()) enemy->HandleCollision(fx);
+            }
+        }
+    }
+
     std::ranges::for_each(m_pCollectibleManager->GetCollectibles() | std::views::filter(isActive),
                           playerHandleCollision);
     std::ranges::for_each(m_pLevelManager->GetColliders() | std::views::filter(isActive), objectHandleCollision);
@@ -876,6 +887,7 @@ void Game::UpdateGame(float elapsedSec)
     if (m_pTestObject->IsActive())m_pTestObject->Update(elapsedSec);
 #endif
 
+    UpdateColliders();
     HandleCollisions();
     m_pCameraManager->DoFrustumCulling();
 }
@@ -917,6 +929,15 @@ void Game::UpdateOutro(float elapsedSec)
 void Game::UpdateSaveScore(float elapsedSec)
 {
     m_pMenuManager->UpdateSaveScore(elapsedSec);
+}
+
+void Game::UpdateColliders()
+{
+    m_pLevelManager->UpdateColliders();
+    m_pPlayerManager->UpdateColliders();
+    m_pEnemyManager->UpdateColliders();
+    m_pCollectibleManager->UpdateColliders();
+    m_pFXManager->UpdateColliders();
 }
 
 void Game::LateUpdateGame(float elapsedSec)

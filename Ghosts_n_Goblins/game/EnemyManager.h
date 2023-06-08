@@ -20,6 +20,7 @@ public:
     void DrawEnemies() const;
     void DrawThrowables() const;
     virtual void Update(float elapsedSec) override;
+    void UpdateColliders();
     void LateUpdate(float elapsedSec);
     void SpawnEnemies();
 

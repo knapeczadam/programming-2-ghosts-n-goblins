@@ -145,11 +145,22 @@ void LevelManager::Update(float elapsedSec)
     std::ranges::for_each(m_Waters | std::views::filter(isActive), update);
 }
 
+void LevelManager::UpdateColliders()
+{
+    static const auto isActive{[](const GameObject* pGameObject) { return pGameObject->IsActive(); }};
+    static const auto updateCollider{[&](GameObject* pGameObject) { pGameObject->UpdateCollider(); }};
+    m_pLevel->UpdateCollider();
+    m_pPlatform->UpdateCollider();
+    std::ranges::for_each(m_Colliders | std::views::filter(isActive), updateCollider);
+    std::ranges::for_each(m_Tombstones | std::views::filter(isActive), updateCollider);
+}
+
 void LevelManager::LateUpdate(float elapsedSec)
 {
     static const auto lateUpdate{[&](GameObject* pGameObject) { pGameObject->LateUpdate(elapsedSec); }};
     std::ranges::for_each(m_Waters, lateUpdate);
     if (m_pDoor->IsActive()) m_pDoor->LateUpdate(elapsedSec);
+    m_pPlatform->LateUpdate(elapsedSec);
 }
 
 void LevelManager::Reset(bool fromCheckpoint)

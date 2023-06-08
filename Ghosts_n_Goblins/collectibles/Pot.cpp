@@ -15,7 +15,6 @@ Pot::Pot(const Point2f& pos, GameController* pGameController)
 void Pot::Update(float elapsedSec)
 {
     m_Shape.bottom += m_Gravity * elapsedSec;
-    UpdateCollider();
     if (m_pGameController->m_pLevelManager->GetLevel()->IsOnGround(this))
     {
         m_Active = false;
@@ -40,6 +39,7 @@ void Pot::Fall(Game::Label contentLabel, const Point2f& pos)
     m_Active = true;
     m_Visible = true;
     m_Content = contentLabel;
+    UpdateCollider();
 }
 
 void Pot::SetContent(Game::Label content)

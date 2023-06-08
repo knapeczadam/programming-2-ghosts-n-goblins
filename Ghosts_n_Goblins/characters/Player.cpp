@@ -42,7 +42,7 @@ Player::Player(const Point2f& pos, GameController* pGameController)
     , m_ShortCooldownTime{0.25f}
     , m_LongCooldownTime{0.30f}
     , m_Attacking{false}
-    , m_CurrWeapon{Game::Label::T_LANCE}
+    , m_CurrWeapon{Game::Label::T_TORCH}
     , m_Overheated{false}
     , m_OnPlatform{false}
     , m_OffsetSnapshot{0.0f, 0.0f}
@@ -218,7 +218,6 @@ void Player::Update(float elapsedSec)
         UpdatePosition(elapsedSec);
         break;
     }
-    UpdateCollider();
 }
 
 void Player::LateUpdate(float elapsedSec)
@@ -259,7 +258,6 @@ void Player::UpdateCooldown(float elapsedSec)
     }
 }
 
-// TODO: weapons are not shown when attacking
 void Player::Throw()
 {
     for (GameObject* pWeapon : m_pGameController->m_pPlayerManager->GetThrowables())
@@ -772,7 +770,7 @@ void Player::OnHit(float elapsedSec)
     }
     m_Shape.bottom += m_Velocity.y * elapsedSec;
     m_Shape.left += m_Velocity.x * elapsedSec;
-    StartTimer(1.0f);
+    StartTimer(2.0f);
     if (IsTimerFinished())
     {
         m_HitTriggered = false;

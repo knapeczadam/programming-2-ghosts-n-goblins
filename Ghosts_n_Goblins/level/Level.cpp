@@ -51,42 +51,43 @@ void Level::HandleCollision(GameObject* other)
     utils::HitInfo hit;
 
     // DOWN
-    const Point2f playerCenter{other->GetColliderCenter()};
+    const Point2f objectCenter{other->GetColliderCenter()};
     Point2f down;
-    down.x = playerCenter.x;
+    down.x = objectCenter.x;
     down.y = other->GetCollider().bottom - epsilon;
 
     // RIGHT
     Point2f right;
     right.x = other->GetCollider().left + other->GetCollider().width + epsilon;
-    right.y = playerCenter.y;
+    right.y = objectCenter.y;
 
     // LEFT
     Point2f left;
     left.x = other->GetCollider().left - epsilon;
-    left.y = playerCenter.y;
+    left.y = objectCenter.y;
     std::ranges::for_each(m_Vertices, [&](const std::vector<Point2f>& vertices)
     {
-        if (utils::Raycast(vertices, playerCenter, down, hit))
+        if (utils::Raycast(vertices, objectCenter, down, hit))
         {
-            other->SetBottom(hit.intersectPoint.y);
+            // TODO: if player is hit, don't set bottom to hit.intersectPoint.y
             Player* pPlayer{static_cast<Player*>(other)};
+            other->SetBottom(hit.intersectPoint.y);
             Vector2f playerVelocity{pPlayer->GetVelocity()};
             playerVelocity.y = 0.f;
             pPlayer->SetVelocity(playerVelocity);
         }
-        if (utils::Raycast(vertices, playerCenter, right, hit))
+        if (utils::Raycast(vertices, objectCenter, right, hit))
         {
-            other->SetLeft(hit.intersectPoint.x - other->GetCollider().width);
             Player* pPlayer{static_cast<Player*>(other)};
+            other->SetLeft(hit.intersectPoint.x - other->GetCollider().width);
             Vector2f playerVelocity{pPlayer->GetVelocity()};
             playerVelocity.x = 0.f;
             pPlayer->SetVelocity(playerVelocity);
         }
-        if (utils::Raycast(vertices, playerCenter, left, hit))
+        if (utils::Raycast(vertices, objectCenter, left, hit))
         {
-            other->SetLeft(hit.intersectPoint.x);
             Player* pPlayer{static_cast<Player*>(other)};
+            other->SetLeft(hit.intersectPoint.x);
             Vector2f playerVelocity{pPlayer->GetVelocity()};
             playerVelocity.x = 0.f;
             pPlayer->SetVelocity(playerVelocity);

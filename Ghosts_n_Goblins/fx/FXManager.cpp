@@ -49,6 +49,13 @@ void FXManager::Update(float elapsedSec)
     std::ranges::for_each(m_Effects | std::ranges::views::filter(isActive), update);
 }
 
+void FXManager::UpdateColliders()
+{
+    static const auto isActive{[](const GameObject* pGameObject) { return pGameObject->IsActive(); }};
+    static const auto updateCollider{[&](GameObject* pGameObject) { pGameObject->UpdateCollider(); }};
+    std::ranges::for_each(m_Effects | std::ranges::views::filter(isActive), updateCollider);
+}
+
 void FXManager::LateUpdate(float elapsedSec)
 {
     static const auto lateUpdate{[&](GameObject* pGameObject) { pGameObject->LateUpdate(elapsedSec); }};
@@ -67,8 +74,11 @@ void FXManager::PlayEffect(Game::Label label, const Point2f& pos, bool flipped, 
         if (pEffect->GetLabel() == label and not pEffect->IsActive())
         {
             Point2f newPos{pos};
+            if (label != Game::Label::F_FIRE_TORCH)
+            {
+                newPos.y -= pEffect->GetSprite()->GetScaledClipHeight() / 2.f;
+            }
             newPos.x -= pEffect->GetSprite()->GetScaledClipWidth() / 2.f;
-            newPos.y -= pEffect->GetSprite()->GetScaledClipHeight() / 2.f;
             pEffect->SetPosition(newPos);
             pEffect->SetFlipped(flipped);
             pEffect->SetActive(true);

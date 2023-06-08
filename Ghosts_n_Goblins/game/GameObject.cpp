@@ -132,10 +132,6 @@ void GameObject::Awake(float elapsedSec)
 
 void GameObject::Update(float elapsedSec)
 {
-    if (m_CollisionEnabled)
-    {
-        UpdateCollider();
-    }
     if (not m_AwakeFired)
     {
         if (utils::GetDistance(GetShapeCenter(), m_pGameController->m_pPlayerManager->GetPlayer()->GetShapeCenter()) <

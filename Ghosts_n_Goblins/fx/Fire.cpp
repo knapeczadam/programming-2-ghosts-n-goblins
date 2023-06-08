@@ -6,8 +6,11 @@
 Fire::Fire(Game::Label label, const Point2f& pos, GameController* pGameController)
     : GameObject{label, pos, true, pGameController}
 {
+    if (label != Game::Label::F_FIRE_TORCH)
+    {
+        m_Shape.bottom = pos.y - m_pSprite->GetScaledClipHeight() / 2;
+    }
     m_Shape.left = pos.x - m_pSprite->GetScaledClipWidth() / 2;
-    m_Shape.bottom = pos.y - m_pSprite->GetScaledClipHeight() / 2;
 }
 
 void Fire::Update(float elapsedSec)
@@ -19,7 +22,7 @@ void Fire::Update(float elapsedSec)
     }
     else if (m_Label == Game::Label::F_FIRE_TORCH)
     {
-        time = 0.4f;
+        time = 1.0f;
     }
     StartTimer(time);
     if (IsTimerFinished())

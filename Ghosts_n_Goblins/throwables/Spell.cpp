@@ -7,7 +7,7 @@ Spell::Spell(const Point2f& pos, const Vector2f& direction, GameController* pGam
     : GameObject{Game::Label::T_SPELL, pos, true, pGameController}
 {
     m_Direction = direction;
-    m_Speed = 200.0f;
+    m_Speed.x = 200.0f;
     m_AwakeDistance = std::numeric_limits<float>::max();
     m_Shape.left = pos.x;
     m_Shape.bottom = pos.y;
@@ -16,7 +16,7 @@ Spell::Spell(const Point2f& pos, const Vector2f& direction, GameController* pGam
 void Spell::Update(float elapsedSec)
 {
     GameObject::Update(elapsedSec);
-    m_Shape.left += (m_Direction.x < 0 ? -1 : 1) * m_Speed * elapsedSec;
+    m_Shape.left += (m_Direction.x < 0 ? -1 : 1) * m_Speed.x * elapsedSec;
 }
 
 void Spell::Awake(float elapsedSec)

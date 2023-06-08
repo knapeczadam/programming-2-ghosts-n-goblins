@@ -87,8 +87,6 @@ public:
     bool IsClimbing() const;
 
     void UpdateState();
-
-protected:
     virtual void UpdateCollider() override;
 
 private:

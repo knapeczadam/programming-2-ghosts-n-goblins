@@ -40,6 +40,7 @@ public:
     void DrawDoor() const;
 
     virtual void Update(float elapsedSec) override;
+    void UpdateColliders();
     void LateUpdate(float elapsedSec);
     virtual void Reset(bool fromCheckpoint = false) override;
     bool CheckpointReached();

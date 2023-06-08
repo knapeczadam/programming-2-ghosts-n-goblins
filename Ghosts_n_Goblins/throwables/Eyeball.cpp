@@ -7,7 +7,7 @@ Eyeball::Eyeball(const Point2f& pos, const Vector2f& direction, GameController* 
     : GameObject{Game::Label::T_EYEBALL, pos, true, pGameController}
 {
     m_Direction = direction;
-    m_Speed = 100.0f;
+    m_Speed.x = 100.0f;
     m_Shape.left = pos.x;
     m_Shape.bottom = pos.y;
 }
@@ -15,8 +15,8 @@ Eyeball::Eyeball(const Point2f& pos, const Vector2f& direction, GameController* 
 void Eyeball::Update(float elapsedSec)
 {
     GameObject::Update(elapsedSec);
-    m_Shape.left += m_Direction.x * m_Speed * elapsedSec;
-    m_Shape.bottom += m_Direction.y * m_Speed * elapsedSec;
+    m_Shape.left += m_Direction.x * m_Speed.x * elapsedSec;
+    m_Shape.bottom += m_Direction.y * m_Speed.x * elapsedSec;
 }
 
 void Eyeball::Awake(float elapsedSec)

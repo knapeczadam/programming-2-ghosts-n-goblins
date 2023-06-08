@@ -98,6 +98,14 @@ void PlayerManager::Update(float elapsedSec)
     std::ranges::for_each(m_Throwables | std::ranges::views::filter(isActive), update);
 }
 
+void PlayerManager::UpdateColliders()
+{
+    static const auto isActive{[](const GameObject* pGameObject) { return pGameObject->IsActive(); }};
+    static const auto updateCollider{[&](GameObject* pGameObject) { pGameObject->UpdateCollider(); }};
+    if (m_pPlayer->IsActive()) m_pPlayer->UpdateCollider();
+    std::ranges::for_each(m_Throwables | std::ranges::views::filter(isActive), updateCollider);
+}
+
 void PlayerManager::LateUpdate(float elapsedSec)
 {
     static const auto isActive{[](const GameObject* pGameObject) { return pGameObject->IsActive(); }};

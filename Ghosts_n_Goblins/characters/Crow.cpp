@@ -35,7 +35,6 @@ void Crow::Update(float elapsedSec)
     {
         Fly(elapsedSec);
     }
-    UpdateCollider();
 }
 
 void Crow::HandleCollision(GameObject* other)

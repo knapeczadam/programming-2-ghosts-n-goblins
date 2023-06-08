@@ -37,7 +37,6 @@ void Magician::Update(float elapsedSec)
     {
         Disappear();
     }
-    UpdateCollider();
 }
 
 void Magician::Awake(float elapsedSec)

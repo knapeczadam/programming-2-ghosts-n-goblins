@@ -349,6 +349,8 @@ private:
     void UpdateOutro(float elapsedSec);
     void UpdateRanking(float elapsedSec);
     void UpdateSaveScore(float elapsedSec);
+    
+    void UpdateColliders();
 
     void UpdateState();
     void UpdateBootState();

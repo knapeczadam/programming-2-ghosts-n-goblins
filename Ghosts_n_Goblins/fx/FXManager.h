@@ -17,7 +17,8 @@ public:
     FXManager& operator=(FXManager&& other) noexcept = delete;
 
     void Draw() const;
-    void Update(float elapsedSec);
+    virtual void Update(float elapsedSec) override;
+    void UpdateColliders();
     void LateUpdate(float elapsedSec);
     std::vector<GameObject*>& GetEffects();
 

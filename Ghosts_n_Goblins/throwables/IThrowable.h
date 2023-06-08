@@ -14,6 +14,9 @@ public:
     virtual void SetDirection(const Vector2f& direction) final;
 
 protected:
+    Point2f m_OriginalPos;
     Vector2f m_Direction;
-    float m_Speed;
+    Vector2f m_Speed;
+    float m_Angle;
+    float m_AccuTime;
 };

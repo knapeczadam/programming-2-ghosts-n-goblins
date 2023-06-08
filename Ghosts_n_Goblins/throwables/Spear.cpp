@@ -7,7 +7,7 @@ Spear::Spear(const Point2f& pos, const Vector2f& direction, GameController* pGam
     : GameObject(Game::Label::T_SPEAR, pos, true, pGameController)
 {
     m_Direction = direction;
-    m_Speed = 100.0f;
+    m_Speed.x = 100.0f;
     m_AwakeDistance = std::numeric_limits<float>::max();
     m_Shape.left = pos.x;
     m_Shape.bottom = pos.y;
@@ -16,8 +16,8 @@ Spear::Spear(const Point2f& pos, const Vector2f& direction, GameController* pGam
 void Spear::Update(float elapsedSec)
 {
     GameObject::Update(elapsedSec);
-    m_Shape.left += m_Direction.x * m_Speed * elapsedSec;
-    m_Shape.bottom += m_Direction.y * m_Speed * elapsedSec;
+    m_Shape.left += m_Direction.x * m_Speed.x * elapsedSec;
+    m_Shape.bottom += m_Direction.y * m_Speed.x * elapsedSec;
 }
 
 void Spear::Awake(float elapsedSec)

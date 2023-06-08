@@ -3,8 +3,11 @@
 
 
 IThrowable::IThrowable()
-    : m_Direction{}
-    , m_Speed{ 0.0f }
+    : m_OriginalPos{0.0f, 0.0f}
+    , m_Direction{0.0f, 0.0f}
+    , m_Speed{ 0.0f, 0.0f }
+    , m_Angle{0.0f}
+    , m_AccuTime{0.0f}
 {
 }
 

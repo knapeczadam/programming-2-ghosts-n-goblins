@@ -24,6 +24,7 @@ public:
 
     virtual void Update(float elapsedSec) override;
     virtual void Awake(float elapsedSec) override;
+    virtual void Reset() override;
 
 private:
     bool m_Collectible;

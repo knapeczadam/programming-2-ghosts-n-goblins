@@ -47,7 +47,6 @@ void Zombie::Update(float elapsedSec)
         HidePot();
         Sleep(elapsedSec);
     }
-    UpdateCollider(); // do not delete this line TODO!
 }
 
 void Zombie::HandleCollision(GameObject* other)

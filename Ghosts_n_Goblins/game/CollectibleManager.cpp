@@ -101,6 +101,13 @@ void CollectibleManager::Update(float elapsedSec)
     UpdatePot();
 }
 
+void CollectibleManager::UpdateColliders()
+{
+    static const auto isActive{[](const GameObject* pGameObject) { return pGameObject->IsActive(); }};
+    static const auto updateCollider{[&](GameObject* pGameObject) { pGameObject->UpdateCollider(); }};
+    std::ranges::for_each(m_Collectibles | std::views::filter(isActive), updateCollider);
+}
+
 void CollectibleManager::Reset(bool fromCheckpoint)
 {
     if (not fromCheckpoint)

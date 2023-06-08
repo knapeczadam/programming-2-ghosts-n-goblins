@@ -8,7 +8,7 @@ Lance::Lance(const Point2f& pos, bool isFlipped, bool collectible, GameControlle
     : GameObject{Game::Label::T_LANCE, pos, true, pGameController}
     , m_Collectible{collectible}
 {
-    m_Speed = 300.0f;
+    m_Speed.x = 300.0f;
     m_Flipped = isFlipped;
     m_AwakeDistance = std::numeric_limits<float>::max();
     if (not collectible)
@@ -28,11 +28,11 @@ void Lance::Update(float elapsedSec)
     }
     if (m_Flipped)
     {
-        m_Shape.left -= m_Speed * elapsedSec;
+        m_Shape.left -= m_Speed.x * elapsedSec;
     }
     else
     {
-        m_Shape.left += m_Speed * elapsedSec;
+        m_Shape.left += m_Speed.x * elapsedSec;
     }
 }
 

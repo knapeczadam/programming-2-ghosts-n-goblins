@@ -25,6 +25,7 @@ public:
     void DrawPlayer() const;
     void DrawThrowables() const;
     virtual void Update(float elapsedSec) override;
+    void UpdateColliders();
     void LateUpdate(float elapsedSec);
 
 protected:

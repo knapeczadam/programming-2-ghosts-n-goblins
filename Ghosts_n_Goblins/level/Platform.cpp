@@ -64,7 +64,6 @@ void Platform::Update(float elapsedSec)
     m_AccuSec += elapsedSec;
     Move();
     m_pSprite->SetPosition(GetPosition<Point2f>());
-    UpdateCollider();
 }
 
 /*
