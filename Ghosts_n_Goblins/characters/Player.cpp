@@ -626,6 +626,10 @@ bool Player::HandleEnemy(GameObject* other)
             m_ImpactFromLeft = ImpactFromLeft(other);
             m_pGameController->m_pSoundManager->PlayEffect(Game::Label::E_ARTHUR_HIT);
             --m_HP;
+            if (m_HP == 1)
+            {
+                m_pGameController->m_pFXManager->PlayEffect(Game::Label::F_DAMAGE, GetColliderCenter(), m_HitFlipped);
+            }
         }
         return true;
     }

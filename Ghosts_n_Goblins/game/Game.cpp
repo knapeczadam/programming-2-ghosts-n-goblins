@@ -79,6 +79,8 @@ Game::Game(const Window& window)
 #if TEST_OBJECT
     , m_pTestObject{nullptr}
 #endif
+    , m_PlayTime{121.f}
+    , m_HurryUpTime{15.f}
 {
     Initialize();
 }
@@ -236,6 +238,7 @@ void Game::InitLabels()
     m_Labels["o_yashichi"] = Label::O_YASHICHI;
 
     // Fx
+    m_Labels["f_damage"] = Label::F_DAMAGE;
     m_Labels["f_fire_boss"] = Label::F_FIRE_BOSS;
     m_Labels["f_fire_enemy"] = Label::F_FIRE_ENEMY;
     m_Labels["f_fire_torch"] = Label::F_FIRE_TORCH;
@@ -947,7 +950,7 @@ void Game::LateUpdateGame(float elapsedSec)
     m_pEnemyManager->LateUpdate(elapsedSec);
     m_pCollectibleManager->LateUpdate(elapsedSec);
     m_pFXManager->LateUpdate(elapsedSec);
-    UpdateRemainingTime(121); // TODO: hardcoded
+    UpdateRemainingTime(m_PlayTime);
 #if TEST_OBJECT
     m_pTestObject->LateUpdate(elapsedSec);
 #endif
@@ -956,7 +959,7 @@ void Game::LateUpdateGame(float elapsedSec)
 void Game::UpdateRemainingTime(int time)
 {
     m_pGameController->m_pUIManager->m_pHUD->SetDigits(GetRemainingTimeDigits(time));
-    if (GetRemainingTime() <= 15.0f) // TODO: hardcoded
+    if (GetRemainingTime() <= m_HurryUpTime)
     {
         m_State = State::HURRY_UP;
     }
@@ -1035,6 +1038,7 @@ void Game::ResetGame(bool fromCheckpoint)
     m_pMenuManager->Reset(fromCheckpoint);
     m_pCameraManager->Reset(fromCheckpoint);
     m_pCollectibleManager->Reset(fromCheckpoint);
+    m_pFXManager->Reset(fromCheckpoint);
     ResetTimer();
 }
 

@@ -244,7 +244,6 @@ void LevelManager::InitColliders(bool fromCheckpoint)
                                 new KeyCollider{Rectf{keyStart, 0.0f, levelWidth - keyStart, viewPortHeight}, m_pGameController},
                                 new PotDeactivator{Rectf{2490.0f, 0.0f, 30.0f, viewPortHeight}, m_pGameController},
                                 new PotDeactivator{Rectf{4405.0f, 0.0f, 30.0f, viewPortHeight}, m_pGameController},
-                                // new PotDeactivator{Rectf{4405.0f, 0.0f, 30.0f, m_pGameController->m_ViewPort.height}, m_pGameController}, TODO
                                 new YashichiCollider{Rectf{5924.0f, 140.0f, 24.0f, 24.0f}, m_pGameController}
                             });
     GameObject* pCheckpoint{new CheckpointCollider{Rectf{3600.0f, 0.0f, 30.0f, viewPortHeight}, m_pGameController}};

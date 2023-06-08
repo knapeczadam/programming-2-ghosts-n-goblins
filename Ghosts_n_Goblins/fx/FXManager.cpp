@@ -1,6 +1,7 @@
 ﻿#include "pch.h"
 #include "FXManager.h"
 
+#include "Damage.h"
 #include "Fire.h"
 #include "ProjectileBlock.h"
 #include "ProjectileDeath.h"
@@ -33,6 +34,7 @@ void FXManager::CleanUp()
 {
     auto deleteGameObject = [](const GameObject* pGameObject) { delete pGameObject; };
     std::ranges::for_each(m_Effects, deleteGameObject);
+    m_Effects.clear();
 }
 
 void FXManager::Draw() const
@@ -58,8 +60,9 @@ void FXManager::UpdateColliders()
 
 void FXManager::LateUpdate(float elapsedSec)
 {
+    static const auto isActive{[](const GameObject* pGameObject) { return pGameObject->IsActive(); }};
     static const auto lateUpdate{[&](GameObject* pGameObject) { pGameObject->LateUpdate(elapsedSec); }};
-    std::ranges::for_each(m_Effects, lateUpdate);
+    std::ranges::for_each(m_Effects | std::views::filter(isActive), lateUpdate);
 }
 
 std::vector<GameObject*>& FXManager::GetEffects()
@@ -97,6 +100,9 @@ void FXManager::PlayEffect(Game::Label label, const Point2f& pos, bool flipped, 
     }
     switch (label)
     {
+    case Game::Label::F_DAMAGE:
+        m_Effects.push_back(new Damage{pos, flipped, m_pGameController});
+        break;
     case Game::Label::F_FIRE_BOSS:
     case Game::Label::F_FIRE_ENEMY:
     case Game::Label::F_FIRE_TORCH:

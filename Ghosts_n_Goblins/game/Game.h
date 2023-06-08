@@ -132,6 +132,7 @@ public:
         O_YASHICHI,
 
         // Fx
+        F_DAMAGE,
         F_FIRE_BOSS,
         F_FIRE_ENEMY,
         F_FIRE_TORCH,
@@ -395,6 +396,8 @@ private:
     SpriteFactory* m_pSpriteFactory;
     TextureManager* m_pTextureManager;
     UIManager* m_pUIManager;
+    const float m_PlayTime;
+    const float m_HurryUpTime;
 
 public:
     static std::random_device rd;

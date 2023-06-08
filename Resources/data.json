@@ -85,6 +85,10 @@
       "path": "collectibles/yashichi.png"
     },
     {
+      "label": "f_damage",
+      "path": "fx/damage.png"
+    },
+    {
       "label": "f_fire_boss",
       "path": "fx/fire_boss.png"
     },
@@ -690,6 +694,13 @@
       "rows": 1,
       "columns": 3,
       "frames_per_second": 10,
+      "scale": 2
+    },
+    {
+      "label": "f_damage",
+      "rows": 1,
+      "columns": 6,
+      "frames_per_second": 12,
       "scale": 2
     },
     {
