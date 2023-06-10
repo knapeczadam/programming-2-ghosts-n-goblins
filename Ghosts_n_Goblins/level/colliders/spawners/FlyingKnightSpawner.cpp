@@ -30,17 +30,17 @@ void FlyingKnightSpawner::Spawn()
         if (not pEnemy->IsActive())
         {
             std::uniform_real_distribution<float> time{1.0f, 2.0f};
-            StartTimer(time(Game::mt));
+            StartTimer(time(Game::GetRandomGenerator()));
             if (IsTimerFinished())
             {
                 FlyingKnight* pKnight{static_cast<FlyingKnight*>(pEnemy)};
                 if (++m_KnightCount % m_MaxKnights == 0)
                 {
                     std::uniform_real_distribution<float> range{m_Range, m_Range * 2.0f};
-                    m_CurrVerOffset = range(Game::mt) - m_Range;
+                    m_CurrVerOffset = range(Game::GetRandomGenerator()) - m_Range;
                 }
                 std::uniform_real_distribution<float> cycleOffset{3.0f, 10.0f};
-                pKnight->SetCycleOffset(cycleOffset(Game::mt));
+                pKnight->SetCycleOffset(cycleOffset(Game::GetRandomGenerator()));
                 Point2f pos;
                 pos.x = m_pGameController->m_pPlayerManager->GetPlayer()->GetPosition<Point2f>().x + m_HorOffset;
                 pos.y = m_VerOffset + m_CurrVerOffset;

@@ -14,6 +14,7 @@ IEnemy::IEnemy(Game::Label label, const Point2f& pos, GameController* pGameContr
     , m_OriginalHP{m_HP}
     , m_HorVelocity{0.0f}
     , m_VerVelocity{0.0f}
+    , m_Velocity{0.0f, 0.0f}
     , m_Ping{true}
     , m_FixedDirection{false}
 {

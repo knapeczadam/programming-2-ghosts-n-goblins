@@ -25,7 +25,7 @@ void ZombieSpawner::Spawn()
         {
             // const int time{std::rand() % 4 + 1};
             std::uniform_real_distribution<float> time{0.0f, 5.0f};
-            StartTimer(time(Game::mt));
+            StartTimer(time(Game::GetRandomGenerator()));
             if (IsTimerFinished())
             {
                 Player* pPlayer{m_pGameController->m_pPlayerManager->GetPlayer()};
@@ -34,7 +34,7 @@ void ZombieSpawner::Spawn()
                 // const int offset{(std::rand() % (m_MaxRange - m_MinRange) + m_MinRange) * flip};
                 std::uniform_real_distribution<float> offset{m_MinRange, m_MaxRange};
                 Point2f pos;
-                pos.x = playerCenter.x + offset(Game::mt) * flip;
+                pos.x = playerCenter.x + offset(Game::GetRandomGenerator()) * flip;
                 pos.y = pPlayer->IsOnHill() ? LevelManager::GetHillHeight() : LevelManager::GetGroundHeight();
                 pEnemy->SetPosition(pos);
                 pEnemy->Reset();

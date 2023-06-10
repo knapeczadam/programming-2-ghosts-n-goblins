@@ -18,10 +18,15 @@ class RedArremer final : public IEnemy
 private:
     enum class State
     {
-        WAIT,
-        WALK,
-        SHOOT,
-        FLY
+        MEDITATING,
+        WAKING_UP,
+        WALKING,
+        FLYING,
+        FLYING_UP,
+        FLYING_DOWN,
+        FLYING_SIDEWAYS,
+        WALKING_SHOOTING,
+        FLYING_SHOOTING
     };
 
 public:
@@ -32,13 +37,24 @@ public:
     RedArremer& operator=(const RedArremer& other) = delete;
     RedArremer& operator=(RedArremer&& other) noexcept = delete;
 
-    virtual void Draw() const override;
     virtual void Update(float elapsedSec) override;
     virtual void HandleCollision(GameObject* other) override;
+    virtual void LateUpdate(float elapsedSec) override;
+    virtual void Awake(float elapsedSec) override;
 
 protected:
-    virtual void Wait(float elapsedSec) override;
     virtual void Walk(float elapsedSec) override;
     virtual void Shoot(float elapsedSec) override;
     virtual void Fly(float elapsedSec) override;
+
+
+private:
+    void UpdateState();
+    void UpdateSprite();
+    void RandomizeState();
+private:
+    State m_State;
+    Point2f m_PosSnapshot;
+    float m_AngleSnapshot;
+    bool m_SnapshotTaken;
 };

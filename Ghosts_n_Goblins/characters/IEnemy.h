@@ -37,6 +37,7 @@ protected:
     int m_OriginalHP;
     float m_HorVelocity;
     float m_VerVelocity;
+    Vector2f m_Velocity;
     bool m_Ping;
     bool m_FixedDirection;
 };

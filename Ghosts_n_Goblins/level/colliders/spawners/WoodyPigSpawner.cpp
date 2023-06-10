@@ -22,7 +22,7 @@ void WoodyPigSpawner::Spawn()
         {
             IEnemy* pEnemy{static_cast<IEnemy*>(pGameObject)};
             std::uniform_real_distribution<float> time{0.0f, 4.0f};
-            StartTimer(time(Game::mt));
+            StartTimer(time(Game::GetRandomGenerator()));
             if (IsTimerFinished())
             {
                 Point2f pos;

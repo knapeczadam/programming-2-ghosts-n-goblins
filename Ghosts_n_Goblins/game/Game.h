@@ -280,8 +280,6 @@ public:
         I_INCREASE_VOLUME,
         I_DECREASE_VOLUME,
 
-        // MINIGAME
-        AVATAR
     };
 
     enum class State
@@ -400,8 +398,11 @@ private:
     const float m_HurryUpTime;
 
 public:
-    static std::random_device rd;
-    static std::mt19937 mt;
+    static std::mt19937& GetRandomGenerator();
+    static bool GetRandomBool();
+private:
+    static std::random_device s_RandomDevice;
+    static std::mt19937 s_RandomGenerator;
 
 #if TEST_OBJECT
     GameObject* m_pTestObject;

@@ -774,7 +774,7 @@ void Player::OnHit(float elapsedSec)
     }
     m_Shape.bottom += m_Velocity.y * elapsedSec;
     m_Shape.left += m_Velocity.x * elapsedSec;
-    StartTimer(2.0f);
+    StartTimer(1.0f);
     if (IsTimerFinished())
     {
         m_HitTriggered = false;

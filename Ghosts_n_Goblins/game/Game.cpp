@@ -37,8 +37,8 @@
 #include "MenuManager.h"
 
 
-std::random_device Game::rd;
-std::mt19937 Game::mt{rd()};
+std::random_device Game::s_RandomDevice;
+std::mt19937 Game::s_RandomGenerator{s_RandomDevice()};
 
 /*
  * TODO:
@@ -339,9 +339,6 @@ void Game::InitLabels()
     // --- DEBUG --- 
     m_Labels["d_level_debug"] = Label::D_LEVEL_DEBUG;
     m_Labels["d_fallback"] = Label::D_FALLBACK;
-
-    // MINIGAME
-    m_Labels["avatar"] = Label::AVATAR;
 }
 
 /**
@@ -1064,6 +1061,17 @@ void Game::PrintInfo() const
 Game::State Game::GetState() const
 {
     return m_State;
+}
+
+std::mt19937& Game::GetRandomGenerator()
+{
+    return s_RandomGenerator;
+}
+
+bool Game::GetRandomBool()
+{
+    std::uniform_int_distribution<> dist{0, 1};
+    return dist(s_RandomGenerator);
 }
 
 void Game::Debug() const
