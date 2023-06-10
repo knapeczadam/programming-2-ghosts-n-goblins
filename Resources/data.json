@@ -126,7 +126,7 @@
     },
     {
       "label": "l_level",
-      "path": "level/level32.bmp"
+      "path": "level/level.bmp"
     },
     {
       "label": "l_foreground",
@@ -138,7 +138,7 @@
     },
     {
       "label": "l_platform",
-      "path": "level/platform.bmp"
+      "path": "level/platform.png"
     },
     {
       "label": "l_water",
@@ -278,11 +278,7 @@
     },
     {
       "label": "d_fallback",
-      "path": "fallback.png"
-    },
-    {
-      "label": "avatar",
-      "path": "minigame/AvatarSheet.png"
+      "path": "debug/fallback2.png"
     },
     {
       "label": "b_black",
@@ -583,10 +579,10 @@
     },
     {
       "label": "c_red_arremer",
-      "rows": 3,
-      "columns": 5,
-      "sub_rows": 3,
-      "sub_columns": 5,
+      "rows": 7,
+      "columns": 3,
+      "sub_rows": 1,
+      "sub_columns": 1,
       "frames_per_second": 10,
       "scale": 2,
       "collider_width": 23,
@@ -956,19 +952,6 @@
       "columns": 4,
       "frames_per_second": 10,
       "scale": 2
-    },
-    {
-      "label": "avatar",
-      "rows": 11,
-      "columns": 10,
-      "sub_rows": 1,
-      "sub_columns": 10,
-      "frames_per_second": 10,
-      "scale": 1,
-      "left_offset_pixel": 0,
-      "top_offset_pixel": 0,
-      "left_offset_columns": 0,
-      "top_offset_rows": 0
     },
     {
       "label": "b_black",
