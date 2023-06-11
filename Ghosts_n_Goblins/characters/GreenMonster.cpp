@@ -59,7 +59,7 @@ void GreenMonster::Wait(float elapsedSec)
 
 void GreenMonster::Shoot(float elapsedSec)
 {
-    const int randInterval{std::rand() % 2 + 1};
+    const int randInterval{Game::GetRandomInt(1, 2)};
     StartTimer(randInterval);
     if (IsTimerFinished())
     {

@@ -13,4 +13,7 @@ public:
     WoodyPigSpawner& operator=(WoodyPigSpawner&&) = delete;
 
     virtual void Spawn() override;
+private:
+    const float m_MinRange;
+    const float m_MaxRange;
 };

@@ -83,8 +83,7 @@ void RedArremer::Awake(float elapsedSec)
 
 void RedArremer::Walk(float elapsedSec)
 {
-    std::uniform_real_distribution<float> time{4.0f, 6.0f};
-    StartTimer(time(Game::GetRandomGenerator()));
+    StartTimer(Game::GetRandomFloat(4.0f, 6.0f));
     if (IsTimerFinished())
     {
         m_pSprite->ResetIterCount();
@@ -129,8 +128,7 @@ void RedArremer::Shoot(float elapsedSec)
 
 void RedArremer::Fly(float elapsedSec)
 {
-    std::uniform_real_distribution<float> time{4.0f, 6.0f};
-    StartTimer(time(Game::GetRandomGenerator()));
+    StartTimer(Game::GetRandomFloat(4.0f, 6.0f));
     if (IsTimerFinished())
     {
         m_pSprite->ResetIterCount();

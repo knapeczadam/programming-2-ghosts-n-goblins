@@ -335,7 +335,7 @@ void LevelManager::InitSpawners(bool fromCheckpoint)
 {
     const float viewPortHeight{m_pGameController->m_ViewPort.height};
     m_pFlyingKnightSpawner = new FlyingKnightSpawner{Rectf{3800.0f, 0.0f, 600.0f, viewPortHeight}, m_pGameController};
-    m_pWoodyPigSpawner = new WoodyPigSpawner{Rectf{0.0f, 0.0f, 0.0f, viewPortHeight}, m_pGameController};
+    m_pWoodyPigSpawner = new WoodyPigSpawner{Rectf{4955.0f, 0.0f, 1500.0f, viewPortHeight}, m_pGameController};
     m_pZombieSpawner = new ZombieSpawner{Rectf{0.0f, 0.0f, 2485.0f, viewPortHeight}, m_pGameController};
     m_Colliders.insert(m_Colliders.end(), {m_pFlyingKnightSpawner, m_pWoodyPigSpawner, m_pZombieSpawner});
 }

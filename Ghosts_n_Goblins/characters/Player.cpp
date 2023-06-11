@@ -27,6 +27,8 @@
 #include <iostream>
 #include <numeric>
 
+#include "WoodyPig.h"
+
 
 Player::Player(const Point2f& pos, GameController* pGameController)
     : GameObject{Game::Label::C_ARTHUR, pos, true, pGameController}
@@ -620,6 +622,11 @@ bool Player::HandleEnemy(GameObject* other)
     if (pEnemy)
     {
         if (pEnemy->GetLabel() == Game::Label::C_ZOMBIE and pEnemy->IsAwake()) return true;
+        if (pEnemy->GetLabel() == Game::Label::C_WOODY_PIG)
+        {
+            const WoodyPig* pWoodyPig{static_cast<WoodyPig*>(other)};
+            if (pWoodyPig->GetState() == WoodyPig::State::SPAWNING) return true;
+        }
         if (m_HP > 0 and m_State != State::HIT)
         {
             m_State = State::HIT;
@@ -661,7 +668,8 @@ bool Player::HandleThrowable(GameObject* other)
             m_pGameController->m_pCollectibleManager->DeactivateContent();
             break;
         case Game::Label::T_EYEBALL:
-        case Game::Label::T_SPEAR:
+        case Game::Label::T_SPEAR_X:
+        case Game::Label::T_SPEAR_Y:
         case Game::Label::T_FIREBALL_UNICORN:
         case Game::Label::T_FIREBALL_RED_ARREMER:
             if (m_HP > 0 and m_State != State::HIT)

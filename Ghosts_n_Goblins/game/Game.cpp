@@ -261,7 +261,8 @@ void Game::InitLabels()
     m_Labels["t_fireball_red_arremer"] = Label::T_FIREBALL_RED_ARREMER;
     m_Labels["t_fireball_unicorn"] = Label::T_FIREBALL_UNICORN;
     m_Labels["t_lance"] = Label::T_LANCE;
-    m_Labels["t_spear"] = Label::T_SPEAR;
+    m_Labels["t_spear_x"] = Label::T_SPEAR_X;
+    m_Labels["t_spear_y"] = Label::T_SPEAR_Y;
     m_Labels["t_spell"] = Label::T_SPELL;
     m_Labels["t_torch"] = Label::T_TORCH;
 
@@ -1063,14 +1064,21 @@ Game::State Game::GetState() const
     return m_State;
 }
 
-std::mt19937& Game::GetRandomGenerator()
-{
-    return s_RandomGenerator;
-}
-
 bool Game::GetRandomBool()
 {
     std::uniform_int_distribution<> dist{0, 1};
+    return dist(s_RandomGenerator);
+}
+
+float Game::GetRandomFloat(float min, float max)
+{
+    std::uniform_real_distribution<float> dist{min, max};
+    return dist(s_RandomGenerator);
+}
+
+int Game::GetRandomInt(int min, int max)
+{
+    std::uniform_int_distribution<int> dist{min, max};
     return dist(s_RandomGenerator);
 }
 

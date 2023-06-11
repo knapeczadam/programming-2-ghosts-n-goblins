@@ -69,7 +69,7 @@ void Crow::Wait(float elapsedSec)
     IEnemy::Wait(elapsedSec);
     m_pSprite->SetSubRows(1);
 
-    const int randInterval{std::rand() % 2 + 1};
+    const int randInterval{Game::GetRandomInt(1, 2)};
     Switch(randInterval);
 
     m_pSprite->CalculateFrameTime();

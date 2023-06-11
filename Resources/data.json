@@ -265,8 +265,12 @@
       "path": "throwables/lance.png"
     },
     {
-      "label": "t_spear",
-      "path": "throwables/spear.png"
+      "label": "t_spear_x",
+      "path": "throwables/spear_x.png"
+    },
+    {
+      "label": "t_spear_y",
+      "path": "throwables/spear_y.png"
     },
     {
       "label": "t_spell",
@@ -612,9 +616,9 @@
     },
     {
       "label": "c_woody_pig",
-      "rows": 3,
+      "rows": 4,
       "columns": 4,
-      "sub_rows": 3,
+      "sub_rows": 1,
       "sub_columns": 4,
       "frames_per_second": 10,
       "scale": 2
@@ -933,9 +937,14 @@
       "collider_height": 1
     },
     {
-      "label": "t_spear",
+      "label": "t_spear_x",
       "scale": 2,
       "collider_height": 3
+    },
+    {
+      "label": "t_spear_y",
+      "scale": 2,
+      "collider_width": 3
     },
     {
       "label": "t_spell",

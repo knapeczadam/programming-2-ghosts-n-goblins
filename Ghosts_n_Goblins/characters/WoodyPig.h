@@ -15,6 +15,14 @@
 class WoodyPig final : public IEnemy, public IPotter
 {
 public:
+    enum class State
+    {
+        SPAWNING,
+        SHOOTING,
+        FLYING,
+        TURNING,
+    };
+public:
     explicit WoodyPig(const Point2f& pos, GameController* pGameController);
     virtual ~WoodyPig() override = default;
     WoodyPig(const WoodyPig& other) = delete;
@@ -22,11 +30,26 @@ public:
     WoodyPig& operator=(const WoodyPig& other) = delete;
     WoodyPig& operator=(WoodyPig&& other) noexcept = delete;
 
-    virtual void Draw() const override;
     virtual void Update(float elapsedSec) override;
     virtual void HandleCollision(GameObject* other) override;
+    virtual void Awake(float elapsedSec) override;
+    virtual void LateUpdate(float elapsedSec) override;
+    virtual void Reset() override;
+    State GetState() const;
 
 protected:
     virtual void Shoot(float elapsedSec) override;
     virtual void Fly(float elapsedSec) override;
+private:
+    void Turn(float elapsedSec);
+    void UpdateState();
+    void UpdateSprite();
+private:
+    State m_State;
+    Point2f m_SnapshotPos;
+    float m_SnapshotOffset;
+    float m_SnapshotAngle;
+    bool m_SnapshotTaken;
+    bool m_SnapshotFlipped;
+    float m_AccuTime;
 };

@@ -172,7 +172,8 @@ public:
         T_FIREBALL_RED_ARREMER,
         T_FIREBALL_UNICORN,
         T_LANCE,
-        T_SPEAR,
+        T_SPEAR_X,
+        T_SPEAR_Y,
         T_SPELL,
         T_TORCH,
 
@@ -398,8 +399,9 @@ private:
     const float m_HurryUpTime;
 
 public:
-    static std::mt19937& GetRandomGenerator();
     static bool GetRandomBool();
+    static float GetRandomFloat(float min, float max);
+    static int GetRandomInt(int min, int max);
 private:
     static std::random_device s_RandomDevice;
     static std::mt19937 s_RandomGenerator;
