@@ -51,10 +51,10 @@ protected:
 private:
     void UpdateState();
     void UpdateSprite();
-    void RandomizeState();
 private:
     State m_State;
-    Point2f m_PosSnapshot;
-    float m_AngleSnapshot;
+    Point2f m_SnapshotPlayerPos;
+    float m_SnapshotAngle;
     bool m_SnapshotTaken;
+    bool m_SnapshotFlipped;
 };

@@ -827,8 +827,8 @@ void Player::CheckBoundaries(const Rectf& boundaries)
     {
         m_Shape.left = boundaries.left - horizontalOffset;
     }
-    else if (m_Collider.left + m_Collider.width > boundaries.left + boundaries.width)
+    else if (m_Collider.left + m_Collider.width > boundaries.width)
     {
-        m_Shape.left = boundaries.left + boundaries.width - m_Collider.width - horizontalOffset;
+        m_Shape.left = boundaries.width - m_Collider.width - horizontalOffset;
     }
 }

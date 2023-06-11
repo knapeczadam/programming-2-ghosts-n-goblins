@@ -31,4 +31,5 @@ void Fireball::Awake(float elapsedSec)
 {
     m_Shape.left -= m_pSprite->GetScaledClipWidth() / 2;
     m_Shape.bottom -= m_pSprite->GetScaledClipHeight() / 2;
+    m_Flipped = m_Direction.x > 0;
 }

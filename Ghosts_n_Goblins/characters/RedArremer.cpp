@@ -16,9 +16,10 @@
 RedArremer::RedArremer(const Point2f& pos, GameController* pGameController)
     : IEnemy{Game::Label::C_RED_ARREMER, pos, pGameController}
     , m_State{State::MEDITATING}
-    , m_PosSnapshot{0.0f, 0.0f}
-    , m_AngleSnapshot{0.0f}
+    , m_SnapshotPlayerPos{0.0f, 0.0f}
+    , m_SnapshotAngle{0.0f}
     , m_SnapshotTaken{false}
+    , m_SnapshotFlipped{false}
 {
     m_Score = 1000;
     m_HP = 3;
@@ -49,8 +50,10 @@ void RedArremer::Update(float elapsedSec)
 void RedArremer::HandleCollision(GameObject* other)
 {
     if (not IsOverlapping(other)) return;
-    if (m_State == State::MEDITATING or m_State == State::WAKING_UP) return;
-    --m_HP;
+    if (m_State != State::MEDITATING or m_State != State::WAKING_UP)
+    {
+        --m_HP;
+    }
     other->SetActive(false);
     other->SetVisible(false);
     m_pGameController->m_pFXManager->PlayEffect(Game::Label::F_PROJECTILE_BLOCK_ENEMY, GetContactPoint(other),
@@ -90,13 +93,14 @@ void RedArremer::Walk(float elapsedSec)
     }
     if (not m_SnapshotTaken)
     {
-        m_PosSnapshot = m_pGameController->m_pPlayerManager->GetPlayer()->GetPosition<Point2f>();
+        m_SnapshotPlayerPos = m_pGameController->m_pPlayerManager->GetPlayer()->GetPosition<Point2f>();
+        m_SnapshotFlipped = m_Flipped;
         m_SnapshotTaken = true;
     }
-    m_Shape.left += (m_Flipped ? m_Velocity.x : -m_Velocity.x) * elapsedSec;
+    m_Shape.left += (m_SnapshotFlipped ? m_Velocity.x : -m_Velocity.x) * elapsedSec;
     const float offset{75.0f};
-    const float left{m_Shape.left + (m_Flipped ? offset : -offset)};
-    if (m_Flipped and left > m_PosSnapshot.x or not m_Flipped and left < m_PosSnapshot.x)
+    const float left{m_Shape.left + (m_SnapshotFlipped ? offset : -offset)};
+    if (m_SnapshotFlipped and left > m_SnapshotPlayerPos.x or not m_SnapshotFlipped and left < m_SnapshotPlayerPos.x)
     {
         m_State = Game::GetRandomBool() ? State::FLYING : State::WALKING;
         m_SnapshotTaken = false;
@@ -155,10 +159,10 @@ void RedArremer::Fly(float elapsedSec)
             m_Shape.bottom -= m_Velocity.y * elapsedSec;
             if (not m_SnapshotTaken)
             {
-                m_AngleSnapshot = GetAngle();
+                m_SnapshotAngle = GetAngle();
                 m_SnapshotTaken = true;
             }
-            m_Shape.left += std::cos(m_AngleSnapshot) * m_Velocity.x * elapsedSec;
+            m_Shape.left += std::cos(m_SnapshotAngle) * m_Velocity.x * elapsedSec;
         }
         else if (m_Shape.bottom < LevelManager::GetGroundHeight())
         {
@@ -231,15 +235,4 @@ void RedArremer::UpdateSprite()
     m_pSprite->SetCurrRowsCols();
     m_pSprite->CalculateFrameTime();
     m_pSprite->UpdateSourceRect();
-}
-
-void RedArremer::RandomizeState()
-{
-    std::uniform_real_distribution<float> time{4.0f, 6.0f};
-    StartTimer(time(Game::GetRandomGenerator()));
-    if (IsTimerFinished())
-    {
-        std::uniform_int_distribution<int> randomState{1, 3};
-        m_State = static_cast<State>(randomState(Game::GetRandomGenerator()));
-    }
 }

@@ -54,7 +54,7 @@ void CameraManager::DoFrustumCulling()
 
     std::ranges::for_each(m_pGameController->m_pPlayerManager->GetThrowables() | std::views::filter(isOutOfWindow), deactivate);
     std::ranges::for_each(m_pGameController->m_pEnemyManager->GetThrowables() | std::views::filter(isOutOfWindow), deactivate);
-    std::ranges::for_each(m_pGameController->m_pEnemyManager->GetGreenMonsters() | std::views::filter(isOutOfWindow) | std::views::transform(toEnemy), sleep);
+    std::ranges::for_each(m_pGameController->m_pEnemyManager->GetGreenMonsters() | std::views::filter(isOutOfWindow), sleep);
     std::ranges::for_each(m_pGameController->m_pEnemyManager->GetZombies() | std::views::filter(isOutOfWindow), deactivate);
     std::ranges::for_each(m_pGameController->m_pEnemyManager->GetFlyingKnights() | std::views::filter(isOutOfWindow), deactivate);
     std::ranges::for_each(m_pGameController->m_pEnemyManager->GetWoodyPigs() | std::views::filter(isOutOfWindow), deactivate);

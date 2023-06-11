@@ -21,10 +21,11 @@ class Unicorn final : public IEnemy, IPotter
 private:
     enum class State
     {
-        WAIT,
-        WALK,
-        JUMP,
-        SHOOT
+        WAITING,
+        ANGRY,
+        WALKING,
+        JUMPING,
+        SHOOTING
     };
 
 public:
@@ -35,16 +36,27 @@ public:
     Unicorn& operator=(const Unicorn& other) = delete;
     Unicorn& operator=(Unicorn&& other) noexcept = delete;
 
-    virtual void Draw() const override;
     virtual void Update(float elapsedSec) override;
     virtual void HandleCollision(GameObject* other) override;
     virtual void Awake(float elapsedSec) override;
+    virtual void LateUpdate(float elapsedSec) override;
 
 protected:
-    virtual void Wait(float elapsedSec) override;
     virtual void Walk(float elapsedSec) override;
     virtual void Jump(float elapsedSec) override;
     virtual void Shoot(float elapsedSec) override;
+private:
+    void UpdateState();
+    void UpdateSprite();
+    float CalculateJumpHeight(float x, float distance) const;
 
 private:
+    State m_State;
+    Point2f m_SnapshotPlayerPos;
+    Point2f m_SnapshotPos;
+    const float m_JumpHeight;
+    const float m_OriginalHeight;
+    bool m_SnapshotTaken;
+    bool m_SnapshotFlipped;
+    int m_LeftOffsetCols;
 };

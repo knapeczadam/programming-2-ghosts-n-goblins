@@ -265,7 +265,7 @@ void GameObject::InitCollider()
     const float verticalOffset{(m_Shape.height - m_pSprite->GetColliderHeight()) / 2};
     const int dir{m_Flipped ? -1 : 1};
     m_Collider.left = m_Shape.left + horizontalOffset + m_pSprite->GetColliderHorizontalOffset() * dir;
-    m_Collider.bottom = m_Shape.bottom + verticalOffset + m_pSprite->GetColliderVerticalOffset() * dir;
+    m_Collider.bottom = m_Shape.bottom + verticalOffset + m_pSprite->GetColliderVerticalOffset();
     m_OriginalCollider = m_Collider;
 }
 
@@ -277,7 +277,7 @@ void GameObject::UpdateCollider()
         const float verticalOffset{(m_Shape.height - m_pSprite->GetColliderHeight()) / 2};
         const int dir{m_Flipped ? -1 : 1};
         m_Collider.left = m_Shape.left + horizontalOffset + m_pSprite->GetColliderHorizontalOffset() * dir;
-        m_Collider.bottom = m_Shape.bottom + verticalOffset + m_pSprite->GetColliderVerticalOffset() * dir;
+        m_Collider.bottom = m_Shape.bottom + verticalOffset + m_pSprite->GetColliderVerticalOffset();
     }
     else
     {

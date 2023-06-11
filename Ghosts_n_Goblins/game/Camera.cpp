@@ -43,6 +43,7 @@ Rectf Camera::GetBoundaries() const
 
 void Camera::SetBoundaries(const Rectf& boundaries)
 {
+    if (boundaries.left > boundaries.width - m_Width) return;
     m_Boundaries = boundaries;
 }
 
@@ -79,9 +80,9 @@ void Camera::Clamp()
     {
         m_Pos.x = m_Boundaries.left;
     }
-    if (m_Pos.x + m_Width > m_Boundaries.left + m_Boundaries.width)
+    if (m_Pos.x + m_Width > m_Boundaries.width)
     {
-        m_Pos.x = m_Boundaries.left + m_Boundaries.width - m_Width;
+        m_Pos.x = m_Boundaries.width - m_Width;
     }
     if (m_Pos.y < m_Boundaries.bottom)
     {

@@ -326,7 +326,8 @@ void LevelManager::InitDoor()
 
 void LevelManager::InitKillZone()
 {
-    m_pKillZone = new KillZone{Rectf{0.0f, 0.0f,m_pGameController->m_pTextureManager->GetTexture(Game::Label::L_LEVEL)->GetWidth(), 10.0f}, m_pGameController};
+    const float offset{m_pGameController->m_ViewPort.width};
+    m_pKillZone = new KillZone{Rectf{0.0f - offset, 0.0f,m_pGameController->m_pTextureManager->GetTexture(Game::Label::L_LEVEL)->GetWidth() + offset * 2, 10.0f}, m_pGameController};
     m_Colliders.push_back(m_pKillZone);
 }
 
