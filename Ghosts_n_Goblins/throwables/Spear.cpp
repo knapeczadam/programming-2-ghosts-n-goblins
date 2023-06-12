@@ -8,7 +8,7 @@ Spear::Spear(const Point2f& pos, const Vector2f& direction, bool down, GameContr
     , m_Down{down}
 {
     m_Direction = direction;
-    m_Speed.x = 100.0f;
+    m_Speed.x = 200.0f;
     m_AwakeDistance = std::numeric_limits<float>::max();
     m_Shape.left = pos.x;
     m_Shape.bottom = pos.y;
@@ -31,7 +31,10 @@ void Spear::Awake(float elapsedSec)
 {
     m_Shape.left -= m_pSprite->GetScaledClipWidth() / 2;
     m_Shape.bottom -= m_pSprite->GetScaledClipHeight() / 2;
-    
+    if (not m_Down)
+    {
+        m_Flipped = m_Direction.x > 0;
+    }
 }
 
 void Spear::SetDown(bool down)

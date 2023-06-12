@@ -21,6 +21,7 @@ public:
         SHOOTING,
         FLYING,
         TURNING,
+        WAITING
     };
 public:
     explicit WoodyPig(const Point2f& pos, GameController* pGameController);
@@ -52,4 +53,5 @@ private:
     bool m_SnapshotTaken;
     bool m_SnapshotFlipped;
     float m_AccuTime;
+    int m_Dir;   
 };

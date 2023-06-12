@@ -159,7 +159,9 @@ void EnemyManager::InitRedArremer()
 
 void EnemyManager::InitUnicorn()
 {
-    m_Enemies.push_back(new Unicorn{Point2f{6903.0f, LevelManager::GetGroundHeight()}, m_pGameController});
+    GameObject* pUnicorn = new Unicorn{Point2f{6903.0f, LevelManager::GetGroundHeight()}, m_pGameController};
+    m_Enemies.push_back(pUnicorn);
+    m_pUnicorn = pUnicorn;
 }
 
 void EnemyManager::InitWoodyPigs()
@@ -243,4 +245,9 @@ std::vector<GameObject*>& EnemyManager::GetZombies()
 GameObject* EnemyManager::GetMagician() const
 {
     return m_pMagician;
+}
+
+GameObject* EnemyManager::GetUnicorn() const
+{
+    return m_pUnicorn;
 }

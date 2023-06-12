@@ -19,6 +19,7 @@ WoodyPigSpawner::WoodyPigSpawner(const Rectf& shape, GameController* pGameContro
 void WoodyPigSpawner::Spawn()
 {
     if (not IsPlayerBetweenBoundaries()) return;
+    if (m_pGameController->m_pEnemyManager->GetUnicorn()->IsAwake()) return;
 
     for (GameObject* pGameObject : m_pGameController->m_pEnemyManager->GetWoodyPigs())
     {

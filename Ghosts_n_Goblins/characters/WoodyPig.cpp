@@ -12,13 +12,14 @@
 
 WoodyPig::WoodyPig(const Point2f& pos, GameController* pGameController)
     : IEnemy{Game::Label::C_WOODY_PIG, pos, pGameController}
-      , m_State{State::SPAWNING}
-      , m_SnapshotPos{0.0f, 0.0f}
-      , m_SnapshotOffset{0.0f}
-      , m_SnapshotAngle{0.0f}
-      , m_SnapshotTaken{false}
-      , m_SnapshotFlipped{false}
-      , m_AccuTime{0.0f}
+    , m_State{State::SPAWNING}
+    , m_SnapshotPos{0.0f, 0.0f}
+    , m_SnapshotOffset{0.0f}
+    , m_SnapshotAngle{0.0f}
+    , m_SnapshotTaken{false}
+    , m_SnapshotFlipped{false}
+    , m_AccuTime{0.0f}
+    , m_Dir{0}
 {
     m_Score = 100;
     m_AwakeDistance = std::numeric_limits<float>::max();
@@ -30,7 +31,6 @@ WoodyPig::WoodyPig(const Point2f& pos, GameController* pGameController)
 void WoodyPig::Update(float elapsedSec)
 {
     IEnemy::Update(elapsedSec);
-    m_Flipped = IsFlipped();
     m_AccuTime += elapsedSec;
 
     switch (m_State)
@@ -63,7 +63,8 @@ void WoodyPig::HandleCollision(GameObject* other)
 
 void WoodyPig::Awake(float elapsedSec)
 {
-    // m_State = State::SPAWNING;
+    m_Flipped = IsFlipped();
+    m_Dir = m_Flipped ? 1 : -1;
 }
 
 void WoodyPig::LateUpdate(float elapsedSec)
@@ -89,7 +90,6 @@ WoodyPig::State WoodyPig::GetState() const
 void WoodyPig::Shoot(float elapsedSec)
 {
     const bool down{Game::GetRandomBool()};
-    const Vector2f direction{m_pGameController->m_pPlayerManager->GetPlayer()->GetShapeCenter() - GetShapeCenter()};
     for (GameObject* pThrowable : m_pGameController->m_pEnemyManager->GetThrowables())
     {
         if ((pThrowable->GetLabel() == Game::Label::T_SPEAR_X or pThrowable->GetLabel() == Game::Label::T_SPEAR_Y) and
@@ -100,7 +100,6 @@ void WoodyPig::Shoot(float elapsedSec)
                 Spear* pSpear{static_cast<Spear*>(pThrowable)};
                 pSpear->Reset();
                 pSpear->SetPosition(GetShapeCenter());
-                pSpear->SetDirection(direction.Normalized());
                 return;
             }
             else if (not down and pThrowable->GetLabel() == Game::Label::T_SPEAR_X)
@@ -108,27 +107,33 @@ void WoodyPig::Shoot(float elapsedSec)
                 Spear* pSpear{static_cast<Spear*>(pThrowable)};
                 pSpear->Reset();
                 pSpear->SetPosition(GetShapeCenter());
-                pSpear->SetDirection(direction.Normalized());
+                pSpear->SetDirection(Vector2f{float(m_Dir), 0.0f});
                 return;
             }
         }
     }
     m_pGameController->m_pEnemyManager->GetThrowables().push_back(
-        new Spear{GetShapeCenter(), direction.Normalized(), down, m_pGameController}
+        new Spear{GetShapeCenter(), Vector2f{float(m_Dir), 0.0f}, down, m_pGameController}
     );
 }
 
 void WoodyPig::Fly(float elapsedSec)
 {
-    // StartTimer(Game::GetRandomFloat(4.0f, 6.0f));
-    StartTimer(Game::GetRandomFloat(1.0f, 2.0f));
+    StartTimer(Game::GetRandomFloat(1.0f, 3.0f));
     if (IsTimerFinished())
     {
-        Shoot(elapsedSec);
-        m_State = State::SHOOTING;
-        m_pSprite->ResetIterCount();
+        if (Game::GetRandomBool())
+        {
+            Shoot(elapsedSec);
+            m_State = State::SHOOTING;
+            m_pSprite->ResetIterCount();
+        }
+        else
+        {
+            m_State = State::WAITING;
+        }
     }
-    m_Shape.left += m_Velocity.x * elapsedSec;
+    m_Shape.left += m_Velocity.x * m_Dir * elapsedSec;
 
     m_pGameController->m_pSoundManager->PlayEffect(Game::Label::E_WOODY_PIG);
 }
@@ -195,12 +200,21 @@ void WoodyPig::UpdateState()
         StartTimer(0.3f);
         if (IsTimerFinished())
         {
-            m_State = Game::GetRandomBool() ? State::FLYING : State::TURNING;
+            m_State = State::FLYING;
         }
     }
     else if (m_State == State::TURNING and m_pSprite->GetIterCount() == 1)
     {
         m_State = State::FLYING;
+    }
+    else if (m_State == State::WAITING)
+    {
+        StartTimer(Game::GetRandomFloat(1.0f, 2.0f));
+        if (IsTimerFinished()) 
+        {
+            m_State =State::FLYING;
+        }
+        
     }
 }
 
@@ -212,6 +226,7 @@ void WoodyPig::UpdateSprite()
         m_pSprite->SetTopOffsetRows(0);
         m_pSprite->SetSubCols(4);
         break;
+    case State::WAITING:
     case State::FLYING:
         m_pSprite->SetTopOffsetRows(1);
         m_pSprite->SetSubCols(2);

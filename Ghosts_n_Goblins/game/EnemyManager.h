@@ -33,6 +33,7 @@ public:
     std::vector<GameObject*>& GetZombies();
 
     GameObject* GetMagician() const;
+    GameObject* GetUnicorn() const;
 
 protected:
     virtual void Initialize(bool fromCheckpoint = false) override;
@@ -57,4 +58,5 @@ private:
     std::vector<GameObject*> m_WoodyPigs;
     std::vector<GameObject*> m_Zombies;
     GameObject* m_pMagician;
+    GameObject* m_pUnicorn;
 };
