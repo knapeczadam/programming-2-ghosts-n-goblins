@@ -775,6 +775,7 @@ void Game::DrawGame() const
     m_pLevelManager->DrawForeGround();
     m_pFXManager->Draw();
     m_pEnemyManager->DrawThrowables();
+    m_pUIManager->m_pUI->DrawTextBonusKey();
     DrawDebug();
     glPopMatrix();
 
