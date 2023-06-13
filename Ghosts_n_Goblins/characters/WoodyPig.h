@@ -46,6 +46,8 @@ private:
     void UpdateState();
     void UpdateSprite();
     void PlayEffect();
+public:
+    static void Initialize();
 private:
     State m_State;
     Point2f m_SnapshotPos;

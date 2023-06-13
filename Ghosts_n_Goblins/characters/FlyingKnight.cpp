@@ -89,3 +89,9 @@ void FlyingKnight::PlayEffect()
         }
     }
 }
+
+void FlyingKnight::Initialize()
+{
+    s_EffectPlaying = false;
+    s_IdPlayingEffect = -1;
+}

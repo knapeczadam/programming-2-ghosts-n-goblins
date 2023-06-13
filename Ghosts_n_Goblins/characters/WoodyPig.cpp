@@ -263,3 +263,9 @@ void WoodyPig::PlayEffect()
         }
     }
 }
+
+void WoodyPig::Initialize()
+{
+    s_EffectPlaying = false;
+    s_IdPlayingEffect = -1;
+}

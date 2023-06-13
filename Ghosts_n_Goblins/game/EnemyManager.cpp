@@ -119,6 +119,7 @@ void EnemyManager::InitCrows()
 
 void EnemyManager::InitFlyingKnights()
 {
+    FlyingKnight::Initialize();
     GameObject* pFlyingKnight1{new FlyingKnight{Point2f{500.0f, 100.0f}, m_pGameController}};
     GameObject* pFlyingKnight2{new FlyingKnight{Point2f{500.0f, 100.0f}, m_pGameController}};
     GameObject* pFlyingKnight3{new FlyingKnight{Point2f{500.0f, 100.0f}, m_pGameController}};
@@ -169,6 +170,7 @@ void EnemyManager::InitUnicorn()
 
 void EnemyManager::InitWoodyPigs()
 {
+    WoodyPig::Initialize();
     GameObject* pWoodyPig1{new WoodyPig{Point2f{1000.0f, 200.0f}, m_pGameController}};
     GameObject* pWoodyPig2{new WoodyPig{Point2f{1000.0f, 200.0f}, m_pGameController}};
     GameObject* pWoodyPig3{new WoodyPig{Point2f{1000.0f, 200.0f}, m_pGameController}};

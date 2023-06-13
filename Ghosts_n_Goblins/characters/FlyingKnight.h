@@ -31,6 +31,8 @@ protected:
 
 private:
     void PlayEffect();
+public:
+    static void Initialize();
 
 private:
     float m_Amplitude;
