@@ -1,6 +1,7 @@
 ﻿#include "pch.h"
 #include "Torch.h"
 
+#include "engine/SoundManager.h"
 #include "engine/Sprite.h"
 #include "fx/FXManager.h"
 #include "game/GameController.h"
@@ -44,6 +45,7 @@ void Torch::Update(float elapsedSec)
         pos.x = GetColliderCenter().x;
         pos.y = GetCollider().bottom;
         m_pGameController->m_pFXManager->PlayEffect(Game::Label::F_FIRE_TORCH, pos, false);
+        m_pGameController->m_pSoundManager->PlayEffect(Game::Label::E_TORCH);
     }
 }
 

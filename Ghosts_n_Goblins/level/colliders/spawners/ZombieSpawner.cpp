@@ -4,6 +4,7 @@
 #include "game/GameObject.h"
 #include "game/GameController.h"
 #include "characters/Player.h"
+#include "engine/SoundManager.h"
 #include "game/EnemyManager.h"
 #include "game/LevelManager.h"
 #include "game/PlayerManager.h"
@@ -34,6 +35,7 @@ void ZombieSpawner::Spawn()
                 pos.y = pPlayer->IsOnHill() ? LevelManager::GetHillHeight() : LevelManager::GetGroundHeight();
                 pEnemy->SetPosition(pos);
                 pEnemy->Reset();
+                m_pGameController->m_pSoundManager->PlayEffect(Game::Label::E_ZOMBIE_SPAWN);
                 return;
             }
         }

@@ -9,6 +9,7 @@
 
 #include "game/PlayerManager.h"
 #include "characters/Player.h"
+#include "engine/SoundManager.h"
 
 ScoreManager::ScoreManager(GameController* pGameController)
     : UI{Game::Label::U_SCORE_MANAGER, pGameController}
@@ -32,16 +33,19 @@ void ScoreManager::Update(float elapsedSec)
     {
         pPlayer->IncreaseLives();
         m_FirstBonus = true;
+        m_pGameController->m_pSoundManager->PlayEffect(Game::Label::E_EXTRA_LIFE);
     }
     else if (score >= m_SecondBonusThreshold and not m_SecondBonus)
     {
         pPlayer->IncreaseLives();
         m_SecondBonus = true;
+        m_pGameController->m_pSoundManager->PlayEffect(Game::Label::E_EXTRA_LIFE);
     }
     else if (score >= m_ThirdBonusThreshold)
     {
         pPlayer->IncreaseLives();
         m_ThirdBonusThreshold += m_SecondBonusThreshold;
+        m_pGameController->m_pSoundManager->PlayEffect(Game::Label::E_EXTRA_LIFE);
     }
 }
 
