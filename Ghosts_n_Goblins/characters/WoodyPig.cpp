@@ -10,6 +10,9 @@
 #include "game/PlayerManager.h"
 #include "throwables/Spear.h"
 
+bool WoodyPig::s_EffectPlaying{false};
+int WoodyPig::s_IdPlayingEffect{-1};
+
 WoodyPig::WoodyPig(const Point2f& pos, GameController* pGameController)
     : IEnemy{Game::Label::C_WOODY_PIG, pos, pGameController}
     , m_State{State::SPAWNING}
@@ -134,8 +137,7 @@ void WoodyPig::Fly(float elapsedSec)
         }
     }
     m_Shape.left += m_Velocity.x * m_Dir * elapsedSec;
-
-    m_pGameController->m_pSoundManager->PlayEffect(Game::Label::E_WOODY_PIG);
+    PlayEffect();
 }
 
 void WoodyPig::Turn(float elapsedSec)
@@ -244,4 +246,20 @@ void WoodyPig::UpdateSprite()
     m_pSprite->SetCurrRowsCols();
     m_pSprite->CalculateFrameTime();
     m_pSprite->UpdateSourceRect();
+}
+
+void WoodyPig::PlayEffect()
+{
+    if (not s_EffectPlaying)
+    {
+        s_IdPlayingEffect = m_Id;
+        s_EffectPlaying = true;
+    }
+    if (s_IdPlayingEffect == m_Id)
+    {
+        if (IsTimerFinished())
+        {
+            s_EffectPlaying =  m_pGameController->m_pSoundManager->PlayEffect(Game::Label::E_WOODY_PIG);
+        }
+    }
 }
