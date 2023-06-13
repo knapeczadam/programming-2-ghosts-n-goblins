@@ -138,7 +138,7 @@ void LevelManager::Update(float elapsedSec)
     static const auto isActive{[](const GameObject* pGameObject) { return pGameObject->IsActive(); }};
     static const auto update{[&](GameObject* pGameObject) { pGameObject->Update(elapsedSec); }};
     m_pLevel->Update(elapsedSec);
-    m_pPlatform->Update(elapsedSec);
+    if (m_pGameController->m_pPlayerManager->GetPlayer()->IsAlive()) m_pPlatform->Update(elapsedSec);
     m_pDoor->Update(elapsedSec);
     std::ranges::for_each(m_Colliders | std::views::filter(isActive), update);
     std::ranges::for_each(m_Tombstones | std::views::filter(isActive), update);

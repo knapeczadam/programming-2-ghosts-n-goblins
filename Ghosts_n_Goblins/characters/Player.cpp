@@ -818,6 +818,11 @@ bool Player::IsClimbing() const
     return m_Climbing;
 }
 
+bool Player::IsAlive() const
+{
+    return m_HP > 0;
+}
+
 void Player::HandleCollision(GameObject* other)
 {
     if (not IsOverlapping(other)) return;

@@ -85,6 +85,7 @@ public:
     bool ImpactFromLeft(GameObject* other) const;
     void SetOnLadder(bool onLadder);
     bool IsClimbing() const;
+    bool IsAlive() const;
 
     void UpdateState();
     virtual void UpdateCollider() override;
