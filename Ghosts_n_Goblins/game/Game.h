@@ -402,6 +402,8 @@ public:
     static bool GetRandomBool();
     static float GetRandomFloat(float min, float max);
     static int GetRandomInt(int min, int max);
+    std::string ToString(State state) const;
+
 private:
     static std::random_device s_RandomDevice;
     static std::mt19937 s_RandomGenerator;

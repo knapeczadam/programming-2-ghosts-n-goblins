@@ -90,6 +90,9 @@ public:
     void UpdateState();
     virtual void UpdateCollider() override;
 
+    std::string ToString(State state) const;
+    std::string ToString(Game::Label weapon) const;
+
 private:
     void UpdatePosition(float elapsedSec);
 

@@ -531,6 +531,60 @@ void Player::UpdateCollider()
     GameObject::UpdateCollider();
 }
 
+std::string Player::ToString(State state) const
+{
+    switch (state)
+    {
+    case State::IDLE:
+        return "IDLE";
+    case State::RUNNING:
+        return "RUNNING";
+    case State::JUMPING_STANDING:
+        return "JUMPING_STANDING";
+    case State::JUMPING_RUNNING:
+        return "JUMPING_RUNNING";
+    case State::CROUCHING:
+        return "CROUCHING";
+    case State::ATTACKING_NORMAL:
+        return "ATTACKING_NORMAl";
+    case State::ATTACKING_CROUCHING:
+        return "ATTACKING_CROUCHING";
+    case State::CLIMBING:
+        return "CLIMBING";
+    case State::CLIMBING_TOP:
+        return "CLIMBING_TOP";
+    case State::HIT:
+        return "HIT";
+    case State::DEAD_SKELETON:
+        return "DEAD_SKELETON";
+    case State::DEAD_SKULL:
+        return "DEAD_SKULL";
+    case State::TRANSFORMING:
+        return "TRANSFORMING";
+    case State::FROG_IDLE:
+        return "FROG_IDLE";
+    case State::FROG_MOVING:
+        return "FROG_MOVING";
+    default:
+        return "UNKNOWN";
+    }
+}
+
+std::string Player::ToString(Game::Label weapon) const
+{
+    switch (weapon)
+    {
+    case Game::Label::T_LANCE:
+        return "LANCE";
+    case Game::Label::T_DAGGER:
+        return "DAGGER";
+    case Game::Label::T_TORCH:
+        return "TORCH";
+    default:
+        return "UNKNOWN";
+    }
+}
+
 bool Player::IsAttacking() const
 {
     return m_Attacking;

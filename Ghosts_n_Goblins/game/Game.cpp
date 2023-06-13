@@ -1082,6 +1082,49 @@ int Game::GetRandomInt(int min, int max)
     return dist(s_RandomGenerator);
 }
 
+std::string Game::ToString(Game::State state) const
+{
+    switch (state)
+    {
+    case State::BOOT:
+        return "BOOT";
+    case State::GAME:
+        return "GAME";
+    case State::MENU:
+        return "MENU";
+    case State::INTRO:
+        return "INTRO";
+    case State::MAP:
+        return "MAP";
+    case State::GAME_OVER:
+        return "GAME_OVER";
+    case State::CONTINUE:
+        return "CONTINUE";
+    case State::RANKING:
+        return "RANKING";
+    case State::OUTRO:
+        return "OUTRO";
+    case State::SAVE_SCORE:
+        return "SAVE_SCORE";
+    case State::SAVE_END:
+        return "SAVE_END";
+    case State::END:
+        return "END";
+    case State::BOSS:
+        return "BOSS";
+    case State::STAGE_CLEAR:
+        return "STAGE_CLEAR";
+    case State::CREDIT:
+        return "CREDIT";
+    case State::FROZEN:
+        return "FROZEN";
+    case State::HURRY_UP:
+        return "HURRY_UP";
+    default:
+        return "UNKNOWN";
+    }
+}
+
 void Game::Debug() const
 {
     const Player* pPlayer{m_pPlayerManager->GetPlayer()};
@@ -1091,52 +1134,15 @@ void Game::Debug() const
     std::cout << " * Position: x - " << pPlayer->GetPosition<Point2f>() << std::endl;
     std::cout << " * Lives: " << pPlayer->GetLives() << std::endl;
     std::cout << " * HP: " << pPlayer->GetHP() << std::endl;
-    std::cout << " * State: " << static_cast<int>(pPlayer->GetState()) << std::endl;
-    std::cout << " * Weapon: " << static_cast<int>(pPlayer->GetWeapon()) << std::endl;
+    std::cout << " * State: " << pPlayer->ToString(pPlayer->GetState()) << std::endl;
+    std::cout << " * Weapon: " << pPlayer->ToString(pPlayer->GetWeapon()) << std::endl;
     std::cout << " * Score: " << pPlayer->GetScore() << std::endl;
     std::cout << " * Velocity: " << pPlayer->GetVelocity() << std::endl;
     std::cout << " * Shape: " << pPlayer->GetShape() << std::endl;
     std::cout << " * Collision box: " << pPlayer->GetCollider() << std::endl;
     std::cout << std::endl;
     std::cout << " --- GAME ---" << std::endl;
-    std::cout << " * Game state: ";
-    switch (m_State)
-    {
-    case State::BOOT: std::cout << "BOOT";
-        break;
-    case State::GAME: std::cout << "GAME";
-        break;
-    case State::MENU: std::cout << "MENU";
-        break;
-    case State::INTRO: std::cout << "INTRO";
-        break;
-    case State::MAP: std::cout << "MAP";
-        break;
-    case State::GAME_OVER: std::cout << "GAME_OVER";
-        break;
-    case State::CONTINUE: std::cout << "CONTINUE";
-        break;
-    case State::RANKING: std::cout << "RANKING";
-        break;
-    case State::OUTRO: std::cout << "OUTRO";
-        break;
-    case State::SAVE_SCORE: std::cout << "SAVE_SCORE";
-        break;
-    case State::SAVE_END: std::cout << "SAVE_END";
-        break;
-    case State::END: std::cout << "END";
-        break;
-    case State::BOSS: std::cout << "BOSS";
-        break;
-    case State::STAGE_CLEAR: std::cout << "STAGE_CLEAR";
-        break;
-    case State::CREDIT: std::cout << "CREDIT";
-        break;
-    case State::FROZEN: std::cout << "FROZEN";
-        break;
-    case State::HURRY_UP: std::cout << "HURRY_UP";
-        break;
-    }
+    std::cout << " * Game state: " << ToString(m_State) << std::endl;
     std::cout << std::endl;
     std::cout << " * Volume: " << m_pSoundManager->GetVolume() << std::endl;
     std::cout << std::endl;
