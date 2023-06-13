@@ -389,6 +389,22 @@
       "path": "boot/25.png"
     },
     {
+      "label": "b_26",
+      "path": "boot/26.png"
+    },
+    {
+      "label": "b_27",
+      "path": "boot/27.png"
+    },
+    {
+      "label": "b_28",
+      "path": "boot/28.png"
+    },
+    {
+      "label": "b_29",
+      "path": "boot/29.png"
+    },
+    {
       "label": "n_01",
       "path": "intro/01.png"
     },
@@ -1064,6 +1080,22 @@
     },
     {
       "label": "b_25",
+      "scale": 2
+    },
+    {
+      "label": "b_26",
+      "scale": 2
+    },
+    {
+      "label": "b_27",
+      "scale": 2
+    },
+    {
+      "label": "b_28",
+      "scale": 2
+    },
+    {
+      "label": "b_29",
       "scale": 2
     },
     {

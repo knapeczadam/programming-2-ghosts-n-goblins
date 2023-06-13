@@ -68,6 +68,10 @@ public:
         B_23,
         B_24,
         B_25,
+        B_26,
+        B_27,
+        B_28,
+        B_29,
         B_END,
 
         // Cutscene, narration

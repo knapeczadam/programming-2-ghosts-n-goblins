@@ -168,6 +168,10 @@ void Game::InitLabels()
     m_Labels["b_23"] = Label::B_23;
     m_Labels["b_24"] = Label::B_24;
     m_Labels["b_25"] = Label::B_25;
+    m_Labels["b_26"] = Label::B_26;
+    m_Labels["b_27"] = Label::B_27;
+    m_Labels["b_28"] = Label::B_28;
+    m_Labels["b_29"] = Label::B_29;
 
     // Cutscene
     m_Labels["n_01"] = Label::N_01;

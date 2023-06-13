@@ -46,20 +46,24 @@ void BootManager::Initialize(bool fromCheckpoint)
     m_Intervals.push({Game::Label::B_12, 0.016f});
     m_Intervals.push({Game::Label::B_13, 0.016f});
     m_Intervals.push({Game::Label::B_14, 0.016f});
-    m_Intervals.push({Game::Label::B_15, 0.032f});
+    m_Intervals.push({Game::Label::B_15, 0.016f});
+    m_Intervals.push({Game::Label::B_16, 0.016f});
+    m_Intervals.push({Game::Label::B_17, 0.032f});
+    m_Intervals.push({Game::Label::B_18, 0.032f});
     m_Intervals.push({Game::Label::B_BLACK, 0.016f});
     m_Intervals.push({Game::Label::B_09, 0.016f});
     m_Intervals.push({Game::Label::B_BLACK, 0.16f});
-    m_Intervals.push({Game::Label::B_16, 0.096f});
-    m_Intervals.push({Game::Label::B_17, 0.14401f});
-    m_Intervals.push({Game::Label::B_18, 1.016f});
-    m_Intervals.push({Game::Label::B_19, 0.048f});
-    m_Intervals.push({Game::Label::B_20, 0.032f});
-    m_Intervals.push({Game::Label::B_21, 3.0f}); // blue
-    m_Intervals.push({Game::Label::B_22, 0.016f});
-    m_Intervals.push({Game::Label::B_23, 4.016f}); // start screen
-    m_Intervals.push({Game::Label::B_24, 5.0f}); // best ranking
-    m_Intervals.push({Game::Label::B_25, 0.033f});
+    m_Intervals.push({Game::Label::B_19, 0.096f});
+    m_Intervals.push({Game::Label::B_20, 0.14401f});
+    m_Intervals.push({Game::Label::B_21, 1.016f});
+    m_Intervals.push({Game::Label::B_22, 0.048f});
+    m_Intervals.push({Game::Label::B_23, 0.032f});
+    m_Intervals.push({Game::Label::B_24, 0.010f});
+    m_Intervals.push({Game::Label::B_25, 3.0f}); // blue
+    m_Intervals.push({Game::Label::B_26, 0.016f});
+    m_Intervals.push({Game::Label::B_27, 4.016f}); // start screen
+    m_Intervals.push({Game::Label::B_28, 5.0f}); // best ranking
+    m_Intervals.push({Game::Label::B_29, 0.033f});
     m_Intervals.push({Game::Label::B_END, 0.0f});
 }
 
@@ -70,7 +74,7 @@ void BootManager::CleanUp()
 void BootManager::Draw() const
 {
     if (m_State == Game::Label::B_END) return;
-    if (m_State == Game::Label::B_23)
+    if (m_State == Game::Label::B_27)
     {
         m_pGameController->m_pUIManager->m_pUI->DrawTextTopRow();
         m_pGameController->m_pUIManager->m_pScoreManager->DrawPlayerScore();
@@ -80,7 +84,7 @@ void BootManager::Draw() const
         m_pGameController->m_pUIManager->m_pUI->DrawTextBottomRow();
         m_pGameController->m_pUIManager->m_pCreditManager->DrawCredits();
     }
-    else if (m_State == Game::Label::B_24)
+    else if (m_State == Game::Label::B_28)
     {
         m_pGameController->m_pUIManager->m_pUI->DrawTextTopRow();
         m_pGameController->m_pUIManager->m_pScoreManager->DrawPlayerScore();
