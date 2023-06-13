@@ -30,9 +30,11 @@ public:
         CLIMBING,
         CLIMBING_TOP,
         HIT,
-        DEAD,
+        DEAD_SKELETON,
+        DEAD_SKULL,
         TRANSFORMING,
-        FROG
+        FROG_IDLE,
+        FROG_MOVING
     };
 
 public:
@@ -45,12 +47,12 @@ public:
     Player& operator=(Player&& other) noexcept = delete;
 
     virtual void Draw() const override;
-    void DrawArmor() const;
     void UpdateCooldown(float elapsedSec);
     void Throw();
     virtual void Update(float elapsedSec) override;
     virtual void LateUpdate(float elapsedSec) override;
     void SyncWithPlatform(float elapsedSec);
+    void UpdateFrog();
     virtual void HandleCollision(GameObject* other) override;
     void UpdateSprite() const; // TODO
 
@@ -95,8 +97,10 @@ public:
 
 private:
     void UpdatePosition(float elapsedSec);
+    void UpdateFrogPosition(float elapsedSec);
 
     void Move();
+    void MoveFrog();
     void MoveHorizontal();
     void Jump();
     void Crouch();
@@ -104,6 +108,7 @@ private:
     void ApplyGravity(float elapsedSec);
 
     void CheckBoundaries(const Rectf& boundaries);
+    void DecreaseHP();
 
 private:
     float m_HorVelocity;
@@ -137,4 +142,5 @@ private:
     bool m_HitFlipped;
     bool m_HasKey;
     bool m_OnHill;
+    bool m_Frog;
 };

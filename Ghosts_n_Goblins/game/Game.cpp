@@ -42,17 +42,9 @@ std::mt19937 Game::s_RandomGenerator{s_RandomDevice()};
 
 /*
  * TODO:
- * shield damage
- * frog
  * ladder
  * zombies on the platform
- * narrowing level
- * pot system
- * torch projectile with fire
- * red arremer
  * white arremer
- * boss
- * woody pig
  * additional boot, intro sequences
  */
 Game::Game(const Window& window)
@@ -60,7 +52,7 @@ Game::Game(const Window& window)
     , m_Data{nullptr}
     , m_DataPath{"data.json"}
     , m_Labels{}
-    , m_State{State::GAME}
+    , m_State{State::BOOT}
     , m_pBootManager{nullptr}
     , m_pCameraManager{nullptr}
     , m_pCutsceneManager{nullptr}
@@ -534,7 +526,7 @@ void Game::UpdateGameState()
         ResetTimer();
         m_State = State::GAME_OVER;
     }
-    else if (m_pPlayerManager->GetPlayer()->GetState() == Player::State::DEAD and not m_pPlayerManager->GetPlayer()
+    else if (m_pPlayerManager->GetPlayer()->GetState() == Player::State::DEAD_SKULL and not m_pPlayerManager->GetPlayer()
         ->
         IsActive())
     {
@@ -733,7 +725,7 @@ void Game::ProcessKeyDownEvent(const SDL_KeyboardEvent& e)
 
     if (m_pInputManager->IsPressed(Label::I_QUIT))
     {
-        std::exit(0); // Function is not thread-safe
+        // std::exit(0); // Function is not thread-safe
     }
     if (m_pInputManager->IsPressed(Label::I_INFO))
     {
@@ -964,7 +956,6 @@ void Game::UpdateRemainingTime(int time)
     }
     if (IsTimerFinished())
     {
-        std::cout << "Time is up!\n";
         m_pPlayerManager->GetPlayer()->Die();
     }
 }

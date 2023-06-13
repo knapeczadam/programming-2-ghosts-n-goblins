@@ -32,37 +32,38 @@
 
 Player::Player(const Point2f& pos, GameController* pGameController)
     : GameObject{Game::Label::C_ARTHUR, pos, true, pGameController}
-    , m_HorVelocity{150.0f}
-    , m_VerVelocity{100.0f}
-    , m_JumpVelocity{500.0f}
-    , m_Velocity{0.0f, 0.0f}
-    , m_Acceleration{0.0f, -1391.0f} // -981.0f
-    , m_State{State::IDLE}
-    , m_Crouching{false}
-    , m_ShortAccuCooldown{0.0f}
-    , m_LongAccuCooldown{0.0f}
-    , m_ShortCooldownTime{0.25f}
-    , m_LongCooldownTime{0.30f}
-    , m_Attacking{false}
-    , m_CurrWeapon{Game::Label::T_TORCH}
-    , m_Overheated{false}
-    , m_OnPlatform{false}
-    , m_OffsetSnapshot{0.0f, 0.0f}
-    , m_CanJump{true}
-    , m_MaxHP{2}
-    , m_HP{m_MaxHP}
-    , m_MaxLives{7}
-    , m_Lives{3}
-    , m_Score{0}
-    , m_CanClimb{false}
-    , m_Climbing{false}
-    , m_OnLadder{false}
-    , m_OnGround{false}
-    , m_ImpactFromLeft{false}
-    , m_HitTriggered{false}
-    , m_HitFlipped{false}
-    , m_HasKey{false}
-    , m_OnHill{false}
+      , m_HorVelocity{150.0f}
+      , m_VerVelocity{100.0f}
+      , m_JumpVelocity{500.0f}
+      , m_Velocity{0.0f, 0.0f}
+      , m_Acceleration{0.0f, -1391.0f} // -981.0f
+      , m_State{State::IDLE}
+      , m_Crouching{false}
+      , m_ShortAccuCooldown{0.0f}
+      , m_LongAccuCooldown{0.0f}
+      , m_ShortCooldownTime{0.25f}
+      , m_LongCooldownTime{0.30f}
+      , m_Attacking{false}
+      , m_CurrWeapon{Game::Label::T_LANCE}
+      , m_Overheated{false}
+      , m_OnPlatform{false}
+      , m_OffsetSnapshot{0.0f, 0.0f}
+      , m_CanJump{true}
+      , m_MaxHP{2}
+      , m_HP{m_MaxHP}
+      , m_MaxLives{7}
+      , m_Lives{3}
+      , m_Score{0}
+      , m_CanClimb{false}
+      , m_Climbing{false}
+      , m_OnLadder{false}
+      , m_OnGround{false}
+      , m_ImpactFromLeft{false}
+      , m_HitTriggered{false}
+      , m_HitFlipped{false}
+      , m_HasKey{false}
+      , m_OnHill{false}
+      , m_Frog{false}
 {
 }
 
@@ -90,17 +91,19 @@ void Player::Draw() const
     Point2f down;
     down.x = playerCenter.x;
     down.y = GetCollider().bottom - epsilon;
+    // UP
+    Point2f up;
+    up.x = playerCenter.x;
+    up.y = GetCollider().bottom + GetCollider().height * 2 + epsilon;
     utils::SetColor(Color4f{0, 1, 0, 1});
     utils::DrawLine(playerCenter, left);
     utils::SetColor(Color4f{1, 0, 0, 1});
     utils::DrawLine(playerCenter, right);
+    utils::SetColor(Color4f{1, 1, 0, 1});
+    utils::DrawLine(Point2f{up.x, down.y + 2.0f}, up);
     utils::SetColor(Color4f{0, 0, 1, 1});
     utils::DrawLine(playerCenter, down);
 #endif
-}
-
-void Player::DrawArmor() const
-{
 }
 
 void Player::UpdateSprite() const
@@ -115,7 +118,7 @@ void Player::UpdateSprite() const
     case State::RUNNING:
         m_pSprite->SetTopOffsetRows(1);
         m_pSprite->SetSubCols(4);
-        m_pSprite->SetFramesPerSec(10);
+        m_pSprite->SetFramesPerSec(16);
         leftOffset = 4;
         break;
     case State::JUMPING_RUNNING:
@@ -133,13 +136,13 @@ void Player::UpdateSprite() const
     case State::ATTACKING_NORMAL:
         m_pSprite->SetTopOffsetRows(5);
         m_pSprite->SetSubCols(2);
-        m_pSprite->SetFramesPerSec(9);
+        m_pSprite->SetFramesPerSec(8);
         leftOffset = 2;
         break;
     case State::ATTACKING_CROUCHING:
         m_pSprite->SetTopOffsetRows(6);
         m_pSprite->SetSubCols(2);
-        m_pSprite->SetFramesPerSec(9);
+        m_pSprite->SetFramesPerSec(8);
         leftOffset = 2;
         break;
     case State::CLIMBING:
@@ -175,17 +178,41 @@ void Player::UpdateSprite() const
         m_pSprite->CalculateFrameTime();
         m_pSprite->UpdateSourceRect();
         return;
-        break;
-    case State::DEAD:
+    case State::DEAD_SKELETON:
         m_pSprite->SetTopOffsetRows(11);
         m_pSprite->SetLeftOffsetCols(0);
-        m_pSprite->SetSubCols(4);
+        m_pSprite->SetSubCols(3);
         m_pSprite->SetCurrRowsCols();
-        m_pSprite->SetFramesPerSec(4);
+        m_pSprite->SetFramesPerSec(3);
         m_pSprite->CalculateFrameTime();
         m_pSprite->UpdateSourceRect();
         return;
-        break;
+    case State::DEAD_SKULL:
+        m_pSprite->SetTopOffsetRows(11);
+        m_pSprite->SetLeftOffsetCols(3);
+        m_pSprite->SetSubCols(1);
+        m_pSprite->SetSubRows(1);
+        m_pSprite->SetCurrRowsCols();
+        m_pSprite->UpdateSourceRect();
+        return;
+    case State::FROG_IDLE:
+        m_pSprite->SetTopOffsetRows(12);
+        m_pSprite->SetLeftOffsetCols(0);
+        m_pSprite->SetSubCols(1);
+        m_pSprite->SetSubRows(1);
+        m_pSprite->SetCurrRowsCols();
+        m_pSprite->UpdateSourceRect();
+        return;
+    case State::FROG_MOVING:
+        m_pSprite->SetTopOffsetRows(13);
+        m_pSprite->SetLeftOffsetCols(0);
+        m_pSprite->SetSubRows(1);
+        m_pSprite->SetSubCols(3);
+        m_pSprite->SetCurrRowsCols();
+        m_pSprite->SetFramesPerSec(6);
+        m_pSprite->CalculateFrameTime();
+        m_pSprite->UpdateSourceRect();
+        return;
     }
     const int offsetMultiplier{m_HP - 1};
     m_pSprite->SetLeftOffsetCols(leftOffset * offsetMultiplier);
@@ -202,7 +229,7 @@ void Player::Update(float elapsedSec)
     case State::HIT:
         OnHit(elapsedSec);
         break;
-    case State::DEAD:
+    case State::DEAD_SKULL:
         StartTimer(0.8f);
         if (IsTimerFinished())
         {
@@ -210,9 +237,11 @@ void Player::Update(float elapsedSec)
             DecreaseLives();
         }
         break;
-    case State::TRANSFORMING:
+    case State::DEAD_SKELETON:
         break;
-    case State::FROG:
+    case State::FROG_IDLE:
+    case State::FROG_MOVING:
+        UpdateFrogPosition(elapsedSec);
         break;
     default:
         Attack();
@@ -362,6 +391,12 @@ void Player::Move()
     }
 }
 
+void Player::MoveFrog()
+{
+    Jump();
+    MoveHorizontal();
+}
+
 void Player::MoveHorizontal()
 {
     if (m_pGameController->m_pInputManager->IsPressed(Game::Label::I_LEFT))
@@ -391,7 +426,14 @@ void Player::Jump()
         IsTriggered(Game::Label::I_JUMP))
     {
         m_pGameController->m_pInputManager->SetTriggered(Game::Label::I_JUMP, true);
-        m_pGameController->m_pSoundManager->PlayEffect(Game::Label::E_ARTHUR_JUMP);
+        if (m_Frog)
+        {
+            m_pGameController->m_pSoundManager->PlayEffect(Game::Label::E_ARTHUR_JUMP_FROG);
+        }
+        else
+        {
+            m_pGameController->m_pSoundManager->PlayEffect(Game::Label::E_ARTHUR_JUMP);
+        }
         m_Velocity.y = m_JumpVelocity;
         m_CanJump = false;
     }
@@ -399,6 +441,28 @@ void Player::Jump()
     {
         m_Velocity.y = 0;
     }
+}
+
+void Player::UpdateFrogPosition(float elapsedSec)
+{
+    m_OnGround = m_pGameController->m_pLevelManager->GetLevel()->IsOnGround(this);
+    if (m_OnGround)
+    {
+        MoveFrog();
+    }
+    ApplyGravity(elapsedSec);
+    if (m_OnPlatform)
+    {
+        SyncWithPlatform(elapsedSec);
+    }
+    else
+    {
+        m_OffsetSnapshot = Vector2f{0, 0};
+        m_Shape.left += m_Velocity.x * elapsedSec; // TODO: in else statement?
+    }
+    m_Shape.bottom += m_Velocity.y * elapsedSec;
+
+    CheckBoundaries(m_pGameController->m_pCameraManager->GetCamera()->GetBoundaries());
 }
 
 void Player::Crouch()
@@ -456,6 +520,25 @@ void Player::SyncWithPlatform(float elapsedSec)
     m_Shape.left = pos.orig.x;
 }
 
+void Player::UpdateFrog()
+{
+    StartTimer(5.0f);
+    if (IsTimerFinished())
+    {
+        m_State = State::IDLE;
+        m_Frog = false;
+        m_pGameController->m_pSoundManager->PlayEffect(Game::Label::E_ARTHUR_TRANSFORM);
+    }
+    if (m_Velocity == Vector2f{})
+    {
+        m_State = State::FROG_IDLE;
+    }
+    else
+    {
+        m_State = State::FROG_MOVING;
+    }
+}
+
 void Player::UpdateState()
 {
     // std::numeric_limits<float>::epsilon()
@@ -463,8 +546,23 @@ void Player::UpdateState()
     const float absVelX{std::abs(m_Velocity.x)};
     const float absVelY{std::abs(m_Velocity.y)};
 
-    if (m_State == State::HIT or m_State == State::DEAD)
+    if (m_State == State::HIT or m_State == State::DEAD_SKULL) return;
+    if (m_Frog)
     {
+        UpdateFrog();
+        return;
+    }
+    else if (m_State == State::DEAD_SKELETON)
+    {
+        if (m_pSprite->IsLastFrame())
+        {
+            m_State = State::DEAD_SKULL;
+        }
+    }
+    else if (m_State != State::DEAD_SKELETON and m_HP == 0)
+    {
+        m_State = State::DEAD_SKELETON;
+        m_pSprite->ResetCurrFrame();
         return;
     }
     else if (not m_Crouching and m_Velocity == Vector2f{})
@@ -686,10 +784,10 @@ bool Player::HandleEnemy(GameObject* other)
             m_State = State::HIT;
             m_ImpactFromLeft = ImpactFromLeft(other);
             m_pGameController->m_pSoundManager->PlayEffect(Game::Label::E_ARTHUR_HIT);
-            --m_HP;
+            DecreaseHP();
             if (m_HP == 1)
             {
-                m_pGameController->m_pFXManager->PlayEffect(Game::Label::F_DAMAGE, GetColliderCenter(), m_HitFlipped);
+                m_pGameController->m_pFXManager->PlayEffect(Game::Label::F_DAMAGE, GetColliderCenter(), m_Flipped);
             }
         }
         return true;
@@ -731,11 +829,13 @@ bool Player::HandleThrowable(GameObject* other)
                 m_State = State::HIT;
                 m_ImpactFromLeft = ImpactFromLeft(other);
                 m_pGameController->m_pSoundManager->PlayEffect(Game::Label::E_ARTHUR_HIT);
-                --m_HP;
+                DecreaseHP();
             }
             break;
         case Game::Label::T_SPELL:
-            std::cout << "I'm a frog!\n";
+            m_State = State::FROG_IDLE;
+            m_Frog = true;
+            ResetTimer();
             m_pGameController->m_pSoundManager->PlayEffect(Game::Label::E_ARTHUR_TRANSFORM);
             break;
         }
@@ -822,27 +922,22 @@ void Player::OnHit(float elapsedSec)
     {
         m_Velocity.y = m_JumpVelocity;;
         m_HitTriggered = true;
+        m_Frog = false;
     }
     m_Velocity.x = m_ImpactFromLeft ? m_HorVelocity : -m_HorVelocity;
     ApplyGravity(elapsedSec);
-    if (m_pGameController->m_pLevelManager->GetLevel()->IsOnGround(this))
-    {
-        if (not m_HitFlipped)
-        {
-            m_Flipped = not m_Flipped;
-            m_HitFlipped = true;
-        }
-        m_Velocity.x = 0;
-    }
     m_Shape.bottom += m_Velocity.y * elapsedSec;
     m_Shape.left += m_Velocity.x * elapsedSec;
-    StartTimer(1.0f);
-    if (IsTimerFinished())
+    UpdateCollider();
+    if (m_pGameController->m_pLevelManager->GetLevel()->IsOnGround(this))
     {
+        m_Flipped = not m_Flipped;
+        m_Velocity.x = 0;
         m_HitTriggered = false;
         if (m_HP == 0)
         {
-            m_State = State::DEAD;
+            m_State = State::DEAD_SKELETON;
+            m_pSprite->ResetCurrFrame();
         }
         else
         {
@@ -854,7 +949,8 @@ void Player::OnHit(float elapsedSec)
 void Player::Die()
 {
     m_HP = 0;
-    m_State = State::DEAD;
+    // m_State = State::DEAD_SKELETON;
+    // m_pSprite->ResetIterCount();
 }
 
 bool Player::ImpactFromLeft(GameObject* other) const
@@ -897,5 +993,13 @@ void Player::CheckBoundaries(const Rectf& boundaries)
     else if (m_Collider.left + m_Collider.width > boundaries.width)
     {
         m_Shape.left = boundaries.width - m_Collider.width - horizontalOffset;
+    }
+}
+
+void Player::DecreaseHP()
+{
+    if (m_HP > 0)
+    {
+        --m_HP;
     }
 }
