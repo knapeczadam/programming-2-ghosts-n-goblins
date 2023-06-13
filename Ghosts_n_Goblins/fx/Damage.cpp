@@ -15,10 +15,10 @@ void Damage::Update(float elapsedSec)
 {
     const float time{1.0f};
     StartTimer(time);
-    if (m_pSprite->GetIterCount() == 1)
+    if (m_pSprite->IsLastFrame())
     {
         m_Active = false;
         m_Visible = false;
-        m_pSprite->ResetIterCount();
+        m_pSprite->ResetCurrFrame();
     }
 }
