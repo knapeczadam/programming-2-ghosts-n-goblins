@@ -54,7 +54,10 @@ void EnemyManager::CleanUp()
     std::ranges::for_each(m_Throwables, deleteGameObject);
     m_Enemies.clear();
     m_Throwables.clear();
+
+    m_Crows.clear();
     m_FlyingKnights.clear();
+    m_GreenMonsters.clear();
     m_WoodyPigs.clear();
     m_Zombies.clear();
 }

@@ -50,11 +50,11 @@ private:
     void InitZombies();
 
 private:
-    std::vector<GameObject*> m_Crows;
     std::vector<GameObject*> m_Enemies;
-    std::vector<GameObject*> m_GreenMonsters;
     std::vector<GameObject*> m_Throwables;
+    std::vector<GameObject*> m_Crows;
     std::vector<GameObject*> m_FlyingKnights;
+    std::vector<GameObject*> m_GreenMonsters;
     std::vector<GameObject*> m_WoodyPigs;
     std::vector<GameObject*> m_Zombies;
     GameObject* m_pMagician;
