@@ -15,6 +15,7 @@ Magician::Magician(const Point2f& pos, GameController* pGameController)
     , m_CanShoot{false}
 {
     m_Score = 2000;
+    m_AwakeDistance = std::numeric_limits<float>::max();
 }
 
 void Magician::Draw() const
@@ -25,6 +26,7 @@ void Magician::Draw() const
 // TODO: sometimes it stuck in the second frame 
 void Magician::Update(float elapsedSec)
 {
+    IEnemy::Update(elapsedSec);
     if (m_Awake)
     {
         Awake(elapsedSec);
@@ -110,11 +112,10 @@ void Magician::HandleCollision(GameObject* other)
 
 void Magician::Reset()
 {
-    ResetHP();
+    IEnemy::Reset();
     ResetTimer();
     m_Active = false;
     m_Visible = false;
-    m_Awake = false;
     m_CanShoot = false;
     m_pSprite->ResetIterCount();
     m_pSprite->ResetCurrFrame();
