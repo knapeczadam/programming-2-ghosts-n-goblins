@@ -1,7 +1,7 @@
 ﻿#pragma once
 
 // Values either 0 or 1
-#define DEBUG 1
+#define DEBUG 0
 #define DEBUG_COLLISION 1
 
 #if DEBUG
