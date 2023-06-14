@@ -32,6 +32,7 @@ protected:
 
 private:
     void Sleep(float elapsedSec);
+    bool HasHillBoundaryReached() const;
 
 private:
     const float m_MinWalingTime;

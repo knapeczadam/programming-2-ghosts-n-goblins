@@ -6,6 +6,7 @@
 #include "engine/Sprite.h"
 #include "fx/FXManager.h"
 #include "game/GameController.h"
+#include "game/LevelManager.h"
 #include "game/PlayerManager.h"
 
 Zombie::Zombie(const Point2f& pos, GameController* pGameController)
@@ -80,8 +81,9 @@ void Zombie::Walk(float elapsedSec)
 {
     m_Shape.left += m_HorVelocity * elapsedSec * m_Dir;
     StartTimer(m_WalkingTime);
-    if (IsTimerFinished())
+    if (IsTimerFinished() or HasHillBoundaryReached())
     {
+        ResetTimer();
         SetColliderHeight(m_MidColliderHeight);
         m_pSprite->ResetCurrFrame();
         m_pSprite->SetLeftOffsetCols(9);
@@ -128,4 +130,13 @@ void Zombie::Sleep(float elapsedSec)
         m_Active = false;
         m_Visible = false;
     }
+}
+
+bool Zombie::HasHillBoundaryReached() const
+{
+    const int offsetMultiplier{3};
+    const bool onHill{std::abs(m_Shape.bottom - LevelManager::GetHillHeight()) < std::numeric_limits<float>::epsilon()};
+    const bool leftReached{m_Shape.left < LevelManager::GetHillStart() + GetCollider().width * offsetMultiplier};
+    const bool rightReached{m_Shape.left + GetCollider().width  > LevelManager::GetHillEnd() - GetCollider().width * offsetMultiplier};
+    return onHill and (leftReached or rightReached);
 }

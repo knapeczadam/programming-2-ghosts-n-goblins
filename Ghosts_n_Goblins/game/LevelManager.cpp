@@ -34,6 +34,8 @@
 
 float LevelManager::s_GroundHeight{62.0f};
 float LevelManager::s_HillHeight{220.0f};
+float LevelManager::s_HillStart{1197.0f};
+float LevelManager::s_HillEnd{2261.0f};
 
 LevelManager::LevelManager(GameController* pGameController)
     : IManager{pGameController}
@@ -343,6 +345,16 @@ void LevelManager::InitSpawners(bool fromCheckpoint)
 float LevelManager::GetHillHeight()
 {
     return s_HillHeight;
+}
+
+float LevelManager::GetHillStart()
+{
+    return s_HillStart;
+}
+
+float LevelManager::GetHillEnd()
+{
+    return s_HillEnd;
 }
 
 float LevelManager::GetGroundHeight()

@@ -64,6 +64,8 @@ private:
 
 public:
     static float GetHillHeight();
+    static float GetHillStart();
+    static float GetHillEnd();
     static float GetGroundHeight();
 
 private:
@@ -84,5 +86,7 @@ private:
 
 private:
     static float s_HillHeight;
+    static float s_HillStart;
+    static float s_HillEnd;
     static float s_GroundHeight;
 };

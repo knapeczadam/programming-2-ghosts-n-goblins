@@ -15,6 +15,9 @@ public:
     virtual void Spawn() override;
 
 private:
+    void RandomizePosition(GameObject* enemy) const;
+
+private:
     const float m_MinRange;
     const float m_MaxRange;
 };
