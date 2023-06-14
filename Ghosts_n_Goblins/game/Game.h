@@ -439,7 +439,10 @@ private:
     void UpdateSaveScoreState();
     void UpdateSaveEndState();
     void UpdateFrozenState();
+    
     void LateUpdateGame(float elapsedSec);
+    void LateUpdateEnd(float elapsedSec);
+    
     void UpdateRemainingTime(int time);
 
     void PlayStream();

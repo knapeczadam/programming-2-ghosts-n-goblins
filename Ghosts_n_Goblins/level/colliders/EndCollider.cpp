@@ -1,6 +1,7 @@
 ﻿#include "pch.h"
 #include "EndCollider.h"
 
+#include "characters/Player.h"
 #include "game/GameController.h"
 #include "game/LevelManager.h"
 
@@ -20,4 +21,6 @@ void EndCollider::HandleCollision(GameObject* other)
             m_Active = false;
         }
     }
+    Player* pPlayer{static_cast<Player*>(other)};
+    pPlayer->SetState(Player::State::WINNING);
 }

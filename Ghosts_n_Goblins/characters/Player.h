@@ -34,7 +34,8 @@ public:
         DEAD_SKULL,
         TRANSFORMING,
         FROG_IDLE,
-        FROG_MOVING
+        FROG_MOVING,
+        WINNING 
     };
 
 public:

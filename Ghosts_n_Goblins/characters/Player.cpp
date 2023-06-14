@@ -210,6 +210,14 @@ void Player::UpdateSprite() const
         m_pSprite->CalculateFrameTime();
         m_pSprite->UpdateSourceRect();
         return;
+    case State::WINNING:
+        m_pSprite->SetTopOffsetRows(9);
+        m_pSprite->SetLeftOffsetCols(1);
+        m_pSprite->SetSubRows(1);
+        m_pSprite->SetSubCols(1);
+        m_pSprite->SetCurrRowsCols();
+        m_pSprite->UpdateSourceRect();
+        return;
     }
     const int offsetMultiplier{m_HP - 1};
     m_pSprite->SetLeftOffsetCols(leftOffset * offsetMultiplier);
@@ -549,6 +557,16 @@ void Player::UpdateState()
         UpdateFrog();
         return;
     }
+    else if (m_State == State::WINNING)
+    {
+        StartTimer(2.0f);
+        if (IsTimerFinished())
+        {
+            m_Active = false;
+            m_Visible = false;
+        }
+        return;
+    }
     else if (m_State == State::DEAD_SKELETON)
     {
         if (m_pSprite->IsLastFrame())
@@ -661,6 +679,8 @@ std::string Player::ToString(State state) const
         return "FROG_IDLE";
     case State::FROG_MOVING:
         return "FROG_MOVING";
+    case State::WINNING:
+        return "WINNING";
     default:
         return "UNKNOWN";
     }

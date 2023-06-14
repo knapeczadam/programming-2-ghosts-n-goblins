@@ -542,6 +542,9 @@ void Game::LateUpdate(float elapsedSec)
     case State::STAGE_CLEAR:
         LateUpdateGame(elapsedSec);
         break;
+    case State::END:
+        LateUpdateEnd(elapsedSec);
+        break;
     }
 }
 
@@ -882,6 +885,7 @@ void Game::DrawEnd() const
     m_pCameraManager->Transform(Label::C_ARTHUR);
     m_pLevelManager->DrawLevel();
     m_pLevelManager->DrawDoor();
+    m_pPlayerManager->DrawPlayer();
     m_pLevelManager->DrawForeGround();
     glPopMatrix();
 
@@ -1016,6 +1020,11 @@ void Game::LateUpdateGame(float elapsedSec)
 #if TEST_OBJECT
     m_pTestObject->LateUpdate(elapsedSec);
 #endif
+}
+
+void Game::LateUpdateEnd(float elapsedSec)
+{
+   m_pPlayerManager->GetPlayer()->LateUpdate(elapsedSec);
 }
 
 void Game::UpdateRemainingTime(int time)
