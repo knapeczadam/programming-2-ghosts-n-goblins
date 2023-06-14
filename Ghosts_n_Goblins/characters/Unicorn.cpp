@@ -127,6 +127,7 @@ void Unicorn::Jump(float elapsedSec)
     {
         m_State = Game::GetRandomBool() ? State::WALKING : State::WAITING;
         m_SnapshotTaken = false;
+        m_pGameController->m_pSoundManager->PlayEffect(Game::Label::E_BIG_ENEMY_WALK);
     }
 }
 
