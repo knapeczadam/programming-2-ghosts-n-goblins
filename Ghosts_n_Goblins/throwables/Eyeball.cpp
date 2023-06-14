@@ -7,7 +7,7 @@ Eyeball::Eyeball(const Point2f& pos, const Vector2f& direction, GameController* 
     : GameObject{Game::Label::T_EYEBALL, pos, true, pGameController}
 {
     m_Direction = direction;
-    m_Speed.x = 100.0f;
+    m_Speed.x = 200.0f;
     m_Shape.left = pos.x;
     m_Shape.bottom = pos.y;
 }

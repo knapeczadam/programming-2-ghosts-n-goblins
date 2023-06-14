@@ -12,9 +12,9 @@ Torch::Torch(const Point2f& pos, bool isFlipped, bool collectible, GameControlle
     : GameObject{collectible ? Game::Label::O_TORCH : Game::Label::T_TORCH, pos, true, pGameController}
     , m_Collectible{collectible}
 {
-    m_Speed.x = 400.0f;
+    m_Speed.x = 500.0f;
     m_Speed.y = -1091.0f;
-    m_Angle = 30.0f * utils::g_Pi / 180.0f;
+    m_Angle = 20.0f * utils::g_Pi / 180.0f;
     m_Flipped = isFlipped;
     m_AwakeDistance = std::numeric_limits<float>::max();
 }
