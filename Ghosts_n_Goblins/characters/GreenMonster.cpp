@@ -13,7 +13,7 @@ GreenMonster::GreenMonster(const Point2f& pos, GameController* pGameController)
     : IEnemy{Game::Label::C_GREEN_MONSTER, pos, pGameController}
 {
     m_Score = 100;
-    m_AwakeDistance = 240.0f;
+    m_AwakeDistance = 250.0f;
 }
 
 void GreenMonster::Update(float elapsedSec)

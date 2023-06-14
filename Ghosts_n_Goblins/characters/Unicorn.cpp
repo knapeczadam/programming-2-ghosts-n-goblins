@@ -27,7 +27,7 @@ Unicorn::Unicorn(const Point2f& pos, GameController* pGameController)
     m_Score = 2000;
     m_HP = 10;
     m_AwakeDistance = 200.0f;
-    m_HorVelocity = 100.0f;
+    m_HorVelocity = 150.0f;
     m_VerVelocity = 100.0f;
     m_Velocity = Vector2f{m_HorVelocity, m_VerVelocity};
 }
@@ -85,7 +85,7 @@ void Unicorn::LateUpdate(float elapsedSec)
 
 void Unicorn::Walk(float elapsedSec)
 {
-    StartTimer(Game::GetRandomFloat(0.5f, 2.0f));
+    StartTimer(Game::GetRandomFloat(0.5f, 1.5f));
     if (IsTimerFinished())
     {
         m_pSprite->ResetIterCount();
