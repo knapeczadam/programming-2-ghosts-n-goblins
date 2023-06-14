@@ -46,6 +46,11 @@
 .idea/**/dictionaries
 .idea/**/shelf
 .idea/**/jsonSchemas.xml
+.idea/**/active-tab-highlighter.xml
+.idea/**/encodings.xml
+.idea/**/indexLayout.xml
+.idea/**/projectSettingsUpdater.xml
+.idea/**/vcs.xml
 
 # AWS User-specific
 .idea/**/aws.xml
