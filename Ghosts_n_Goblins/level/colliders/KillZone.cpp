@@ -14,4 +14,5 @@ void KillZone::HandleCollision(GameObject* other)
     if (not IsOverlapping(other)) return;
     Player* pPlayer = static_cast<Player*>(other);
     pPlayer->Die();
+    m_Active = false;
 }

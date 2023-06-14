@@ -558,8 +558,9 @@ void Player::UpdateState()
         {
             m_State = State::DEAD_SKULL;
         }
+        return;
     }
-    else if (m_State != State::DEAD_SKELETON and m_HP == 0)
+    else if (m_HP == 0)
     {
         m_State = State::DEAD_SKELETON;
         m_pSprite->ResetCurrFrame();
@@ -949,8 +950,8 @@ void Player::OnHit(float elapsedSec)
 void Player::Die()
 {
     m_HP = 0;
-    // m_State = State::DEAD_SKELETON;
-    // m_pSprite->ResetIterCount();
+    m_State = State::DEAD_SKELETON;
+    m_pSprite->ResetCurrFrame();
 }
 
 bool Player::ImpactFromLeft(GameObject* other) const

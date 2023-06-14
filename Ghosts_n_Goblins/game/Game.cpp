@@ -746,8 +746,6 @@ void Game::HandleCollisions()
     static const auto playerHandleCollision{[&](GameObject* pGameObject) { pPlayer->HandleCollision(pGameObject); }};
     static const auto objectHandleCollision{[&](GameObject* pGameObject) { pGameObject->HandleCollision(pPlayer); }};
 
-
-    if (pPlayer->IsActive()) m_pLevelManager->GetKillZone()->HandleCollision(pPlayer);
     if (pPlayer->IsActive()) m_pLevelManager->GetLevel()->HandleCollision(pPlayer);
 
     // Player on enemies
