@@ -78,7 +78,29 @@ void InitialSaver::OnEnter()
         m_pGameController->m_pInputManager->SetTriggered(Game::Label::I_SELECT, true);
         if (m_Initial.length() < m_MaxLength)
         {
-            m_Initial += m_pGameController->m_pUIManager->m_pInitialDrawer->GetCharacter(m_RowIdx, m_ColIdx);
+            const char c{m_pGameController->m_pUIManager->m_pInitialDrawer->GetCharacter(m_RowIdx, m_ColIdx)};
+            if (c == char(InitialDrawer::ASCII::SPACE))
+            {
+                if (!m_Initial.empty() and  m_Initial[0] != ' ')
+                {
+                    m_Initial += ' ';
+                }
+            }
+            else if (c == char(InitialDrawer::ASCII::BACKSPACE))
+            {
+                if (!m_Initial.empty())
+                {
+                    m_Initial.pop_back();
+                }
+            }
+            else if (c == char(InitialDrawer::ASCII::SUB))
+            {
+               m_Initial = "CPM"; 
+            }
+            else
+            {
+                m_Initial +=  c;
+            }
         }
         if (m_Initial.length() == m_MaxLength)
         {

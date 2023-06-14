@@ -11,6 +11,13 @@ public:
         TAN = 10
     };
 
+    enum class ASCII
+    {
+        SPACE = 32,
+        BACKSPACE = 8,
+        SUB = 26
+    };
+
 public:
     explicit InitialDrawer(GameController* pGameController);
     virtual ~InitialDrawer() override = default;
