@@ -32,15 +32,15 @@ void FXManager::Initialize(bool fromCheckpoint)
 
 void FXManager::CleanUp()
 {
-    auto deleteGameObject = [](const GameObject* pGameObject) { delete pGameObject; };
+    static const auto deleteGameObject = [](const GameObject* pGameObject) { delete pGameObject; };
     std::ranges::for_each(m_Effects, deleteGameObject);
     m_Effects.clear();
 }
 
 void FXManager::Draw() const
 {
-    static auto draw{[](const GameObject* pGameObject) { pGameObject->Draw(); }};
-    static auto isVisible{[](const GameObject* pGameObject) { return pGameObject->IsVisible(); }};
+    static const auto draw{[](const GameObject* pGameObject) { pGameObject->Draw(); }};
+    static const auto isVisible{[](const GameObject* pGameObject) { return pGameObject->IsVisible(); }};
     std::ranges::for_each(m_Effects | std::ranges::views::filter(isVisible), draw);
 }
 

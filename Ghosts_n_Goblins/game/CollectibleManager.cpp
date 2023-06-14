@@ -55,7 +55,7 @@ void CollectibleManager::Initialize(bool fromCheckpoint)
 
 void CollectibleManager::CleanUp()
 {
-    auto deleteGameObject = [](const GameObject* pGameObject) { delete pGameObject; };
+    static const auto deleteGameObject = [](const GameObject* pGameObject) { delete pGameObject; };
     std::ranges::for_each(m_Collectibles, deleteGameObject);
     m_Collectibles.clear();
 }
@@ -87,8 +87,8 @@ void CollectibleManager::UpdatePot()
 
 void CollectibleManager::Draw() const
 {
-    static auto draw{[](const GameObject* pGameObject) { pGameObject->Draw(); }};
-    static auto isVisible{[](const GameObject* pGameObject) { return pGameObject->IsVisible(); }};
+    static const auto draw{[](const GameObject* pGameObject) { pGameObject->Draw(); }};
+    static const auto isVisible{[](const GameObject* pGameObject) { return pGameObject->IsVisible(); }};
     std::ranges::for_each(m_Collectibles | std::views::filter(isVisible), draw);
 }
 

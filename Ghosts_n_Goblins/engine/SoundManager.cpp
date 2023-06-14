@@ -160,7 +160,7 @@ void SoundManager::LoadSounds()
     {
         const std::string label{sound["label"]};
         const std::string path{sound["path"]};
-        auto it = m_pGameController->m_Labels.find(label);
+        const auto it = m_pGameController->m_Labels.find(label);
         if (it == m_pGameController->m_Labels.end())
         {
             std::cerr << "SoundManager::LoadSounds() - ERROR: label (" << label <<
@@ -175,7 +175,7 @@ void SoundManager::LoadSounds()
     {
         const std::string label{sound["label"]};
         const std::string path{sound["path"]};
-        auto it = m_pGameController->m_Labels.find(label);
+        const auto it = m_pGameController->m_Labels.find(label);
         if (it == m_pGameController->m_Labels.end())
         {
             std::cerr << "SoundManager::LoadSounds() - ERROR: label (" << label <<

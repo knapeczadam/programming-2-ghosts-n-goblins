@@ -50,7 +50,7 @@ void EnemyManager::Initialize(bool fromCheckpoint)
 
 void EnemyManager::CleanUp()
 {
-    auto deleteGameObject = [](const GameObject* pGameObject) { delete pGameObject; };
+    static const auto deleteGameObject = [](const GameObject* pGameObject) { delete pGameObject; };
     std::ranges::for_each(m_Enemies, deleteGameObject);
     std::ranges::for_each(m_Throwables, deleteGameObject);
     m_Enemies.clear();
@@ -71,15 +71,15 @@ void EnemyManager::Reset(bool fromCheckpoint)
 
 void EnemyManager::DrawEnemies() const
 {
-    static auto draw{[](const GameObject* pGameObject) { pGameObject->Draw(); }};
-    static auto isVisible{[](const GameObject* pGameObject) { return pGameObject->IsVisible(); }};
+    static const auto draw{[](const GameObject* pGameObject) { pGameObject->Draw(); }};
+    static const auto isVisible{[](const GameObject* pGameObject) { return pGameObject->IsVisible(); }};
     std::ranges::for_each(m_Enemies | std::views::filter(isVisible), draw);
 }
 
 void EnemyManager::DrawThrowables() const
 {
-    static auto draw{[](const GameObject* pGameObject) { pGameObject->Draw(); }};
-    static auto isVisible{[](const GameObject* pGameObject) { return pGameObject->IsVisible(); }};
+    static const auto draw{[](const GameObject* pGameObject) { pGameObject->Draw(); }};
+    static const auto isVisible{[](const GameObject* pGameObject) { return pGameObject->IsVisible(); }};
     std::ranges::for_each(m_Throwables | std::views::filter(isVisible), draw);
 }
 

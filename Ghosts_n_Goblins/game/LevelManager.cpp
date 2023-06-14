@@ -76,7 +76,7 @@ void LevelManager::Initialize(bool fromCheckpoint)
 
 void LevelManager::CleanUp()
 {
-    auto deleteGameObject = [](const GameObject* pGameObject) { delete pGameObject; };
+    static const auto deleteGameObject = [](const GameObject* pGameObject) { delete pGameObject; };
     std::ranges::for_each(m_Colliders, deleteGameObject);
     std::ranges::for_each(m_Tombstones, deleteGameObject);
     std::ranges::for_each(m_Waters, deleteGameObject);
@@ -92,7 +92,7 @@ void LevelManager::CleanUp()
 
 void LevelManager::DrawColliders() const
 {
-    static auto draw{[](const GameObject* pGameObject) { pGameObject->Draw(); }};
+    static const auto draw{[](const GameObject* pGameObject) { pGameObject->Draw(); }};
     std::ranges::for_each(m_Colliders, draw);
 }
 
@@ -118,13 +118,13 @@ void LevelManager::DrawPlatform() const
 
 void LevelManager::DrawTombstones() const
 {
-    static auto draw{[](const GameObject* pGameObject) { pGameObject->Draw(); }};
+    static const auto draw{[](const GameObject* pGameObject) { pGameObject->Draw(); }};
     std::ranges::for_each(m_Tombstones, draw);
 }
 
 void LevelManager::DrawWaters() const
 {
-    static auto draw{[](const GameObject* pGameObject) { pGameObject->Draw(); }};
+    static const auto draw{[](const GameObject* pGameObject) { pGameObject->Draw(); }};
     std::ranges::for_each(m_Waters, draw);
 }
 

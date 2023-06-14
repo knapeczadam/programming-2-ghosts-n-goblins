@@ -52,7 +52,7 @@ void PlayerManager::Initialize(bool fromCheckpoint)
 
 void PlayerManager::CleanUp()
 {
-    auto deleteGameObject = [](const GameObject* pGameObject) { delete pGameObject; };
+    static const auto deleteGameObject = [](const GameObject* pGameObject) { delete pGameObject; };
     std::ranges::for_each(m_Throwables, deleteGameObject);
     m_Throwables.clear();
     m_PrevLives = m_pPlayer->GetLives();
@@ -84,8 +84,8 @@ void PlayerManager::DrawPlayer() const
 
 void PlayerManager::DrawThrowables() const
 {
-    static auto draw{[](const GameObject* pGameObject) { pGameObject->Draw(); }};
-    static auto isVisible{[](const GameObject* pGameObject) { return pGameObject->IsVisible(); }};
+    static const auto draw{[](const GameObject* pGameObject) { pGameObject->Draw(); }};
+    static const auto isVisible{[](const GameObject* pGameObject) { return pGameObject->IsVisible(); }};
     std::ranges::for_each(m_Throwables | std::ranges::views::filter(isVisible), draw);
 }
 

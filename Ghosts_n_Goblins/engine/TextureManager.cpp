@@ -37,7 +37,7 @@ void TextureManager::LoadTextures()
     {
         const std::string label{texture["label"]};
         const std::string path{texture["path"]};
-        auto it = m_pGameController->m_Labels.find(label);
+        const auto it = m_pGameController->m_Labels.find(label);
         if (it == m_pGameController->m_Labels.end())
         {
             std::cerr << "TextureManager::LoadTextures() - ERROR: label (" << label <<
