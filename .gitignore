@@ -519,7 +519,4 @@ FodyWeavers.xsd
 ### VisualStudio Patch ###
 # Additional files built by Visual Studio
 
-### Custom Rules ###
-Resources/videos/
-
 # End of https://www.toptal.com/developers/gitignore/api/c++,visualstudio,rider
