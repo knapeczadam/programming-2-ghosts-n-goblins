@@ -2,9 +2,11 @@
 #include "CutsceneManager.h"
 
 #include "GameController.h"
+#include "UIManager.h"
 #include "engine/SoundManager.h"
 #include "engine/Sprite.h"
 #include "engine/SpriteFactory.h"
+#include "ui/UI.h"
 
 CutsceneManager::CutsceneManager(GameController* gameController)
     : IManager(gameController)
@@ -163,6 +165,10 @@ void CutsceneManager::DrawIntro() const
 {
     if (m_State == Game::Label::N_END) return;
     m_pGameController->m_pSpriteFactory->CreateSprite(m_State)->Draw();
+    // black layer over the original top score
+    utils::SetColor(Color4f{0, 0, 0, 1.0f});
+    utils::FillRect(224.0f, 416.0f, 76.0f, 16.0f);
+    m_pGameController->m_pUIManager->m_pUI->DrawTopScore();
 }
 
 void CutsceneManager::Update(float elapsedSec)

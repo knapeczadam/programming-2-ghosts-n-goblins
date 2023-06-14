@@ -93,6 +93,14 @@ void BootManager::Draw() const
         m_pGameController->m_pUIManager->m_pUI->DrawTextBottomRow();
         m_pGameController->m_pUIManager->m_pCreditManager->DrawCredits();
     }
+    else if (m_State == Game::Label::B_29)
+    {
+        m_pGameController->m_pSpriteFactory->CreateSprite(m_State)->Draw();
+        // black layer over the original top score
+        utils::SetColor(Color4f{0, 0, 0, 1.0f});
+        utils::FillRect(224.0f, 416.0f, 76.0f, 16.0f);
+        m_pGameController->m_pUIManager->m_pScoreManager->DrawTopScore();
+    }
     else
     {
         m_pGameController->m_pSpriteFactory->CreateSprite(m_State)->Draw();
