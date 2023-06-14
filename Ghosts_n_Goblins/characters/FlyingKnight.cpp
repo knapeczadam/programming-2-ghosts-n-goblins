@@ -19,7 +19,7 @@ FlyingKnight::FlyingKnight(const Point2f& pos, GameController* pGameController)
     m_Score = 100;
     m_FixedDirection = true;
     m_HorVelocity = 120.0f;
-    m_VerVelocity = 2.0f;
+    m_VerVelocity = 3.0f;
 }
 
 void FlyingKnight::Update(float elapsedSec)
