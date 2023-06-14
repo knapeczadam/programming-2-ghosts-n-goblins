@@ -13,7 +13,7 @@ GreenMonster::GreenMonster(const Point2f& pos, GameController* pGameController)
     : IEnemy{Game::Label::C_GREEN_MONSTER, pos, pGameController}
 {
     m_Score = 100;
-    m_AwakeDistance = 200.0f;
+    m_AwakeDistance = 240.0f;
 }
 
 void GreenMonster::Draw() const
@@ -59,8 +59,7 @@ void GreenMonster::Wait(float elapsedSec)
 
 void GreenMonster::Shoot(float elapsedSec)
 {
-    const int randInterval{Game::GetRandomInt(1, 2)};
-    StartTimer(randInterval);
+    StartTimer(Game::GetRandomFloat(1.0f, 2.0f));
     if (IsTimerFinished())
     {
         const Vector2f direction{m_pGameController->m_pPlayerManager->GetPlayer()->GetShapeCenter() - GetShapeCenter()};

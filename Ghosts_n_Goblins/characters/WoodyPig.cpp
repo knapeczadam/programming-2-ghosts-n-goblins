@@ -26,7 +26,7 @@ WoodyPig::WoodyPig(const Point2f& pos, GameController* pGameController)
 {
     m_Score = 100;
     m_AwakeDistance = std::numeric_limits<float>::max();
-    m_HorVelocity = 100.0f;
+    m_HorVelocity = 150.0f;
     m_VerVelocity = 100.0f;
     m_Velocity = Vector2f{m_HorVelocity, m_VerVelocity};
 }
@@ -122,7 +122,7 @@ void WoodyPig::Shoot(float elapsedSec)
 
 void WoodyPig::Fly(float elapsedSec)
 {
-    StartTimer(Game::GetRandomFloat(1.0f, 3.0f));
+    StartTimer(Game::GetRandomFloat(0.5f, 1.5f));
     if (IsTimerFinished())
     {
         if (Game::GetRandomBool())

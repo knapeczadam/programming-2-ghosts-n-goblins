@@ -85,8 +85,7 @@ void Unicorn::LateUpdate(float elapsedSec)
 
 void Unicorn::Walk(float elapsedSec)
 {
-    m_pGameController->m_pSoundManager->PlayEffect(Game::Label::E_BIG_ENEMY_WALK);
-    StartTimer(Game::GetRandomFloat(1.0f, 2.0f));
+    StartTimer(Game::GetRandomFloat(0.5f, 2.0f));
     if (IsTimerFinished())
     {
         m_pSprite->ResetIterCount();

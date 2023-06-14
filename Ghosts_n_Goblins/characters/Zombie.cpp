@@ -19,7 +19,7 @@ Zombie::Zombie(const Point2f& pos, GameController* pGameController)
     , m_MidColliderHeight{m_Collider.height / 2.0f}
 {
     m_Score = 200;
-    m_HorVelocity = 50.0f;
+    m_HorVelocity = 75.0f;
     m_FixedDirection = true;
     m_AwakeDistance = std::numeric_limits<float>::max();
 }

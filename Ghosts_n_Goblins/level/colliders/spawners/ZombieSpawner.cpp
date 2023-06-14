@@ -24,7 +24,7 @@ void ZombieSpawner::Spawn()
     {
         if (not pEnemy->IsActive())
         {
-            StartTimer(Game::GetRandomFloat(0.0f, 5.0f));
+            StartTimer(Game::GetRandomFloat(0.0f, 2.0f));
             if (IsTimerFinished())
             {
                 Player* pPlayer{m_pGameController->m_pPlayerManager->GetPlayer()};

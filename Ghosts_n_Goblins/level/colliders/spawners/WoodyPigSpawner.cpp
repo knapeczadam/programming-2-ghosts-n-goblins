@@ -26,13 +26,13 @@ void WoodyPigSpawner::Spawn()
         if (not pGameObject->IsActive())
         {
             IEnemy* pEnemy{static_cast<IEnemy*>(pGameObject)};
-            StartTimer(Game::GetRandomFloat(0.0f, 5.0f));
+            StartTimer(Game::GetRandomFloat(0.0f, 2.0f));
             if (IsTimerFinished())
             {
                 Player* pPlayer{m_pGameController->m_pPlayerManager->GetPlayer()};
                 const Point2f playerCenter{pPlayer->GetColliderCenter()};
                 const int flip{Game::GetRandomBool() ? -1 : 1};
-                const float offset{50.0f};
+                const float offset{30.0f};
                 Point2f pos;
                 pos.x = playerCenter.x + Game::GetRandomFloat(m_MinRange, m_MaxRange) * flip;
                 pos.y = Game::GetRandomFloat(LevelManager::GetGroundHeight() + offset, LevelManager::GetHillHeight());

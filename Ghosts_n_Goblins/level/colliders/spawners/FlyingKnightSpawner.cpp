@@ -29,7 +29,7 @@ void FlyingKnightSpawner::Spawn()
     {
         if (not pEnemy->IsActive())
         {
-            StartTimer(Game::GetRandomFloat(1.0f, 2.0f));
+            StartTimer(Game::GetRandomFloat(0.5f, 2.0f));
             if (IsTimerFinished())
             {
                 FlyingKnight* pKnight{static_cast<FlyingKnight*>(pEnemy)};

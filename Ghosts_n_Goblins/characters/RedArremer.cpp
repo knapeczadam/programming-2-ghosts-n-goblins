@@ -24,8 +24,8 @@ RedArremer::RedArremer(const Point2f& pos, GameController* pGameController)
     m_Score = 1000;
     m_HP = 3;
     m_AwakeDistance = 200.0f;
-    m_HorVelocity = 100.0f;
-    m_VerVelocity = 100.0f;
+    m_HorVelocity = 200.0f;
+    m_VerVelocity = 200.0f;
     m_Velocity = Vector2f{m_HorVelocity, m_VerVelocity};
 }
 
