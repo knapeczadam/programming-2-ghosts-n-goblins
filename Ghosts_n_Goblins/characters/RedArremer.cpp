@@ -50,7 +50,7 @@ void RedArremer::Update(float elapsedSec)
 void RedArremer::HandleCollision(GameObject* other)
 {
     if (not IsOverlapping(other)) return;
-    if (m_State != State::MEDITATING or m_State != State::WAKING_UP)
+    if (m_State != State::MEDITATING and m_State != State::WAKING_UP)
     {
         --m_HP;
     }
