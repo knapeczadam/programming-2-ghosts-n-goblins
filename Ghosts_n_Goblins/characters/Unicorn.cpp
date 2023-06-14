@@ -66,7 +66,7 @@ void Unicorn::HandleCollision(GameObject* other)
         m_pGameController->m_pPlayerManager->GetPlayer()->AddScore(m_Score);
         m_pGameController->m_pFXManager->PlayEffect(Game::Label::F_FIRE_BOSS, GetColliderCenter(), other->IsFlipped());
         m_pGameController->m_pFXManager->
-                           PlayEffect(Game::Label::F_SCORE, GetColliderCenter(), other->IsFlipped(), this);
+                           PlayEffect(Game::Label::F_SCORE, GetColliderCenter(), false, this);
         m_pGameController->m_pSoundManager->PlayEffect(Game::Label::E_BOSS_DEATH);
     }
 }
