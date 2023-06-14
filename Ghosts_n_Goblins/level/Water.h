@@ -11,7 +11,4 @@ public:
     Water(Water&& other) noexcept = delete;
     Water& operator=(const Water& other) = delete;
     Water& operator=(Water&& other) noexcept = delete;
-
-    virtual void Draw() const override;
-    virtual void Update(float elapsedSec) override;
 };

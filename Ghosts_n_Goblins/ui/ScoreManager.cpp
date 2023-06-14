@@ -1,20 +1,17 @@
 ﻿#include "pch.h"
 #include "ScoreManager.h"
 
-#include "engine/SpriteFactory.h"
+#include "characters/Player.h"
+#include "engine/SoundManager.h"
 #include "game/GameController.h"
+#include "game/PlayerManager.h"
 
 #include <fstream>
 #include <sstream>
 
-#include "game/PlayerManager.h"
-#include "characters/Player.h"
-#include "engine/SoundManager.h"
-
 ScoreManager::ScoreManager(GameController* pGameController)
     : UI{Game::Label::U_SCORE_MANAGER, pGameController}
     , m_Path{"ranking.txt"}
-    , m_TopScore{0}
     , m_Scores{}
     , m_FirstBonusThreshold{20000}
     , m_SecondBonusThreshold{70000}

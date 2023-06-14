@@ -9,6 +9,7 @@
 #include "EnemyManager.h"
 #include "InputManager.h"
 #include "LevelManager.h"
+#include "MenuManager.h"
 #include "PlayerManager.h"
 #include "Texture.h"
 #include "UIManager.h"
@@ -33,9 +34,6 @@
 #include <fstream>
 #include <iostream>
 #include <ranges>
-
-#include "MenuManager.h"
-
 
 std::random_device Game::s_RandomDevice;
 std::mt19937 Game::s_RandomGenerator{s_RandomDevice()};
@@ -68,11 +66,11 @@ Game::Game(const Window& window)
     , m_pSpriteFactory{nullptr}
     , m_pTextureManager{nullptr}
     , m_pUIManager{nullptr}
+    , m_PlayTime{121.f}
+    , m_HurryUpTime{15.f}
 #if TEST_OBJECT
     , m_pTestObject{nullptr}
 #endif
-    , m_PlayTime{121.f}
-    , m_HurryUpTime{15.f}
 {
     Initialize();
 }

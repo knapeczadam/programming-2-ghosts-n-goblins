@@ -22,11 +22,6 @@ FlyingKnight::FlyingKnight(const Point2f& pos, GameController* pGameController)
     m_VerVelocity = 2.0f;
 }
 
-void FlyingKnight::Draw() const
-{
-    GameObject::Draw();
-}
-
 void FlyingKnight::Update(float elapsedSec)
 {
     IEnemy::Update(elapsedSec);

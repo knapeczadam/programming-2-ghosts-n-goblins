@@ -216,7 +216,6 @@ void WoodyPig::UpdateState()
         {
             m_State =State::FLYING;
         }
-        
     }
 }
 

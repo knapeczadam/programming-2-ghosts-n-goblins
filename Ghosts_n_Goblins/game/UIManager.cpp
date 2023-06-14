@@ -2,6 +2,7 @@
 #include "UIManager.h"
 
 #include "GameController.h"
+#include "engine/SoundManager.h"
 #include "ui/CreditManager.h"
 #include "ui/HUD.h"
 #include "ui/InitialDrawer.h"
@@ -11,8 +12,6 @@
 #include "ui/ScoreManager.h"
 
 #include <iostream>
-
-#include "engine/SoundManager.h"
 
 UIManager::UIManager(GameController* pGameController)
     : IManager{pGameController}

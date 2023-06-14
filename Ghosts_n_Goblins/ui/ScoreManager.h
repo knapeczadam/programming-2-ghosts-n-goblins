@@ -1,9 +1,8 @@
 ﻿#pragma once
+#include "UI.h"
 
 #include <map>
 # include <string>
-
-#include "UI.h"
 
 class Sprite;
 class GameController;
@@ -31,7 +30,6 @@ public:
 
 private:
     const std::string m_Path;
-    int m_TopScore;
     std::multimap<int, std::string, std::greater<>> m_Scores;
     const int m_FirstBonusThreshold;
     const int m_SecondBonusThreshold;

@@ -1,7 +1,6 @@
 ﻿#include "pch.h"
 #include "IThrowable.h"
 
-
 IThrowable::IThrowable()
     : m_OriginalPos{0.0f, 0.0f}
     , m_Direction{0.0f, 0.0f}

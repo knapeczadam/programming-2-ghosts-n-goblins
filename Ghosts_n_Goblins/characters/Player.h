@@ -40,7 +40,6 @@ public:
 public:
     explicit Player(const Point2f& pos, GameController* pGameController);
     virtual ~Player() override = default;
-    bool IsOnHill() const;
     Player(const Player& other) = delete;
     Player(Player&& other) noexcept = delete;
     Player& operator=(const Player& other) = delete;
@@ -88,6 +87,7 @@ public:
     void SetOnLadder(bool onLadder);
     bool IsClimbing() const;
     bool IsAlive() const;
+    bool IsOnHill() const;
 
     void UpdateState();
     virtual void UpdateCollider() override;
@@ -139,7 +139,6 @@ private:
     bool m_OnGround;
     bool m_ImpactFromLeft;
     bool m_HitTriggered;
-    bool m_HitFlipped;
     bool m_HasKey;
     bool m_OnHill;
     bool m_Frog;

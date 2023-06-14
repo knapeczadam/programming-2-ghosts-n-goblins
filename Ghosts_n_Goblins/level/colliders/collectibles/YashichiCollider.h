@@ -11,7 +11,6 @@ public:
     YashichiCollider& operator=(const YashichiCollider& other) = delete;
     YashichiCollider& operator=(YashichiCollider&& other) noexcept = delete;
 
-
     virtual void HandleCollision(GameObject* other) override;
 
 private:

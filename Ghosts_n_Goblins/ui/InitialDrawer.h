@@ -11,6 +11,7 @@ public:
         TAN = 10
     };
 
+public:
     explicit InitialDrawer(GameController* pGameController);
     virtual ~InitialDrawer() override = default;
     InitialDrawer(const InitialDrawer& other) = delete;

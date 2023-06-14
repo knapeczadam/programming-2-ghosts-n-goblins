@@ -7,11 +7,9 @@
 #include "fx/FXManager.h"
 #include "game/EnemyManager.h"
 #include "game/GameController.h"
+#include "game/LevelManager.h"
 #include "game/PlayerManager.h"
 #include "throwables/Fireball.h"
-#include "game/GameController.h"
-#include "game/LevelManager.h"
-
 
 RedArremer::RedArremer(const Point2f& pos, GameController* pGameController)
     : IEnemy{Game::Label::C_RED_ARREMER, pos, pGameController}

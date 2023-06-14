@@ -21,14 +21,12 @@ public:
     void UpdateColliders();
     void LateUpdate(float elapsedSec);
     std::vector<GameObject*>& GetEffects();
+    void PlayEffect(Game::Label label, const Point2f& pos, bool flipped, GameObject* other = nullptr);
 
 protected:
     virtual void Initialize(bool fromCheckpoint = false) override;
     virtual void CleanUp() override;
-
-public:
-    void PlayEffect(Game::Label label, const Point2f& pos, bool flipped, GameObject* other = nullptr);
-
+    
 private:
     std::vector<GameObject*> m_Effects;
 };

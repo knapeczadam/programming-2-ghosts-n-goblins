@@ -3,7 +3,6 @@
 
 #include "engine/Sprite.h"
 
-
 Dagger::Dagger(const Point2f& pos, bool isFlipped, bool collectible, GameController* pGameController)
     : GameObject{Game::Label::T_DAGGER, pos, true, pGameController}
     , m_Collectible{collectible}

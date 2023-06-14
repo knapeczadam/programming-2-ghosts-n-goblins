@@ -45,6 +45,7 @@ protected:
     virtual void Walk(float elapsedSec) override;
     virtual void Jump(float elapsedSec) override;
     virtual void Shoot(float elapsedSec) override;
+    
 private:
     void UpdateState();
     void UpdateSprite();

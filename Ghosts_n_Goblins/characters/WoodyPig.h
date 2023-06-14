@@ -23,6 +23,7 @@ public:
         TURNING,
         WAITING
     };
+    
 public:
     explicit WoodyPig(const Point2f& pos, GameController* pGameController);
     virtual ~WoodyPig() override = default;
@@ -41,13 +42,16 @@ public:
 protected:
     virtual void Shoot(float elapsedSec) override;
     virtual void Fly(float elapsedSec) override;
+    
 private:
     void Turn(float elapsedSec);
     void UpdateState();
     void UpdateSprite();
     void PlayEffect();
+    
 public:
     static void Initialize();
+    
 private:
     State m_State;
     Point2f m_SnapshotPos;
@@ -57,6 +61,7 @@ private:
     bool m_SnapshotFlipped;
     float m_AccuTime;
     int m_Dir;
+    
 private:
     static bool s_EffectPlaying;
     static int s_IdPlayingEffect;

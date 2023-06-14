@@ -24,11 +24,6 @@ Zombie::Zombie(const Point2f& pos, GameController* pGameController)
     m_AwakeDistance = std::numeric_limits<float>::max();
 }
 
-void Zombie::Draw() const
-{
-    GameObject::Draw();
-}
-
 void Zombie::Update(float elapsedSec)
 {
     IPotter::Update(elapsedSec);

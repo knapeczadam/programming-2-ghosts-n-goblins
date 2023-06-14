@@ -17,6 +17,7 @@ public:
 private:
     virtual float SetTimme() const final;
 
+private:
     int m_Score;
     bool m_Shown;
 };

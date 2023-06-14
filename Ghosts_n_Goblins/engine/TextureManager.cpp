@@ -6,7 +6,6 @@
 
 #include <iostream>
 
-
 TextureManager::TextureManager(GameController* pGameController)
     : IManager(pGameController)
     , m_Textures{}

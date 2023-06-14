@@ -19,9 +19,6 @@ Level::Level(GameController* pGameController)
     SetVertices();
 }
 
-/*
-Draws the background texture
- */
 void Level::Draw() const
 {
     m_pSprite->Draw();
@@ -34,27 +31,23 @@ void Level::Draw() const
 #endif
 }
 
-/*
-It handles the vertical collision of the given actor with the level using the
-Raycast functionality.
-It stops the actor when it penetrates the level:
-- the bottom-position is changed to the y value of the intersection point
-(actor should not penetrate the level) and
-- the vertical part of the actor's velocity becomes 0.
-Tip: use Raycast with a vertical ray (blue line) in the middle of the actor.
- */
 void Level::HandleCollision(GameObject* other)
 {
     m_pGameController->m_pLevelManager->GetPlatform()->HandleCollision(other);
 
     const float epsilon{0.0f};
     utils::HitInfo hit;
-
+    
     // DOWN
     const Point2f objectCenter{other->GetColliderCenter()};
     Point2f down;
     down.x = objectCenter.x;
     down.y = other->GetCollider().bottom - epsilon;
+
+    // UP
+    Point2f up;
+    up.x = objectCenter.x;
+    up.y = other->GetCollider().bottom + other->GetCollider().height * 2 + epsilon;
 
     // RIGHT
     Point2f right;
@@ -67,45 +60,44 @@ void Level::HandleCollision(GameObject* other)
     left.y = objectCenter.y;
     std::ranges::for_each(m_Vertices, [&](const std::vector<Point2f>& vertices)
     {
+        // TODO: fix this
+        // if (utils::Raycast(vertices, Point2f{up.x, down.y + 5.0f}, up, hit) and pPlayer->GetState() == Player::State::HIT) return;
         if (utils::Raycast(vertices, objectCenter, down, hit))
         {
-            // TODO: if player is hit, don't set bottom to hit.intersectPoint.y
-            Player* pPlayer{static_cast<Player*>(other)};
             other->SetBottom(hit.intersectPoint.y);
-            Vector2f playerVelocity{pPlayer->GetVelocity()};
-            playerVelocity.y = 0.f;
-            pPlayer->SetVelocity(playerVelocity);
+            Player* pPlayer{dynamic_cast<Player*>(other)};
+            if (pPlayer)
+            {
+                Vector2f playerVelocity{pPlayer->GetVelocity()};
+                playerVelocity.y = 0.f;
+                pPlayer->SetVelocity(playerVelocity);
+            }
         }
         if (utils::Raycast(vertices, objectCenter, right, hit))
         {
-            Player* pPlayer{static_cast<Player*>(other)};
             other->SetLeft(hit.intersectPoint.x - other->GetCollider().width);
-            Vector2f playerVelocity{pPlayer->GetVelocity()};
-            playerVelocity.x = 0.f;
-            pPlayer->SetVelocity(playerVelocity);
+            Player* pPlayer{dynamic_cast<Player*>(other)};
+            if (pPlayer)
+            {
+                Vector2f playerVelocity{pPlayer->GetVelocity()};
+                playerVelocity.x = 0.f;
+                pPlayer->SetVelocity(playerVelocity);
+            }
         }
         if (utils::Raycast(vertices, objectCenter, left, hit))
         {
-            Player* pPlayer{static_cast<Player*>(other)};
             other->SetLeft(hit.intersectPoint.x);
-            Vector2f playerVelocity{pPlayer->GetVelocity()};
-            playerVelocity.x = 0.f;
-            pPlayer->SetVelocity(playerVelocity);
+            Player* pPlayer{dynamic_cast<Player*>(other)};
+            if (pPlayer)
+            {
+                Vector2f playerVelocity{pPlayer->GetVelocity()};
+                playerVelocity.x = 0.f;
+                pPlayer->SetVelocity(playerVelocity);
+            }
         }
     });
-    // const bool isHit{utils::Raycast(m_Vertices[0], p1, p2, hit)};
-    // if (isHit)
-    // {
-    //     actorShape.bottom = hit.intersectPoint.y;
-    //     actorVelocity.y = 0.f;
-    // }
 }
 
-/*
-Returns true when the actor touches the level, otherwise false is returned.
-Tip: use RayCast with a vertical ray in the middle of the actor and that is 1
-pixel deeper than the bottom.
- */
 bool Level::IsOnGround(GameObject* pGameObject) const
 {
     const float epsilon{0.0f};
@@ -135,7 +127,6 @@ Rectf Level::GetBoundaries() const
     return m_Boundaries;
 }
 
-// TODO: egy bizonyos idő után már nem lehet visszamenni
 void Level::SetBoundaries(const Rectf& boundaries)
 {
     m_Boundaries = boundaries;

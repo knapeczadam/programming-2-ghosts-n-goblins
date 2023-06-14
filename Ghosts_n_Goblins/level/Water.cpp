@@ -14,13 +14,3 @@ Water::Water(const Point2f& pos, float clipWidth, GameController* pGameControlle
 {
     m_pSprite->SetClipWidth(clipWidth);
 }
-
-void Water::Draw() const
-{
-    GameObject::Draw();
-}
-
-void Water::Update(float elapsedSec)
-{
-    GameObject::Update(elapsedSec);
-}

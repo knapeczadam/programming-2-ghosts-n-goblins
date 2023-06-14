@@ -21,7 +21,6 @@ public:
     Zombie& operator=(const Zombie& other) = delete;
     Zombie& operator=(Zombie&& other) noexcept = delete;
 
-    virtual void Draw() const override;
     virtual void Update(float elapsedSec) override;
     virtual void HandleCollision(GameObject* other) override;
     virtual void Reset() override;

@@ -18,11 +18,6 @@ Magician::Magician(const Point2f& pos, GameController* pGameController)
     m_AwakeDistance = std::numeric_limits<float>::max();
 }
 
-void Magician::Draw() const
-{
-    GameObject::Draw();
-}
-
 // TODO: sometimes it stuck in the second frame 
 void Magician::Update(float elapsedSec)
 {
@@ -54,7 +49,6 @@ void Magician::Awake(float elapsedSec)
         m_pSprite->UpdateSourceRect();
     }
 }
-
 
 void Magician::Shoot(float elapsedSec)
 {

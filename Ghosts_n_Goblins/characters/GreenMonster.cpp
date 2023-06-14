@@ -16,11 +16,6 @@ GreenMonster::GreenMonster(const Point2f& pos, GameController* pGameController)
     m_AwakeDistance = 240.0f;
 }
 
-void GreenMonster::Draw() const
-{
-    GameObject::Draw();
-}
-
 void GreenMonster::Update(float elapsedSec)
 {
     IEnemy::Update(elapsedSec);
@@ -50,11 +45,6 @@ void GreenMonster::HandleCollision(GameObject* other)
         m_pGameController->m_pFXManager->PlayEffect(Game::Label::F_FIRE_ENEMY, GetColliderCenter(), other->IsFlipped());
         m_pGameController->m_pSoundManager->PlayEffect(Game::Label::E_ENEMY_DEATH);
     }
-}
-
-void GreenMonster::Wait(float elapsedSec)
-{
-    IEnemy::Wait(elapsedSec);
 }
 
 void GreenMonster::Shoot(float elapsedSec)

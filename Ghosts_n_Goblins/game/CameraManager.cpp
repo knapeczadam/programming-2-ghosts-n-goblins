@@ -6,14 +6,13 @@
 #include "GameController.h"
 #include "LevelManager.h"
 #include "PlayerManager.h"
-#include "level/Level.h"
-
-#include <ranges>
-
 #include "UIManager.h"
 #include "characters/IEnemy.h"
 #include "characters/Player.h"
+#include "level/Level.h"
 #include "ui/Map.h"
+
+#include <ranges>
 
 class IEnemy;
 

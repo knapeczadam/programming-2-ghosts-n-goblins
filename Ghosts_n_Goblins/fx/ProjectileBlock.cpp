@@ -13,7 +13,7 @@ ProjectileBlock::ProjectileBlock(Game::Label label, const Point2f& pos, bool fli
 
 void ProjectileBlock::Update(float elapsedSec)
 {
-    float time{0.2f}; // 1 / (200/3) * 1000
+    const float time{0.2f}; // 1 / (200/3) * 1000
     StartTimer(time);
     if (IsTimerFinished())
     {

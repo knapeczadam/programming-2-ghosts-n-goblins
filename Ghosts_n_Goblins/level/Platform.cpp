@@ -66,9 +66,6 @@ void Platform::Update(float elapsedSec)
     m_pSprite->SetPosition(GetPosition<Point2f>());
 }
 
-/*
-Handles collision with this platform only when the actor is moving downwards.
- */
 void Platform::HandleCollision(GameObject* other)
 {
     const Point2f p1{other->GetColliderCenter()};
@@ -83,30 +80,8 @@ void Platform::HandleCollision(GameObject* other)
         playerVelocity.y = 0.f;
         pPlayer->SetVelocity(playerVelocity);
     }
-    // Swamp effect
-    // if (isHit)
-    // {
-    //    if (actorVelocity.y < 0.0f and hit.intersectPoint.y < actorShape.bottom)
-    //    {
-    //        actorShape.bottom = hit.intersectPoint.y;
-    //        actorVelocity.y = 0.0f;
-    //    } 
-    // }
-    return; // TODO: review this
-    Player* pPlayer{static_cast<Player*>(other)};
-    if (isHit and pPlayer->GetVelocity().y < 0)
-    {
-        other->SetBottom(hit.intersectPoint.y);
-        Vector2f playerVelocity{pPlayer->GetVelocity()};
-        playerVelocity.y = 0.f;
-        pPlayer->SetVelocity(playerVelocity);
-    }
 }
 
-/*
-Returns true when the given actor is not going upwards and is on the
-platform’s top.
- */
 bool Platform::IsOnGround(GameObject* pGameObject) const
 {
     const float epsilon{0.0f};
@@ -117,14 +92,6 @@ bool Platform::IsOnGround(GameObject* pGameObject) const
     if (utils::Raycast(GetColliderVertices(), p1, p2, hit))
     {
         pPlayer->SetIsOnPlatform(true);
-        return true;
-    }
-    pPlayer->SetIsOnPlatform(false);
-    return false;
-    if (pPlayer->GetVelocity().y <= 0.0f && utils::IsOverlapping(p1, p2, m_Shape))
-    {
-        pPlayer->SetIsOnPlatform(true);
-
         return true;
     }
     pPlayer->SetIsOnPlatform(false);

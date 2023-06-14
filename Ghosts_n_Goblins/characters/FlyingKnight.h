@@ -21,7 +21,6 @@ public:
     FlyingKnight& operator=(const FlyingKnight& other) = delete;
     FlyingKnight& operator=(FlyingKnight&& other) noexcept = delete;
 
-    virtual void Draw() const override;
     virtual void Update(float elapsedSec) override;
     virtual void HandleCollision(GameObject* other) override;
     void SetCycleOffset(float offset);
@@ -31,6 +30,7 @@ protected:
 
 private:
     void PlayEffect();
+    
 public:
     static void Initialize();
 

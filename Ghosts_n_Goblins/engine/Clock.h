@@ -10,14 +10,17 @@ public:
     Clock& operator=(const Clock& other) = delete;
     Clock& operator=(Clock&& other) noexcept = delete;
 
-    static void Update(float elapsedSec);
     bool IsFinished() const;
     float GetRemainingTime() const;
 
+public:
+    static void Update(float elapsedSec);
     static float GetAccuTime();
 
 private:
-    static float s_AccuTime; // accumulated time in seconds
     const float m_TotalTime; // total time in seconds
     const float m_StartTime; // time in seconds when the timer started
+
+public:
+    static float s_AccuTime; // accumulated time in seconds
 };

@@ -1,12 +1,12 @@
 ﻿#include "pch.h"
 #include "Map.h"
 
-#include <iostream>
-
+#include "engine/Sprite.h"
 #include "engine/SpriteFactory.h"
 #include "game/GameController.h"
-#include "engine/Sprite.h"
 #include "game/LevelManager.h"
+
+#include <iostream>
 
 Map::Map(GameController* pGameController)
     : UI{Game::Label::U_MAP, pGameController}

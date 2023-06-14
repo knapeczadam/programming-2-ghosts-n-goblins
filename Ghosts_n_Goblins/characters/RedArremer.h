@@ -47,10 +47,10 @@ protected:
     virtual void Shoot(float elapsedSec) override;
     virtual void Fly(float elapsedSec) override;
 
-
 private:
     void UpdateState();
     void UpdateSprite();
+    
 private:
     State m_State;
     Point2f m_SnapshotPlayerPos;

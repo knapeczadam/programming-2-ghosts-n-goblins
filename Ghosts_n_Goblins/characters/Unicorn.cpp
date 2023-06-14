@@ -18,7 +18,7 @@ Unicorn::Unicorn(const Point2f& pos, GameController* pGameController)
     , m_State{State::WAITING}
     , m_SnapshotPlayerPos{0.0f, 0.0f}
     , m_SnapshotPos{0.0f, 0.0f}
-    , m_JumpHeight{100.0f}
+    , m_JumpHeight{LevelManager::GetHillHeight()}
     , m_OriginalHeight{pos.y}
     , m_SnapshotTaken{false}
     , m_SnapshotFlipped{false}
@@ -148,7 +148,6 @@ void Unicorn::Shoot(float elapsedSec)
     m_pGameController->m_pEnemyManager->GetThrowables().push_back(
         new Fireball{Game::Label::T_FIREBALL_UNICORN, GetShapeCenter(), direction.Normalized(), m_pGameController}
     );
-    // m_pGameController->m_pSoundManager->PlayEffect(Game::Label::F_FIRE_BOSS);
 }
 
 void Unicorn::UpdateState()
@@ -214,6 +213,6 @@ void Unicorn::UpdateSprite()
 
 float Unicorn::CalculateJumpHeight(float x, float distance) const
 {
-    const float a{-LevelManager::GetHillHeight() / std::powf(distance / 2, 2)};
-    return a * std::powf(x - distance / 2, 2) + LevelManager::GetHillHeight();
+    const float a{-m_JumpHeight / std::powf(distance / 2, 2)};
+    return a * std::powf(x - distance / 2, 2) + m_JumpHeight;
 }

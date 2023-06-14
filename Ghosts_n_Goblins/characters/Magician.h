@@ -20,7 +20,6 @@ public:
     Magician& operator=(const Magician& other) = delete;
     Magician& operator=(Magician&& other) noexcept = delete;
 
-    virtual void Draw() const override;
     virtual void Update(float elapsedSec) override;
     virtual void Awake(float elapsedSec) override;
     virtual void HandleCollision(GameObject* other) override;

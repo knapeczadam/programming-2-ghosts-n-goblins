@@ -19,11 +19,6 @@ Crow::Crow(const Point2f& pos, GameController* pGameController)
     m_VerVelocity = 20.0f;
 }
 
-void Crow::Draw() const
-{
-    GameObject::Draw();
-}
-
 void Crow::Update(float elapsedSec)
 {
     IEnemy::Update(elapsedSec);
@@ -69,8 +64,7 @@ void Crow::Wait(float elapsedSec)
     IEnemy::Wait(elapsedSec);
     m_pSprite->SetSubRows(1);
 
-    const int randInterval{Game::GetRandomInt(1, 2)};
-    Switch(randInterval);
+    Switch(Game::GetRandomFloat(1.0f, 2.0f));
 
     m_pSprite->CalculateFrameTime();
     m_pSprite->SetCurrRowsCols();

@@ -10,7 +10,6 @@
 #include "game/GameController.h"
 #include "game/PlayerManager.h"
 
-
 HUD::HUD(GameController* pGameController)
     : UI{Game::Label::U_HUD, pGameController}
     , m_pFrame{pGameController->m_pSpriteFactory->CreateSprite(Game::Label::U_FRAME)}

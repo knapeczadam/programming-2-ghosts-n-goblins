@@ -5,6 +5,8 @@
 #include "IEnemy.h"
 #include "Matrix2x3.h"
 #include "Texture.h"
+#include "utils.h"
+#include "WoodyPig.h"
 #include "collectibles/ICollectible.h"
 #include "collectibles/Key.h"
 #include "engine/SoundManager.h"
@@ -22,13 +24,9 @@
 #include "throwables/Dagger.h"
 #include "throwables/Lance.h"
 #include "throwables/Torch.h"
-#include "utils.h"
 
 #include <iostream>
 #include <numeric>
-
-#include "WoodyPig.h"
-
 
 Player::Player(const Point2f& pos, GameController* pGameController)
     : GameObject{Game::Label::C_ARTHUR, pos, true, pGameController}
@@ -60,7 +58,6 @@ Player::Player(const Point2f& pos, GameController* pGameController)
       , m_OnGround{false}
       , m_ImpactFromLeft{false}
       , m_HitTriggered{false}
-      , m_HitFlipped{false}
       , m_HasKey{false}
       , m_OnHill{false}
       , m_Frog{false}

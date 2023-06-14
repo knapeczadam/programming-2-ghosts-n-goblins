@@ -20,11 +20,9 @@ public:
 
 private:
     void DrawAbc() const;
-    auto DrawInitial() const -> void;
+    void DrawInitial() const;
     void FlickerCharacter() const;
     void OnEnter();
-
-private:
     void SaveInitial();
 
 private:

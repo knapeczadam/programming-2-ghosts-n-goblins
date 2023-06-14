@@ -21,7 +21,6 @@ public:
     Crow& operator=(const Crow& other) = delete;
     Crow& operator=(Crow&& other) noexcept = delete;
 
-    virtual void Draw() const override;
     virtual void Update(float elapsedSec) override;
     virtual void HandleCollision(GameObject* other) override;
 

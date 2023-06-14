@@ -1,26 +1,25 @@
 ﻿#include "pch.h"
 #include "CollectibleManager.h"
 
+#include "EnemyManager.h"
 #include "GameController.h"
+#include "LevelManager.h"
+#include "characters/IPotter.h"
 #include "collectibles/Armor.h"
 #include "collectibles/Coin.h"
+#include "collectibles/Doll.h"
+#include "collectibles/Key.h"
+#include "collectibles/King.h"
 #include "collectibles/MoneyBag.h"
 #include "collectibles/Necklace.h"
 #include "collectibles/Pot.h"
 #include "collectibles/Yashichi.h"
-
-#include <ranges>
-
-#include "EnemyManager.h"
-#include "LevelManager.h"
-#include "characters/IPotter.h"
-#include "collectibles/Doll.h"
-#include "collectibles/Key.h"
-#include "collectibles/King.h"
 #include "level/colliders/spawners/ISpawner.h"
 #include "throwables/Dagger.h"
 #include "throwables/Lance.h"
 #include "throwables/Torch.h"
+
+#include <ranges>
 
 CollectibleManager::CollectibleManager(GameController* pGameController)
     : IManager{pGameController}

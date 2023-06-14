@@ -2,6 +2,7 @@
 #include "EnemyManager.h"
 
 #include "GameController.h"
+#include "LevelManager.h"
 #include "characters/Crow.h"
 #include "characters/FlyingKnight.h"
 #include "characters/GreenMonster.h"
@@ -10,21 +11,21 @@
 #include "characters/Unicorn.h"
 #include "characters/WoodyPig.h"
 #include "characters/Zombie.h"
+#include "level/colliders/spawners/ZombieSpawner.h"
 
 #include <ranges>
 
-#include "LevelManager.h"
-#include "level/colliders/spawners/ZombieSpawner.h"
-
 EnemyManager::EnemyManager(GameController* pGameController)
     : IManager(pGameController)
-    , m_Crows{}
     , m_Enemies{}
-    , m_GreenMonsters{}
     , m_Throwables{}
+    , m_Crows{}
     , m_FlyingKnights{}
+    , m_GreenMonsters{}
     , m_WoodyPigs{}
     , m_Zombies{}
+    , m_pMagician{nullptr}
+    , m_pUnicorn{nullptr}
 {
     m_pGameController->m_pEnemyManager = this;
     Initialize();

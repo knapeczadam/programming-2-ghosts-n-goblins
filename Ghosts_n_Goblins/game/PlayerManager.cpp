@@ -3,11 +3,10 @@
 
 #include "GameController.h"
 #include "GameObject.h"
+#include "LevelManager.h"
 #include "characters/Player.h"
 
 #include <ranges>
-
-#include "LevelManager.h"
 
 PlayerManager::PlayerManager(GameController* pGameController)
     : IManager{pGameController}

@@ -21,10 +21,11 @@ public:
     std::vector<GameObject*>& GetThrowables();
     Player* GetPlayer() const;
 
+    virtual void Update(float elapsedSec) override;
     virtual void Reset(bool fromCheckpoint = false) override;
+    
     void DrawPlayer() const;
     void DrawThrowables() const;
-    virtual void Update(float elapsedSec) override;
     void UpdateColliders();
     void LateUpdate(float elapsedSec);
 

@@ -1,6 +1,5 @@
 ﻿#pragma once
 #include "ICollider.h"
-#include "game/GameObject.h"
 
 class TombstoneCollider final : public ICollider
 {

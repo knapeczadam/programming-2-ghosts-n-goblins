@@ -1,6 +1,5 @@
 // Knapecz, Adam - 1DAE11
 #pragma once
-#include "Vector2f.h"
 #include "game/Game.h"
 #include "game/GameObject.h"
 
