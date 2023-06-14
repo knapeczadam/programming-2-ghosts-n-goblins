@@ -489,10 +489,13 @@ void Player::Climb()
         m_Velocity.y = m_VerVelocity;
         m_Climbing = true;
     }
-    else if (m_pGameController->m_pInputManager->IsPressed(Game::Label::I_DOWN))
+    else if (m_OnHill and m_pGameController->m_pInputManager->IsPressed(Game::Label::I_DOWN))
     {
-        m_Velocity.y = -m_VerVelocity;
-        m_Climbing = true;
+         // TOTO: fix
+        // m_Velocity.y = -m_VerVelocity;
+        // m_Climbing = true;
+        m_Velocity.y = 0.0f;
+        m_Climbing = false;
     }
     else
     {
