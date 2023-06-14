@@ -26,4 +26,5 @@ protected:
 private:
     std::queue<std::pair<Game::Label, float>> m_Intervals;
     Game::Label m_State;
+    bool m_ArmorPickedUp;
 };
