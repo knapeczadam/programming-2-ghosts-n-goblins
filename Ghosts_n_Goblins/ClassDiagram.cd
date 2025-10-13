@@ -1,0 +1,190 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Camera" Collapsed="true">
+    <Position X="0.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAABAEAAAgABYAAAAAQQAIEACACCIAAgAAAAAAA=</HashCode>
+      <FileName>game\Camera.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Game" Collapsed="true">
+    <Position X="5" Y="2.25" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>QgULQFoyRICRE52kENCJvAAEqBmCADBAkTIgpRGJACA=</HashCode>
+      <FileName>game\Game.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BaseGame" Collapsed="true">
+    <Position X="3" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAQIAAAEIAhAIgAQABAAIABAAACAAAAAAAIgCIAAACI=</HashCode>
+      <FileName>C:\Users\adam\OneDrive - Hogeschool West-Vlaanderen\DAE\2022 - 2023\Semester 2\Programming 2\00 - Game Project\Knapecz_Adam_Ghosts_n_Goblins\Engine\BaseGame.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ITimer" Collapsed="true">
+    <Position X="6.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAABgAAAAAAAAAAAAAAARAAAAIAAAgAgEAAAA=</HashCode>
+      <FileName>engine\ITimer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Crow" Collapsed="true">
+    <Position X="9.25" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQQAAAAAAAAAAAAAEAAAAAAAAQQAAAAAAIjAAAAAEA=</HashCode>
+      <FileName>characters\Crow.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IEnemy" Collapsed="true">
+    <Position X="9.25" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>wAIAAABAAogAJMAGAEEAAAABAAQQIAQIQAAhgIAACAA=</HashCode>
+      <FileName>characters\IEnemy.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameObject" Collapsed="true">
+    <Position X="6.75" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AJQQBAFEASAJFgAokAAAYAARBwEDWlQABAUhAIIAAEA=</HashCode>
+      <FileName>game\GameObject.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Zombie" Collapsed="true">
+    <Position X="12" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACYQCAAAEQQBBAAAAAEAAAAAAEAAIAAAAgAgAAAAAHA=</HashCode>
+      <FileName>characters\Zombie.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IPotter" Collapsed="true">
+    <Position X="14.25" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAAAAgAAAAAAAAAIAgAAABAAQAAAAAigAAAAAA=</HashCode>
+      <FileName>characters\IPotter.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Armor" Collapsed="true">
+    <Position X="4.75" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAEAAgAAAAAAA=</HashCode>
+      <FileName>collectibles\Armor.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ICollectible" Collapsed="true">
+    <Position X="2.75" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAgggAAAAAg=</HashCode>
+      <FileName>collectibles\ICollectible.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Clock" Collapsed="true">
+    <Position X="0.75" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAQgAAAAAAAAAAgAAAAAAAAAAAABgAgAAEACgA=</HashCode>
+      <FileName>engine\Clock.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sprite" Collapsed="true">
+    <Position X="0.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CEURgFQCgKDIYqSFA5qEQAPIKByAlky4tEAmYsiUJqY=</HashCode>
+      <FileName>engine\Sprite.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SpriteFactory" Collapsed="true">
+    <Position X="0.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAAAAAAAAAAAAAAIAAAEBAAAAAAAgAAAAAIA=</HashCode>
+      <FileName>engine\SpriteFactory.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Damage" Collapsed="true">
+    <Position X="10" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAACAAAAAAAAAAAAAAAAAAAAAIAAAAAAgAAAAAAA=</HashCode>
+      <FileName>fx\Damage.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameController">
+    <Position X="0.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgEAAAAiABAAECAAAJAACAAEoBAAACAAAQAgCBAAAAA=</HashCode>
+      <FileName>game\GameController.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UIManager" Collapsed="true">
+    <Position X="12.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>FAAQAAAAQAIAKQAAABAAAAAAAAAAAAAAQAAgAEAAAQA=</HashCode>
+      <FileName>game\UIManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IManager" Collapsed="true">
+    <Position X="10" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAABQAAAQAAAABAAAEAAAAAAAAgAEAAAAA=</HashCode>
+      <FileName>game\IManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="YashichiCollider" Collapsed="true">
+    <Position X="4.25" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIQAAAAAAAAAAAAAAAAEAAAAAAAAAAAgAAgAAAAAAA=</HashCode>
+      <FileName>level\colliders\collectibles\YashichiCollider.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ICollider" Collapsed="true">
+    <Position X="4.25" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAiAAAAAAA=</HashCode>
+      <FileName>level\colliders\ICollider.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Fireball" Collapsed="true">
+    <Position X="6.75" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAwAAAAAEA=</HashCode>
+      <FileName>throwables\Fireball.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IThrowable" Collapsed="true">
+    <Position X="6.75" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAASAAAEEAAAAAAAAAAAAIAAgAEAACgAAAAAAA=</HashCode>
+      <FileName>throwables\IThrowable.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HUD" Collapsed="true">
+    <Position X="12.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAQAgESIAAAAgAAAQCgAAAAACABCEAgAAAgEBAAgAA=</HashCode>
+      <FileName>ui\HUD.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UI" Collapsed="true">
+    <Position X="9" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AwwICAAIEAAAlgYgEAAAAgAIAEEQABEAAKAiSABAlQA=</HashCode>
+      <FileName>ui\UI.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ZombieSpawner" Collapsed="true">
+    <Position X="0.5" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAIAAAAABAAAAAAEAAAAAAAAAAAAAAAAgAAAABBA=</HashCode>
+      <FileName>level\colliders\spawners\ZombieSpawner.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ISpawner" Collapsed="true">
+    <Position X="2.5" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAEAAAAEAAAAAAAAAIAAAgAAgAAAAAAA=</HashCode>
+      <FileName>level\colliders\spawners\ISpawner.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
