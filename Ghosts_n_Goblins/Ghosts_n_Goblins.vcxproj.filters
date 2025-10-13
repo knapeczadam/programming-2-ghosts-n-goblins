@@ -279,6 +279,9 @@
     <ClCompile Include="level\colliders\TombstoneCollider.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="fx\Damage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="collectibles\ICollectible.h">
@@ -548,5 +551,11 @@
     <ClInclude Include="level\colliders\TombstoneCollider.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="fx\Damage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>
