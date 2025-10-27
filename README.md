@@ -1,11 +1,11 @@
-# 👾 Programming 2 – Ghosts 'n Goblins (2023)
+# ⚔️ Programming 2 – Ghosts 'n Goblins  
 
 Hey there, fellow DAE student, arcade fan, or curious visitor 👋  
 Welcome to my **Programming 2 – Ghosts 'n Goblins** repository — a final project building on the [Programming 2](https://github.com/knapeczadam/programming-2) course.
 
 ---
 
-## 🗂️ About this repository
+## 🗄️ About this repository
 
 This repo contains my **arcade game remake project**, recreating the **first level of Capcom's Ghosts 'n Goblins (1985)**.  
 
@@ -17,11 +17,15 @@ Pixel-perfect implementation ensures accurate recreation of the level, while the
 
 ---
 
-## 🔖 Repository Structure
+## 📂 Repository Structure
 
 All code is on the **main branch**.  
-Two builds are available:
 
+---
+
+## 🚀 Releases
+
+Two builds are available:
 - `programming_2-ghosts_n_goblins-1.0.0-windows-x64.zip` → standard release  
 - `programming_2-ghosts_n_goblins-debug-1.0.0-windows-x64.zip` → debug mode with **infinite lives** and **visual debug shapes**  
 
@@ -35,10 +39,11 @@ If you’re exploring Programming 2 projects: **study, tinker, and enjoy a class
 
 ---
 
-### 🪪 License
+### ⚖️ License
 This repository is licensed under the **MIT License** — feel free to explore, learn, or fork for educational purposes.
 
 ---
 
 *Made with C++, curiosity, and arcade nostalgia 🎮  
-— Adam*
+— Ádám*
+
