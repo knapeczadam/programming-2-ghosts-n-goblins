@@ -1,4 +1,4 @@
-# ⚔️ Programming 2 – Ghosts 'n Goblins  
+# 🩲 Programming 2 – Ghosts 'n Goblins  
 
 Hey there, fellow DAE student, arcade fan, or curious visitor 👋  
 Welcome to my **Programming 2 – Ghosts 'n Goblins** repository — a final project building on the [Programming 2](https://github.com/knapeczadam/programming-2) course.
@@ -46,4 +46,5 @@ This repository is licensed under the **MIT License** — feel free to explore, 
 
 *Made with C++, curiosity, and arcade nostalgia 🎮  
 — Ádám*
+
 
